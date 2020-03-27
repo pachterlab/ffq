@@ -5,17 +5,30 @@ import argparse
 import requests
 from bs4 import BeautifulSoup
 
+def _check_args_SRR(SRR):
+    if SRR[0:3] != "SRR": 
+        sys.stderr.write("[Error] Not a valid SRR number, must begin with 'SRR'\n")
+        return False
+    if len(SRR) != 10:
+        sys.stderr.write("[Error] SRR number must be 10 digits long\n")
+        return False
+    if not SRR[3:].isdigit(): 
+        sys.stderr.write("[Error] Not a valid SRR number, must end in digits\n")
+        return False
+    return True
+
 def _check_args(args):
-    if args.SRR[0:3] != "SRR":
-        return False
-    if len(args.SRR) != 10:
-        return False
+    ## SRR
+    for sn, s in enumerate(args.SRR):
+        if not _check_args_SRR(s):
+            return False
     return True
 
 def _get_page(url):
     page = requests.get(url)
     return page
 
+## TODO: if page does not have the fastq files, return "malformed SRR entry"
 def _parse_page(page):
     soup = BeautifulSoup(page.text, "xml")
     db = soup.find_all("DB")
@@ -25,24 +38,43 @@ def _parse_page(page):
     link = soup.find_all("ID")[idx].text
     return link
 
-def main(args):
-    if not _check_args(args): return -1
-    base_url = "https://www.ebi.ac.uk/ena/browser/api/xml/"
-    url = base_url + args.SRR
+# try this: https://www.ebi.ac.uk/ena/data/warehouse/filereport?accession=SRR8426372&result=read_run&fields=run_accession,fastq_ftp
 
-    page = _get_page(url)
-    source_link = _parse_page(page)
+def _one(SRR):
+    # base_url = "https://www.ebi.ac.uk/ena/browser/api/xml/"
+    # url = base_url + SRR
+
+    # page = _get_page(url)
+    # source_link = _parse_page(page)
+
+    source_link = "https://www.ebi.ac.uk/ena/data/warehouse/filereport?accession={}&result=read_run&fields=run_accession,fastq_ftp".format(SRR)
 
     page = _get_page(source_link)
-    print("\n".join(page.text.split("\n")[1].split("\t")[1].split(";")))
+    ftp = ["ftp://"+ i for i in page.text.split("\n")[1].split("\t")[1].split(";")]
+
+    for f in ftp:
+        sys.stdout.write("{}\t{}\n".format(SRR, f))
+
+def _many(units):
+    for sn, s in enumerate(units):
+        _one(s)
+    return
+
+def main(args):
+    if not _check_args(args): return -1
+
+    units = args.SRR
+
+    _many(units)
 
     return 1
 
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-o", "--output", required=False, help="text file to store links")
-    parser.add_argument("SRR")
+
+    ## TODO add sys.stdin ability to read from standard in
+    parser.add_argument("SRR", nargs="+", default=sys.stdin)
 
     args = parser.parse_args()
 
