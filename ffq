@@ -3,9 +3,10 @@
 import sys
 import argparse
 import requests
+import utils
 from bs4 import BeautifulSoup
 
-def _check_args_SRR(SRR):
+def check_args_SRR(SRR):
     if SRR[0:3] != "SRR": 
         sys.stderr.write("[Error] Not a valid SRR number, must begin with 'SRR'\n")
         return False
@@ -17,57 +18,50 @@ def _check_args_SRR(SRR):
         return False
     return True
 
-def _check_args(args):
+def check_args(args):
     ## SRR
     for sn, s in enumerate(args.SRR):
-        if not _check_args_SRR(s):
+        if not check_args_SRR(s):
             return False
     return True
 
-def _get_page(url):
+def get_page(url):
     page = requests.get(url)
     return page
-
-## TODO: if page does not have the fastq files, return "malformed SRR entry"
-def _parse_page(page):
+def get_soup(page):
     soup = BeautifulSoup(page.text, "xml")
-    db = soup.find_all("DB")
-    for en, e in enumerate(db):
-        if e.text == "ENA-FASTQ-FILES":
-            idx = en
-    link = soup.find_all("ID")[idx].text
-    return link
+    return soup
 
 # try this: https://www.ebi.ac.uk/ena/data/warehouse/filereport?accession=SRR8426372&result=read_run&fields=run_accession,fastq_ftp
 
-def _one(SRR):
-    # base_url = "https://www.ebi.ac.uk/ena/browser/api/xml/"
-    # url = base_url + SRR
+def single(SRR):
+    base_url = "https://www.ebi.ac.uk/ena/browser/api/xml/"
+    url = base_url + SRR
+    soup = get_soup(get_page(url))
 
-    # page = _get_page(url)
-    # source_link = _parse_page(page)
+    ftp = utils.get_ftp_links(soup)
+    title = utils.get_title(soup)
 
-    source_link = "https://www.ebi.ac.uk/ena/data/warehouse/filereport?accession={}&result=read_run&fields=run_accession,fastq_ftp".format(SRR)
-
-    page = _get_page(source_link)
-    ftp = ["ftp://"+ i for i in page.text.split("\n")[1].split("\t")[1].split(";")]
+    # source_link = "https://www.ebi.ac.uk/ena/data/warehouse/filereport?accession={}&result=read_run&fields=run_accession,fastq_ftp".format(SRR)
 
     for f in ftp:
-        sys.stdout.write("{}\t{}\n".format(SRR, f))
+        sys.stdout.write("{}\t{}\t{}\n".format(SRR, "\t".join(title), f))
 
-def _many(units):
+def multiple(units):
+    # Looping is naive implementatino
+    # xml api can take multiple SRR's as string
     for sn, s in enumerate(units):
-        _one(s)
-    return
+        single(s)
+    return True
 
 def main(args):
-    if not _check_args(args): return -1
+    if not check_args(args): return False
 
     units = args.SRR
+    #base = "https://www.ebi.ac.uk/ena/browser/api/xml/"
+    multiple(units)
 
-    _many(units)
-
-    return 1
+    return True
 
 
 if __name__=="__main__":
