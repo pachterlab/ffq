@@ -7,13 +7,13 @@ import utils
 from bs4 import BeautifulSoup
 
 def check_args_SRR(SRR):
-    if SRR[0:3] != "SRR": 
+    if SRR[0:3] != "SRR":
         sys.stderr.write("[Error] Not a valid SRR number, must begin with 'SRR'\n")
         return False
     if len(SRR) != 10:
         sys.stderr.write("[Error] SRR number must be 10 digits long\n")
         return False
-    if not SRR[3:].isdigit(): 
+    if not SRR[3:].isdigit():
         sys.stderr.write("[Error] Not a valid SRR number, must end in digits\n")
         return False
     return True
@@ -54,7 +54,7 @@ def multiple(units):
         single(s)
     return True
 
-def main(args):
+def ffq(args):
     if not check_args(args): return False
 
     units = args.SRR
@@ -62,14 +62,3 @@ def main(args):
     multiple(units)
 
     return True
-
-
-if __name__=="__main__":
-    parser = argparse.ArgumentParser()
-
-    ## TODO add sys.stdin ability to read from standard in
-    parser.add_argument("SRR", nargs="+", default=sys.stdin)
-
-    args = parser.parse_args()
-
-    main(args)
