@@ -7,6 +7,11 @@ from .ffq import ffq
 
 logger = logging.getLogger(__name__)
 
+def check_SRR(SRR):
+    if SRR[0:3] != "SRR" or len(SRR) != 10 or not SRR[3:].isdigit():
+        return False
+    return True
+
 
 def main():
     """Command-line entrypoint.
@@ -15,7 +20,7 @@ def main():
     parser = argparse.ArgumentParser(description='ffq {}'.format(__version__))
     parser._actions[0].help = parser._actions[0].help.capitalize()
 
-    parser.add_argument('srrs', help='SRA Run Accessions (SRRs)', nargs='+')
+    parser.add_argument('SRRs', help='SRA Run Accessions (SRRs)', nargs='+')
     parser.add_argument(
         '--verbose', help='Print debugging information', action='store_true'
     )
@@ -33,4 +38,10 @@ def main():
 
     logger.debug('Printing verbose output')
     logger.debug(args)
-    ffq(args)
+
+    # Check SRRs
+    for SRR in args.SRRs:
+        if SRR[0:3] != "SRR" or len(SRR) != 10 or not SRR[3:].isdigit():
+            parser.error(f'{SRR} failed validation. SRRs must be 10 characters long, start with \'SRR\', and end with seven digits.')
+
+    ffq(args.SRRs)

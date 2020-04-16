@@ -1,29 +1,7 @@
-#!/usr/bin/env python3
-
 import sys
-import argparse
 import requests
 import utils
 from bs4 import BeautifulSoup
-
-def check_args_SRR(SRR):
-    if SRR[0:3] != "SRR":
-        sys.stderr.write("[Error] Not a valid SRR number, must begin with 'SRR'\n")
-        return False
-    if len(SRR) != 10:
-        sys.stderr.write("[Error] SRR number must be 10 digits long\n")
-        return False
-    if not SRR[3:].isdigit():
-        sys.stderr.write("[Error] Not a valid SRR number, must end in digits\n")
-        return False
-    return True
-
-def check_args(args):
-    ## SRR
-    for sn, s in enumerate(args.SRR):
-        if not check_args_SRR(s):
-            return False
-    return True
 
 def get_page(url):
     page = requests.get(url)
@@ -47,18 +25,10 @@ def single(SRR):
     for f in ftp:
         sys.stdout.write("{}\t{}\t{}\n".format(SRR, "\t".join(title), f))
 
-def multiple(units):
+def ffq(SRRs):
+    #base = "https://www.ebi.ac.uk/ena/browser/api/xml/"
     # Looping is naive implementatino
     # xml api can take multiple SRR's as string
     for sn, s in enumerate(units):
         single(s)
-    return True
-
-def ffq(args):
-    if not check_args(args): return False
-
-    units = args.SRR
-    #base = "https://www.ebi.ac.uk/ena/browser/api/xml/"
-    multiple(units)
-
     return True
