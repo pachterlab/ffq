@@ -1,4 +1,5 @@
 import argparse
+import json
 import logging
 import sys
 
@@ -6,11 +7,6 @@ from . import __version__
 from .ffq import ffq
 
 logger = logging.getLogger(__name__)
-
-def check_SRR(SRR):
-    if SRR[0:3] != "SRR" or len(SRR) != 10 or not SRR[3:].isdigit():
-        return False
-    return True
 
 
 def main():
@@ -35,6 +31,8 @@ def main():
         format='[%(asctime)s] %(levelname)7s %(message)s',
         level=logging.DEBUG if args.verbose else logging.INFO,
     )
+    logging.getLogger('chardet.charsetprober').setLevel(logging.WARNING)
+    logging.getLogger('urllib3').setLevel(logging.WARNING)
 
     logger.debug('Printing verbose output')
     logger.debug(args)
@@ -42,6 +40,12 @@ def main():
     # Check SRRs
     for SRR in args.SRRs:
         if SRR[0:3] != "SRR" or len(SRR) != 10 or not SRR[3:].isdigit():
-            parser.error(f'{SRR} failed validation. SRRs must be 10 characters long, start with \'SRR\', and end with seven digits.')
+            parser.error((
+                f'{SRR} failed validation. SRRs must be 10 characters long, '
+                'start with \'SRR\', and end with seven digits.'
+            ))
 
-    ffq(args.SRRs)
+    runs = ffq(args.SRRs)
+    for run in runs:
+        with open(f'{run["accession"]}.json', 'w') as f:
+            json.dump(run, f, indent=4)
