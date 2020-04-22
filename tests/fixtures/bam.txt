@@ -1,0 +1,2 @@
+run_accession	submitted_ftp	submitted_md5	submitted_bytes	submitted_format
+SRR6835844	ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam;ftp.sra.ebi.ac.uk/vol1/run/SRR683/SRR6835844/10X_P4_0.bam.bai	5355fe6a07155026085ce46631268ab1;c9396c2596254831470a9138ae86ded7	17093057664;7163216	BAM;BAI

@@ -1,0 +1,2 @@
+run_accession	fastq_ftp	fastq_md5	fastq_bytes
+SRR8426358	ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz;ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz	be7e88cf6f6fd90f1b1170f1cb367123;2124da22644d876c4caa92ffd9e2402e	5507959060;7194107512

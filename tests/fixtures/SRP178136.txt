@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<STUDY_SET>
+<STUDY accession="SRP178136" alias="GSE124872" center_name="GEO" broker_name="NCBI">
+     <IDENTIFIERS>
+          <PRIMARY_ID>SRP178136</PRIMARY_ID>
+          <SECONDARY_ID>PRJNA514051</SECONDARY_ID>
+          <EXTERNAL_ID label="primary" namespace="BioProject">PRJNA514051</EXTERNAL_ID>
+          <EXTERNAL_ID namespace="GEO">GSE124872</EXTERNAL_ID>
+          <SUBMITTER_ID namespace="GEO">GSE124872</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <DESCRIPTOR>
+          <STUDY_TITLE>Multi-modal analysis of the aging mouse lung at cellular resolution</STUDY_TITLE>
+          <STUDY_TYPE existing_study_type="Transcriptome Analysis"/>
+          <STUDY_ABSTRACT>A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue.</STUDY_ABSTRACT>
+          <CENTER_PROJECT_NAME>GSE124872</CENTER_PROJECT_NAME>
+     </DESCRIPTOR>
+     <STUDY_LINKS>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>pubmed</DB>
+                    <ID>30814501</ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>SRS4237518-SRS4237558</ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-EXPERIMENT</DB>
+                    <ID>SRX5234127-SRX5234167</ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-RUN</DB>
+                    <ID>SRR8426358-SRR8426398</ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>SRA832392</ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[http://www.ebi.ac.uk/ena/data/warehouse/filereport?accession=SRP178136&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[http://www.ebi.ac.uk/ena/data/warehouse/filereport?accession=SRP178136&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+     </STUDY_LINKS>
+     <STUDY_ATTRIBUTES>
+          <STUDY_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>1635550613</VALUE>
+          </STUDY_ATTRIBUTE>
+          <STUDY_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>385374220281</VALUE>
+          </STUDY_ATTRIBUTE>
+          <STUDY_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-01-26</VALUE>
+          </STUDY_ATTRIBUTE>
+          <STUDY_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-03-14</VALUE>
+          </STUDY_ATTRIBUTE>
+     </STUDY_ATTRIBUTES>
+</STUDY>
+</STUDY_SET>

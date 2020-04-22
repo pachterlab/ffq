@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RUN_SET>
+<RUN accession="SRR8426358" alias="GSM3557675_r1" center_name="GEO" broker_name="NCBI">
+     <IDENTIFIERS>
+          <PRIMARY_ID>SRR8426358</PRIMARY_ID>
+          <SUBMITTER_ID namespace="GEO">GSM3557675_r1</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <TITLE>Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq</TITLE>
+     <EXPERIMENT_REF accession="SRX5234128" refname="GSM3557675">
+          <IDENTIFIERS>
+               <PRIMARY_ID>SRX5234128</PRIMARY_ID>
+          </IDENTIFIERS>
+     </EXPERIMENT_REF>
+     <SPOT_DESCRIPTOR>
+          <SPOT_DECODE_SPEC>
+               <SPOT_LENGTH>202</SPOT_LENGTH>
+               <READ_SPEC>
+                    <READ_INDEX>0</READ_INDEX>
+                    <READ_CLASS>Application Read</READ_CLASS>
+                    <READ_TYPE>Forward</READ_TYPE>
+                    <BASE_COORD>1</BASE_COORD>
+               </READ_SPEC>
+               <READ_SPEC>
+                    <READ_INDEX>1</READ_INDEX>
+                    <READ_CLASS>Application Read</READ_CLASS>
+                    <READ_TYPE>Reverse</READ_TYPE>
+                    <BASE_COORD>102</BASE_COORD>
+               </READ_SPEC>
+          </SPOT_DECODE_SPEC>
+     </SPOT_DESCRIPTOR>
+     <RUN_LINKS>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-STUDY</DB>
+                    <ID>SRP178136</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>SRS4237519</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>SRA832392</ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[http://www.ebi.ac.uk/ena/data/warehouse/filereport?accession=SRR8426358&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+          <RUN_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[http://www.ebi.ac.uk/ena/data/warehouse/filereport?accession=SRR8426358&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </RUN_LINK>
+     </RUN_LINKS>
+     <RUN_ATTRIBUTES>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>109256158</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>21984096610</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2019-01-27</VALUE>
+          </RUN_ATTRIBUTE>
+          <RUN_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2019-01-27</VALUE>
+          </RUN_ATTRIBUTE>
+     </RUN_ATTRIBUTES>
+</RUN>
+</RUN_SET>
