@@ -1,6 +1,7 @@
 import argparse
 import json
 import logging
+import os
 import sys
 
 from . import __version__
@@ -17,6 +18,13 @@ def main():
     parser._actions[0].help = parser._actions[0].help.capitalize()
 
     parser.add_argument('SRRs', help='SRA Run Accessions (SRRs)', nargs='+')
+    parser.add_argument(
+        '-o',
+        metavar='OUT',
+        help='Path to output directory (default: current directory)',
+        type=str,
+        default='.',
+    )
     parser.add_argument(
         '--verbose', help='Print debugging information', action='store_true'
     )
@@ -46,6 +54,8 @@ def main():
             ))
 
     runs = ffq(args.SRRs)
+
+    os.makedirs(args.o, exist_ok=True)
     for run in runs:
-        with open(f'{run["accession"]}.json', 'w') as f:
+        with open(os.path.join(args.o, f'{run["accession"]}.json'), 'w') as f:
             json.dump(run, f, indent=4)
