@@ -29,14 +29,14 @@ class TestFfq(TestMixin, TestCase):
                     'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq',
                 'files': [{
                     'url':
-                        'ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz',
+                        'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz',
                     'md5':
                         'be7e88cf6f6fd90f1b1170f1cb367123',
                     'size':
                         '5507959060'
                 }, {
                     'url':
-                        'ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz',
+                        'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz',
                     'md5':
                         '2124da22644d876c4caa92ffd9e2402e',
                     'size':
@@ -76,14 +76,14 @@ class TestFfq(TestMixin, TestCase):
                     'Illumina NovaSeq 6000 sequencing; GSM3040890: library 10X_P4_0; Mus musculus; RNA-Seq',
                 'files': [{
                     'url':
-                        'ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam',
+                        'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam',
                     'md5':
                         '5355fe6a07155026085ce46631268ab1',
                     'size':
                         '17093057664'
                 }, {
                     'url':
-                        'ftp.sra.ebi.ac.uk/vol1/run/SRR683/SRR6835844/10X_P4_0.bam.bai',
+                        'ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR683/SRR6835844/10X_P4_0.bam.bai',
                     'md5':
                         'c9396c2596254831470a9138ae86ded7',
                     'size':

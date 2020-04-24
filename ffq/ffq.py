@@ -40,7 +40,7 @@ def parse_run(soup):
                 break
 
             files = [{
-                'url': url,
+                'url': f'ftp://{url}',
                 'md5': md5,
                 'size': size
             } for url, md5, size in
@@ -68,7 +68,7 @@ def parse_run(soup):
                     )
                 files = [
                     {
-                        'url': url,
+                        'url': f'ftp://{url}',
                         'md5': md5,
                         'size': size
                     } for url, md5, size in
