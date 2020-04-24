@@ -166,7 +166,7 @@ class TestFfq(TestMixin, TestCase):
             parse_experiment.return_value = experiment
             parse_study.return_value = study
 
-            self.assertEqual([run], ffq.ffq(['SRR8426358']))
+            self.assertEqual(run, ffq.ffq('SRR8426358'))
             self.assertEqual(4, get_xml.call_count)
             get_xml.assert_has_calls([
                 call('SRR8426358'),
