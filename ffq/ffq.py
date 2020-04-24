@@ -151,18 +151,15 @@ def parse_study(soup):
     return {'accession': accession, 'title': title, 'abstract': abstract}
 
 
-def ffq(SRRs):
-    runs = []
-    for srr in SRRs:
-        logger.info(f'Parsing run {srr}')
-        run = parse_run(get_xml(srr))
-        logger.debug(f'Parsing sample {run["sample"]}')
-        sample = parse_sample(get_xml(run['sample']))
-        logger.debug(f'Parsing experiment {run["experiment"]}')
-        experiment = parse_experiment(get_xml(run['experiment']))
-        logger.debug(f'Parsing study {run["study"]}')
-        study = parse_study(get_xml(run['study']))
+def ffq(accession):
+    logger.info(f'Parsing run {accession}')
+    run = parse_run(get_xml(accession))
+    logger.debug(f'Parsing sample {run["sample"]}')
+    sample = parse_sample(get_xml(run['sample']))
+    logger.debug(f'Parsing experiment {run["experiment"]}')
+    experiment = parse_experiment(get_xml(run['experiment']))
+    logger.debug(f'Parsing study {run["study"]}')
+    study = parse_study(get_xml(run['study']))
 
-        run.update({'sample': sample, 'experiment': experiment, 'study': study})
-        runs.append(run)
-    return runs
+    run.update({'sample': sample, 'experiment': experiment, 'study': study})
+    return run

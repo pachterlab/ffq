@@ -53,7 +53,7 @@ def main():
                 'start with \'SRR\', and end with seven digits.'
             ))
 
-    runs = ffq(args.SRRs)
+    runs = [ffq(accession) for accession in args.SRRs]
 
     os.makedirs(args.o, exist_ok=True)
     for run in runs:
