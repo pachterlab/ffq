@@ -11,7 +11,7 @@ long_description = read('README.md')
 setup(
     name='ffq',
     version='0.0.1',
-    url='https://github.com/sbooeshaghi/ffq',
+    url='https://github.com/pachterlab/ffq',
     author='Kyung Hoi (Joseph) Min, Sina Booeshaghi',
     author_email='phoenixter96@gmail.com, alisina@caltech.edu',
     maintainer='Pachter Lab',

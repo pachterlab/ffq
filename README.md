@@ -16,19 +16,19 @@ pip install ffq
 
 ## Usage
 
-#### Fetch information of a single run and display it in the terminal
+### Fetch information of a single run and display it in the terminal
 ```
 ffq [ACCESSION]
 ```
 where `[ACCESSION]` is the run accession.
 
-#### Fetch information of multiple runs and display it in the terminal
+### Fetch information of multiple runs and display it in the terminal
 ```
 ffq [ACCESSION1] [ACCESSION2] ...
 ```
 where `[ACCESSION1]` and `[ACCESSION2]` are run accessions.
 
-#### Write run information to a single JSON file
+### Write run information to a single JSON file
 ```
 ffq -o [JSON_PATH] [ACCESSIONS]
 ```
@@ -36,7 +36,7 @@ where `[JSON_PATH]` is the path to the JSON file that will contain run
 information and `[ACCESSIONS]` is a space-delimited list of one or more
 run accessions.
 
-#### Write run information to multiple JSON files, one file per run
+### Write run information to multiple JSON files, one file per run
 ```
 ffq -o [OUT_DIR] --split [ACCESSIONS]
 ```
