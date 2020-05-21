@@ -12,11 +12,11 @@ setup(
     name='ffq',
     version='0.0.1',
     url='https://github.com/sbooeshaghi/ffq',
-    author='Sina Booeshaghi',
-    author_email='alisina@caltech.edu',
+    author='Kyung Hoi (Joseph) Min, Sina Booeshaghi',
+    author_email='phoenixter96@gmail.com, alisina@caltech.edu',
     maintainer='Pachter Lab',
     maintainer_email='lpachter@caltech.edu',
-    description='',  # noqa
+    description='Fetch run information from the European Nucleotide Archive (ENA).',  # noqa
     long_description=long_description,
     long_description_content_type='text/markdown',
     keywords='',
