@@ -16,8 +16,6 @@ jobs:
         with:
           python-version: '3.7'
           architecture: x64
-      - name: Install dependencies
-        run: pip install -r dev-requirements.txt
       - name: Build
         run: python setup.py sdist bdist_wheel
       - name: Publish package to PyPI
