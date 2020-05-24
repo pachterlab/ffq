@@ -3,7 +3,10 @@ from unittest import mock, TestCase
 from bs4 import BeautifulSoup
 
 import ffq.utils as utils
-from ffq.config import CROSSREF_URL, ENA_URL, ENA_SEARCH_URL
+from ffq.config import (
+    CROSSREF_URL, ENA_URL, ENA_SEARCH_URL, GSE_SEARCH_URL, GSE_SEARCH_TERMS, GSE_SUMMARY_URL,
+    GSE_SUMMARY_TERMS
+)
 
 
 class TestUtils(TestCase):
@@ -22,6 +25,34 @@ class TestUtils(TestCase):
             """
             result = utils.get_xml('accession')
             cached_get.assert_called_once_with(f'{ENA_URL}/accession/')
+            self.assertTrue(isinstance(result, BeautifulSoup))
+
+    def test_get_gse_search_json(self):
+        with mock.patch('ffq.utils.cached_get') as cached_get:
+            cached_get.return_value = """
+            {
+                {key1:value1},
+                {key2:value2}
+            }
+            """
+            result = utils.get_gse_search_json('accession')
+            cached_get.assert_called_once_with(
+                f'{GSE_SEARCH_URL}accession{GSE_SEARCH_TERMS}'
+            )
+            self.assertTrue(isinstance(result, BeautifulSoup))
+
+    def test_get_gse_summary_json(self):
+        with mock.patch('ffq.utils.cached_get') as cached_get:
+            cached_get.return_value = """
+            {
+                {key1:value1},
+                {key2:value2}
+            }
+            """
+            result = utils.get_gse_summary_json('accession')
+            cached_get.assert_called_once_with(
+                f'{GSE_SUMMARY_URL}accession{GSE_SUMMARY_TERMS}'
+            )
             self.assertTrue(isinstance(result, BeautifulSoup))
 
     def test_parse_tsv(self):
@@ -54,3 +85,8 @@ class TestUtils(TestCase):
                     'fields': 'secondary_study_accession',
                 }
             )
+            
+    def test_SRR_range(self):
+        text = 'SRR10-SRR13'
+        self.assertEqual(['SRR10', 'SRR11', 'SRR12', 'SRR13'],
+                         utils.parse_SRR_range(text))

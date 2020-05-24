@@ -150,6 +150,76 @@ class TestFfq(TestMixin, TestCase):
             )
         }, ffq.parse_study(soup))
 
+    def test_parse_study_with_run(self):
+        with open(self.study_with_run_path, 'r') as f:
+            soup = BeautifulSoup(f.read(), 'xml')
+            self.assertEqual({
+                'accession':
+                    'SRP096361',
+                'title':
+                    'A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types',
+                'abstract': (
+                    'Drop-seq and single cell sequencing of mouse arcuate nucleus and '
+                    'median eminence. Please see below link for searchable cluster-based '
+                    'gene expression. Overall design: Drop-Seq was performed on six separate '
+                    'days using mice in C57BL6/J background at various ages/sex noted. '
+                    'On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate '
+                    'was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% '
+                    'Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 '
+                    'replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 '
+                    'replicates were obtained'
+                ),
+                'runlist': [
+                    'SRR5164436', 'SRR5164437', 'SRR5164438', 'SRR5164439',
+                    'SRR5164440', 'SRR5164441', 'SRR5164442', 'SRR5164443',
+                    'SRR5164444', 'SRR5164445', 'SRR5164446'
+                ]
+            }, ffq.parse_study_with_run(soup))
+
+    def test_gse_search_json(self):
+        with open(self.gse_search_path, 'r') as f:
+            soup = BeautifulSoup(f.read(), 'html.parser')
+            self.assertEqual({
+                'accession': 'GSE93374',
+                'gse_id': "200093374"
+            }, ffq.parse_gse_search(soup))
+
+    def test_gse_summary_json(self):
+        with open(self.gse_summary_path, 'r') as f:
+            soup = BeautifulSoup(f.read(), 'html.parser')
+            self.assertEqual({'accession': 'SRP096361'},
+                             ffq.parse_gse_summary(soup))
+
+    def test_ffq_gse(self):
+        # Need to figure out how to add for loop test for adding individual runs
+        with mock.patch('ffq.ffq.get_gse_search_json') as get_gse_search_json, \
+            mock.patch('ffq.ffq.get_gse_summary_json') as get_gse_summary_json, \
+            mock.patch('ffq.ffq.parse_run') as parse_run, \
+            mock.patch('ffq.ffq.parse_gse_search') as parse_gse_search, \
+            mock.patch('ffq.ffq.parse_gse_summary') as parse_gse_summary, \
+            mock.patch('ffq.ffq.parse_study_with_run') as parse_study_with_run, \
+            mock.patch('ffq.ffq.get_xml') as get_xml:
+
+            gse = mock.MagicMock()
+            study = mock.MagicMock()
+            run_info = mock.MagicMock()
+
+            run = mock.MagicMock()
+
+            parse_gse_search.return_value = gse
+            parse_gse_summary.return_value = study
+            parse_study_with_run.return_value = run_info
+            parse_run.return_value = run
+
+            self.assertEqual(gse, ffq.ffq_gse('GSE93374'))
+            get_gse_search_json.assert_has_calls([
+                call('GSE93374'),
+            ])
+            get_gse_summary_json.assert_has_calls([
+                call(parse_gse_search()['gse_id']),
+            ])
+            get_xml.assert_has_calls([call(parse_gse_summary()['accession'])])
+
     def test_ffq_srr(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
             mock.patch('ffq.ffq.parse_run') as parse_run,\

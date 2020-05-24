@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<STUDY_SET>
+<STUDY accession="SRP096361" alias="GSE93374" center_name="GEO" broker_name="NCBI">
+     <IDENTIFIERS>
+          <PRIMARY_ID>SRP096361</PRIMARY_ID>
+          <SECONDARY_ID>PRJNA360829</SECONDARY_ID>
+          <EXTERNAL_ID label="primary" namespace="BioProject">PRJNA360829</EXTERNAL_ID>
+          <EXTERNAL_ID namespace="GEO">GSE93374</EXTERNAL_ID>
+          <SUBMITTER_ID namespace="GEO">GSE93374</SUBMITTER_ID>
+     </IDENTIFIERS>
+     <DESCRIPTOR>
+          <STUDY_TITLE>A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types</STUDY_TITLE>
+          <STUDY_TYPE existing_study_type="Transcriptome Analysis"/>
+          <STUDY_ABSTRACT>Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained</STUDY_ABSTRACT>
+          <CENTER_PROJECT_NAME>GSE93374</CENTER_PROJECT_NAME>
+     </DESCRIPTOR>
+     <STUDY_LINKS>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>pubmed</DB>
+                    <ID>28166221</ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SAMPLE</DB>
+                    <ID>SRS1913121-SRS1913131</ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-EXPERIMENT</DB>
+                    <ID>SRX2481508-SRX2481518</ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-RUN</DB>
+                    <ID>SRR5164436-SRR5164446</ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMISSION</DB>
+                    <ID>SRA526019</ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-FASTQ-FILES</DB>
+                    <ID><![CDATA[http://www.ebi.ac.uk/ena/data/warehouse/filereport?accession=SRP096361&result=read_run&fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes]]></ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+          <STUDY_LINK>
+               <XREF_LINK>
+                    <DB>ENA-SUBMITTED-FILES</DB>
+                    <ID><![CDATA[http://www.ebi.ac.uk/ena/data/warehouse/filereport?accession=SRP096361&result=read_run&fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format]]></ID>
+               </XREF_LINK>
+          </STUDY_LINK>
+     </STUDY_LINKS>
+     <STUDY_ATTRIBUTES>
+          <STUDY_ATTRIBUTE>
+               <TAG>ENA-SPOT-COUNT</TAG>
+               <VALUE>2578595982</VALUE>
+          </STUDY_ATTRIBUTE>
+          <STUDY_ATTRIBUTE>
+               <TAG>ENA-BASE-COUNT</TAG>
+               <VALUE>198583034242</VALUE>
+          </STUDY_ATTRIBUTE>
+          <STUDY_ATTRIBUTE>
+               <TAG>ENA-FIRST-PUBLIC</TAG>
+               <VALUE>2017-02-01</VALUE>
+          </STUDY_ATTRIBUTE>
+          <STUDY_ATTRIBUTE>
+               <TAG>ENA-LAST-UPDATE</TAG>
+               <VALUE>2017-11-30</VALUE>
+          </STUDY_ATTRIBUTE>
+     </STUDY_ATTRIBUTES>
+</STUDY>
+</STUDY_SET>
