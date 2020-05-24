@@ -1,11 +1,17 @@
+import json
 from functools import lru_cache
 
 import requests
 from bs4 import BeautifulSoup
 
 from .config import (
-    ENA_URL, GSE_SEARCH_URL, GSE_SUMMARY_URL, GSE_SEARCH_TERMS,
-    GSE_SUMMARY_TERMS
+    CROSSREF_URL,
+    ENA_SEARCH_URL,
+    ENA_URL,
+    GSE_SEARCH_URL,
+    GSE_SUMMARY_URL,
+    GSE_SEARCH_TERMS,
+    GSE_SUMMARY_TERMS,
 )
 
 
@@ -31,6 +37,18 @@ def get_xml(accession):
     :rtype: bs4.BeautifulSoup
     """
     return BeautifulSoup(cached_get(f'{ENA_URL}/{accession}/'), 'xml')
+
+
+def get_doi(doi):
+    """Given a DOI, retrieve metadata from CrossRef.
+
+    :param doi: the DOI, without the leading hostname (no http or https)
+    :type doi: str
+
+    :return: response from CrossRef as a dictionary
+    :rtype: dict
+    """
+    return json.loads(cached_get(f'{CROSSREF_URL}/{doi}'))['message']
 
 
 def get_gse_search_json(accession):
@@ -81,6 +99,33 @@ def parse_tsv(s):
         values = line.split('\t')
         rows.append({key: value for key, value in zip(header, values)})
     return rows
+
+
+def search_ena_title(title):
+    """Given a title, search the ENA for studies (SRPs) corresponding to the title.
+
+    :param title: study title
+    :type title: str
+
+    :return: list of SRPs
+    :rtype: list
+    """
+    # TODO: use cached get. Can't be used currently because dictionaries can
+    # not be hashed.
+    response = requests.get(
+        ENA_SEARCH_URL,
+        params={
+            'result': 'study',
+            'limit': 0,
+            'query': f'study_title="{title}"',
+            'fields': 'secondary_study_accession',
+        }
+    )
+    response.raise_for_status()
+    if not response.text:
+        return []
+    table = parse_tsv(response.text)
+    return [t['secondary_study_accession'] for t in table]
 
 
 def parse_SRR_range(text):
