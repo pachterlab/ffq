@@ -4,10 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from .config import (
-    ENA_URL,
-    GSE_SEARCH_URL,
-    GSE_SUMMARY_URL,
-    GSE_SEARCH_TERMS,
+    ENA_URL, GSE_SEARCH_URL, GSE_SUMMARY_URL, GSE_SEARCH_TERMS,
     GSE_SUMMARY_TERMS
 )
 
@@ -35,6 +32,7 @@ def get_xml(accession):
     """
     return BeautifulSoup(cached_get(f'{ENA_URL}/{accession}/'), 'xml')
 
+
 def get_gse_search_json(accession):
     """Given an accession, retrieve the JSON from GEO SEARCH.
 
@@ -44,7 +42,11 @@ def get_gse_search_json(accession):
     :return: a BeautifulSoup object of the parsed JSON
     :rtype: bs4.BeautifulSoup
     """
-    return BeautifulSoup(cached_get(f'{GSE_SEARCH_URL}{accession}{GSE_SEARCH_TERMS}'), 'html.parser')
+    return BeautifulSoup(
+        cached_get(f'{GSE_SEARCH_URL}{accession}{GSE_SEARCH_TERMS}'),
+        'html.parser'
+    )
+
 
 def get_gse_summary_json(accession):
     """Given an accession, retrieve the JSON from GEO SUMMARY.
@@ -55,7 +57,10 @@ def get_gse_summary_json(accession):
     :return: a BeautifulSoup object of the parsed JSON
     :rtype: bs4.BeautifulSoup
     """
-    return BeautifulSoup(cached_get(f'{GSE_SUMMARY_URL}{accession}{GSE_SUMMARY_TERMS}'), 'html.parser')
+    return BeautifulSoup(
+        cached_get(f'{GSE_SUMMARY_URL}{accession}{GSE_SUMMARY_TERMS}'),
+        'html.parser'
+    )
 
 
 def parse_tsv(s):
@@ -77,6 +82,7 @@ def parse_tsv(s):
         rows.append({key: value for key, value in zip(header, values)})
     return rows
 
+
 def parse_SRR_range(text):
     """Given an a string of SRR ranges, returns a list of intermediary SRR numbers.
 
@@ -87,5 +93,5 @@ def parse_SRR_range(text):
     :rtype: list
     """
     data = [int(i[3:]) for i in text.split("-")]
-    ids = [f'SRR{i}' for i in range(data[0], data[1]+1)] 
+    ids = [f'SRR{i}' for i in range(data[0], data[1] + 1)]
     return ids

@@ -4,8 +4,8 @@ import json
 from collections import defaultdict
 
 from .utils import (
-    cached_get, get_xml, parse_tsv, parse_SRR_range,
-    get_gse_search_json, get_gse_summary_json
+    cached_get, get_xml, parse_tsv, parse_SRR_range, get_gse_search_json,
+    get_gse_summary_json
 )
 
 logger = logging.getLogger(__name__)
@@ -155,7 +155,8 @@ def parse_study(soup):
 
     return {'accession': accession, 'title': title, 'abstract': abstract}
 
-def parse_study_with_run(soup): 
+
+def parse_study_with_run(soup):
     """Given a BeautifulSoup object representing a study, parse out relevant
     information.
 
@@ -177,7 +178,13 @@ def parse_study_with_run(soup):
             srr += parse_SRR_range(srr_range)
         else:
             srr += srr_range
-    return {'accession': accession, 'title': title, 'abstract': abstract, 'runlist': srr}
+    return {
+        'accession': accession,
+        'title': title,
+        'abstract': abstract,
+        'runlist': srr
+    }
+
 
 def parse_gse_search(soup):
     """Given a BeautifulSoup object representing a geo study, parse out relevant
@@ -193,7 +200,8 @@ def parse_gse_search(soup):
 
     accession = data['esearchresult']['querytranslation'].split('[')[0]
     gse_id = data['esearchresult']['idlist'][-1]
-    return {'accession':accession, 'gse_id': gse_id}
+    return {'accession': accession, 'gse_id': gse_id}
+
 
 def parse_gse_summary(soup):
     """Given a BeautifulSoup object representing a geo study identifier, parse out relevant
@@ -211,12 +219,13 @@ def parse_gse_summary(soup):
 
     relations = data['result'][f'{gse_id}']['extrelations']
     for value in relations:
-        if value['relationtype'] == 'SRA': # may have many samples?
+        if value['relationtype'] == 'SRA':  # may have many samples?
             sra = value
 
     srp = sra['targetobject']
 
-    return {'accession': srp, 'gse_id', gse_id}
+    return {'accession': srp, 'gse_id': gse_id}
+
 
 def ffq_gse(accession):
     logger.info(f'Parsing GEO {accession}')
@@ -239,6 +248,7 @@ def ffq_gse(accession):
 
     return gse
 
+
 def ffq_srr(accession):
     logger.info(f'Parsing run {accession}')
     run = parse_run(get_xml(accession))
@@ -251,6 +261,7 @@ def ffq_srr(accession):
 
     run.update({'sample': sample, 'experiment': experiment, 'study': study})
     return run
+
 
 def ffq(accession):
     pass

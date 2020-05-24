@@ -9,8 +9,8 @@ from .ffq import ffq_srr, ffq_gse
 
 logger = logging.getLogger(__name__)
 
-
 SEARCH_TYPES = ('SRR', 'GSE', 'XXX')
+
 
 def main():
     """Command-line entrypoint.
@@ -24,7 +24,9 @@ def main():
     )
     parser._actions[0].help = parser._actions[0].help.capitalize()
 
-    parser.add_argument('IDs', help='Can be a SRA Run Accessions, GEO Study, or XXX', nargs='+')
+    parser.add_argument(
+        'IDs', help='Can be a SRA Run Accessions, GEO Study, or XXX', nargs='+'
+    )
     parser.add_argument(
         '-o',
         metavar='OUT',
@@ -40,7 +42,7 @@ def main():
     parser.add_argument(
         '-t',
         metavar='TYPE',
-        help = (
+        help=(
             'The type of term used to query data. Can be one of '
             f'{", ".join(SEARCH_TYPES)} '
             '(default: SRR)'
@@ -100,7 +102,6 @@ def main():
     elif args.t == 'GSE':
         runs = [ffq_gse(accession) for accession in args.IDs]
 
-   
     keyed = {run['accession']: run for run in runs}
 
     if args.o:
@@ -113,8 +114,9 @@ def main():
                     json.dump(run, f, indent=4)
         else:
             # Otherwise, write a single JSON with run accession as keys.
-            if os.path.dirname(args.o) != '': # handles case where file is in current dir
-                os.makedirs(os.path.dirname(args.o), exist_ok=True) 
+            if os.path.dirname(
+                    args.o) != '':  # handles case where file is in current dir
+                os.makedirs(os.path.dirname(args.o), exist_ok=True)
             with open(args.o, 'w') as f:
                 json.dump(keyed, f, indent=4)
     else:
