@@ -248,14 +248,13 @@ def ffq_srp(accession):
 
     logger.warning(f'There are {len(study["runlist"])} runs for {accession}')
 
-    runs = {run: ffq_srr(run) for run in study['runlist']}
+    runs = {run: ffq_srr(run) for run in study.pop('runlist')}
 
     # Remove study information from runs because that is redundant.
     for run in runs.values():
         del run['study']
 
     study.update({'runs': runs})
-    del study['runlist']
 
     return study
 
