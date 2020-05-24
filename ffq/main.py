@@ -5,10 +5,12 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq
+from .ffq import ffq_srr, ffq_gse
 
 logger = logging.getLogger(__name__)
 
+
+SEARCH_TYPES = ('SRR', 'GSE', 'XXX')
 
 def main():
     """Command-line entrypoint.
@@ -22,7 +24,7 @@ def main():
     )
     parser._actions[0].help = parser._actions[0].help.capitalize()
 
-    parser.add_argument('SRRs', help='SRA Run Accessions (SRRs)', nargs='+')
+    parser.add_argument('IDs', help='Can be a SRA Run Accessions, GEO Study, or XXX', nargs='+')
     parser.add_argument(
         '-o',
         metavar='OUT',
@@ -34,6 +36,21 @@ def main():
         type=str,
         required=False,
     )
+
+    parser.add_argument(
+        '-t',
+        metavar='TYPE',
+        help = (
+            'The type of term used to query data. Can be one of '
+            f'{", ".join(SEARCH_TYPES)} '
+            '(default: SRR)'
+        ),
+        type=str,
+        required=False,
+        choices=SEARCH_TYPES,
+        default='SRR'
+    )
+
     parser.add_argument(
         '--split', help='Split runs into their own files.', action='store_true'
     )
@@ -61,15 +78,29 @@ def main():
     if args.split and not args.o:
         parser.error('`-o` must be provided when using `--split`')
 
-    # Check SRRs
-    for SRR in args.SRRs:
-        if SRR[0:3] != "SRR" or len(SRR) != 10 or not SRR[3:].isdigit():
-            parser.error((
-                f'{SRR} failed validation. SRRs must be 10 characters long, '
-                'start with \'SRR\', and end with seven digits.'
-            ))
+    # Check IDs depending on type
+    if args.t == 'SRR':
+        for ID in args.IDs:
+            if ID[0:3] != "SRR" or len(ID) != 10 or not ID[3:].isdigit():
+                parser.error((
+                    f'{ID} failed validation. SRRs must be 10 characters long, '
+                    'start with \'SRR\', and end with seven digits.'
+                ))
+    elif args.t == 'GSE':
+        for ID in args.IDs:
+            if ID[0:3] != "GSE" or not ID[3:].isdigit():
+                parser.error((
+                    f'{ID} failed validation. GSEs must start with \'GSE\','
+                    ' and end with digits.'
+                ))
 
-    runs = [ffq(accession) for accession in args.SRRs]
+    # run ffq depending on type
+    if args.t == 'SRR':
+        runs = [ffq_srr(accession) for accession in args.IDs]
+    elif args.t == 'GSE':
+        runs = [ffq_gse(accession) for accession in args.IDs]
+
+   
     keyed = {run['accession']: run for run in runs}
 
     if args.o:
@@ -82,7 +113,8 @@ def main():
                     json.dump(run, f, indent=4)
         else:
             # Otherwise, write a single JSON with run accession as keys.
-            os.makedirs(os.path.dirname(args.o), exist_ok=True)
+            if os.path.dirname(args.o) != '': # handles case where file is in current dir
+                os.makedirs(os.path.dirname(args.o), exist_ok=True) 
             with open(args.o, 'w') as f:
                 json.dump(keyed, f, indent=4)
     else:

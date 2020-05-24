@@ -1,1 +1,5 @@
 ENA_URL = 'https://www.ebi.ac.uk/ena/browser/api/xml'
+GSE_SEARCH_URL = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term='
+GSE_SEARCH_TERMS = '%5bGEO%20Accession&retmax=1&retmode=json'
+GSE_SUMMARY_URL = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id='
+GSE_SUMMARY_TERMS = '&retmode=json'

@@ -150,7 +150,7 @@ class TestFfq(TestMixin, TestCase):
             )
         }, ffq.parse_study(soup))
 
-    def test_ffq(self):
+    def test_ffq_srr(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
             mock.patch('ffq.ffq.parse_run') as parse_run,\
             mock.patch('ffq.ffq.parse_sample') as parse_sample,\
@@ -166,7 +166,7 @@ class TestFfq(TestMixin, TestCase):
             parse_experiment.return_value = experiment
             parse_study.return_value = study
 
-            self.assertEqual(run, ffq.ffq('SRR8426358'))
+            self.assertEqual(run, ffq.ffq_srr('SRR8426358'))
             self.assertEqual(4, get_xml.call_count)
             get_xml.assert_has_calls([
                 call('SRR8426358'),
