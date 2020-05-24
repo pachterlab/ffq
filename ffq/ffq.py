@@ -1,7 +1,19 @@
 import logging
 import re
+import json
+from collections import defaultdict
+from urllib.parse import urlparse
 
-from .utils import cached_get, get_xml, parse_tsv
+from .utils import (
+    cached_get,
+    get_doi,
+    get_gse_search_json,
+    get_gse_summary_json,
+    get_xml,
+    parse_SRR_range,
+    parse_tsv,
+    search_ena_title,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -151,7 +163,78 @@ def parse_study(soup):
     return {'accession': accession, 'title': title, 'abstract': abstract}
 
 
-def ffq(accession):
+def parse_study_with_run(soup):
+    """Given a BeautifulSoup object representing a study, parse out relevant
+    information.
+
+    :param soup: a BeautifulSoup object representing a study
+    :type soup: bs4.BeautifulSoup
+
+    :return: a dictionary containing study information and run information
+    :rtype: dict
+    """
+    accession = soup.find('PRIMARY_ID', text=re.compile(r'SRP.+')).text
+    title = soup.find('STUDY_TITLE').text
+    abstract = soup.find('STUDY_ABSTRACT').text
+
+    # Returns all of the runs associated with a study
+    srr = []
+    srr_ranges = soup.find('ID', text=re.compile(r'SRR.+')).text.split(",")
+    for srr_range in srr_ranges:
+        if '-' in srr_range:
+            srr += parse_SRR_range(srr_range)
+        else:
+            srr += srr_range
+    return {
+        'accession': accession,
+        'title': title,
+        'abstract': abstract,
+        'runlist': srr
+    }
+
+
+def parse_gse_search(soup):
+    """Given a BeautifulSoup object representing a geo study, parse out relevant
+    information.
+
+    :param soup: a BeautifulSoup object representing a study
+    :type soup: bs4.BeautifulSoup
+
+    :return: a dictionary containing geo study unique identifier based on a search
+    :rtype: dict
+    """
+    data = json.loads(soup.text)
+
+    accession = data['esearchresult']['querytranslation'].split('[')[0]
+    gse_id = data['esearchresult']['idlist'][-1]
+    return {'accession': accession, 'gse_id': gse_id}
+
+
+def parse_gse_summary(soup):
+    """Given a BeautifulSoup object representing a geo study identifier, parse out relevant
+    information.
+
+    :param soup: a BeautifulSoup object representing a study
+    :type soup: bs4.BeautifulSoup
+
+    :return: a dictionary containing summary of geo study information
+    :rtype: dict
+    """
+    data = json.loads(soup.text)
+
+    gse_id = data['result']['uids'][-1]
+
+    relations = data['result'][f'{gse_id}']['extrelations']
+    for value in relations:
+        if value['relationtype'] == 'SRA':  # may have many samples?
+            sra = value
+
+    srp = sra['targetobject']
+
+    return {'accession': srp}
+
+
+def ffq_srr(accession):
     logger.info(f'Parsing run {accession}')
     run = parse_run(get_xml(accession))
     logger.debug(f'Parsing sample {run["sample"]}')
@@ -163,3 +246,71 @@ def ffq(accession):
 
     run.update({'sample': sample, 'experiment': experiment, 'study': study})
     return run
+
+
+def ffq_srp(accession):
+    logger.info(f'Parsing Study SRP {accession}')
+    study = parse_study_with_run(get_xml(accession))
+
+    logger.warning(f'There are {len(study["runlist"])} runs for {accession}')
+
+    runs = {run: ffq_srr(run) for run in study.pop('runlist')}
+
+    # Remove study information from runs because that is redundant.
+    for run in runs.values():
+        del run['study']
+
+    study.update({'runs': runs})
+
+    return study
+
+
+def ffq_gse(accession):
+    logger.info(f'Parsing GEO {accession}')
+    gse = parse_gse_search(get_gse_search_json(accession))
+
+    logger.info(f'Getting Study SRP for {accession}')
+    study = parse_gse_summary(get_gse_summary_json(gse['gse_id']))
+
+    logger.info(f'Parsing Study SRP {study["accession"]}')
+    run_info = parse_study_with_run(get_xml(study["accession"]))
+
+    runlist = run_info.pop('runlist')
+    study.update(run_info)
+
+    logger.warning(f'There are {len(runlist)} runs for {accession}')
+
+    runs = defaultdict()
+    for run in runlist:
+        logger.info(f'Parsing run {run}')
+        runs[run] = parse_run(get_xml(run))
+
+    gse.update({'study': study, 'runs': runs})
+
+    return gse
+
+
+def ffq_title(title):
+    logger.info(f'Searching for Study SRP with title \'{title}\'')
+    study_accessions = search_ena_title(title)
+
+    if not study_accessions:
+        raise Exception('No studies found for the given title')
+    logger.info(
+        f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
+    )
+
+    return [ffq_srp(accession) for accession in study_accessions]
+
+
+def ffq_doi(doi):
+    # Sanitize DOI so that it doesn't include leading http or https
+    parsed = urlparse(doi)
+
+    if parsed.scheme:
+        doi = parsed.path.strip('/')
+
+    logger.info(f'Searching for DOI \'{doi}\'')
+    paper = get_doi(doi)
+    logger.info(f'Found paper with title \'{paper["title"][0]}\'')
+    return ffq_title(paper['title'][0])

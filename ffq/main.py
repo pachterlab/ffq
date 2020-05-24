@@ -5,9 +5,11 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq
+from .ffq import ffq_doi, ffq_gse, ffq_srp, ffq_srr, ffq_title
 
 logger = logging.getLogger(__name__)
+
+SEARCH_TYPES = ('SRR', 'SRP', 'GSE', 'DOI', 'TITLE')
 
 
 def main():
@@ -22,7 +24,14 @@ def main():
     )
     parser._actions[0].help = parser._actions[0].help.capitalize()
 
-    parser.add_argument('SRRs', help='SRA Run Accessions (SRRs)', nargs='+')
+    parser.add_argument(
+        'IDs',
+        help=(
+            'Can be a SRA Run Accessions, SRA Study Accessions, '
+            'GEO Study Accessions, DOIs or paper titles.'
+        ),
+        nargs='+'
+    )
     parser.add_argument(
         '-o',
         metavar='OUT',
@@ -34,6 +43,21 @@ def main():
         type=str,
         required=False,
     )
+
+    parser.add_argument(
+        '-t',
+        metavar='TYPE',
+        help=(
+            'The type of term used to query data. Can be one of '
+            f'{", ".join(SEARCH_TYPES)} '
+            '(default: SRR)'
+        ),
+        type=str,
+        required=False,
+        choices=SEARCH_TYPES,
+        default='SRR'
+    )
+
     parser.add_argument(
         '--split', help='Split runs into their own files.', action='store_true'
     )
@@ -61,29 +85,71 @@ def main():
     if args.split and not args.o:
         parser.error('`-o` must be provided when using `--split`')
 
-    # Check SRRs
-    for SRR in args.SRRs:
-        if SRR[0:3] != "SRR" or len(SRR) != 10 or not SRR[3:].isdigit():
-            parser.error((
-                f'{SRR} failed validation. SRRs must be 10 characters long, '
-                'start with \'SRR\', and end with seven digits.'
-            ))
+    # Check IDs depending on type
+    if args.t == 'SRR':
+        for ID in args.IDs:
+            if ID[0:3] != "SRR" or len(ID) != 10 or not ID[3:].isdigit():
+                parser.error((
+                    f'{ID} failed validation. SRRs must be 10 characters long, '
+                    'start with \'SRR\', and end with seven digits.'
+                ))
+    elif args.t == 'SRP':
+        for ID in args.IDs:
+            if ID[0:3] != "SRP" or len(ID) != 10 or not ID[3:].isdigit():
+                parser.error((
+                    f'{ID} failed validation. SRPs must be 10 characters long, '
+                    'start with \'SRP\', and end with seven digits.'
+                ))
+    elif args.t == 'GSE':
+        for ID in args.IDs:
+            if ID[0:3] != "GSE" or not ID[3:].isdigit():
+                parser.error((
+                    f'{ID} failed validation. GSEs must start with \'GSE\','
+                    ' and end with digits.'
+                ))
+    elif args.t in ('DOI', 'TITLE'):
+        logger.warning(
+            'Searching by DOI or TITLE may result in missing information.'
+        )
 
-    runs = [ffq(accession) for accession in args.SRRs]
-    keyed = {run['accession']: run for run in runs}
+    try:
+        # run ffq depending on type
+        if args.t == 'SRR':
+            results = [ffq_srr(accession) for accession in args.IDs]
+        elif args.t == 'SRP':
+            results = [ffq_srp(accession) for accession in args.IDs]
+        elif args.t == 'GSE':
+            results = [ffq_gse(accession) for accession in args.IDs]
+        elif args.t == 'TITLE':
+            results = [
+                study for title in args.IDs for study in ffq_title(title)
+            ]
+        elif args.t == 'DOI':
+            results = [study for doi in args.IDs for study in ffq_doi(doi)]
 
-    if args.o:
-        if args.split:
-            # Split each run into its own JSON.
-            for run in runs:
-                os.makedirs(args.o, exist_ok=True)
-                with open(os.path.join(args.o, f'{run["accession"]}.json'),
-                          'w') as f:
-                    json.dump(run, f, indent=4)
+        keyed = {result['accession']: result for result in results}
+
+        if args.o:
+            if args.split:
+                # Split each result into its own JSON.
+                for result in results:
+                    os.makedirs(args.o, exist_ok=True)
+                    with open(os.path.join(args.o,
+                                           f'{result["accession"]}.json'),
+                              'w') as f:
+                        json.dump(result, f, indent=4)
+            else:
+                # Otherwise, write a single JSON with result accession as keys.
+                if os.path.dirname(
+                        args.o
+                ) != '':  # handles case where file is in current dir
+                    os.makedirs(os.path.dirname(args.o), exist_ok=True)
+                with open(args.o, 'w') as f:
+                    json.dump(keyed, f, indent=4)
         else:
-            # Otherwise, write a single JSON with run accession as keys.
-            os.makedirs(os.path.dirname(args.o), exist_ok=True)
-            with open(args.o, 'w') as f:
-                json.dump(keyed, f, indent=4)
-    else:
-        print(json.dumps(keyed, indent=4))
+            print(json.dumps(keyed, indent=4))
+    except Exception as e:
+        if args.verbose:
+            logger.exception(e)
+        else:
+            logger.error(e)
