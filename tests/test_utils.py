@@ -3,7 +3,7 @@ from unittest import mock, TestCase
 from bs4 import BeautifulSoup
 
 import ffq.utils as utils
-from ffq.config import ENA_URL
+from ffq.config import CROSSREF_URL, ENA_URL, ENA_SEARCH_URL
 
 
 class TestUtils(TestCase):
@@ -31,3 +31,26 @@ class TestUtils(TestCase):
             'header2': 'value2',
             'header3': 'value3'
         }], utils.parse_tsv(s))
+
+    def test_get_doi(self):
+        with mock.patch('ffq.utils.cached_get') as cached_get:
+            cached_get.return_value = """{
+                "message": {"key": "value"}
+            }"""
+            result = utils.get_doi('doi')
+            cached_get.assert_called_once_with(f'{CROSSREF_URL}/doi')
+            self.assertEqual({'key': 'value'}, result)
+
+    def test_search_ena_title(self):
+        with mock.patch('ffq.utils.requests.get') as get:
+            get.return_value.text = 'study_accession\tsecondary_study_accession\nPRJNA579178\tSRP226764\n'
+            self.assertEqual(['SRP226764'], utils.search_ena_title('title'))
+            get.assert_called_once_with(
+                ENA_SEARCH_URL,
+                params={
+                    'result': 'study',
+                    'limit': 0,
+                    'query': f'study_title="title"',
+                    'fields': 'secondary_study_accession',
+                }
+            )

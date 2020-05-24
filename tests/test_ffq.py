@@ -174,3 +174,47 @@ class TestFfq(TestMixin, TestCase):
                 call(parse_run()['experiment']),
                 call(parse_run()['study'])
             ])
+
+    def test_ffq_srp(self):
+        with mock.patch('ffq.ffq.get_xml') as get_xml,\
+            mock.patch('ffq.ffq.parse_study_with_run') as parse_study_with_run,\
+            mock.patch('ffq.ffq.ffq_srr') as ffq_srr:
+
+            study = {'runlist': ['run1', 'run2']}
+            run1 = mock.MagicMock()
+            run2 = mock.MagicMock()
+            parse_study_with_run.return_value = study
+            ffq_srr.side_effect = [run1, run2]
+
+            self.assertEqual({'runs': {
+                'run1': run1,
+                'run2': run2
+            }}, ffq.ffq_srp('SRP226764'))
+            get_xml.assert_called_once_with('SRP226764')
+            self.assertEqual(2, ffq_srr.call_count)
+            ffq_srr.assert_has_calls([call('run1'), call('run2')])
+
+    def test_ffq_title(self):
+        with mock.patch('ffq.ffq.search_ena_title') as search_ena_title,\
+            mock.patch('ffq.ffq.ffq_srp') as ffq_srp:
+
+            search_ena_title.return_value = ['SRP226764']
+            self.assertEqual([ffq_srp.return_value], ffq.ffq_title('title'))
+            ffq_srp.assert_called_once_with('SRP226764')
+
+    def test_ffq_title_empty(self):
+        with mock.patch('ffq.ffq.search_ena_title') as search_ena_title,\
+            mock.patch('ffq.ffq.ffq_srp'):
+
+            search_ena_title.return_value = []
+            with self.assertRaises(Exception):
+                ffq.ffq_title('title')
+
+    def test_ffq_doi(self):
+        with mock.patch('ffq.ffq.get_doi') as get_doi,\
+            mock.patch('ffq.ffq.ffq_title') as ffq_title:
+
+            get_doi.return_value = {'title': ['title']}
+            self.assertEqual(ffq_title.return_value, ffq.ffq_doi('doi'))
+            get_doi.assert_called_once_with('doi')
+            ffq_title.assert_called_once_with('title')

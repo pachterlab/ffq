@@ -1,4 +1,6 @@
+CROSSREF_URL = 'https://api.crossref.org/works'
 ENA_URL = 'https://www.ebi.ac.uk/ena/browser/api/xml'
+ENA_SEARCH_URL = 'https://www.ebi.ac.uk/ena/portal/api/search'
 GSE_SEARCH_URL = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=gds&term='
 GSE_SEARCH_TERMS = '%5bGEO%20Accession&retmax=1&retmode=json'
 GSE_SUMMARY_URL = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id='
