@@ -5,8 +5,14 @@ from collections import defaultdict
 from urllib.parse import urlparse
 
 from .utils import (
-    cached_get, get_xml, parse_tsv, parse_SRR_range, get_gse_search_json,
-    get_gse_summary_json, search_ena_title, get_doi
+    cached_get,
+    get_doi,
+    get_gse_search_json,
+    get_gse_summary_json,
+    get_xml,
+    parse_SRR_range,
+    parse_tsv,
+    search_ena_title,
 )
 
 logger = logging.getLogger(__name__)

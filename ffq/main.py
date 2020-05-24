@@ -5,7 +5,7 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq_gse, ffq_srp, ffq_srr, ffq_doi, ffq_title
+from .ffq import ffq_doi, ffq_gse, ffq_srp, ffq_srr, ffq_title
 
 logger = logging.getLogger(__name__)
 
