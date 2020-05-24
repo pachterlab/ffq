@@ -224,7 +224,7 @@ def parse_gse_summary(soup):
 
     srp = sra['targetobject']
 
-    return {'accession': srp, 'gse_id': gse_id}
+    return {'accession': srp}
 
 
 def ffq_gse(accession):
@@ -237,10 +237,13 @@ def ffq_gse(accession):
     logger.info(f'Parsing Study SRP {study["accession"]}')
     run_info = parse_study_with_run(get_xml(study["accession"]))
 
-    logger.warning(f'There are {len(run_info["runlist"])} runs for {accession}')
+    runlist = run_info.pop('runlist')
+    study.update(run_info)
+
+    logger.warning(f'There are {len(runlist)} runs for {accession}')
 
     runs = defaultdict()
-    for run in run_info['runlist']:
+    for run in runlist:
         logger.info(f'Parsing run {run}')
         runs[run] = parse_run(get_xml(run))
 

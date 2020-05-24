@@ -1,0 +1,98 @@
+{
+    "header": {
+        "type": "esummary",
+        "version": "0.3"
+    },
+    "result": {
+        "uids": [
+            "200093374"
+        ],
+        "200093374": {
+            "uid": "200093374",
+            "accession": "GSE93374",
+            "gds": "",
+            "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+            "summary": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence.   Please see below link for searchable cluster-based gene expression.",
+            "gpl": "19057",
+            "gse": "93374",
+            "taxon": "Mus musculus",
+            "entrytype": "GSE",
+            "gdstype": "Expression profiling by high throughput sequencing",
+            "ptechtype": "",
+            "valtype": "",
+            "ssinfo": "",
+            "subsetinfo": "",
+            "pdat": "2017/01/31",
+            "suppfile": "TXT",
+            "samples": [
+                {
+                    "accession": "GSM2452128",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_24 hour fast_refed_1"
+                },
+                {
+                    "accession": "GSM2452125",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib 10% low fat diet_1"
+                },
+                {
+                    "accession": "GSM2452122",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib Chow_1"
+                },
+                {
+                    "accession": "GSM2452124",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib Chow_3"
+                },
+                {
+                    "accession": "GSM2452123",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib Chow_2"
+                },
+                {
+                    "accession": "GSM2452129",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib Chow_4"
+                },
+                {
+                    "accession": "GSM2452126",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib 60% high fat diet fed_1"
+                },
+                {
+                    "accession": "GSM2452132",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_24 hour fast_3"
+                },
+                {
+                    "accession": "GSM2452130",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_24 hour fast_2"
+                },
+                {
+                    "accession": "GSM2452127",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_24 hour fast_1"
+                },
+                {
+                    "accession": "GSM2452131",
+                    "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib Chow_5"
+                }
+            ],
+            "relations": [
+            ],
+            "extrelations": [
+                {
+                    "relationtype": "SRA",
+                    "targetobject": "SRP096361",
+                    "targetftplink": "ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByStudy/sra/SRP/SRP096/SRP096361/"
+                }
+            ],
+            "n_samples": 11,
+            "seriestitle": "",
+            "platformtitle": "",
+            "platformtaxa": "",
+            "samplestaxa": "",
+            "pubmedids": [
+                "28166221"
+            ],
+            "projects": [
+            ],
+            "ftplink": "ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE93nnn/GSE93374/",
+            "geo2r": "no",
+            "bioproject": "PRJNA360829"
+        }
+    }
+}
+
