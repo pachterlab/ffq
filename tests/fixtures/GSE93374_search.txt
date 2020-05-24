@@ -1,0 +1,27 @@
+{
+    "header": {
+        "type": "esearch",
+        "version": "0.3"
+    },
+    "esearchresult": {
+        "count": "13",
+        "retmax": "1",
+        "retstart": "0",
+        "idlist": [
+            "200093374"
+        ],
+        "translationset": [
+        ],
+        "translationstack": [
+            {
+                "term": "GSE93374[GEO Accession]",
+                "field": "GEO Accession",
+                "count": "13",
+                "explode": "N"
+            },
+            "GROUP"
+        ],
+        "querytranslation": "GSE93374[GEO Accession]"
+    }
+}
+

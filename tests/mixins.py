@@ -19,3 +19,14 @@ class TestMixin(TestCase):
         cls.run2_path = os.path.join(cls.fixtures_dir, 'SRR6835844.txt')
         cls.bam_path = os.path.join(cls.fixtures_dir, 'bam.txt')
         cls.bam2_path = os.path.join(cls.fixtures_dir, 'bam_empty.txt')
+
+        # GSE
+        cls.gse_search_path = os.path.join(
+            cls.fixtures_dir, 'GSE93374_search.txt'
+        )
+        cls.gse_summary_path = os.path.join(
+            cls.fixtures_dir, 'GSE93374_summary.txt'
+        )
+        cls.study_with_run_path = os.path.join(
+            cls.fixtures_dir, 'SRP096361_with_runlist.txt'
+        )
