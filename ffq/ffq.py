@@ -286,7 +286,7 @@ def ffq_title(title):
     study_accessions = search_ena_title(title)
 
     if not study_accessions:
-        raise Exception(f'No studies found for the given title')
+        raise Exception('No studies found for the given title')
     logger.info(
         f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
     )
