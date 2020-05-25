@@ -29,7 +29,14 @@ def parse_run(soup):
     :rtype: dict
     """
     accession = soup.find('PRIMARY_ID', text=re.compile(r'SRR.+')).text
-    experiment = soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')).text
+    find_experiment = soup.find('PRIMARY_ID', text=re.compile(r'SRX.+'))
+
+    # SRX can be hidden in two places
+    if not find_experiment:
+        experiment = soup.find('EXPERIMENT_REF').get('accession')
+    else:
+        experiment = find_experiment.text
+
     study = soup.find('ID', text=re.compile(r'SRP.+')).text
     sample = soup.find('ID', text=re.compile(r'SRS.+')).text
     title = soup.find('TITLE').text
