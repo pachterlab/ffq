@@ -89,7 +89,7 @@ class TestUtils(TestCase):
                 params={
                     'result': 'study',
                     'limit': 0,
-                    'query': f'study_title="title"',
+                    'query': 'study_title="title"',
                     'fields': 'secondary_study_accession',
                 }
             )
