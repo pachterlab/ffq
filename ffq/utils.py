@@ -224,6 +224,10 @@ def parse_SRR_range(text):
     :return: a list of SRR numbers
     :rtype: list
     """
-    data = [int(i[3:]) for i in text.split("-")]
-    ids = [f'SRR{i}' for i in range(data[0], data[1] + 1)]
+    first, last = text.split('-')
+    ids = [
+        f'SRR{str(i).zfill(len(first) - 3)}'
+        for i in range(int(first[3:]),
+                       int(last[3:]) + 1)
+    ]
     return ids
