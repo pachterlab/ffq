@@ -338,7 +338,7 @@ def ffq_doi(doi):
 
         pmid = pmids[0]
         logger.info(f'Found Pubmed ID \'{pmid}\'')
-        logger.info(f'Searching for GEO record linked to this Pubmed ID.')
+        logger.info('Searching for GEO record linked to this Pubmed ID.')
         geoids = ncbi_link('pubmed', 'gds', pmid)
         if not geoids:
             raise Exception(
