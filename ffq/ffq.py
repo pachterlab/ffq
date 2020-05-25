@@ -1,15 +1,19 @@
+import json
 import logging
 import re
-import json
+import time
 from collections import defaultdict
 from urllib.parse import urlparse
 
 from .utils import (
     cached_get,
+    geo_ids_to_gses,
     get_doi,
     get_gse_search_json,
     get_gse_summary_json,
     get_xml,
+    ncbi_link,
+    ncbi_search,
     parse_SRR_range,
     parse_tsv,
     search_ena_title,
@@ -29,14 +33,7 @@ def parse_run(soup):
     :rtype: dict
     """
     accession = soup.find('PRIMARY_ID', text=re.compile(r'SRR.+')).text
-    find_experiment = soup.find('PRIMARY_ID', text=re.compile(r'SRX.+'))
-
-    # SRX can be hidden in two places
-    if not find_experiment:
-        experiment = soup.find('EXPERIMENT_REF').get('accession')
-    else:
-        experiment = find_experiment.text
-
+    experiment = soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')).text
     study = soup.find('ID', text=re.compile(r'SRP.+')).text
     sample = soup.find('ID', text=re.compile(r'SRS.+')).text
     title = soup.find('TITLE').text
@@ -297,17 +294,17 @@ def ffq_gse(accession):
     return gse
 
 
-def ffq_title(title):
-    logger.info(f'Searching for Study SRP with title \'{title}\'')
-    study_accessions = search_ena_title(title)
-
-    if not study_accessions:
-        raise Exception('No studies found for the given title')
-    logger.info(
-        f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
-    )
-
-    return [ffq_srp(accession) for accession in study_accessions]
+# def ffq_title(title):
+#     logger.info(f'Searching for Study SRP with title \'{title}\'')
+#     study_accessions = search_ena_title(title)
+#
+#     if not study_accessions:
+#         raise Exception('No studies found for the given title')
+#     logger.info(
+#         f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
+#     )
+#
+#     return [ffq_srp(accession) for accession in study_accessions]
 
 
 def ffq_doi(doi):
@@ -319,5 +316,53 @@ def ffq_doi(doi):
 
     logger.info(f'Searching for DOI \'{doi}\'')
     paper = get_doi(doi)
-    logger.info(f'Found paper with title \'{paper["title"][0]}\'')
-    return ffq_title(paper['title'][0])
+    title = paper["title"][0]
+    logger.info(f'Found paper with title \'{title}\'')
+
+    logger.info(f'Searching for Study SRP with title \'{title}\'')
+    study_accessions = search_ena_title(title)
+
+    # If not study with the title is found, search Pubmed, which can be linked
+    # to a GEO accession.
+    if not study_accessions:
+        logger.warning((
+            'No studies found with the given title. '
+            f'Searching Pubmed for DOI \'{doi}\''
+        ))
+        pmids = ncbi_search('pubmed', doi)
+
+        if not pmids:
+            raise Exception('No Pubmed records match the DOI')
+        if len(pmids) > 1:
+            raise Exception(f'{len(pmids)} match the DOI: {", ".join(pmids)}')
+
+        pmid = pmids[0]
+        logger.info(f'Found Pubmed ID \'{pmid}\'')
+        logger.info(f'Searching for GEO record linked to this Pubmed ID.')
+        geoids = ncbi_link('pubmed', 'gds', pmid)
+        if not geoids:
+            raise Exception(
+                f'No GEO records are linked to the Pubmed ID \'{pmid}\''
+            )
+        logger.info(f'Found {len(geoids)} GEO records: {", ".join(geoids)}')
+
+        # Convert these geo ids to GSE accessions
+        logger.info('Finding GEO Accessions for these GEO records')
+        gses = geo_ids_to_gses(geoids)
+        if len(gses) != len(geoids):
+            raise Exception((
+                'Number of GEO Accessions found does not match the number of GEO '
+                f'records: expected {len(geoids)} but found {len(gses)}'
+            ))
+        logger.info(f'Found GEO Accessions: {", ".join(gses)}')
+
+        # Sleep for one second because NCBI has rate-limiting to 3 requests
+        # a second
+        time.sleep(1)
+        return [ffq_gse(accession) for accession in gses]
+
+    logger.info(
+        f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
+    )
+
+    return [ffq_srp(accession) for accession in study_accessions]

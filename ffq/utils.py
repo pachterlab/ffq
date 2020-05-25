@@ -1,4 +1,5 @@
 import json
+import re
 from functools import lru_cache
 
 import requests
@@ -12,7 +13,12 @@ from .config import (
     GSE_SUMMARY_URL,
     GSE_SEARCH_TERMS,
     GSE_SUMMARY_TERMS,
+    NCBI_FETCH_URL,
+    NCBI_LINK_URL,
+    NCBI_SEARCH_URL,
 )
+
+GSE_PARSER = re.compile(r'Series\t\tAccession: (?P<accession>GSE[0-9]+)\t')
 
 
 @lru_cache()
@@ -126,6 +132,87 @@ def search_ena_title(title):
         return []
     table = parse_tsv(response.text)
     return [t['secondary_study_accession'] for t in table]
+
+
+def ncbi_search(db, term):
+    """Search the specified NCBI entrez database for the specified term.
+    Documentation: https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch
+
+    :param db: an entrez database
+    :type db: str
+    :param term: search term
+    :type term: str
+
+    :return: list of ids that match the search
+    :rtype: list
+    """
+    # TODO: use cached get. Can't be used currently because dictionaries can
+    # not be hashed.
+    response = requests.get(
+        NCBI_SEARCH_URL,
+        params={
+            'db': db,
+            'term': term,
+            'retmode': 'json',
+            'retmax': 10  # arbitrary
+        }
+    )
+    response.raise_for_status()
+    return response.json()['esearchresult']['idlist']
+
+
+def ncbi_link(origin, destination, id):
+    """Translate an ID from one NCBI entrez database to another.
+    Documentation: https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ELink
+
+    :param origin: the entrez database that the id belongs to
+    :type origin: str
+    :param destination: the entrez database to translate the id to
+    :type destination: str
+    :param id: entrez database ID
+    :type id: str
+
+    :return: list of ids that match the search
+    :rtype: list
+    """
+    # TODO: use cached get. Can't be used currently because dictionaries can
+    # not be hashed.
+    response = requests.get(
+        NCBI_LINK_URL,
+        params={
+            'dbfrom': origin,
+            'db': destination,
+            'id': id,
+            'retmode': 'json',
+        }
+    )
+    response.raise_for_status()
+    ids = []
+    for linkset in response.json()['linksets']:
+        for linksetdb in linkset['linksetdbs']:
+            ids.extend(linksetdb['links'])
+    return ids
+
+
+def geo_ids_to_gses(ids):
+    """Convert a GEO ID (which is a number) to a GSE (which starts with GSE).
+
+    :param id: list of GEO IDs
+    :type id: list
+
+    :return: list of GSE accessions
+    :rtype: list
+    """
+    # TODO: use cached get. Can't be used currently because dictionaries can
+    # not be hashed.
+    response = requests.get(
+        NCBI_FETCH_URL, params={
+            'db': 'gds',
+            'id': ','.join(ids)
+        }
+    )
+    response.raise_for_status()
+    return GSE_PARSER.findall(response.text)
 
 
 def parse_SRR_range(text):
