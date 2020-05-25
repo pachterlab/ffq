@@ -264,27 +264,35 @@ class TestFfq(TestMixin, TestCase):
             self.assertEqual(2, ffq_srr.call_count)
             ffq_srr.assert_has_calls([call('run1'), call('run2')])
 
-    def test_ffq_title(self):
-        with mock.patch('ffq.ffq.search_ena_title') as search_ena_title,\
-            mock.patch('ffq.ffq.ffq_srp') as ffq_srp:
-
-            search_ena_title.return_value = ['SRP226764']
-            self.assertEqual([ffq_srp.return_value], ffq.ffq_title('title'))
-            ffq_srp.assert_called_once_with('SRP226764')
-
-    def test_ffq_title_empty(self):
-        with mock.patch('ffq.ffq.search_ena_title') as search_ena_title,\
-            mock.patch('ffq.ffq.ffq_srp'):
-
-            search_ena_title.return_value = []
-            with self.assertRaises(Exception):
-                ffq.ffq_title('title')
-
     def test_ffq_doi(self):
         with mock.patch('ffq.ffq.get_doi') as get_doi,\
-            mock.patch('ffq.ffq.ffq_title') as ffq_title:
+            mock.patch('ffq.ffq.search_ena_title') as search_ena_title,\
+            mock.patch('ffq.ffq.ffq_srp') as ffq_srp:
 
             get_doi.return_value = {'title': ['title']}
-            self.assertEqual(ffq_title.return_value, ffq.ffq_doi('doi'))
+            search_ena_title.return_value = ['SRP1']
+            self.assertEqual([ffq_srp.return_value], ffq.ffq_doi('doi'))
             get_doi.assert_called_once_with('doi')
-            ffq_title.assert_called_once_with('title')
+            search_ena_title.assert_called_once_with('title')
+            ffq_srp.assert_called_once_with('SRP1')
+
+    def test_ffq_doi_no_title(self):
+        with mock.patch('ffq.ffq.get_doi') as get_doi,\
+            mock.patch('ffq.ffq.search_ena_title') as search_ena_title,\
+            mock.patch('ffq.ffq.ncbi_search') as ncbi_search,\
+            mock.patch('ffq.ffq.ncbi_link') as ncbi_link,\
+            mock.patch('ffq.ffq.geo_ids_to_gses') as geo_ids_to_gses,\
+            mock.patch('ffq.ffq.ffq_gse') as ffq_gse:
+
+            get_doi.return_value = {'title': ['title']}
+            search_ena_title.return_value = []
+            ncbi_search.return_value = ['PMID1']
+            ncbi_link.return_value = ['GEOID1']
+            geo_ids_to_gses.return_value = ['GSE1']
+            self.assertEqual([ffq_gse.return_value], ffq.ffq_doi('doi'))
+            get_doi.assert_called_once_with('doi')
+            search_ena_title.assert_called_once_with('title')
+            ncbi_search.assert_called_once_with('pubmed', 'doi')
+            ncbi_link.assert_called_once_with('pubmed', 'gds', 'PMID1')
+            geo_ids_to_gses.assert_called_once_with(['GEOID1'])
+            ffq_gse.assert_called_once_with('GSE1')

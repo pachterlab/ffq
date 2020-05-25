@@ -4,8 +4,16 @@ from bs4 import BeautifulSoup
 
 import ffq.utils as utils
 from ffq.config import (
-    CROSSREF_URL, ENA_URL, ENA_SEARCH_URL, GSE_SEARCH_URL, GSE_SEARCH_TERMS, GSE_SUMMARY_URL,
-    GSE_SUMMARY_TERMS
+    CROSSREF_URL,
+    ENA_URL,
+    ENA_SEARCH_URL,
+    GSE_SEARCH_URL,
+    GSE_SEARCH_TERMS,
+    GSE_SUMMARY_URL,
+    GSE_SUMMARY_TERMS,
+    NCBI_FETCH_URL,
+    NCBI_LINK_URL,
+    NCBI_SEARCH_URL,
 )
 
 
@@ -85,7 +93,58 @@ class TestUtils(TestCase):
                     'fields': 'secondary_study_accession',
                 }
             )
-            
+
+    def test_ncbi_search(self):
+        with mock.patch('ffq.utils.requests.get') as get:
+            get.return_value.json.return_value = {
+                'esearchresult': {
+                    'idlist': ['id1', 'id2']
+                }
+            }
+            self.assertEqual(['id1', 'id2'], utils.ncbi_search('db', 'term'))
+            get.assert_called_once_with(
+                NCBI_SEARCH_URL,
+                params={
+                    'db': 'db',
+                    'term': 'term',
+                    'retmode': 'json',
+                    'retmax': 10
+                }
+            )
+
+    def test_ncbi_link(self):
+        with mock.patch('ffq.utils.requests.get') as get:
+            get.return_value.json.return_value = {
+                'linksets': [{
+                    'linksetdbs': [{
+                        'links': ['id1', 'id2']
+                    }]
+                }]
+            }
+            self.assertEqual(['id1', 'id2'],
+                             utils.ncbi_link('origin', 'destination', 'id'))
+            get.assert_called_once_with(
+                NCBI_LINK_URL,
+                params={
+                    'dbfrom': 'origin',
+                    'db': 'destination',
+                    'id': 'id',
+                    'retmode': 'json',
+                }
+            )
+
+    def test_geo_ids_to_gses(self):
+        with mock.patch('ffq.utils.requests.get') as get:
+            get.return_value.text = 'Series\t\tAccession: GSE1\tSeries\t\tAccession: GSE2\t'
+            self.assertEqual(['GSE1', 'GSE2'],
+                             utils.geo_ids_to_gses(['id1', 'id2']))
+            get.assert_called_once_with(
+                NCBI_FETCH_URL, params={
+                    'db': 'gds',
+                    'id': 'id1,id2',
+                }
+            )
+
     def test_SRR_range(self):
         text = 'SRR10-SRR13'
         self.assertEqual(['SRR10', 'SRR11', 'SRR12', 'SRR13'],
