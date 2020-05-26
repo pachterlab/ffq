@@ -46,17 +46,6 @@ class TestFfq(TestMixin, TestCase):
 
     def test_parse_run_bam(self):
         with mock.patch('ffq.ffq.cached_get') as cached_get:
-            with open(self.fastqs2_path, 'r') as f1, open(self.bam2_path,
-                                                          'r') as f2:
-                cached_get.side_effect = [f1.read(), f2.read()]
-            with open(self.run2_path, 'r') as f:
-                soup = BeautifulSoup(f.read(), 'xml')
-
-            with self.assertRaises(Exception):
-                ffq.parse_run(soup)
-
-    def test_parse_run_exception(self):
-        with mock.patch('ffq.ffq.cached_get') as cached_get:
             with open(self.fastqs2_path, 'r') as f1, open(self.bam_path,
                                                           'r') as f2:
                 cached_get.side_effect = [f1.read(), f2.read()]
