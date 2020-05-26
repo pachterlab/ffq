@@ -1,4 +1,5 @@
 # Examples
+The following are `ffq` usage examples and their outputs.
 
 ## SRR
 ### A single SRR
@@ -38,6 +39,16 @@ ffq -t SRP -o srp_split --split SRP178136 SRP096361
 ```
 Output: [srp_split](srp_split)
 
-## GEO
+## GSE
+### A single GSE
+
+### Multiple GSEs
+
+### Multiple GSEs with `--split`
 
 ## DOI
+### A single DOI
+
+### Multiple DOIs
+
+### Multiple DOIs with `--split`

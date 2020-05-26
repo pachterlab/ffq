@@ -62,3 +62,6 @@ where `[GSES]` is a space-delimited list of one or more GEO study accessions. Th
 ffq -t DOI [DOIS]
 ```
 where `[DOIS]` is a space-delimited list of one or more DOIs. The output is a JSON-formatted string (or a JSON file if `-o` is provided) with SRA study accessions as keys. When `--split` is also provided, each study is written to its own separate JSON.
+
+## Examples
+Examples are available in the [examples](examples) directory.
