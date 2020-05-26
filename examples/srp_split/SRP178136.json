@@ -1,0 +1,1522 @@
+{
+    "accession": "SRP178136",
+    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue.",
+    "runs": {
+        "SRR8426358": {
+            "accession": "SRR8426358",
+            "experiment": {
+                "accession": "SRX5234128",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237519",
+                "title": "old_Dropseq_1",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "24 months",
+                    "number of cells": "799",
+                    "ENA-SPOT-COUNT": "109256158",
+                    "ENA-BASE-COUNT": "21984096610",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz",
+                    "md5": "be7e88cf6f6fd90f1b1170f1cb367123",
+                    "size": "5507959060"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz",
+                    "md5": "2124da22644d876c4caa92ffd9e2402e",
+                    "size": "7194107512"
+                }
+            ]
+        },
+        "SRR8426359": {
+            "accession": "SRR8426359",
+            "experiment": {
+                "accession": "SRX5234129",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557676: old_Dropseq_2; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237520",
+                "title": "old_Dropseq_2",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "24 months",
+                    "number of cells": "499",
+                    "ENA-SPOT-COUNT": "75353664",
+                    "ENA-BASE-COUNT": "15164398336",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557676: old_Dropseq_2; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/009/SRR8426359/SRR8426359_1.fastq.gz",
+                    "md5": "7aa6116b61bbc2a4eb8745c34216331e",
+                    "size": "3840879422"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/009/SRR8426359/SRR8426359_2.fastq.gz",
+                    "md5": "0a439a254d6691411f368b9b2385c006",
+                    "size": "5333126082"
+                }
+            ]
+        },
+        "SRR8426360": {
+            "accession": "SRR8426360",
+            "experiment": {
+                "accession": "SRX5234130",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557677: young_Dropseq_1; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237521",
+                "title": "young_Dropseq_1",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "499",
+                    "ENA-SPOT-COUNT": "76904856",
+                    "ENA-BASE-COUNT": "15479150961",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557677: young_Dropseq_1; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/000/SRR8426360/SRR8426360_1.fastq.gz",
+                    "md5": "1af89e239e8d49251f85b880972bb446",
+                    "size": "3644965436"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/000/SRR8426360/SRR8426360_2.fastq.gz",
+                    "md5": "a0c569bdb5c1e5e5fa600ba91dcc3c48",
+                    "size": "5512374901"
+                }
+            ]
+        },
+        "SRR8426361": {
+            "accession": "SRR8426361",
+            "experiment": {
+                "accession": "SRX5234131",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557678: young_Dropseq_2; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237522",
+                "title": "young_Dropseq_2",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "499",
+                    "ENA-SPOT-COUNT": "62538569",
+                    "ENA-BASE-COUNT": "12586925432",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557678: young_Dropseq_2; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/001/SRR8426361/SRR8426361_1.fastq.gz",
+                    "md5": "a378a9e729d62d2cac180451cadf7240",
+                    "size": "3053323672"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/001/SRR8426361/SRR8426361_2.fastq.gz",
+                    "md5": "172615b32b4b5f0299549e8f51886913",
+                    "size": "4069054050"
+                }
+            ]
+        },
+        "SRR8426362": {
+            "accession": "SRR8426362",
+            "experiment": {
+                "accession": "SRX5234132",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557679: old_Dropseq_3; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237523",
+                "title": "old_Dropseq_3",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "24 months",
+                    "number of cells": "1199",
+                    "ENA-SPOT-COUNT": "65131616",
+                    "ENA-BASE-COUNT": "13109278821",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557679: old_Dropseq_3; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/002/SRR8426362/SRR8426362_1.fastq.gz",
+                    "md5": "2c301dad988fbe3451022aefd15ecc1c",
+                    "size": "3315085392"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/002/SRR8426362/SRR8426362_2.fastq.gz",
+                    "md5": "b3ce481d0d8ff4dd69503d8c97b40c38",
+                    "size": "4808199146"
+                }
+            ]
+        },
+        "SRR8426363": {
+            "accession": "SRR8426363",
+            "experiment": {
+                "accession": "SRX5234133",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557680: old_Dropseq_4; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237524",
+                "title": "old_Dropseq_4",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "24 months",
+                    "number of cells": "1047",
+                    "ENA-SPOT-COUNT": "56363976",
+                    "ENA-BASE-COUNT": "11343722638",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557680: old_Dropseq_4; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/003/SRR8426363/SRR8426363_1.fastq.gz",
+                    "md5": "341514fe6d0a5c8b56c886450f4adb7c",
+                    "size": "2875993959"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/003/SRR8426363/SRR8426363_2.fastq.gz",
+                    "md5": "a32b16e8440e3377eb8c691681a3cc09",
+                    "size": "4081987126"
+                }
+            ]
+        },
+        "SRR8426364": {
+            "accession": "SRR8426364",
+            "experiment": {
+                "accession": "SRX5234134",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557681: old_Dropseq_5; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237525",
+                "title": "old_Dropseq_5",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "24 months",
+                    "number of cells": "1199",
+                    "ENA-SPOT-COUNT": "61732471",
+                    "ENA-BASE-COUNT": "12422016491",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557681: old_Dropseq_5; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/004/SRR8426364/SRR8426364_1.fastq.gz",
+                    "md5": "ecc19127b2e7986abbda50fff57dfa47",
+                    "size": "3151043014"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/004/SRR8426364/SRR8426364_2.fastq.gz",
+                    "md5": "29abdaec274a07f7ad2d00e400531bcc",
+                    "size": "4619130197"
+                }
+            ]
+        },
+        "SRR8426365": {
+            "accession": "SRR8426365",
+            "experiment": {
+                "accession": "SRX5234135",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557682: young_Dropseq_3; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237526",
+                "title": "young_Dropseq_3",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "1199",
+                    "ENA-SPOT-COUNT": "70225586",
+                    "ENA-BASE-COUNT": "14136404465",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557682: young_Dropseq_3; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/005/SRR8426365/SRR8426365_1.fastq.gz",
+                    "md5": "fb6dad2fb78d7c9c6f89685932410ac7",
+                    "size": "3310592844"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/005/SRR8426365/SRR8426365_2.fastq.gz",
+                    "md5": "84fd589ec08f097c88661ff5691d7abe",
+                    "size": "4997077302"
+                }
+            ]
+        },
+        "SRR8426366": {
+            "accession": "SRR8426366",
+            "experiment": {
+                "accession": "SRX5234136",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557683: young_Dropseq_4; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237527",
+                "title": "young_Dropseq_4",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "1199",
+                    "ENA-SPOT-COUNT": "68168108",
+                    "ENA-BASE-COUNT": "13721187249",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557683: young_Dropseq_4; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/006/SRR8426366/SRR8426366_1.fastq.gz",
+                    "md5": "13a840a2155a60be5b4d716ccabbb9ea",
+                    "size": "3198633291"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/006/SRR8426366/SRR8426366_2.fastq.gz",
+                    "md5": "c1de07e8f8b3e91a00542ded0da3bf8a",
+                    "size": "4656540099"
+                }
+            ]
+        },
+        "SRR8426367": {
+            "accession": "SRR8426367",
+            "experiment": {
+                "accession": "SRX5234127",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557684: young_Dropseq_5; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237518",
+                "title": "young_Dropseq_5",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "1199",
+                    "ENA-SPOT-COUNT": "60893140",
+                    "ENA-BASE-COUNT": "12256488531",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557684: young_Dropseq_5; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/007/SRR8426367/SRR8426367_1.fastq.gz",
+                    "md5": "e900a42182249f0788ac0955408c5916",
+                    "size": "2841050080"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/007/SRR8426367/SRR8426367_2.fastq.gz",
+                    "md5": "838f4a0c61e98f09ed829cbe14f6403f",
+                    "size": "4263810620"
+                }
+            ]
+        },
+        "SRR8426368": {
+            "accession": "SRR8426368",
+            "experiment": {
+                "accession": "SRX5234137",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557685: young_Dropseq_6; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237528",
+                "title": "young_Dropseq_6",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "1199",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557685: young_Dropseq_6; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426368/SRR8426368_1.fastq.gz",
+                    "md5": "1232bb2fa17f37665a07fd227bc3a243",
+                    "size": "2818966953"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426368/SRR8426368_2.fastq.gz",
+                    "md5": "af1e941cb893d33da007a13c3518664b",
+                    "size": "4176869389"
+                }
+            ]
+        },
+        "SRR8426369": {
+            "accession": "SRR8426369",
+            "experiment": {
+                "accession": "SRX5234138",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557686: old_Dropseq_6; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237529",
+                "title": "old_Dropseq_6",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "24 months",
+                    "number of cells": "1199",
+                    "ENA-SPOT-COUNT": "74088609",
+                    "ENA-BASE-COUNT": "14911651491",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557686: old_Dropseq_6; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/009/SRR8426369/SRR8426369_1.fastq.gz",
+                    "md5": "67b85a42be6730854c1e7a92784c3979",
+                    "size": "3777464094"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/009/SRR8426369/SRR8426369_2.fastq.gz",
+                    "md5": "7bb99dddce5863e9e19bbf9b8924f448",
+                    "size": "5411504081"
+                }
+            ]
+        },
+        "SRR8426370": {
+            "accession": "SRR8426370",
+            "experiment": {
+                "accession": "SRX5234139",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557687: old_Dropseq_7; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237530",
+                "title": "old_Dropseq_7",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "24 months",
+                    "number of cells": "1199",
+                    "ENA-SPOT-COUNT": "68834163",
+                    "ENA-BASE-COUNT": "13854612484",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557687: old_Dropseq_7; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/000/SRR8426370/SRR8426370_1.fastq.gz",
+                    "md5": "0cd1616b49290f83dd3d5b9aa181e84a",
+                    "size": "3441394318"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/000/SRR8426370/SRR8426370_2.fastq.gz",
+                    "md5": "ea8be30d9e1a2cde68153ea99c135804",
+                    "size": "5097042539"
+                }
+            ]
+        },
+        "SRR8426371": {
+            "accession": "SRR8426371",
+            "experiment": {
+                "accession": "SRX5234140",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557688: young_Dropseq_7; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237531",
+                "title": "young_Dropseq_7",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "1199",
+                    "ENA-SPOT-COUNT": "67565326",
+                    "ENA-BASE-COUNT": "13601539573",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557688: young_Dropseq_7; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/001/SRR8426371/SRR8426371_1.fastq.gz",
+                    "md5": "56f856f530bb813d0b3c98bf9caea036",
+                    "size": "3277838441"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/001/SRR8426371/SRR8426371_2.fastq.gz",
+                    "md5": "88df666574308cc3b7a8eed8f37425ce",
+                    "size": "4812150713"
+                }
+            ]
+        },
+        "SRR8426372": {
+            "accession": "SRR8426372",
+            "experiment": {
+                "accession": "SRX5234141",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557689: young_Dropseq_8; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237532",
+                "title": "young_Dropseq_8",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "679",
+                    "ENA-SPOT-COUNT": "49144954",
+                    "ENA-BASE-COUNT": "9892043654",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557689: young_Dropseq_8; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/002/SRR8426372/SRR8426372_1.fastq.gz",
+                    "md5": "8546b5a5c62e76e5dcbb79e9ee13b89e",
+                    "size": "2389120304"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/002/SRR8426372/SRR8426372_2.fastq.gz",
+                    "md5": "9b3ea07f7397a5905b265d743b98268b",
+                    "size": "3208503807"
+                }
+            ]
+        },
+        "SRR8426373": {
+            "accession": "SRR8426373",
+            "experiment": {
+                "accession": "SRX5234142",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557690: old_whole_lung_1; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237533",
+                "title": "old_whole_lung_1",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "71719106",
+                    "ENA-BASE-COUNT": "19845007564",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557690: old_whole_lung_1; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/003/SRR8426373/SRR8426373_1.fastq.gz",
+                    "md5": "1365392f5c1ca6fb85fe670207d781bf",
+                    "size": "5079226055"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/003/SRR8426373/SRR8426373_2.fastq.gz",
+                    "md5": "40e2f1798a2469ac0a8088250ae0ebe3",
+                    "size": "5539888415"
+                }
+            ]
+        },
+        "SRR8426374": {
+            "accession": "SRR8426374",
+            "experiment": {
+                "accession": "SRX5234143",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557691: old_whole_lung_2; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237534",
+                "title": "old_whole_lung_2",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "86303504",
+                    "ENA-BASE-COUNT": "23482853256",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557691: old_whole_lung_2; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/004/SRR8426374/SRR8426374_1.fastq.gz",
+                    "md5": "7e983885716171f17e8351d70b8f76e6",
+                    "size": "5932349005"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/004/SRR8426374/SRR8426374_2.fastq.gz",
+                    "md5": "1daeb17997592a4d0d48892a8dea6f60",
+                    "size": "6463985144"
+                }
+            ]
+        },
+        "SRR8426375": {
+            "accession": "SRR8426375",
+            "experiment": {
+                "accession": "SRX5234144",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557692: old_whole_lung_3; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237535",
+                "title": "old_whole_lung_3",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "87735736",
+                    "ENA-BASE-COUNT": "23696304382",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557692: old_whole_lung_3; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/005/SRR8426375/SRR8426375_1.fastq.gz",
+                    "md5": "855f33dae4383fa44edfd3322f80100c",
+                    "size": "5991272792"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/005/SRR8426375/SRR8426375_2.fastq.gz",
+                    "md5": "4241dd8ac2dd19bf8291a917505b5ca5",
+                    "size": "6557131842"
+                }
+            ]
+        },
+        "SRR8426376": {
+            "accession": "SRR8426376",
+            "experiment": {
+                "accession": "SRX5234145",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557693: young_wholelung_1; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237536",
+                "title": "young_wholelung_1",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "46281185",
+                    "ENA-BASE-COUNT": "12737751572",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557693: young_wholelung_1; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/006/SRR8426376/SRR8426376_1.fastq.gz",
+                    "md5": "db15264708fed47c586b2550a12cdc0d",
+                    "size": "3248576506"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/006/SRR8426376/SRR8426376_2.fastq.gz",
+                    "md5": "d143b4fb15543107e83efa7d5ba9fdaf",
+                    "size": "3505684316"
+                }
+            ]
+        },
+        "SRR8426377": {
+            "accession": "SRR8426377",
+            "experiment": {
+                "accession": "SRX5234146",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557694: young_wholelung_2; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237537",
+                "title": "young_wholelung_2",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "45985258",
+                    "ENA-BASE-COUNT": "12721241575",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557694: young_wholelung_2; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/007/SRR8426377/SRR8426377_1.fastq.gz",
+                    "md5": "bd8a5c4d4fbd4a00c5006cbe451b000d",
+                    "size": "3318151182"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/007/SRR8426377/SRR8426377_2.fastq.gz",
+                    "md5": "4243439b44bf05b61d6fce3398dfdfcb",
+                    "size": "3593514287"
+                }
+            ]
+        },
+        "SRR8426378": {
+            "accession": "SRR8426378",
+            "experiment": {
+                "accession": "SRX5234147",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557695: young_wholelung_3; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237538",
+                "title": "young_wholelung_3",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Whole lung",
+                    "tissue": "Whole lung",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "55146825",
+                    "ENA-BASE-COUNT": "15277333918",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557695: young_wholelung_3; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426378/SRR8426378_1.fastq.gz",
+                    "md5": "5ad955b1cd474188202c461ae5d62c56",
+                    "size": "3939973107"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426378/SRR8426378_2.fastq.gz",
+                    "md5": "3b03021e07cb83bf1b379afff40153ba",
+                    "size": "4213790460"
+                }
+            ]
+        },
+        "SRR8426379": {
+            "accession": "SRR8426379",
+            "experiment": {
+                "accession": "SRX5234148",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557696: young_flowsorted_epi_1; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237539",
+                "title": "young_flowsorted_epi_1",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Epithelial cells",
+                    "tissue": "Epithelial cells",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "12050501",
+                    "ENA-BASE-COUNT": "3628538246",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557696: young_flowsorted_epi_1; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/009/SRR8426379/SRR8426379_1.fastq.gz",
+                    "md5": "7ddf6f04b18ccafadb520662c8cb96eb",
+                    "size": "857859239"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/009/SRR8426379/SRR8426379_2.fastq.gz",
+                    "md5": "e75fdd13d30a88cd271161b8cf1937e1",
+                    "size": "1035481083"
+                }
+            ]
+        },
+        "SRR8426380": {
+            "accession": "SRR8426380",
+            "experiment": {
+                "accession": "SRX5234149",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557697: old_flowsorted_epi_1; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237540",
+                "title": "old_flowsorted_epi_1",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Epithelial cells",
+                    "tissue": "Epithelial cells",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "12165262",
+                    "ENA-BASE-COUNT": "3662792129",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557697: old_flowsorted_epi_1; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/000/SRR8426380/SRR8426380_1.fastq.gz",
+                    "md5": "bb7126a3834e4f3d61e94ea2007d9dd4",
+                    "size": "884359285"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/000/SRR8426380/SRR8426380_2.fastq.gz",
+                    "md5": "905059bfeeaf2292a7165b8c02d98e16",
+                    "size": "1029460996"
+                }
+            ]
+        },
+        "SRR8426381": {
+            "accession": "SRR8426381",
+            "experiment": {
+                "accession": "SRX5234150",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557698: young_flowsorted_epi_2; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237541",
+                "title": "young_flowsorted_epi_2",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Epithelial cells",
+                    "tissue": "Epithelial cells",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "12762270",
+                    "ENA-BASE-COUNT": "3842703160",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557698: young_flowsorted_epi_2; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/001/SRR8426381/SRR8426381_1.fastq.gz",
+                    "md5": "0f7339434b744920de6a5d8159351978",
+                    "size": "921628571"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/001/SRR8426381/SRR8426381_2.fastq.gz",
+                    "md5": "e58ac3464622c794a797249c29d7e126",
+                    "size": "1108589874"
+                }
+            ]
+        },
+        "SRR8426382": {
+            "accession": "SRR8426382",
+            "experiment": {
+                "accession": "SRX5234151",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557699: old_flowsorted_epi_2; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237542",
+                "title": "old_flowsorted_epi_2",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Epithelial cells",
+                    "tissue": "Epithelial cells",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "14140478",
+                    "ENA-BASE-COUNT": "4257770200",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557699: old_flowsorted_epi_2; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/002/SRR8426382/SRR8426382_1.fastq.gz",
+                    "md5": "028f43944723d863d9fdd954ae8445ad",
+                    "size": "1037470899"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/002/SRR8426382/SRR8426382_2.fastq.gz",
+                    "md5": "3836350ce7738d44ad7933342c0a7b5a",
+                    "size": "1231930982"
+                }
+            ]
+        },
+        "SRR8426383": {
+            "accession": "SRR8426383",
+            "experiment": {
+                "accession": "SRX5234152",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557700: young_flowsorted_epi_3; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237543",
+                "title": "young_flowsorted_epi_3",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Epithelial cells",
+                    "tissue": "Epithelial cells",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "16448202",
+                    "ENA-BASE-COUNT": "4952807265",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557700: young_flowsorted_epi_3; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/003/SRR8426383/SRR8426383_1.fastq.gz",
+                    "md5": "5db0e94a1aac9979e6a3159a38cb5b79",
+                    "size": "1234135960"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/003/SRR8426383/SRR8426383_2.fastq.gz",
+                    "md5": "a38f71dd20cd5ca9b2444af4f829f89e",
+                    "size": "1499124098"
+                }
+            ]
+        },
+        "SRR8426384": {
+            "accession": "SRR8426384",
+            "experiment": {
+                "accession": "SRX5234153",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557701: old_flowsorted_epi_3; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237544",
+                "title": "old_flowsorted_epi_3",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Epithelial cells",
+                    "tissue": "Epithelial cells",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "13449739",
+                    "ENA-BASE-COUNT": "4049653403",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557701: old_flowsorted_epi_3; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/004/SRR8426384/SRR8426384_1.fastq.gz",
+                    "md5": "ae5c51ca0f142885d3ae7bb5c5b610ef",
+                    "size": "1037203556"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/004/SRR8426384/SRR8426384_2.fastq.gz",
+                    "md5": "bd72744b1009be4e857eca0fb24d0067",
+                    "size": "1197679476"
+                }
+            ]
+        },
+        "SRR8426385": {
+            "accession": "SRR8426385",
+            "experiment": {
+                "accession": "SRX5234154",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557702: young_flowsorted_mac_1; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237545",
+                "title": "young_flowsorted_mac_1",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "17112406",
+                    "ENA-BASE-COUNT": "5151762140",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557702: young_flowsorted_mac_1; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/005/SRR8426385/SRR8426385_1.fastq.gz",
+                    "md5": "5c8386f6a3918781f097d6f07529a9c0",
+                    "size": "1371463325"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/005/SRR8426385/SRR8426385_2.fastq.gz",
+                    "md5": "2d91c3bfd3c921e7a2dfd861086b33ea",
+                    "size": "1547536423"
+                }
+            ]
+        },
+        "SRR8426386": {
+            "accession": "SRR8426386",
+            "experiment": {
+                "accession": "SRX5234155",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557703: old_flowsorted_mac_1; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237546",
+                "title": "old_flowsorted_mac_1",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "12315397",
+                    "ENA-BASE-COUNT": "3707560120",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557703: old_flowsorted_mac_1; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/006/SRR8426386/SRR8426386_1.fastq.gz",
+                    "md5": "d778c5355ed1e11bd848acf28ac9d78e",
+                    "size": "1017158112"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/006/SRR8426386/SRR8426386_2.fastq.gz",
+                    "md5": "6da26f6e5e635377e5fd4f75ac08f6d6",
+                    "size": "1154180619"
+                }
+            ]
+        },
+        "SRR8426387": {
+            "accession": "SRR8426387",
+            "experiment": {
+                "accession": "SRX5234156",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557704: old_flowsorted_mac_2; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237547",
+                "title": "old_flowsorted_mac_2",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "12313891",
+                    "ENA-BASE-COUNT": "3707140210",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557704: old_flowsorted_mac_2; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/007/SRR8426387/SRR8426387_1.fastq.gz",
+                    "md5": "10a55b7ede562b5c11d1c13241a14f64",
+                    "size": "989264436"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/007/SRR8426387/SRR8426387_2.fastq.gz",
+                    "md5": "bcb43c7ee309829cc12cb3a591090095",
+                    "size": "1143870281"
+                }
+            ]
+        },
+        "SRR8426388": {
+            "accession": "SRR8426388",
+            "experiment": {
+                "accession": "SRX5234157",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557705: young_flowsorted_mac_2; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237548",
+                "title": "young_flowsorted_mac_2",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "17561517",
+                    "ENA-BASE-COUNT": "5287427580",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557705: young_flowsorted_mac_2; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426388/SRR8426388_1.fastq.gz",
+                    "md5": "ef1ae2c0306e91bc94af338e659c2e9a",
+                    "size": "1434441208"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426388/SRR8426388_2.fastq.gz",
+                    "md5": "e9d377e40a7432c54a3975bbde87bdb2",
+                    "size": "1653193352"
+                }
+            ]
+        },
+        "SRR8426389": {
+            "accession": "SRR8426389",
+            "experiment": {
+                "accession": "SRX5234158",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557706: old_flowsorted_mac_3; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237549",
+                "title": "old_flowsorted_mac_3",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "13482851",
+                    "ENA-BASE-COUNT": "4059445398",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557706: old_flowsorted_mac_3; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/009/SRR8426389/SRR8426389_1.fastq.gz",
+                    "md5": "00d4d9b585341834f4f910c4b49263e4",
+                    "size": "1104929439"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/009/SRR8426389/SRR8426389_2.fastq.gz",
+                    "md5": "e89eac1a928e457229c7b7034f24f4be",
+                    "size": "1279112110"
+                }
+            ]
+        },
+        "SRR8426390": {
+            "accession": "SRR8426390",
+            "experiment": {
+                "accession": "SRX5234159",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557707: young_flowsorted_mac_3; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237550",
+                "title": "young_flowsorted_mac_3",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "13241321",
+                    "ENA-BASE-COUNT": "3986647557",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557707: young_flowsorted_mac_3; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/000/SRR8426390/SRR8426390_1.fastq.gz",
+                    "md5": "923922a7ea1399ffa39e60d00dd9af27",
+                    "size": "1081064751"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/000/SRR8426390/SRR8426390_2.fastq.gz",
+                    "md5": "4d4078890d3f1f0dd3b06e8a725b3b6c",
+                    "size": "1234237329"
+                }
+            ]
+        },
+        "SRR8426391": {
+            "accession": "SRR8426391",
+            "experiment": {
+                "accession": "SRX5234160",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557708: old_flowsorted_mac_4; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237551",
+                "title": "old_flowsorted_mac_4",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "16815905",
+                    "ENA-BASE-COUNT": "5062819921",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557708: old_flowsorted_mac_4; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/001/SRR8426391/SRR8426391_1.fastq.gz",
+                    "md5": "212a069e4396c7da74b5bfe8048c484f",
+                    "size": "1367844263"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/001/SRR8426391/SRR8426391_2.fastq.gz",
+                    "md5": "29ca1fda4f2dd962544178af400bba5c",
+                    "size": "1563170652"
+                }
+            ]
+        },
+        "SRR8426392": {
+            "accession": "SRR8426392",
+            "experiment": {
+                "accession": "SRX5234161",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557709: old_flowsorted_mac_5; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237552",
+                "title": "old_flowsorted_mac_5",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "11314478",
+                    "ENA-BASE-COUNT": "3405383506",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557709: old_flowsorted_mac_5; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/002/SRR8426392/SRR8426392_1.fastq.gz",
+                    "md5": "e5b0fd28b90b428c4a50446bf4850548",
+                    "size": "894096647"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/002/SRR8426392/SRR8426392_2.fastq.gz",
+                    "md5": "59b860f46625884462fec0138e243b28",
+                    "size": "967395235"
+                }
+            ]
+        },
+        "SRR8426393": {
+            "accession": "SRR8426393",
+            "experiment": {
+                "accession": "SRX5234162",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557710: young_flowsorted_mac_4; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237553",
+                "title": "young_flowsorted_mac_4",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "14594028",
+                    "ENA-BASE-COUNT": "4393794173",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557710: young_flowsorted_mac_4; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/003/SRR8426393/SRR8426393_1.fastq.gz",
+                    "md5": "2cbecab684ee27c9a55b66ddee69aad1",
+                    "size": "1191943642"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/003/SRR8426393/SRR8426393_2.fastq.gz",
+                    "md5": "142e18566ad88b7f1e0004c1c41a6463",
+                    "size": "1389060931"
+                }
+            ]
+        },
+        "SRR8426394": {
+            "accession": "SRR8426394",
+            "experiment": {
+                "accession": "SRX5234163",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557711: old_flowsorted_mac_6; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237554",
+                "title": "old_flowsorted_mac_6",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "15721142",
+                    "ENA-BASE-COUNT": "4733091719",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557711: old_flowsorted_mac_6; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/004/SRR8426394/SRR8426394_1.fastq.gz",
+                    "md5": "6cebf013680380eebb200869fb9a687f",
+                    "size": "1287485967"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/004/SRR8426394/SRR8426394_2.fastq.gz",
+                    "md5": "066d856bfb2652d80d02f1862a14006f",
+                    "size": "1508294199"
+                }
+            ]
+        },
+        "SRR8426395": {
+            "accession": "SRR8426395",
+            "experiment": {
+                "accession": "SRX5234164",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557712: young_flowsorted_epi_4; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237555",
+                "title": "young_flowsorted_epi_4",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Epithelial cells",
+                    "tissue": "Epithelial cells",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "14413438",
+                    "ENA-BASE-COUNT": "4339665106",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557712: young_flowsorted_epi_4; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/005/SRR8426395/SRR8426395_1.fastq.gz",
+                    "md5": "a4ac999bd156b6921cead95bec1d9948",
+                    "size": "1100934329"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/005/SRR8426395/SRR8426395_2.fastq.gz",
+                    "md5": "4645cac8669fff932084f083028035fa",
+                    "size": "1275429218"
+                }
+            ]
+        },
+        "SRR8426396": {
+            "accession": "SRR8426396",
+            "experiment": {
+                "accession": "SRX5234165",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557713: young_flowsorted_mac_5; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237556",
+                "title": "young_flowsorted_mac_5",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "3 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "13064219",
+                    "ENA-BASE-COUNT": "3933192693",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557713: young_flowsorted_mac_5; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/006/SRR8426396/SRR8426396_1.fastq.gz",
+                    "md5": "9103c410afffd26ed35f38bca42097d9",
+                    "size": "1072131507"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/006/SRR8426396/SRR8426396_2.fastq.gz",
+                    "md5": "414814eb209da4f40a0e206c2eff9e5d",
+                    "size": "1260798968"
+                }
+            ]
+        },
+        "SRR8426397": {
+            "accession": "SRR8426397",
+            "experiment": {
+                "accession": "SRX5234166",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557714: old_flowsorted_epi_4; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237557",
+                "title": "old_flowsorted_epi_4",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Epithelial cells",
+                    "tissue": "Epithelial cells",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "10181935",
+                    "ENA-BASE-COUNT": "3065704610",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557714: old_flowsorted_epi_4; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/007/SRR8426397/SRR8426397_1.fastq.gz",
+                    "md5": "bae5b334260d5db7c942608b0507c160",
+                    "size": "745878975"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/007/SRR8426397/SRR8426397_2.fastq.gz",
+                    "md5": "75274a74d39c4d7300935822f10e8f4d",
+                    "size": "874303225"
+                }
+            ]
+        },
+        "SRR8426398": {
+            "accession": "SRR8426398",
+            "experiment": {
+                "accession": "SRX5234167",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557715: old_flowsorted_mac_7; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000"
+            },
+            "sample": {
+                "accession": "SRS4237558",
+                "title": "old_flowsorted_mac_7",
+                "organism": "Mus musculus",
+                "attributes": {
+                    "source_name": "Macrophages",
+                    "tissue": "Macrophages",
+                    "age": "22 months",
+                    "number of cells": "NA",
+                    "ENA-SPOT-COUNT": "13028823",
+                    "ENA-BASE-COUNT": "3922312142",
+                    "ENA-FIRST-PUBLIC": "2019-01-11",
+                    "ENA-LAST-UPDATE": "2019-01-11"
+                }
+            },
+            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557715: old_flowsorted_mac_7; Mus musculus; RNA-Seq",
+            "files": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426398/SRR8426398_1.fastq.gz",
+                    "md5": "4de6a9a101e04b99ba901e9bddf7a567",
+                    "size": "1086463049"
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426398/SRR8426398_2.fastq.gz",
+                    "md5": "656438158fa25709cf4ff5434b66c858",
+                    "size": "1264457333"
+                }
+            ]
+        }
+    }
+}
