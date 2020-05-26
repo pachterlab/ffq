@@ -88,17 +88,17 @@ def main():
     # Check IDs depending on type
     if args.t == 'SRR':
         for ID in args.IDs:
-            if ID[0:3] != "SRR" or len(ID) != 10 or not ID[3:].isdigit():
+            if ID[0:3] != "SRR" or not ID[3:].isdigit():
                 parser.error((
-                    f'{ID} failed validation. SRRs must be 10 characters long, '
-                    'start with \'SRR\', and end with seven digits.'
+                    f'{ID} failed validation. SRRs must '
+                    'start with \'SRR\' and end with digits.'
                 ))
     elif args.t == 'SRP':
         for ID in args.IDs:
-            if ID[0:3] != "SRP" or len(ID) != 10 or not ID[3:].isdigit():
+            if ID[0:3] != "SRP" or not ID[3:].isdigit():
                 parser.error((
-                    f'{ID} failed validation. SRPs must be 10 characters long, '
-                    'start with \'SRP\', and end with seven digits.'
+                    f'{ID} failed validation. SRPs must '
+                    'start with \'SRP\' and end with digits.'
                 ))
     elif args.t == 'GSE':
         for ID in args.IDs:
