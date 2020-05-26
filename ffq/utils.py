@@ -16,9 +16,11 @@ from .config import (
     NCBI_FETCH_URL,
     NCBI_LINK_URL,
     NCBI_SEARCH_URL,
+    NCBI_SUMMARY_URL,
 )
 
 GSE_PARSER = re.compile(r'Series\t\tAccession: (?P<accession>GSE[0-9]+)\t')
+SRR_PARSER = re.compile(r'Run acc="(?P<accession>SRR[0-9]+)"')
 
 
 @lru_cache()
@@ -158,7 +160,7 @@ def ncbi_search(db, term):
         }
     )
     response.raise_for_status()
-    return response.json()['esearchresult']['idlist']
+    return response.json().get('esearchresult', {}).get('idlist', [])
 
 
 def ncbi_link(origin, destination, id):
@@ -188,14 +190,15 @@ def ncbi_link(origin, destination, id):
     )
     response.raise_for_status()
     ids = []
-    for linkset in response.json()['linksets']:
-        for linksetdb in linkset['linksetdbs']:
-            ids.extend(linksetdb['links'])
+    for linkset in response.json().get('linksets', []):
+        if linkset:
+            for linksetdb in linkset.get('linksetdbs', {}):
+                ids.extend(linksetdb.get('links', []))
     return ids
 
 
 def geo_ids_to_gses(ids):
-    """Convert a GEO ID (which is a number) to a GSE (which starts with GSE).
+    """Convert GEO IDs (which is a number) to a GSEs (which starts with GSE).
 
     :param id: list of GEO IDs
     :type id: list
@@ -213,6 +216,27 @@ def geo_ids_to_gses(ids):
     )
     response.raise_for_status()
     return GSE_PARSER.findall(response.text)
+
+
+def sra_ids_to_srrs(ids):
+    """Convert SRA IDs (which is a number) to SRRs.
+
+    :param id: list of SRA IDs
+    :type id: list
+
+    :return: list of SRR accessions
+    :rtype: list
+    """
+    # TODO: use cached get. Can't be used currently because dictionaries can
+    # not be hashed.
+    response = requests.get(
+        NCBI_SUMMARY_URL, params={
+            'db': 'sra',
+            'id': ','.join(ids)
+        }
+    )
+    response.raise_for_status()
+    return SRR_PARSER.findall(response.text)
 
 
 def parse_SRR_range(text):

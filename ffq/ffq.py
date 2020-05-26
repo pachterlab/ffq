@@ -17,6 +17,7 @@ from .utils import (
     parse_SRR_range,
     parse_tsv,
     search_ena_title,
+    sra_ids_to_srrs,
 )
 
 logger = logging.getLogger(__name__)
@@ -33,7 +34,9 @@ def parse_run(soup):
     :rtype: dict
     """
     accession = soup.find('PRIMARY_ID', text=re.compile(r'SRR.+')).text
-    experiment = soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')).text
+    experiment = soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')).text \
+        if soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')) \
+        else soup.find('EXPERIMENT_REF')['accession']
     study = soup.find('ID', text=re.compile(r'SRP.+')).text
     sample = soup.find('ID', text=re.compile(r'SRS.+')).text
     title = soup.find('TITLE').text
@@ -319,16 +322,18 @@ def ffq_doi(doi):
     This function first searches CrossRef for the paper title, then uses that
     to find any SRA studies that match the title. If there are, all the runs in
     each study are fetched. If there are not, Pubmed is searched for the DOI,
-    which may contain GEO IDs. These IDs are searched on GEO for their
-    corresponding SRA studies.
+    which may contain GEO IDs. If there are GEO IDs, `ffq_gse` is called for each.
+    If not, the Pubmed entry may include SRA links. If there are, `ffq_srr` is
+    called for each linked run. These runs are then grouped by SRP.
 
     :param doi: paper DOI
     :type doi: str
 
     :return: list of SRA or GEO studies that are linked to this paper. If
              there are SRA studies matching the paper title, the returned
-             list is a list of SRA studies. Otherwise, it is a list of GEO
-             studies.
+             list is a list of SRA studies. If not, and the paper includes
+             a GEO link, it is a list of GEO studies. If not, and the paper
+             includes SRA links, it is a list of SRPs.
     :rtype: list
     """
     # Sanitize DOI so that it doesn't include leading http or https
@@ -345,37 +350,41 @@ def ffq_doi(doi):
     logger.info(f'Searching for Study SRP with title \'{title}\'')
     study_accessions = search_ena_title(title)
 
+    if study_accessions:
+        logger.info(
+            f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
+        )
+        return [ffq_srp(accession) for accession in study_accessions]
+
     # If not study with the title is found, search Pubmed, which can be linked
     # to a GEO accession.
-    if not study_accessions:
-        logger.warning((
-            'No studies found with the given title. '
-            f'Searching Pubmed for DOI \'{doi}\''
-        ))
-        pmids = ncbi_search('pubmed', doi)
+    logger.warning((
+        'No studies found with the given title. '
+        f'Searching Pubmed for DOI \'{doi}\''
+    ))
+    pubmed_ids = ncbi_search('pubmed', doi)
 
-        if not pmids:
-            raise Exception('No Pubmed records match the DOI')
-        if len(pmids) > 1:
-            raise Exception(f'{len(pmids)} match the DOI: {", ".join(pmids)}')
+    if not pubmed_ids:
+        raise Exception('No Pubmed records match the DOI')
+    if len(pubmed_ids) > 1:
+        raise Exception(
+            f'{len(pubmed_ids)} match the DOI: {", ".join(pubmed_ids)}'
+        )
 
-        pmid = pmids[0]
-        logger.info(f'Found Pubmed ID \'{pmid}\'')
-        logger.info('Searching for GEO record linked to this Pubmed ID.')
-        geoids = ncbi_link('pubmed', 'gds', pmid)
-        if not geoids:
-            raise Exception(
-                f'No GEO records are linked to the Pubmed ID \'{pmid}\''
-            )
-        logger.info(f'Found {len(geoids)} GEO records: {", ".join(geoids)}')
+    pubmed_id = pubmed_ids[0]
+    logger.info(f'Found Pubmed ID \'{pubmed_id}\'')
+    logger.info('Searching for GEO record linked to this Pubmed ID.')
+    geo_ids = ncbi_link('pubmed', 'gds', pubmed_id)
+    if geo_ids:
+        logger.info(f'Found {len(geo_ids)} GEO records: {", ".join(geo_ids)}')
 
         # Convert these geo ids to GSE accessions
         logger.info('Finding GEO Accessions for these GEO records')
-        gses = geo_ids_to_gses(geoids)
-        if len(gses) != len(geoids):
+        gses = geo_ids_to_gses(geo_ids)
+        if len(gses) != len(geo_ids):
             raise Exception((
                 'Number of GEO Accessions found does not match the number of GEO '
-                f'records: expected {len(geoids)} but found {len(gses)}'
+                f'records: expected {len(geo_ids)} but found {len(gses)}'
             ))
         logger.info(f'Found GEO Accessions: {", ".join(gses)}')
 
@@ -384,8 +393,26 @@ def ffq_doi(doi):
         time.sleep(1)
         return [ffq_gse(accession) for accession in gses]
 
-    logger.info(
-        f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
-    )
+    # If the pubmed id is not linked to any GEO record, search for SRA records
+    logger.warning((
+        f'No GEO records are linked to the Pubmed ID \'{pubmed_id}\'. '
+        'Searching for SRA record linked to this Pubmed ID.'
+    ))
+    time.sleep(1)
+    sra_ids = ncbi_link('pubmed', 'sra', pubmed_id)
+    if sra_ids:
+        logger.info(f'Found {len(sra_ids)} SRA records.')
+        srrs = sra_ids_to_srrs(sra_ids)
+        runs = [ffq_srr(accession) for accession in srrs]
 
-    return [ffq_srp(accession) for accession in study_accessions]
+        # Group runs by project to keep things consistent.
+        studies = []
+        for run in runs:
+            study = run.pop('study')
+            study.setdefault('runs', {})[run['accession']] = run
+            studies.append(study)
+        return studies
+    else:
+        raise Exception(
+            f'No SRA records are linked to Pubmed ID \'{pubmed_id}\''
+        )

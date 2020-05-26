@@ -296,3 +296,41 @@ class TestFfq(TestMixin, TestCase):
             ncbi_link.assert_called_once_with('pubmed', 'gds', 'PMID1')
             geo_ids_to_gses.assert_called_once_with(['GEOID1'])
             ffq_gse.assert_called_once_with('GSE1')
+
+    def test_ffq_doi_no_geo(self):
+        with mock.patch('ffq.ffq.get_doi') as get_doi,\
+            mock.patch('ffq.ffq.search_ena_title') as search_ena_title,\
+            mock.patch('ffq.ffq.ncbi_search') as ncbi_search,\
+            mock.patch('ffq.ffq.ncbi_link') as ncbi_link,\
+            mock.patch('ffq.ffq.sra_ids_to_srrs') as sra_ids_to_srrs,\
+            mock.patch('ffq.ffq.ffq_srr') as ffq_srr:
+
+            get_doi.return_value = {'title': ['title']}
+            search_ena_title.return_value = []
+            ncbi_search.return_value = ['PMID1']
+            ncbi_link.side_effect = [[], ['SRA1']]
+            sra_ids_to_srrs.return_value = ['SRR1']
+            ffq_srr.return_value = {
+                'accession': 'SRR1',
+                'study': {
+                    'accession': 'SRP1'
+                }
+            }
+            self.assertEqual([{
+                'accession': 'SRP1',
+                'runs': {
+                    'SRR1': {
+                        'accession': 'SRR1'
+                    }
+                }
+            }], ffq.ffq_doi('doi'))
+            get_doi.assert_called_once_with('doi')
+            search_ena_title.assert_called_once_with('title')
+            ncbi_search.assert_called_once_with('pubmed', 'doi')
+            self.assertEqual(2, ncbi_link.call_count)
+            ncbi_link.assert_has_calls([
+                call('pubmed', 'gds', 'PMID1'),
+                call('pubmed', 'sra', 'PMID1'),
+            ])
+            sra_ids_to_srrs.assert_called_once_with(['SRA1'])
+            ffq_srr.assert_called_once_with('SRR1')

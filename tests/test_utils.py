@@ -14,6 +14,7 @@ from ffq.config import (
     NCBI_FETCH_URL,
     NCBI_LINK_URL,
     NCBI_SEARCH_URL,
+    NCBI_SUMMARY_URL,
 )
 
 
@@ -141,6 +142,18 @@ class TestUtils(TestCase):
             get.assert_called_once_with(
                 NCBI_FETCH_URL, params={
                     'db': 'gds',
+                    'id': 'id1,id2',
+                }
+            )
+
+    def test_sra_ids_to_srrs(self):
+        with mock.patch('ffq.utils.requests.get') as get:
+            get.return_value.text = 'Run acc="SRR1" Run acc="SRR2"'
+            self.assertEqual(['SRR1', 'SRR2'],
+                             utils.sra_ids_to_srrs(['id1', 'id2']))
+            get.assert_called_once_with(
+                NCBI_SUMMARY_URL, params={
+                    'db': 'sra',
                     'id': 'id1,id2',
                 }
             )
