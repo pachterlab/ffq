@@ -82,9 +82,10 @@ def parse_run(soup):
                 # If any of these are empty, or there are no BAM files,
                 # there's something wrong.
                 if not urls or not md5s or not sizes or 'BAM' not in formats:
-                    raise Exception(
+                    logger.warning(
                         f'Run {accession} does not have any compatible files'
                     )
+                    break
                 files = [
                     {
                         'url': f'ftp://{url}',

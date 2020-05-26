@@ -48,7 +48,19 @@ Output: [srp_split](srp_split)
 
 ## DOI
 ### A single DOI
+```
+ffq -t DOI -o doi_single.json 10.1038/s41467-019-08831-9
+```
+Output: [doi_single.json](doi_single.json)
 
 ### Multiple DOIs
+```
+ffq -t DOI -o doi_multiple.json 10.1038/s41467-019-08831-9 10.1016/j.immuni.2019.06.027
+```
+Output: [doi_multiple.json](doi_multiple.json)
 
 ### Multiple DOIs with `--split`
+```
+ffq -t DOI -o doi_multiple.json --split 10.1038/s41467-019-08831-9 10.1016/j.immuni.2019.06.027
+```
+Output: [doi_split](doi_split)
