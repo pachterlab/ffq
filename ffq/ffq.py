@@ -239,6 +239,14 @@ def parse_gse_summary(soup):
 
 
 def ffq_srr(accession):
+    """Fetch SRR information.
+
+    :param accession: run accession
+    :type accession: str
+
+    :return: dictionary of run information
+    :rtype: dict
+    """
     logger.info(f'Parsing run {accession}')
     run = parse_run(get_xml(accession))
     logger.debug(f'Parsing sample {run["sample"]}')
@@ -253,6 +261,17 @@ def ffq_srr(accession):
 
 
 def ffq_srp(accession):
+    """Fetch SRP information.
+
+    :param accession: study accession
+    :type accession: str
+
+    :return: dictionary of study information. The dictionary contains a
+             'runs' key, which is a dictionary of all the runs in the study, as
+             returned by `ffq_srr` with the 'study' key popped (because it
+             is redundant).
+    :rtype: dict
+    """
     logger.info(f'Parsing Study SRP {accession}')
     study = parse_study_with_run(get_xml(accession))
 
@@ -294,20 +313,24 @@ def ffq_gse(accession):
     return gse
 
 
-# def ffq_title(title):
-#     logger.info(f'Searching for Study SRP with title \'{title}\'')
-#     study_accessions = search_ena_title(title)
-#
-#     if not study_accessions:
-#         raise Exception('No studies found for the given title')
-#     logger.info(
-#         f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
-#     )
-#
-#     return [ffq_srp(accession) for accession in study_accessions]
-
-
 def ffq_doi(doi):
+    """Fetch DOI information.
+
+    This function first searches CrossRef for the paper title, then uses that
+    to find any SRA studies that match the title. If there are, all the runs in
+    each study are fetched. If there are not, Pubmed is searched for the DOI,
+    which may contain GEO IDs. These IDs are searched on GEO for their
+    corresponding SRA studies.
+
+    :param doi: paper DOI
+    :type doi: str
+
+    :return: list of SRA or GEO studies that are linked to this paper. If
+             there are SRA studies matching the paper title, the returned
+             list is a list of SRA studies. Otherwise, it is a list of GEO
+             studies.
+    :rtype: list
+    """
     # Sanitize DOI so that it doesn't include leading http or https
     parsed = urlparse(doi)
 
