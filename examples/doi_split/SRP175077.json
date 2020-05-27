@@ -11,6 +11,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
             },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+            },
             "sample": {
                 "accession": "SRS4203422",
                 "title": "AXLN1",
@@ -42,6 +47,11 @@
                 "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535276: AXLN1; Homo sapiens; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
+            },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
             },
             "sample": {
                 "accession": "SRS4203422",
@@ -75,6 +85,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
             },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+            },
             "sample": {
                 "accession": "SRS4203423",
                 "title": "AXLN2",
@@ -106,6 +121,11 @@
                 "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535277: AXLN2; Homo sapiens; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
+            },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
             },
             "sample": {
                 "accession": "SRS4203423",
@@ -139,6 +159,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
             },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+            },
             "sample": {
                 "accession": "SRS4203424",
                 "title": "AXLN3",
@@ -170,6 +195,11 @@
                 "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
+            },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
             },
             "sample": {
                 "accession": "SRS4203424",
@@ -203,6 +233,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
             },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+            },
             "sample": {
                 "accession": "SRS4203424",
                 "title": "AXLN3",
@@ -234,6 +269,11 @@
                 "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
+            },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
             },
             "sample": {
                 "accession": "SRS4203424",
@@ -267,6 +307,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
             },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+            },
             "sample": {
                 "accession": "SRS4203424",
                 "title": "AXLN3",
@@ -298,6 +343,11 @@
                 "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
+            },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
             },
             "sample": {
                 "accession": "SRS4203424",
@@ -331,6 +381,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
             },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+            },
             "sample": {
                 "accession": "SRS4203424",
                 "title": "AXLN3",
@@ -362,6 +417,11 @@
                 "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
+            },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
             },
             "sample": {
                 "accession": "SRS4203424",
@@ -395,6 +455,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
             },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+            },
             "sample": {
                 "accession": "SRS4203424",
                 "title": "AXLN3",
@@ -426,6 +491,11 @@
                 "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535279: AXLN4; Homo sapiens; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
+            },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
             },
             "sample": {
                 "accession": "SRS4203425",
@@ -459,6 +529,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
             },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+            },
             "sample": {
                 "accession": "SRS4203425",
                 "title": "AXLN4",
@@ -490,6 +565,11 @@
                 "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535279: AXLN4; Homo sapiens; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
+            },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
             },
             "sample": {
                 "accession": "SRS4203425",
@@ -523,6 +603,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
             },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+            },
             "sample": {
                 "accession": "SRS4203426",
                 "title": "HNLN1",
@@ -554,6 +639,11 @@
                 "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535280: HNLN1; Homo sapiens; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
+            },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
             },
             "sample": {
                 "accession": "SRS4203426",
@@ -587,6 +677,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
             },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+            },
             "sample": {
                 "accession": "SRS4203427",
                 "title": "HNLN2",
@@ -618,6 +713,11 @@
                 "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535281: HNLN2; Homo sapiens; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 3000"
+            },
+            "study": {
+                "accession": "SRP175077",
+                "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
+                "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
             },
             "sample": {
                 "accession": "SRS4203427",

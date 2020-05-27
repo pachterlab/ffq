@@ -11,6 +11,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
             },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
+            },
             "sample": {
                 "accession": "SRS1913121",
                 "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib Chow_1",
@@ -51,6 +56,11 @@
                 "title": "NextSeq 500 paired end sequencing; GSM2452123: Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib Chow_2; Mus musculus; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
+            },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
             },
             "sample": {
                 "accession": "SRS1913122",
@@ -93,6 +103,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
             },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
+            },
             "sample": {
                 "accession": "SRS1913123",
                 "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib Chow_3",
@@ -133,6 +148,11 @@
                 "title": "NextSeq 500 paired end sequencing; GSM2452125: Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib 10% low fat diet_1; Mus musculus; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
+            },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
             },
             "sample": {
                 "accession": "SRS1913124",
@@ -175,6 +195,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
             },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
+            },
             "sample": {
                 "accession": "SRS1913125",
                 "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib 60% high fat diet fed_1",
@@ -215,6 +240,11 @@
                 "title": "NextSeq 500 paired end sequencing; GSM2452127: Drop-Seq analysis of Pooled Arc-ME single-cell suspension_24 hour fast_1; Mus musculus; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
+            },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
             },
             "sample": {
                 "accession": "SRS1913126",
@@ -257,6 +287,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
             },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
+            },
             "sample": {
                 "accession": "SRS1913127",
                 "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_24 hour fast_refed_1",
@@ -297,6 +332,11 @@
                 "title": "NextSeq 500 paired end sequencing; GSM2452129: Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib Chow_4; Mus musculus; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
+            },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
             },
             "sample": {
                 "accession": "SRS1913128",
@@ -339,6 +379,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
             },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
+            },
             "sample": {
                 "accession": "SRS1913129",
                 "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_24 hour fast_2",
@@ -380,6 +425,11 @@
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
             },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
+            },
             "sample": {
                 "accession": "SRS1913130",
                 "title": "Drop-Seq analysis of Pooled Arc-ME single-cell suspension_ad lib Chow_5",
@@ -420,6 +470,11 @@
                 "title": "NextSeq 500 paired end sequencing; GSM2452132: Drop-Seq analysis of Pooled Arc-ME single-cell suspension_24 hour fast_3; Mus musculus; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "NextSeq 500"
+            },
+            "study": {
+                "accession": "SRP096361",
+                "title": "A Molecular Census of Arcuate Hypothalamus and Median Eminence Cell Types",
+                "abstract": "Drop-seq and single cell sequencing of mouse arcuate nucleus and median eminence. Please see below link for searchable cluster-based gene expression. Overall design: Drop-Seq was performed on six separate days using mice in C57BL6/J background at various ages/sex noted. On day 1, Chow_1 replicate was obtained. On day 2, Chow_2 replicate was  obtained. On day 3, Chow_3 replicate was obtained.  On day 4, 10% Diet_1 and HFD_1 replicates were obtained. On day 5, Fast_1 and Refed_1 replicates were obtained. On day 6,  Fast_2, Fast_3, Chow_4, and Chow_5 replicates were obtained"
             },
             "sample": {
                 "accession": "SRS1913131",

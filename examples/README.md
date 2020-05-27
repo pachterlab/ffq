@@ -41,10 +41,24 @@ Output: [srp_split](srp_split)
 
 ## GSE
 ### A single GSE
+```
+ffq -t GSE -o gse_single.json GSE135326
+```
+Output: [gse_single.json](gse_single.json)
 
 ### Multiple GSEs
+```
+ffq -t GSE -o gse_single.json GSE135326 GSE124494
+```
+Output: [gse_multiple.json](gse_multiple.json)
+
 
 ### Multiple GSEs with `--split`
+```
+ffq -t GSE -o gse_split --split GSE135326 GSE124494
+```
+Output: [gse_split](gse_split)
+
 
 ## DOI
 ### A single DOI

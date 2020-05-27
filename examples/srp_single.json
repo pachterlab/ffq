@@ -12,6 +12,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237519",
                     "title": "old_Dropseq_1",
@@ -48,6 +53,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557676: old_Dropseq_2; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237520",
@@ -86,6 +96,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237521",
                     "title": "young_Dropseq_1",
@@ -122,6 +137,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557678: young_Dropseq_2; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237522",
@@ -160,6 +180,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237523",
                     "title": "old_Dropseq_3",
@@ -196,6 +221,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557680: old_Dropseq_4; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237524",
@@ -234,6 +264,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237525",
                     "title": "old_Dropseq_5",
@@ -270,6 +305,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557682: young_Dropseq_3; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237526",
@@ -308,6 +348,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237527",
                     "title": "young_Dropseq_4",
@@ -344,6 +389,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557684: young_Dropseq_5; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237518",
@@ -382,6 +432,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237528",
                     "title": "young_Dropseq_6",
@@ -416,6 +471,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557686: old_Dropseq_6; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237529",
@@ -454,6 +514,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237530",
                     "title": "old_Dropseq_7",
@@ -490,6 +555,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557688: young_Dropseq_7; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237531",
@@ -528,6 +598,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237532",
                     "title": "young_Dropseq_8",
@@ -564,6 +639,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557690: old_whole_lung_1; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237533",
@@ -602,6 +682,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237534",
                     "title": "old_whole_lung_2",
@@ -638,6 +723,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557692: old_whole_lung_3; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237535",
@@ -676,6 +766,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237536",
                     "title": "young_wholelung_1",
@@ -712,6 +807,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557694: young_wholelung_2; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237537",
@@ -750,6 +850,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237538",
                     "title": "young_wholelung_3",
@@ -786,6 +891,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557696: young_flowsorted_epi_1; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237539",
@@ -824,6 +934,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237540",
                     "title": "old_flowsorted_epi_1",
@@ -860,6 +975,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557698: young_flowsorted_epi_2; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237541",
@@ -898,6 +1018,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237542",
                     "title": "old_flowsorted_epi_2",
@@ -934,6 +1059,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557700: young_flowsorted_epi_3; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237543",
@@ -972,6 +1102,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237544",
                     "title": "old_flowsorted_epi_3",
@@ -1008,6 +1143,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557702: young_flowsorted_mac_1; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237545",
@@ -1046,6 +1186,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237546",
                     "title": "old_flowsorted_mac_1",
@@ -1082,6 +1227,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557704: old_flowsorted_mac_2; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237547",
@@ -1120,6 +1270,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237548",
                     "title": "young_flowsorted_mac_2",
@@ -1156,6 +1311,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557706: old_flowsorted_mac_3; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237549",
@@ -1194,6 +1354,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237550",
                     "title": "young_flowsorted_mac_3",
@@ -1230,6 +1395,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557708: old_flowsorted_mac_4; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237551",
@@ -1268,6 +1438,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237552",
                     "title": "old_flowsorted_mac_5",
@@ -1304,6 +1479,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557710: young_flowsorted_mac_4; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237553",
@@ -1342,6 +1522,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237554",
                     "title": "old_flowsorted_mac_6",
@@ -1378,6 +1563,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557712: young_flowsorted_epi_4; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237555",
@@ -1416,6 +1606,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237556",
                     "title": "young_flowsorted_mac_5",
@@ -1453,6 +1648,11 @@
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
                 },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
+                },
                 "sample": {
                     "accession": "SRS4237557",
                     "title": "old_flowsorted_epi_4",
@@ -1489,6 +1689,11 @@
                     "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557715: old_flowsorted_mac_7; Mus musculus; RNA-Seq",
                     "platform": "ILLUMINA",
                     "instrument": "Illumina HiSeq 4000"
+                },
+                "study": {
+                    "accession": "SRP178136",
+                    "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
+                    "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
                 },
                 "sample": {
                     "accession": "SRS4237558",

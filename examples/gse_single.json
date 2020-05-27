@@ -1,0 +1,181 @@
+{
+    "GSE135326": {
+        "accession": "GSE135326",
+        "geo_id": "200135326",
+        "study": {
+            "accession": "SRP217236",
+            "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
+            "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)",
+            "runs": {
+                "SRR9895509": {
+                    "accession": "SRR9895509",
+                    "experiment": {
+                        "accession": "SRX6647876",
+                        "title": "HiSeq X Ten sequencing; GSM4005492: Artis_A3; Mus musculus; RNA-Seq",
+                        "platform": "ILLUMINA",
+                        "instrument": "HiSeq X Ten"
+                    },
+                    "study": {
+                        "accession": "SRP217236",
+                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
+                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
+                    },
+                    "sample": {
+                        "accession": "SRS5208565",
+                        "title": "Artis_A3",
+                        "organism": "Mus musculus",
+                        "attributes": {
+                            "source_name": "medial prefrontal cortex (mPFC)",
+                            "age": "adult",
+                            "brain region": "medial prefrontal cortex",
+                            "treatment": "Antibiotic-treated",
+                            "ENA-SPOT-COUNT": "200444657",
+                            "ENA-BASE-COUNT": "19242687072",
+                            "ENA-FIRST-PUBLIC": "2019-08-07",
+                            "ENA-LAST-UPDATE": "2019-08-07"
+                        }
+                    },
+                    "title": "HiSeq X Ten sequencing; GSM4005492: Artis_A3; Mus musculus; RNA-Seq",
+                    "files": [
+                        {
+                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895509/Artis_A3_possorted_genome_bam.bam",
+                            "md5": "3252eefb72814201f2baff7ae7fd1e3d",
+                            "size": "21797401053"
+                        },
+                        {
+                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895509/Artis_A3_possorted_genome_bam.bam.bai",
+                            "md5": "fe90ce27170fb6a2db9cffc80495684e",
+                            "size": "12068048"
+                        }
+                    ]
+                },
+                "SRR9895510": {
+                    "accession": "SRR9895510",
+                    "experiment": {
+                        "accession": "SRX6647877",
+                        "title": "HiSeq X Ten sequencing; GSM4005493: Artis_A4; Mus musculus; RNA-Seq",
+                        "platform": "ILLUMINA",
+                        "instrument": "HiSeq X Ten"
+                    },
+                    "study": {
+                        "accession": "SRP217236",
+                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
+                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
+                    },
+                    "sample": {
+                        "accession": "SRS5208562",
+                        "title": "Artis_A4",
+                        "organism": "Mus musculus",
+                        "attributes": {
+                            "source_name": "medial prefrontal cortex (mPFC)",
+                            "age": "adult",
+                            "brain region": "medial prefrontal cortex",
+                            "treatment": "Antibiotic-treated",
+                            "ENA-SPOT-COUNT": "182375428",
+                            "ENA-BASE-COUNT": "17508041088",
+                            "ENA-FIRST-PUBLIC": "2019-08-07",
+                            "ENA-LAST-UPDATE": "2019-08-07"
+                        }
+                    },
+                    "title": "HiSeq X Ten sequencing; GSM4005493: Artis_A4; Mus musculus; RNA-Seq",
+                    "files": [
+                        {
+                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895510/Artis_A4_possorted_genome_bam.bam",
+                            "md5": "99823f55a89ec19b66ecd16472f27f73",
+                            "size": "20387309051"
+                        },
+                        {
+                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895510/Artis_A4_possorted_genome_bam.bam.bai",
+                            "md5": "3b5d12057ed0297aa92165eb70943b9c",
+                            "size": "11409872"
+                        }
+                    ]
+                },
+                "SRR9895511": {
+                    "accession": "SRR9895511",
+                    "experiment": {
+                        "accession": "SRX6647878",
+                        "title": "HiSeq X Ten sequencing; GSM4005494: Artis_B3; Mus musculus; RNA-Seq",
+                        "platform": "ILLUMINA",
+                        "instrument": "HiSeq X Ten"
+                    },
+                    "study": {
+                        "accession": "SRP217236",
+                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
+                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
+                    },
+                    "sample": {
+                        "accession": "SRS5208563",
+                        "title": "Artis_B3",
+                        "organism": "Mus musculus",
+                        "attributes": {
+                            "source_name": "medial prefrontal cortex (mPFC)",
+                            "age": "adult",
+                            "brain region": "medial prefrontal cortex",
+                            "treatment": "Control",
+                            "ENA-SPOT-COUNT": "187244844",
+                            "ENA-BASE-COUNT": "17975505024",
+                            "ENA-FIRST-PUBLIC": "2019-08-07",
+                            "ENA-LAST-UPDATE": "2019-08-07"
+                        }
+                    },
+                    "title": "HiSeq X Ten sequencing; GSM4005494: Artis_B3; Mus musculus; RNA-Seq",
+                    "files": [
+                        {
+                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895511/Artis_B3_possorted_genome_bam.bam",
+                            "md5": "3b8459752bafb76bd4152ea5e7facf02",
+                            "size": "20824036139"
+                        },
+                        {
+                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895511/Artis_B3_possorted_genome_bam.bam.bai",
+                            "md5": "8fd99342fcd71628f1a04c32abc37c44",
+                            "size": "11767224"
+                        }
+                    ]
+                },
+                "SRR9895512": {
+                    "accession": "SRR9895512",
+                    "experiment": {
+                        "accession": "SRX6647879",
+                        "title": "HiSeq X Ten sequencing; GSM4005495: Artis_B4; Mus musculus; RNA-Seq",
+                        "platform": "ILLUMINA",
+                        "instrument": "HiSeq X Ten"
+                    },
+                    "study": {
+                        "accession": "SRP217236",
+                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
+                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
+                    },
+                    "sample": {
+                        "accession": "SRS5208564",
+                        "title": "Artis_B4",
+                        "organism": "Mus musculus",
+                        "attributes": {
+                            "source_name": "medial prefrontal cortex (mPFC)",
+                            "age": "adult",
+                            "brain region": "medial prefrontal cortex",
+                            "treatment": "Control",
+                            "ENA-SPOT-COUNT": "209920123",
+                            "ENA-BASE-COUNT": "20152331808",
+                            "ENA-FIRST-PUBLIC": "2019-08-07",
+                            "ENA-LAST-UPDATE": "2019-08-07"
+                        }
+                    },
+                    "title": "HiSeq X Ten sequencing; GSM4005495: Artis_B4; Mus musculus; RNA-Seq",
+                    "files": [
+                        {
+                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895512/Artis_B4_possorted_genome_bam.bam",
+                            "md5": "988778036055cb793d5f56073d58a64d",
+                            "size": "22812618518"
+                        },
+                        {
+                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895512/Artis_B4_possorted_genome_bam.bam.bai",
+                            "md5": "bdb687b29bec887d2249c1dba511caf3",
+                            "size": "12143208"
+                        }
+                    ]
+                }
+            }
+        }
+    }
+}
