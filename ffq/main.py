@@ -5,11 +5,11 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_srp, ffq_srr, ffq_title
+from .ffq import ffq_doi, ffq_gse, ffq_srp, ffq_srr
 
 logger = logging.getLogger(__name__)
 
-SEARCH_TYPES = ('SRR', 'SRP', 'GSE', 'DOI', 'TITLE')
+SEARCH_TYPES = ('SRR', 'SRP', 'GSE', 'DOI')
 
 
 def main():
@@ -88,17 +88,17 @@ def main():
     # Check IDs depending on type
     if args.t == 'SRR':
         for ID in args.IDs:
-            if ID[0:3] != "SRR" or len(ID) != 10 or not ID[3:].isdigit():
+            if ID[0:3] != "SRR" or not ID[3:].isdigit():
                 parser.error((
-                    f'{ID} failed validation. SRRs must be 10 characters long, '
-                    'start with \'SRR\', and end with seven digits.'
+                    f'{ID} failed validation. SRRs must '
+                    'start with \'SRR\' and end with digits.'
                 ))
     elif args.t == 'SRP':
         for ID in args.IDs:
-            if ID[0:3] != "SRP" or len(ID) != 10 or not ID[3:].isdigit():
+            if ID[0:3] != "SRP" or not ID[3:].isdigit():
                 parser.error((
-                    f'{ID} failed validation. SRPs must be 10 characters long, '
-                    'start with \'SRP\', and end with seven digits.'
+                    f'{ID} failed validation. SRPs must '
+                    'start with \'SRP\' and end with digits.'
                 ))
     elif args.t == 'GSE':
         for ID in args.IDs:
@@ -107,10 +107,8 @@ def main():
                     f'{ID} failed validation. GSEs must start with \'GSE\','
                     ' and end with digits.'
                 ))
-    elif args.t in ('DOI', 'TITLE'):
-        logger.warning(
-            'Searching by DOI or TITLE may result in missing information.'
-        )
+    elif args.t == 'DOI':
+        logger.warning('Searching by DOI may result in missing information.')
 
     try:
         # run ffq depending on type
@@ -120,10 +118,6 @@ def main():
             results = [ffq_srp(accession) for accession in args.IDs]
         elif args.t == 'GSE':
             results = [ffq_gse(accession) for accession in args.IDs]
-        elif args.t == 'TITLE':
-            results = [
-                study for title in args.IDs for study in ffq_title(title)
-            ]
         elif args.t == 'DOI':
             results = [study for doi in args.IDs for study in ffq_doi(doi)]
 

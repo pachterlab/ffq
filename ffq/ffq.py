@@ -1,18 +1,22 @@
+import json
 import logging
 import re
-import json
-from collections import defaultdict
+import time
 from urllib.parse import urlparse
 
 from .utils import (
     cached_get,
+    geo_id_to_srp,
+    geo_ids_to_gses,
     get_doi,
     get_gse_search_json,
-    get_gse_summary_json,
     get_xml,
+    ncbi_link,
+    ncbi_search,
     parse_SRR_range,
     parse_tsv,
     search_ena_title,
+    sra_ids_to_srrs,
 )
 
 logger = logging.getLogger(__name__)
@@ -29,7 +33,9 @@ def parse_run(soup):
     :rtype: dict
     """
     accession = soup.find('PRIMARY_ID', text=re.compile(r'SRR.+')).text
-    experiment = soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')).text
+    experiment = soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')).text \
+        if soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')) \
+        else soup.find('EXPERIMENT_REF')['accession']
     study = soup.find('ID', text=re.compile(r'SRP.+')).text
     sample = soup.find('ID', text=re.compile(r'SRS.+')).text
     title = soup.find('TITLE').text
@@ -75,9 +81,10 @@ def parse_run(soup):
                 # If any of these are empty, or there are no BAM files,
                 # there's something wrong.
                 if not urls or not md5s or not sizes or 'BAM' not in formats:
-                    raise Exception(
+                    logger.warning(
                         f'Run {accession} does not have any compatible files'
                     )
+                    break
                 files = [
                     {
                         'url': f'ftp://{url}',
@@ -206,8 +213,8 @@ def parse_gse_search(soup):
     data = json.loads(soup.text)
 
     accession = data['esearchresult']['querytranslation'].split('[')[0]
-    gse_id = data['esearchresult']['idlist'][-1]
-    return {'accession': accession, 'gse_id': gse_id}
+    geo_id = data['esearchresult']['idlist'][-1]
+    return {'accession': accession, 'geo_id': geo_id}
 
 
 def parse_gse_summary(soup):
@@ -222,19 +229,27 @@ def parse_gse_summary(soup):
     """
     data = json.loads(soup.text)
 
-    gse_id = data['result']['uids'][-1]
+    geo_id = data['result']['uids'][-1]
 
-    relations = data['result'][f'{gse_id}']['extrelations']
+    relations = data['result'][f'{geo_id}']['extrelations']
     for value in relations:
         if value['relationtype'] == 'SRA':  # may have many samples?
             sra = value
 
-    srp = sra['targetobject']
-
-    return {'accession': srp}
+    if sra:
+        srp = sra['targetobject']
+        return {'accession': srp}
 
 
 def ffq_srr(accession):
+    """Fetch SRR information.
+
+    :param accession: run accession
+    :type accession: str
+
+    :return: dictionary of run information
+    :rtype: dict
+    """
     logger.info(f'Parsing run {accession}')
     run = parse_run(get_xml(accession))
     logger.debug(f'Parsing sample {run["sample"]}')
@@ -249,6 +264,16 @@ def ffq_srr(accession):
 
 
 def ffq_srp(accession):
+    """Fetch SRP information.
+
+    :param accession: study accession
+    :type accession: str
+
+    :return: dictionary of study information. The dictionary contains a
+             'runs' key, which is a dictionary of all the runs in the study, as
+             returned by `ffq_srr`.
+    :rtype: dict
+    """
     logger.info(f'Parsing Study SRP {accession}')
     study = parse_study_with_run(get_xml(accession))
 
@@ -256,54 +281,53 @@ def ffq_srp(accession):
 
     runs = {run: ffq_srr(run) for run in study.pop('runlist')}
 
-    # Remove study information from runs because that is redundant.
-    for run in runs.values():
-        del run['study']
-
     study.update({'runs': runs})
 
     return study
 
 
 def ffq_gse(accession):
+    """Fetch GSE information.
+
+    This function finds the SRP corresponding to the GSE and calls `ffq_srp`.
+
+    :param accession: GSE accession
+    :type accession: str
+
+    :return: dictionary containing GSE information
+    :rtype: dict
+    """
     logger.info(f'Parsing GEO {accession}')
     gse = parse_gse_search(get_gse_search_json(accession))
 
     logger.info(f'Getting Study SRP for {accession}')
-    study = parse_gse_summary(get_gse_summary_json(gse['gse_id']))
-
-    logger.info(f'Parsing Study SRP {study["accession"]}')
-    run_info = parse_study_with_run(get_xml(study["accession"]))
-
-    runlist = run_info.pop('runlist')
-    study.update(run_info)
-
-    logger.warning(f'There are {len(runlist)} runs for {accession}')
-
-    runs = defaultdict()
-    for run in runlist:
-        logger.info(f'Parsing run {run}')
-        runs[run] = parse_run(get_xml(run))
-
-    gse.update({'study': study, 'runs': runs})
-
+    time.sleep(1)
+    srp = geo_id_to_srp(gse.pop('geo_id'))
+    study = ffq_srp(srp)
+    gse.update({'study': study})
     return gse
 
 
-def ffq_title(title):
-    logger.info(f'Searching for Study SRP with title \'{title}\'')
-    study_accessions = search_ena_title(title)
-
-    if not study_accessions:
-        raise Exception('No studies found for the given title')
-    logger.info(
-        f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
-    )
-
-    return [ffq_srp(accession) for accession in study_accessions]
-
-
 def ffq_doi(doi):
+    """Fetch DOI information.
+
+    This function first searches CrossRef for the paper title, then uses that
+    to find any SRA studies that match the title. If there are, all the runs in
+    each study are fetched. If there are not, Pubmed is searched for the DOI,
+    which may contain GEO IDs. If there are GEO IDs, `ffq_gse` is called for each.
+    If not, the Pubmed entry may include SRA links. If there are, `ffq_srr` is
+    called for each linked run. These runs are then grouped by SRP.
+
+    :param doi: paper DOI
+    :type doi: str
+
+    :return: list of SRA or GEO studies that are linked to this paper. If
+             there are SRA studies matching the paper title, the returned
+             list is a list of SRA studies. If not, and the paper includes
+             a GEO link, it is a list of GEO studies. If not, and the paper
+             includes SRA links, it is a list of SRPs.
+    :rtype: list
+    """
     # Sanitize DOI so that it doesn't include leading http or https
     parsed = urlparse(doi)
 
@@ -312,5 +336,75 @@ def ffq_doi(doi):
 
     logger.info(f'Searching for DOI \'{doi}\'')
     paper = get_doi(doi)
-    logger.info(f'Found paper with title \'{paper["title"][0]}\'')
-    return ffq_title(paper['title'][0])
+    title = paper["title"][0]
+    logger.info(f'Found paper with title \'{title}\'')
+
+    logger.info(f'Searching for Study SRP with title \'{title}\'')
+    study_accessions = search_ena_title(title)
+
+    if study_accessions:
+        logger.info(
+            f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
+        )
+        return [ffq_srp(accession) for accession in study_accessions]
+
+    # If not study with the title is found, search Pubmed, which can be linked
+    # to a GEO accession.
+    logger.warning((
+        'No studies found with the given title. '
+        f'Searching Pubmed for DOI \'{doi}\''
+    ))
+    pubmed_ids = ncbi_search('pubmed', doi)
+
+    if not pubmed_ids:
+        raise Exception('No Pubmed records match the DOI')
+    if len(pubmed_ids) > 1:
+        raise Exception(
+            f'{len(pubmed_ids)} match the DOI: {", ".join(pubmed_ids)}'
+        )
+
+    pubmed_id = pubmed_ids[0]
+    logger.info(f'Found Pubmed ID \'{pubmed_id}\'')
+    logger.info('Searching for GEO record linked to this Pubmed ID.')
+    geo_ids = ncbi_link('pubmed', 'gds', pubmed_id)
+    if geo_ids:
+        logger.info(f'Found {len(geo_ids)} GEO records: {", ".join(geo_ids)}')
+
+        # Convert these geo ids to GSE accessions
+        logger.info('Finding GEO Accessions for these GEO records')
+        gses = geo_ids_to_gses(geo_ids)
+        if len(gses) != len(geo_ids):
+            raise Exception((
+                'Number of GEO Accessions found does not match the number of GEO '
+                f'records: expected {len(geo_ids)} but found {len(gses)}'
+            ))
+        logger.info(f'Found GEO Accessions: {", ".join(gses)}')
+
+        # Sleep for one second because NCBI has rate-limiting to 3 requests
+        # a second
+        time.sleep(1)
+        return [ffq_gse(accession) for accession in gses]
+
+    # If the pubmed id is not linked to any GEO record, search for SRA records
+    logger.warning((
+        f'No GEO records are linked to the Pubmed ID \'{pubmed_id}\'. '
+        'Searching for SRA record linked to this Pubmed ID.'
+    ))
+    time.sleep(1)
+    sra_ids = ncbi_link('pubmed', 'sra', pubmed_id)
+    if sra_ids:
+        logger.info(f'Found {len(sra_ids)} SRA records.')
+        srrs = sra_ids_to_srrs(sra_ids)
+        runs = [ffq_srr(accession) for accession in srrs]
+
+        # Group runs by project to keep things consistent.
+        studies = []
+        for run in runs:
+            study = run['study'].copy()  # Prevent recursive dict
+            study.setdefault('runs', {})[run['accession']] = run
+            studies.append(study)
+        return studies
+    else:
+        raise Exception(
+            f'No SRA records are linked to Pubmed ID \'{pubmed_id}\''
+        )

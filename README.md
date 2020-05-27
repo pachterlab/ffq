@@ -16,31 +16,52 @@ pip install ffq
 
 ## Usage
 
-### Fetch information of a single run and display it in the terminal
+### Fetch information of an SRA run and display it in the terminal
 ```
-ffq [ACCESSION]
+ffq [SRR]
 ```
-where `[ACCESSION]` is the run accession.
+where `[SRR]` is the run accession.
 
-### Fetch information of multiple runs and display it in the terminal
+### Fetch information of multiple SRA runs and display it in the terminal
 ```
-ffq [ACCESSION1] [ACCESSION2] ...
+ffq [SRR1] [SRR2] ...
 ```
-where `[ACCESSION1]` and `[ACCESSION2]` are run accessions.
+where `[SRR1]` and `[SRR2]` are run accessions.
 
-### Write run information to a single JSON file
+### Write SRA run information to a single JSON file
 ```
-ffq -o [JSON_PATH] [ACCESSIONS]
+ffq -o [JSON_PATH] [SRRS]
 ```
 where `[JSON_PATH]` is the path to the JSON file that will contain run
-information and `[ACCESSIONS]` is a space-delimited list of one or more
+information and `[SRRS]` is a space-delimited list of one or more
 run accessions.
 
-### Write run information to multiple JSON files, one file per run
+### Write SRA run information to multiple JSON files, one file per run
 ```
-ffq -o [OUT_DIR] --split [ACCESSIONS]
+ffq -o [OUT_DIR] --split [SRRS]
 ```
 where `[OUT_PATH]` is the path to directory to which to write the JSON files.
 Information about each run will be written to its own separate JSON file named
-`[ACCESSION].json`. `[ACCESSIONS]` is a space-delimited list of one or more
+`[ACCESSION].json`. `[SRRS]` is a space-delimited list of one or more
 run accessions.
+
+### Fetch information of one or more SRA study (and all of their runs)
+```
+ffq -t SRP [SRPS]
+```
+where `[SRPS]` is a space-delimited list of one or more SRA study accessions. The output is a JSON-formatted string (or a JSON file if `-o` is provided) with study accessions as keys. When `--split` is also provided, each study is written to its own separate JSON.
+
+### Fetch information of one or more GEO study (and all of their runs)
+```
+ffq -t GSE [GSES]
+```
+where `[GSES]` is a space-delimited list of one or more GEO study accessions. The output is a JSON-formatted string (or a JSON file if `-o` is provided) with study accessions as keys. When `--split` is also provided, each study is written to its own separate JSON.
+
+### Fetch information of all studies (and all of their runs) in one or more papers
+```
+ffq -t DOI [DOIS]
+```
+where `[DOIS]` is a space-delimited list of one or more DOIs. The output is a JSON-formatted string (or a JSON file if `-o` is provided) with SRA study accessions as keys. When `--split` is also provided, each study is written to its own separate JSON.
+
+## Examples
+Examples are available in the [examples](examples) directory.
