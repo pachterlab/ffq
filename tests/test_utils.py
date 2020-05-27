@@ -1,4 +1,5 @@
 from unittest import mock, TestCase
+from unittest.mock import call
 
 from bs4 import BeautifulSoup
 
@@ -95,6 +96,29 @@ class TestUtils(TestCase):
                 }
             )
 
+    def test_ncbi_summary(self):
+        with mock.patch('ffq.utils.requests.get') as get:
+            get.return_value.json.return_value = {
+                'result': {
+                    'uids': ['id1', 'id2'],
+                    'id1': 'summary1',
+                    'id2': 'summary2'
+                }
+            }
+            self.assertEqual({
+                'id1': 'summary1',
+                'id2': 'summary2',
+            }, utils.ncbi_summary('db', 'id'))
+            get.assert_called_once_with(
+                NCBI_SUMMARY_URL,
+                params={
+                    'db': 'db',
+                    'id': 'id',
+                    'retmode': 'json',
+                    'retmax': 10000,
+                }
+            )
+
     def test_ncbi_search(self):
         with mock.patch('ffq.utils.requests.get') as get:
             get.return_value.json.return_value = {
@@ -109,7 +133,7 @@ class TestUtils(TestCase):
                     'db': 'db',
                     'term': 'term',
                     'retmode': 'json',
-                    'retmax': 10
+                    'retmax': 100000
                 }
             )
 
@@ -132,6 +156,43 @@ class TestUtils(TestCase):
                     'id': 'id',
                     'retmode': 'json',
                 }
+            )
+
+    def test_geo_id_to_srp(self):
+        with mock.patch('ffq.utils.ncbi_summary') as ncbi_summary:
+            ncbi_summary.return_value = {
+                'id': {
+                    'extrelations': [{
+                        'relationtype': 'SRA',
+                        'targetobject': 'SRP1'
+                    }]
+                }
+            }
+            self.assertEqual('SRP1', utils.geo_id_to_srp('id'))
+            ncbi_summary.assert_called_once_with('gds', 'id')
+
+    def test_geo_id_to_srp_bioproject(self):
+        with mock.patch('ffq.utils.ncbi_summary') as ncbi_summary,\
+            mock.patch('ffq.utils.ncbi_search') as ncbi_search,\
+            mock.patch('ffq.utils.ncbi_link') as ncbi_link:
+            ncbi_summary.side_effect = [{
+                'id': {
+                    'bioproject': 'PRJNA1'
+                }
+            }, {
+                'SRA1': 'Study acc="SRP1"',
+                'SRA2': 'Study acc="SRP1"'
+            }]
+            ncbi_search.return_value = ['BIOPROJECT1']
+            ncbi_link.return_value = ['SRA1', 'SRA2']
+            self.assertEqual('SRP1', utils.geo_id_to_srp('id'))
+            self.assertEqual(2, ncbi_summary.call_count)
+            ncbi_summary.assert_has_calls([
+                call('gds', 'id'), call('sra', 'SRA1,SRA2')
+            ])
+            ncbi_search.assert_called_once_with('bioproject', 'PRJNA1[PRJA]')
+            ncbi_link.assert_called_once_with(
+                'bioproject', 'sra', 'BIOPROJECT1'
             )
 
     def test_geo_ids_to_gses(self):

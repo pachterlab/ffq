@@ -1,5 +1,6 @@
 import json
 import re
+import time
 from functools import lru_cache
 
 import requests
@@ -20,6 +21,7 @@ from .config import (
 )
 
 GSE_PARSER = re.compile(r'Series\t\tAccession: (?P<accession>GSE[0-9]+)\t')
+SRP_PARSER = re.compile(r'Study acc="(?P<accession>SRP[0-9]+)"')
 SRR_PARSER = re.compile(r'Run acc="(?P<accession>SRR[0-9]+)"')
 
 
@@ -136,6 +138,37 @@ def search_ena_title(title):
     return [t['secondary_study_accession'] for t in table]
 
 
+def ncbi_summary(db, id):
+    """Fetch a summary from the specified NCBI entrez database for the specified term.
+    Documentation: https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESummary
+
+    :param db: an entrez database
+    :type db: str
+    :param id: database id, can be comma-delimited list of ids
+    :type id: str
+
+    :return: dictionary of id-summary pairs
+    :rtype: dict
+    """
+    # TODO: use cached get. Can't be used currently because dictionaries can
+    # not be hashed.
+    response = requests.get(
+        NCBI_SUMMARY_URL,
+        params={
+            'db': db,
+            'id': id,
+            'retmode': 'json',
+            'retmax': 10000  # maximum allowed
+        }
+    )
+    response.raise_for_status()
+    return {
+        id: summary
+        for id, summary in response.json()['result'].items()
+        if id != 'uids'
+    }
+
+
 def ncbi_search(db, term):
     """Search the specified NCBI entrez database for the specified term.
     Documentation: https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch
@@ -156,11 +189,11 @@ def ncbi_search(db, term):
             'db': db,
             'term': term,
             'retmode': 'json',
-            'retmax': 10  # arbitrary
+            'retmax': 100000  # max allowed
         }
     )
     response.raise_for_status()
-    return response.json().get('esearchresult', {}).get('idlist', [])
+    return sorted(response.json().get('esearchresult', {}).get('idlist', []))
 
 
 def ncbi_link(origin, destination, id):
@@ -194,7 +227,42 @@ def ncbi_link(origin, destination, id):
         if linkset:
             for linksetdb in linkset.get('linksetdbs', {}):
                 ids.extend(linksetdb.get('links', []))
-    return ids
+    return sorted(list(set(ids)))
+
+
+def geo_id_to_srp(id):
+    """Convert a GEO ID to an SRP.
+
+    :param id: GEO ID
+    :type id: str
+
+    :return: SRP accession
+    :rtype: str
+    """
+    summaries = ncbi_summary('gds', id)
+    data = summaries[id]
+
+    # Check if there is a directly linked SRP
+    if 'extrelations' in data:
+        for value in data['extrelations']:
+            if value['relationtype'] == 'SRA':  # may have manys samples?
+                return value['targetobject']
+
+    # No SRA relation was found, but all GSEs have linked bioproject, so
+    # search for that instead.
+    bioproject_ids = ncbi_search('bioproject', f'{data["bioproject"]}[PRJA]')
+    assert len(bioproject_ids) == 1
+    bioproject_id = bioproject_ids[0]
+
+    # Search for SRA ids linked to this bioproject.
+    sra_ids = ncbi_link('bioproject', 'sra', bioproject_id)
+
+    # Fetch summaries of these SRA ids
+    time.sleep(1)
+    sras = ncbi_summary('sra', ','.join(sra_ids))
+    srps = list(set(SRP_PARSER.findall(str(sras))))
+    assert len(srps) == 1
+    return srps[0]
 
 
 def geo_ids_to_gses(ids):
@@ -215,7 +283,7 @@ def geo_ids_to_gses(ids):
         }
     )
     response.raise_for_status()
-    return GSE_PARSER.findall(response.text)
+    return sorted(list(set(GSE_PARSER.findall(response.text))))
 
 
 def sra_ids_to_srrs(ids):
@@ -236,7 +304,7 @@ def sra_ids_to_srrs(ids):
         }
     )
     response.raise_for_status()
-    return SRR_PARSER.findall(response.text)
+    return sorted(list(set(SRR_PARSER.findall(response.text))))
 
 
 def parse_SRR_range(text):

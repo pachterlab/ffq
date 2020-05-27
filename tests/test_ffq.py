@@ -170,7 +170,7 @@ class TestFfq(TestMixin, TestCase):
             soup = BeautifulSoup(f.read(), 'html.parser')
             self.assertEqual({
                 'accession': 'GSE93374',
-                'gse_id': "200093374"
+                'geo_id': "200093374"
             }, ffq.parse_gse_search(soup))
 
     def test_gse_summary_json(self):
@@ -182,32 +182,26 @@ class TestFfq(TestMixin, TestCase):
     def test_ffq_gse(self):
         # Need to figure out how to add for loop test for adding individual runs
         with mock.patch('ffq.ffq.get_gse_search_json') as get_gse_search_json, \
-            mock.patch('ffq.ffq.get_gse_summary_json') as get_gse_summary_json, \
-            mock.patch('ffq.ffq.parse_run') as parse_run, \
             mock.patch('ffq.ffq.parse_gse_search') as parse_gse_search, \
-            mock.patch('ffq.ffq.parse_gse_summary') as parse_gse_summary, \
-            mock.patch('ffq.ffq.parse_study_with_run') as parse_study_with_run, \
-            mock.patch('ffq.ffq.get_xml') as get_xml:
+            mock.patch('ffq.ffq.geo_id_to_srp') as geo_id_to_srp, \
+            mock.patch('ffq.ffq.ffq_srp') as ffq_srp:
 
-            gse = mock.MagicMock()
-            study = mock.MagicMock()
-            run_info = mock.MagicMock()
+            parse_gse_search.return_value = {
+                'accession': 'GSE1',
+                'geo_id': 'GEOID1'
+            }
+            geo_id_to_srp.return_value = 'SRP1'
+            ffq_srp.return_value = {'accession': 'SRP1'}
 
-            run = mock.MagicMock()
-
-            parse_gse_search.return_value = gse
-            parse_gse_summary.return_value = study
-            parse_study_with_run.return_value = run_info
-            parse_run.return_value = run
-
-            self.assertEqual(gse, ffq.ffq_gse('GSE93374'))
-            get_gse_search_json.assert_has_calls([
-                call('GSE93374'),
-            ])
-            get_gse_summary_json.assert_has_calls([
-                call(parse_gse_search()['gse_id']),
-            ])
-            get_xml.assert_has_calls([call(parse_gse_summary()['accession'])])
+            self.assertEqual({
+                'accession': 'GSE1',
+                'study': {
+                    'accession': 'SRP1'
+                }
+            }, ffq.ffq_gse('GSE1'))
+            get_gse_search_json.assert_called_once_with('GSE1')
+            geo_id_to_srp.assert_called_once_with('GEOID1')
+            ffq_srp.assert_called_once_with('SRP1')
 
     def test_ffq_srr(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
@@ -309,7 +303,10 @@ class TestFfq(TestMixin, TestCase):
                 'accession': 'SRP1',
                 'runs': {
                     'SRR1': {
-                        'accession': 'SRR1'
+                        'accession': 'SRR1',
+                        'study': {
+                            'accession': 'SRP1'
+                        }
                     }
                 }
             }], ffq.ffq_doi('doi'))

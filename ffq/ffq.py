@@ -2,15 +2,14 @@ import json
 import logging
 import re
 import time
-from collections import defaultdict
 from urllib.parse import urlparse
 
 from .utils import (
     cached_get,
+    geo_id_to_srp,
     geo_ids_to_gses,
     get_doi,
     get_gse_search_json,
-    get_gse_summary_json,
     get_xml,
     ncbi_link,
     ncbi_search,
@@ -214,8 +213,8 @@ def parse_gse_search(soup):
     data = json.loads(soup.text)
 
     accession = data['esearchresult']['querytranslation'].split('[')[0]
-    gse_id = data['esearchresult']['idlist'][-1]
-    return {'accession': accession, 'gse_id': gse_id}
+    geo_id = data['esearchresult']['idlist'][-1]
+    return {'accession': accession, 'geo_id': geo_id}
 
 
 def parse_gse_summary(soup):
@@ -230,16 +229,16 @@ def parse_gse_summary(soup):
     """
     data = json.loads(soup.text)
 
-    gse_id = data['result']['uids'][-1]
+    geo_id = data['result']['uids'][-1]
 
-    relations = data['result'][f'{gse_id}']['extrelations']
+    relations = data['result'][f'{geo_id}']['extrelations']
     for value in relations:
         if value['relationtype'] == 'SRA':  # may have many samples?
             sra = value
 
-    srp = sra['targetobject']
-
-    return {'accession': srp}
+    if sra:
+        srp = sra['targetobject']
+        return {'accession': srp}
 
 
 def ffq_srr(accession):
@@ -272,8 +271,7 @@ def ffq_srp(accession):
 
     :return: dictionary of study information. The dictionary contains a
              'runs' key, which is a dictionary of all the runs in the study, as
-             returned by `ffq_srr` with the 'study' key popped (because it
-             is redundant).
+             returned by `ffq_srr`.
     :rtype: dict
     """
     logger.info(f'Parsing Study SRP {accession}')
@@ -283,37 +281,30 @@ def ffq_srp(accession):
 
     runs = {run: ffq_srr(run) for run in study.pop('runlist')}
 
-    # Remove study information from runs because that is redundant.
-    for run in runs.values():
-        del run['study']
-
     study.update({'runs': runs})
 
     return study
 
 
 def ffq_gse(accession):
+    """Fetch GSE information.
+
+    This function finds the SRP corresponding to the GSE and calls `ffq_srp`.
+
+    :param accession: GSE accession
+    :type accession: str
+
+    :return: dictionary containing GSE information
+    :rtype: dict
+    """
     logger.info(f'Parsing GEO {accession}')
     gse = parse_gse_search(get_gse_search_json(accession))
 
     logger.info(f'Getting Study SRP for {accession}')
-    study = parse_gse_summary(get_gse_summary_json(gse['gse_id']))
-
-    logger.info(f'Parsing Study SRP {study["accession"]}')
-    run_info = parse_study_with_run(get_xml(study["accession"]))
-
-    runlist = run_info.pop('runlist')
-    study.update(run_info)
-
-    logger.warning(f'There are {len(runlist)} runs for {accession}')
-
-    runs = defaultdict()
-    for run in runlist:
-        logger.info(f'Parsing run {run}')
-        runs[run] = parse_run(get_xml(run))
-
-    gse.update({'study': study, 'runs': runs})
-
+    time.sleep(1)
+    srp = geo_id_to_srp(gse.pop('geo_id'))
+    study = ffq_srp(srp)
+    gse.update({'study': study})
     return gse
 
 
@@ -409,7 +400,7 @@ def ffq_doi(doi):
         # Group runs by project to keep things consistent.
         studies = []
         for run in runs:
-            study = run.pop('study')
+            study = run['study'].copy()  # Prevent recursive dict
             study.setdefault('runs', {})[run['accession']] = run
             studies.append(study)
         return studies
