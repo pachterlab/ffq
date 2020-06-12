@@ -230,7 +230,7 @@ def ncbi_link(origin, destination, id):
     return sorted(list(set(ids)))
 
 
-def geo_id_to_srp(id):
+def geo_id_to_srps(id):
     """Convert a GEO ID to an SRP.
 
     :param id: GEO ID
@@ -243,10 +243,12 @@ def geo_id_to_srp(id):
     data = summaries[id]
 
     # Check if there is a directly linked SRP
+    srps = []
     if 'extrelations' in data:
         for value in data['extrelations']:
             if value['relationtype'] == 'SRA':  # may have manys samples?
-                return value['targetobject']
+                srps.append(value['targetobject'])
+        return srps
 
     # No SRA relation was found, but all GSEs have linked bioproject, so
     # search for that instead.
@@ -261,8 +263,7 @@ def geo_id_to_srp(id):
     time.sleep(1)
     sras = ncbi_summary('sra', ','.join(sra_ids))
     srps = list(set(SRP_PARSER.findall(str(sras))))
-    assert len(srps) == 1
-    return srps[0]
+    return srps
 
 
 def geo_ids_to_gses(ids):

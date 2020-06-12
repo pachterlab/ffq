@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 
 from .utils import (
     cached_get,
-    geo_id_to_srp,
+    geo_id_to_srps,
     geo_ids_to_gses,
     get_doi,
     get_gse_search_json,
@@ -191,7 +191,7 @@ def parse_study_with_run(soup):
         if '-' in srr_range:
             srr += parse_SRR_range(srr_range)
         else:
-            srr += srr_range
+            srr.append(srr_range)
     return {
         'accession': accession,
         'title': title,
@@ -302,9 +302,9 @@ def ffq_gse(accession):
 
     logger.info(f'Getting Study SRP for {accession}')
     time.sleep(1)
-    srp = geo_id_to_srp(gse.pop('geo_id'))
-    study = ffq_srp(srp)
-    gse.update({'study': study})
+    srps = geo_id_to_srps(gse.pop('geo_id'))
+    studies = [ffq_srp(srp) for srp in srps]
+    gse.update({'studies': {study['accession']: study for study in studies}})
     return gse
 
 
@@ -337,7 +337,6 @@ def ffq_doi(doi):
     logger.info(f'Searching for DOI \'{doi}\'')
     paper = get_doi(doi)
     title = paper["title"][0]
-    logger.info(f'Found paper with title \'{title}\'')
 
     logger.info(f'Searching for Study SRP with title \'{title}\'')
     study_accessions = search_ena_title(title)
@@ -364,22 +363,17 @@ def ffq_doi(doi):
         )
 
     pubmed_id = pubmed_ids[0]
-    logger.info(f'Found Pubmed ID \'{pubmed_id}\'')
-    logger.info('Searching for GEO record linked to this Pubmed ID.')
+    logger.info(f'Searching for GEO record linked to Pubmed ID \'{pubmed_id}\'')
     geo_ids = ncbi_link('pubmed', 'gds', pubmed_id)
     if geo_ids:
-        logger.info(f'Found {len(geo_ids)} GEO records: {", ".join(geo_ids)}')
-
         # Convert these geo ids to GSE accessions
-        logger.info('Finding GEO Accessions for these GEO records')
         gses = geo_ids_to_gses(geo_ids)
+        logger.info(f'Found {len(gses)} GEO Accessions: {", ".join(gses)}')
         if len(gses) != len(geo_ids):
             raise Exception((
                 'Number of GEO Accessions found does not match the number of GEO '
                 f'records: expected {len(geo_ids)} but found {len(gses)}'
             ))
-        logger.info(f'Found GEO Accessions: {", ".join(gses)}')
-
         # Sleep for one second because NCBI has rate-limiting to 3 requests
         # a second
         time.sleep(1)
@@ -393,7 +387,6 @@ def ffq_doi(doi):
     time.sleep(1)
     sra_ids = ncbi_link('pubmed', 'sra', pubmed_id)
     if sra_ids:
-        logger.info(f'Found {len(sra_ids)} SRA records.')
         srrs = sra_ids_to_srrs(sra_ids)
         runs = [ffq_srr(accession) for accession in srrs]
 
