@@ -135,7 +135,32 @@ def search_ena_title(title):
     if not response.text:
         return []
     table = parse_tsv(response.text)
-    return [t['secondary_study_accession'] for t in table]
+
+    # If there is no secondary_study_accession, need to use bioproject.
+    srps = [
+        t['secondary_study_accession']
+        for t in table
+        if 'secondary_study_accession' in t and t['secondary_study_accession']
+    ]
+    bioprojects = [
+        t['study_accession']
+        for t in table
+        if 'secondary_study_accession' not in t
+    ]
+
+    if bioprojects:
+        bioproject_ids = ncbi_search(
+            'bioproject',
+            ' or '.join(f'{bioproject}[PRJA]' for bioproject in bioprojects)
+        )
+        sra_ids = ncbi_link('bioproject', 'sra', ','.join(bioproject_ids))
+
+        # Fetch summaries of these SRA ids
+        time.sleep(1)
+        sras = ncbi_summary('sra', ','.join(sra_ids))
+        srps.extend(SRP_PARSER.findall(str(sras)))
+
+    return list(set(srps))
 
 
 def ncbi_summary(db, id):

@@ -57,43 +57,39 @@ def parse_run(soup):
             if not urls or not md5s or not sizes:
                 break
 
-            files = [{
-                'url': f'ftp://{url}',
-                'md5': md5,
-                'size': size
-            } for url, md5, size in
-                     zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
+            files.extend(
+                [{
+                    'url': f'ftp://{url}',
+                    'md5': md5,
+                    'size': size
+                } for url, md5, size in
+                 zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
+            )
             break
 
-    # Fallback to BAM (in submitted file)
-    if not files:
-        for xref in soup.find_all('XREF_LINK'):
-            if xref.find('DB').text == 'ENA-SUBMITTED-FILES':
-                bam_url = xref.find('ID').text
+    # Include BAM (in submitted file)
+    for xref in soup.find_all('XREF_LINK'):
+        if xref.find('DB').text == 'ENA-SUBMITTED-FILES':
+            bam_url = xref.find('ID').text
 
-                table = parse_tsv(cached_get(bam_url))
-                assert len(table) == 1
+            table = parse_tsv(cached_get(bam_url))
+            assert len(table) == 1
 
-                urls = table[0].get('submitted_ftp', '')
-                md5s = table[0].get('submitted_md5', '')
-                sizes = table[0].get('submitted_bytes', '')
-                formats = table[0].get('submitted_format', '')
-                # If any of these are empty, or there are no BAM files,
-                # there's something wrong.
-                if not urls or not md5s or not sizes or 'BAM' not in formats:
-                    logger.warning(
-                        f'Run {accession} does not have any compatible files'
-                    )
-                    break
-                files = [
-                    {
-                        'url': f'ftp://{url}',
-                        'md5': md5,
-                        'size': size
-                    } for url, md5, size in
-                    zip(urls.split(';'), md5s.split(';'), sizes.split(';'))
-                ]
+            urls = table[0].get('submitted_ftp', '')
+            md5s = table[0].get('submitted_md5', '')
+            sizes = table[0].get('submitted_bytes', '')
+            formats = table[0].get('submitted_format', '')
+            if not urls or not md5s or not sizes or 'BAM' not in formats:
                 break
+            files.extend(
+                [{
+                    'url': f'ftp://{url}',
+                    'md5': md5,
+                    'size': size
+                } for url, md5, size in
+                 zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
+            )
+            break
 
     return {
         'accession': accession,

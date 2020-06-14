@@ -183,24 +183,26 @@ class TestFfq(TestMixin, TestCase):
         # Need to figure out how to add for loop test for adding individual runs
         with mock.patch('ffq.ffq.get_gse_search_json') as get_gse_search_json, \
             mock.patch('ffq.ffq.parse_gse_search') as parse_gse_search, \
-            mock.patch('ffq.ffq.geo_id_to_srp') as geo_id_to_srp, \
+            mock.patch('ffq.ffq.geo_id_to_srps') as geo_id_to_srps, \
             mock.patch('ffq.ffq.ffq_srp') as ffq_srp:
 
             parse_gse_search.return_value = {
                 'accession': 'GSE1',
                 'geo_id': 'GEOID1'
             }
-            geo_id_to_srp.return_value = 'SRP1'
+            geo_id_to_srps.return_value = ['SRP1']
             ffq_srp.return_value = {'accession': 'SRP1'}
 
             self.assertEqual({
                 'accession': 'GSE1',
-                'study': {
-                    'accession': 'SRP1'
+                'studies': {
+                    'SRP1': {
+                        'accession': 'SRP1'
+                    }
                 }
             }, ffq.ffq_gse('GSE1'))
             get_gse_search_json.assert_called_once_with('GSE1')
-            geo_id_to_srp.assert_called_once_with('GEOID1')
+            geo_id_to_srps.assert_called_once_with('GEOID1')
             ffq_srp.assert_called_once_with('SRP1')
 
     def test_ffq_srr(self):
