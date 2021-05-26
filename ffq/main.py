@@ -5,12 +5,12 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_srp, ffq_srr, ffq_erp, ffq_err
+from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study
 
 logger = logging.getLogger(__name__)
 
-RUN_TYPES = ('SRR', 'ERR')
-PROJECT_TYPES = ('SRP', 'ERP')
+RUN_TYPES = ('SRR', 'ERR', 'DRR')
+PROJECT_TYPES = ('SRP', 'ERP', 'DRP')  # aka study types
 GEO_TYPES = ('GSE',)
 OTHER_TYPES = ('DOI',)
 SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + GEO_TYPES + OTHER_TYPES
@@ -31,7 +31,7 @@ def main():
     parser.add_argument(
         'IDs',
         help=(
-            'Can be a SRA Run Accessions, SRA Study Accessions, '
+            'Can be a SRA / ENA Run Accessions or Study Accessions, '
             'GEO Study Accessions, DOIs or paper titles.'
         ),
         nargs='+'
@@ -102,14 +102,10 @@ def main():
 
     try:
         # run ffq depending on type
-        if args.t == 'SRR':
-            results = [ffq_srr(accession) for accession in args.IDs]
-        elif args.t == 'SRP':
-            results = [ffq_srp(accession) for accession in args.IDs]
-        elif args.t == 'ERR':
-            results = [ffq_err(accession) for accession in args.IDs]
-        elif args.t == 'ERP':
-            results = [ffq_erp(accession) for accession in args.IDs]
+        if args.t in RUN_TYPES:
+            results = [ffq_run(accession) for accession in args.IDs]
+        elif args.t in PROJECT_TYPES:
+            results = [ffq_study(accession) for accession in args.IDs]
         elif args.t == 'GSE':
             results = [ffq_gse(accession) for accession in args.IDs]
         elif args.t == 'DOI':

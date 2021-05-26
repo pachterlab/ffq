@@ -21,10 +21,10 @@ from .utils import (
 
 logger = logging.getLogger(__name__)
 
-RUN_REGEX = r'(SRR.+)|(ERR.+)'
-EXPERIMENT_REGEX = r'(SRX.+)|(ERX.+)'
-PROJECT_REGEX = r'(SRP.+)|(ERP.+)'
-SAMPLE_REGEX = r'(SRS.+)|(ERS.+)'
+RUN_PARSER = re.compile(r'(SRR.+)|(ERR.+)|(DRR.+)')
+EXPERIMENT_PARSER = re.compile(r'(SRX.+)|(ERX.+)|(DRX.+)')
+PROJECT_PARSER = re.compile(r'(SRP.+)|(ERP.+)|(DRP.+)')
+SAMPLE_PARSER = re.compile(r'(SRS.+)|(ERS.+)|(DRS.+)')
 
 
 def parse_run(soup):
@@ -38,12 +38,12 @@ def parse_run(soup):
     :rtype: dict
     """
 
-    accession = soup.find('PRIMARY_ID', text=re.compile(RUN_REGEX)).text
-    experiment = soup.find('PRIMARY_ID', text=re.compile(EXPERIMENT_REGEX)).text \
-        if soup.find('PRIMARY_ID', text=re.compile(EXPERIMENT_REGEX)) \
+    accession = soup.find('PRIMARY_ID', text=RUN_PARSER).text
+    experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text \
+        if soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER) \
         else soup.find('EXPERIMENT_REF')['accession']
-    study = soup.find('ID', text=re.compile(PROJECT_REGEX)).text
-    sample = soup.find('ID', text=re.compile(SAMPLE_REGEX)).text
+    study = soup.find('ID', text=PROJECT_PARSER).text
+    sample = soup.find('ID', text=SAMPLE_PARSER).text
     title = soup.find('TITLE').text
     files = []
 
@@ -117,7 +117,7 @@ def parse_sample(soup):
     :return: a dictionary containing sample information
     :rtype: dict
     """
-    accession = soup.find('PRIMARY_ID', text=re.compile(SAMPLE_REGEX)).text
+    accession = soup.find('PRIMARY_ID', text=SAMPLE_PARSER).text
     title = soup.find('TITLE').text
     organism = soup.find('SCIENTIFIC_NAME').text
     attributes = {
@@ -142,7 +142,7 @@ def parse_experiment(soup):
     :return: a dictionary containing experiment information
     :rtype: dict
     """
-    accession = soup.find('PRIMARY_ID', text=re.compile(EXPERIMENT_REGEX)).text
+    accession = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text
     title = soup.find('TITLE').text
     platform = soup.find('INSTRUMENT_MODEL').find_parent().name
     instrument = soup.find('INSTRUMENT_MODEL').text
@@ -165,9 +165,10 @@ def parse_study(soup):
     :return: a dictionary containing study information
     :rtype: dict
     """
-    accession = soup.find('PRIMARY_ID', text=re.compile(PROJECT_REGEX)).text
+    accession = soup.find('PRIMARY_ID', text=PROJECT_PARSER).text
     title = soup.find('STUDY_TITLE').text
-    abstract = soup.find('STUDY_ABSTRACT').text
+    abstract = soup.find('STUDY_ABSTRACT'
+                         ).text if soup.find('STUDY_ABSTRACT') else ""
 
     return {'accession': accession, 'title': title, 'abstract': abstract}
 
@@ -182,13 +183,13 @@ def parse_study_with_run(soup):
     :return: a dictionary containing study information and run information
     :rtype: dict
     """
-    accession = soup.find('PRIMARY_ID', text=re.compile(PROJECT_REGEX)).text
+    accession = soup.find('PRIMARY_ID', text=PROJECT_PARSER).text
     title = soup.find('STUDY_TITLE').text
     abstract = soup.find('STUDY_ABSTRACT').text
 
     # Returns all of the runs associated with a study
     run = []
-    run_ranges = soup.find('ID', text=re.compile(RUN_REGEX)).text.split(",")
+    run_ranges = soup.find('ID', text=RUN_PARSER).text.split(",")
     for run_range in run_ranges:
         if '-' in run_range:
             run += parse_run_range(run_range)
@@ -243,8 +244,8 @@ def parse_gse_summary(soup):
         return {'accession': srp}
 
 
-def ffq_srr(accession):
-    """Fetch SRR information.
+def ffq_run(accession):
+    """Fetch Run information.
 
     :param accession: run accession
     :type accession: str
@@ -265,37 +266,15 @@ def ffq_srr(accession):
     return run
 
 
-def ffq_err(accession):
-    """Fetch ERR information.
-
-    :param accession: run accession
-    :type accession: str
-
-    :return: dictionary of run information
-    :rtype: dict
-    """
-    logger.info(f'Parsing run {accession}')
-    run = parse_run(get_xml(accession))
-    logger.debug(f'Parsing sample {run["sample"]}')
-    sample = parse_sample(get_xml(run['sample']))
-    logger.debug(f'Parsing experiment {run["experiment"]}')
-    experiment = parse_experiment(get_xml(run['experiment']))
-    logger.debug(f'Parsing study {run["study"]}')
-    study = parse_study(get_xml(run['study']))
-
-    run.update({'sample': sample, 'experiment': experiment, 'study': study})
-    return run
-
-
-def ffq_srp(accession):
-    """Fetch SRP information.
+def ffq_study(accession):
+    """Fetch Study information.
 
     :param accession: study accession
     :type accession: str
 
     :return: dictionary of study information. The dictionary contains a
              'runs' key, which is a dictionary of all the runs in the study, as
-             returned by `ffq_srr`.
+             returned by `ffq_run`.
     :rtype: dict
     """
     logger.info(f'Parsing Study SRP {accession}')
@@ -303,30 +282,7 @@ def ffq_srp(accession):
 
     logger.warning(f'There are {len(study["runlist"])} runs for {accession}')
 
-    runs = {run: ffq_srr(run) for run in study.pop('runlist')}
-
-    study.update({'runs': runs})
-
-    return study
-
-
-def ffq_erp(accession):
-    """Fetch ERP information.
-
-    :param accession: study accession
-    :type accession: str
-
-    :return: dictionary of study information. The dictionary contains a
-             'runs' key, which is a dictionary of all the runs in the study, as
-             returned by `ffq_err`.
-    :rtype: dict
-    """
-    logger.info(f'Parsing Study SRP {accession}')
-    study = parse_study_with_run(get_xml(accession))
-
-    logger.warning(f'There are {len(study["runlist"])} runs for {accession}')
-
-    runs = {run: ffq_err(run) for run in study.pop('runlist')}
+    runs = {run: ffq_run(run) for run in study.pop('runlist')}
 
     study.update({'runs': runs})
 
@@ -336,7 +292,7 @@ def ffq_erp(accession):
 def ffq_gse(accession):
     """Fetch GSE information.
 
-    This function finds the SRP corresponding to the GSE and calls `ffq_srp`.
+    This function finds the SRP corresponding to the GSE and calls `ffq_study`.
 
     :param accession: GSE accession
     :type accession: str
@@ -350,7 +306,7 @@ def ffq_gse(accession):
     logger.info(f'Getting Study SRP for {accession}')
     time.sleep(1)
     srps = geo_id_to_srps(gse.pop('geo_id'))
-    studies = [ffq_srp(srp) for srp in srps]
+    studies = [ffq_study(srp) for srp in srps]
     gse.update({'studies': {study['accession']: study for study in studies}})
     return gse
 
@@ -362,7 +318,7 @@ def ffq_doi(doi):
     to find any SRA studies that match the title. If there are, all the runs in
     each study are fetched. If there are not, Pubmed is searched for the DOI,
     which may contain GEO IDs. If there are GEO IDs, `ffq_gse` is called for each.
-    If not, the Pubmed entry may include SRA links. If there are, `ffq_srr` is
+    If not, the Pubmed entry may include SRA links. If there are, `ffq_run` is
     called for each linked run. These runs are then grouped by SRP.
 
     :param doi: paper DOI
@@ -392,7 +348,7 @@ def ffq_doi(doi):
         logger.info(
             f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
         )
-        return [ffq_srp(accession) for accession in study_accessions]
+        return [ffq_study(accession) for accession in study_accessions]
 
     # If not study with the title is found, search Pubmed, which can be linked
     # to a GEO accession.
@@ -435,7 +391,7 @@ def ffq_doi(doi):
     sra_ids = ncbi_link('pubmed', 'sra', pubmed_id)
     if sra_ids:
         srrs = sra_ids_to_srrs(sra_ids)
-        runs = [ffq_srr(accession) for accession in srrs]
+        runs = [ffq_run(accession) for accession in srrs]
 
         # Group runs by project to keep things consistent.
         studies = []
