@@ -219,12 +219,12 @@ class TestUtils(TestCase):
                 }
             )
 
-    def test_parse_SRR_range(self):
+    def test_parse_run_range(self):
         text = 'SRR10-SRR13'
         self.assertEqual(['SRR10', 'SRR11', 'SRR12', 'SRR13'],
-                         utils.parse_SRR_range(text))
+                         utils.parse_run_range(text))
 
-    def test_parse_SRR_range_leading_zero(self):
+    def test_parse_run_range_leading_zero(self):
         text = 'SRR01-SRR05'
         self.assertEqual(['SRR01', 'SRR02', 'SRR03', 'SRR04', 'SRR05'],
-                         utils.parse_SRR_range(text))
+                         utils.parse_run_range(text))

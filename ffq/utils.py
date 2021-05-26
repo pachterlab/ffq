@@ -333,18 +333,21 @@ def sra_ids_to_srrs(ids):
     return sorted(list(set(SRR_PARSER.findall(response.text))))
 
 
-def parse_SRR_range(text):
-    """Given an a string of SRR ranges, returns a list of intermediary SRR numbers.
+def parse_run_range(text):
+    """Given an a string of run ranges, returns a list of intermediary run numbers.
 
-    :param text: an SRR range (example: 'SRR4340020-SRR4340045')
+    :param text: an SRR range (example: 'SRR4340020-SRR4340045') or ERR range (example: 'ERR4340020-ERR4340045')
     :type text: str
 
-    :return: a list of SRR numbers
+    :return: a list of range of accession numbers
     :rtype: list
     """
+
     first, last = text.split('-')
+    base = re.match(r'^.*?(?=[0-9])', first).group(0)
+
     ids = [
-        f'SRR{str(i).zfill(len(first) - 3)}'
+        f'{base}{str(i).zfill(len(first) - 3)}'
         for i in range(int(first[3:]),
                        int(last[3:]) + 1)
     ]

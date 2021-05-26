@@ -13,13 +13,18 @@ from .utils import (
     get_xml,
     ncbi_link,
     ncbi_search,
-    parse_SRR_range,
+    parse_run_range,
     parse_tsv,
     search_ena_title,
     sra_ids_to_srrs,
 )
 
 logger = logging.getLogger(__name__)
+
+RUN_REGEX = r'(SRR.+)|(ERR.+)'
+EXPERIMENT_REGEX = r'(SRX.+)|(ERX.+)'
+PROJECT_REGEX = r'(SRP.+)|(ERP.+)'
+SAMPLE_REGEX = r'(SRS.+)|(ERS.+)'
 
 
 def parse_run(soup):
@@ -32,12 +37,13 @@ def parse_run(soup):
     :return: a dictionary containing run information
     :rtype: dict
     """
-    accession = soup.find('PRIMARY_ID', text=re.compile(r'SRR.+')).text
-    experiment = soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')).text \
-        if soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')) \
+
+    accession = soup.find('PRIMARY_ID', text=re.compile(RUN_REGEX)).text
+    experiment = soup.find('PRIMARY_ID', text=re.compile(EXPERIMENT_REGEX)).text \
+        if soup.find('PRIMARY_ID', text=re.compile(EXPERIMENT_REGEX)) \
         else soup.find('EXPERIMENT_REF')['accession']
-    study = soup.find('ID', text=re.compile(r'SRP.+')).text
-    sample = soup.find('ID', text=re.compile(r'SRS.+')).text
+    study = soup.find('ID', text=re.compile(PROJECT_REGEX)).text
+    sample = soup.find('ID', text=re.compile(SAMPLE_REGEX)).text
     title = soup.find('TITLE').text
     files = []
 
@@ -111,7 +117,7 @@ def parse_sample(soup):
     :return: a dictionary containing sample information
     :rtype: dict
     """
-    accession = soup.find('PRIMARY_ID', text=re.compile(r'SRS.+')).text
+    accession = soup.find('PRIMARY_ID', text=re.compile(SAMPLE_REGEX)).text
     title = soup.find('TITLE').text
     organism = soup.find('SCIENTIFIC_NAME').text
     attributes = {
@@ -136,7 +142,7 @@ def parse_experiment(soup):
     :return: a dictionary containing experiment information
     :rtype: dict
     """
-    accession = soup.find('PRIMARY_ID', text=re.compile(r'SRX.+')).text
+    accession = soup.find('PRIMARY_ID', text=re.compile(EXPERIMENT_REGEX)).text
     title = soup.find('TITLE').text
     platform = soup.find('INSTRUMENT_MODEL').find_parent().name
     instrument = soup.find('INSTRUMENT_MODEL').text
@@ -159,7 +165,7 @@ def parse_study(soup):
     :return: a dictionary containing study information
     :rtype: dict
     """
-    accession = soup.find('PRIMARY_ID', text=re.compile(r'SRP.+')).text
+    accession = soup.find('PRIMARY_ID', text=re.compile(PROJECT_REGEX)).text
     title = soup.find('STUDY_TITLE').text
     abstract = soup.find('STUDY_ABSTRACT').text
 
@@ -176,23 +182,23 @@ def parse_study_with_run(soup):
     :return: a dictionary containing study information and run information
     :rtype: dict
     """
-    accession = soup.find('PRIMARY_ID', text=re.compile(r'SRP.+')).text
+    accession = soup.find('PRIMARY_ID', text=re.compile(PROJECT_REGEX)).text
     title = soup.find('STUDY_TITLE').text
     abstract = soup.find('STUDY_ABSTRACT').text
 
     # Returns all of the runs associated with a study
-    srr = []
-    srr_ranges = soup.find('ID', text=re.compile(r'SRR.+')).text.split(",")
-    for srr_range in srr_ranges:
-        if '-' in srr_range:
-            srr += parse_SRR_range(srr_range)
+    run = []
+    run_ranges = soup.find('ID', text=re.compile(RUN_REGEX)).text.split(",")
+    for run_range in run_ranges:
+        if '-' in run_range:
+            run += parse_run_range(run_range)
         else:
-            srr.append(srr_range)
+            run.append(run_range)
     return {
         'accession': accession,
         'title': title,
         'abstract': abstract,
-        'runlist': srr
+        'runlist': run
     }
 
 
@@ -259,6 +265,28 @@ def ffq_srr(accession):
     return run
 
 
+def ffq_err(accession):
+    """Fetch ERR information.
+
+    :param accession: run accession
+    :type accession: str
+
+    :return: dictionary of run information
+    :rtype: dict
+    """
+    logger.info(f'Parsing run {accession}')
+    run = parse_run(get_xml(accession))
+    logger.debug(f'Parsing sample {run["sample"]}')
+    sample = parse_sample(get_xml(run['sample']))
+    logger.debug(f'Parsing experiment {run["experiment"]}')
+    experiment = parse_experiment(get_xml(run['experiment']))
+    logger.debug(f'Parsing study {run["study"]}')
+    study = parse_study(get_xml(run['study']))
+
+    run.update({'sample': sample, 'experiment': experiment, 'study': study})
+    return run
+
+
 def ffq_srp(accession):
     """Fetch SRP information.
 
@@ -276,6 +304,29 @@ def ffq_srp(accession):
     logger.warning(f'There are {len(study["runlist"])} runs for {accession}')
 
     runs = {run: ffq_srr(run) for run in study.pop('runlist')}
+
+    study.update({'runs': runs})
+
+    return study
+
+
+def ffq_erp(accession):
+    """Fetch ERP information.
+
+    :param accession: study accession
+    :type accession: str
+
+    :return: dictionary of study information. The dictionary contains a
+             'runs' key, which is a dictionary of all the runs in the study, as
+             returned by `ffq_err`.
+    :rtype: dict
+    """
+    logger.info(f'Parsing Study SRP {accession}')
+    study = parse_study_with_run(get_xml(accession))
+
+    logger.warning(f'There are {len(study["runlist"])} runs for {accession}')
+
+    runs = {run: ffq_err(run) for run in study.pop('runlist')}
 
     study.update({'runs': runs})
 
