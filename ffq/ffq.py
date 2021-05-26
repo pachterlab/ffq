@@ -391,15 +391,19 @@ def ffq_doi(doi):
     sra_ids = ncbi_link('pubmed', 'sra', pubmed_id)
     if sra_ids:
         srrs = sra_ids_to_srrs(sra_ids)
+        logger.warning(f"Found {len(srrs)} run accessions.")
         runs = [ffq_run(accession) for accession in srrs]
 
         # Group runs by project to keep things consistent.
-        studies = []
+        studies = {}
         for run in runs:
             study = run['study'].copy()  # Prevent recursive dict
-            study.setdefault('runs', {})[run['accession']] = run
-            studies.append(study)
-        return studies
+            # get the study accession if exists and add the run to the runs
+            studies.setdefault(study["accession"],
+                               study).setdefault('runs',
+                                                 {})[run['accession']] = run
+
+        return [v for k, v in studies.items()]
     else:
         raise Exception(
             f'No SRA records are linked to Pubmed ID \'{pubmed_id}\''
