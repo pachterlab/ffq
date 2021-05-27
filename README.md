@@ -1,6 +1,6 @@
 # ffq
-![github version](https://img.shields.io/badge/Version-0.0.1-informational)
-[![pypi version](https://img.shields.io/pypi/v/ffq)](https://pypi.org/project/ffq/0.0.1/)
+![github version](https://img.shields.io/badge/Version-0.0.2-informational)
+[![pypi version](https://img.shields.io/pypi/v/ffq)](https://pypi.org/project/ffq/0.0.2/)
 ![python versions](https://img.shields.io/pypi/pyversions/ffq)
 ![status](https://github.com/pachterlab/ffq/workflows/CI/badge.svg)
 [![pypi downloads](https://img.shields.io/pypi/dm/ffq)](https://pypi.org/project/ffq/)
