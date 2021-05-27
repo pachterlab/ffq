@@ -5,11 +5,15 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_srp, ffq_srr
+from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study
 
 logger = logging.getLogger(__name__)
 
-SEARCH_TYPES = ('SRR', 'SRP', 'GSE', 'DOI')
+RUN_TYPES = ('SRR', 'ERR', 'DRR')
+PROJECT_TYPES = ('SRP', 'ERP', 'DRP')  # aka study types
+GEO_TYPES = ('GSE',)
+OTHER_TYPES = ('DOI',)
+SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + GEO_TYPES + OTHER_TYPES
 
 
 def main():
@@ -27,7 +31,7 @@ def main():
     parser.add_argument(
         'IDs',
         help=(
-            'Can be a SRA Run Accessions, SRA Study Accessions, '
+            'Can be a SRA / ENA Run Accessions or Study Accessions, '
             'GEO Study Accessions, DOIs or paper titles.'
         ),
         nargs='+'
@@ -86,25 +90,11 @@ def main():
         parser.error('`-o` must be provided when using `--split`')
 
     # Check IDs depending on type
-    if args.t == 'SRR':
+    if args.t in RUN_TYPES + PROJECT_TYPES + GEO_TYPES:
         for ID in args.IDs:
-            if ID[0:3] != "SRR" or not ID[3:].isdigit():
+            if ID[0:3] != args.t or not ID[3:].isdigit():
                 parser.error((
-                    f'{ID} failed validation. SRRs must '
-                    'start with \'SRR\' and end with digits.'
-                ))
-    elif args.t == 'SRP':
-        for ID in args.IDs:
-            if ID[0:3] != "SRP" or not ID[3:].isdigit():
-                parser.error((
-                    f'{ID} failed validation. SRPs must '
-                    'start with \'SRP\' and end with digits.'
-                ))
-    elif args.t == 'GSE':
-        for ID in args.IDs:
-            if ID[0:3] != "GSE" or not ID[3:].isdigit():
-                parser.error((
-                    f'{ID} failed validation. GSEs must start with \'GSE\','
+                    f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
                     ' and end with digits.'
                 ))
     elif args.t == 'DOI':
@@ -112,10 +102,10 @@ def main():
 
     try:
         # run ffq depending on type
-        if args.t == 'SRR':
-            results = [ffq_srr(accession) for accession in args.IDs]
-        elif args.t == 'SRP':
-            results = [ffq_srp(accession) for accession in args.IDs]
+        if args.t in RUN_TYPES:
+            results = [ffq_run(accession) for accession in args.IDs]
+        elif args.t in PROJECT_TYPES:
+            results = [ffq_study(accession) for accession in args.IDs]
         elif args.t == 'GSE':
             results = [ffq_gse(accession) for accession in args.IDs]
         elif args.t == 'DOI':

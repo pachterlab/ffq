@@ -135,7 +135,32 @@ def search_ena_title(title):
     if not response.text:
         return []
     table = parse_tsv(response.text)
-    return [t['secondary_study_accession'] for t in table]
+
+    # If there is no secondary_study_accession, need to use bioproject.
+    srps = [
+        t['secondary_study_accession']
+        for t in table
+        if 'secondary_study_accession' in t and t['secondary_study_accession']
+    ]
+    bioprojects = [
+        t['study_accession']
+        for t in table
+        if 'secondary_study_accession' not in t
+    ]
+
+    if bioprojects:
+        bioproject_ids = ncbi_search(
+            'bioproject',
+            ' or '.join(f'{bioproject}[PRJA]' for bioproject in bioprojects)
+        )
+        sra_ids = ncbi_link('bioproject', 'sra', ','.join(bioproject_ids))
+
+        # Fetch summaries of these SRA ids
+        time.sleep(1)
+        sras = ncbi_summary('sra', ','.join(sra_ids))
+        srps.extend(SRP_PARSER.findall(str(sras)))
+
+    return list(set(srps))
 
 
 def ncbi_summary(db, id):
@@ -230,7 +255,7 @@ def ncbi_link(origin, destination, id):
     return sorted(list(set(ids)))
 
 
-def geo_id_to_srp(id):
+def geo_id_to_srps(id):
     """Convert a GEO ID to an SRP.
 
     :param id: GEO ID
@@ -243,10 +268,12 @@ def geo_id_to_srp(id):
     data = summaries[id]
 
     # Check if there is a directly linked SRP
+    srps = []
     if 'extrelations' in data:
         for value in data['extrelations']:
             if value['relationtype'] == 'SRA':  # may have manys samples?
-                return value['targetobject']
+                srps.append(value['targetobject'])
+        return srps
 
     # No SRA relation was found, but all GSEs have linked bioproject, so
     # search for that instead.
@@ -261,8 +288,7 @@ def geo_id_to_srp(id):
     time.sleep(1)
     sras = ncbi_summary('sra', ','.join(sra_ids))
     srps = list(set(SRP_PARSER.findall(str(sras))))
-    assert len(srps) == 1
-    return srps[0]
+    return srps
 
 
 def geo_ids_to_gses(ids):
@@ -307,18 +333,21 @@ def sra_ids_to_srrs(ids):
     return sorted(list(set(SRR_PARSER.findall(response.text))))
 
 
-def parse_SRR_range(text):
-    """Given an a string of SRR ranges, returns a list of intermediary SRR numbers.
+def parse_run_range(text):
+    """Given an a string of run ranges, returns a list of intermediary run numbers.
 
-    :param text: an SRR range (example: 'SRR4340020-SRR4340045')
+    :param text: an SRR range (example: 'SRR4340020-SRR4340045') or ERR range (example: 'ERR4340020-ERR4340045')
     :type text: str
 
-    :return: a list of SRR numbers
+    :return: a list of range of accession numbers
     :rtype: list
     """
+
     first, last = text.split('-')
+    base = re.match(r'^.*?(?=[0-9])', first).group(0)
+
     ids = [
-        f'SRR{str(i).zfill(len(first) - 3)}'
+        f'{base}{str(i).zfill(len(first) - 3)}'
         for i in range(int(first[3:]),
                        int(last[3:]) + 1)
     ]

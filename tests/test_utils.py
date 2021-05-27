@@ -158,7 +158,7 @@ class TestUtils(TestCase):
                 }
             )
 
-    def test_geo_id_to_srp(self):
+    def test_geo_id_to_srps(self):
         with mock.patch('ffq.utils.ncbi_summary') as ncbi_summary:
             ncbi_summary.return_value = {
                 'id': {
@@ -168,10 +168,10 @@ class TestUtils(TestCase):
                     }]
                 }
             }
-            self.assertEqual('SRP1', utils.geo_id_to_srp('id'))
+            self.assertEqual(['SRP1'], utils.geo_id_to_srps('id'))
             ncbi_summary.assert_called_once_with('gds', 'id')
 
-    def test_geo_id_to_srp_bioproject(self):
+    def test_geo_id_to_srps_bioproject(self):
         with mock.patch('ffq.utils.ncbi_summary') as ncbi_summary,\
             mock.patch('ffq.utils.ncbi_search') as ncbi_search,\
             mock.patch('ffq.utils.ncbi_link') as ncbi_link:
@@ -185,7 +185,7 @@ class TestUtils(TestCase):
             }]
             ncbi_search.return_value = ['BIOPROJECT1']
             ncbi_link.return_value = ['SRA1', 'SRA2']
-            self.assertEqual('SRP1', utils.geo_id_to_srp('id'))
+            self.assertEqual(['SRP1'], utils.geo_id_to_srps('id'))
             self.assertEqual(2, ncbi_summary.call_count)
             ncbi_summary.assert_has_calls([
                 call('gds', 'id'), call('sra', 'SRA1,SRA2')
@@ -219,12 +219,12 @@ class TestUtils(TestCase):
                 }
             )
 
-    def test_parse_SRR_range(self):
+    def test_parse_run_range(self):
         text = 'SRR10-SRR13'
         self.assertEqual(['SRR10', 'SRR11', 'SRR12', 'SRR13'],
-                         utils.parse_SRR_range(text))
+                         utils.parse_run_range(text))
 
-    def test_parse_SRR_range_leading_zero(self):
+    def test_parse_run_range_leading_zero(self):
         text = 'SRR01-SRR05'
         self.assertEqual(['SRR01', 'SRR02', 'SRR03', 'SRR04', 'SRR05'],
-                         utils.parse_SRR_range(text))
+                         utils.parse_run_range(text))

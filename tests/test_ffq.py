@@ -183,27 +183,29 @@ class TestFfq(TestMixin, TestCase):
         # Need to figure out how to add for loop test for adding individual runs
         with mock.patch('ffq.ffq.get_gse_search_json') as get_gse_search_json, \
             mock.patch('ffq.ffq.parse_gse_search') as parse_gse_search, \
-            mock.patch('ffq.ffq.geo_id_to_srp') as geo_id_to_srp, \
-            mock.patch('ffq.ffq.ffq_srp') as ffq_srp:
+            mock.patch('ffq.ffq.geo_id_to_srps') as geo_id_to_srps, \
+            mock.patch('ffq.ffq.ffq_study') as ffq_study:
 
             parse_gse_search.return_value = {
                 'accession': 'GSE1',
                 'geo_id': 'GEOID1'
             }
-            geo_id_to_srp.return_value = 'SRP1'
-            ffq_srp.return_value = {'accession': 'SRP1'}
+            geo_id_to_srps.return_value = ['SRP1']
+            ffq_study.return_value = {'accession': 'SRP1'}
 
             self.assertEqual({
                 'accession': 'GSE1',
-                'study': {
-                    'accession': 'SRP1'
+                'studies': {
+                    'SRP1': {
+                        'accession': 'SRP1'
+                    }
                 }
             }, ffq.ffq_gse('GSE1'))
             get_gse_search_json.assert_called_once_with('GSE1')
-            geo_id_to_srp.assert_called_once_with('GEOID1')
-            ffq_srp.assert_called_once_with('SRP1')
+            geo_id_to_srps.assert_called_once_with('GEOID1')
+            ffq_study.assert_called_once_with('SRP1')
 
-    def test_ffq_srr(self):
+    def test_ffq_run(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
             mock.patch('ffq.ffq.parse_run') as parse_run,\
             mock.patch('ffq.ffq.parse_sample') as parse_sample,\
@@ -219,7 +221,7 @@ class TestFfq(TestMixin, TestCase):
             parse_experiment.return_value = experiment
             parse_study.return_value = study
 
-            self.assertEqual(run, ffq.ffq_srr('SRR8426358'))
+            self.assertEqual(run, ffq.ffq_run('SRR8426358'))
             self.assertEqual(4, get_xml.call_count)
             get_xml.assert_has_calls([
                 call('SRR8426358'),
@@ -228,36 +230,36 @@ class TestFfq(TestMixin, TestCase):
                 call(parse_run()['study'])
             ])
 
-    def test_ffq_srp(self):
+    def test_ffq_study(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
             mock.patch('ffq.ffq.parse_study_with_run') as parse_study_with_run,\
-            mock.patch('ffq.ffq.ffq_srr') as ffq_srr:
+            mock.patch('ffq.ffq.ffq_run') as ffq_run:
 
             study = {'runlist': ['run1', 'run2']}
             run1 = mock.MagicMock()
             run2 = mock.MagicMock()
             parse_study_with_run.return_value = study
-            ffq_srr.side_effect = [run1, run2]
+            ffq_run.side_effect = [run1, run2]
 
             self.assertEqual({'runs': {
                 'run1': run1,
                 'run2': run2
-            }}, ffq.ffq_srp('SRP226764'))
+            }}, ffq.ffq_study('SRP226764'))
             get_xml.assert_called_once_with('SRP226764')
-            self.assertEqual(2, ffq_srr.call_count)
-            ffq_srr.assert_has_calls([call('run1'), call('run2')])
+            self.assertEqual(2, ffq_run.call_count)
+            ffq_run.assert_has_calls([call('run1'), call('run2')])
 
     def test_ffq_doi(self):
         with mock.patch('ffq.ffq.get_doi') as get_doi,\
             mock.patch('ffq.ffq.search_ena_title') as search_ena_title,\
-            mock.patch('ffq.ffq.ffq_srp') as ffq_srp:
+            mock.patch('ffq.ffq.ffq_study') as ffq_study:
 
             get_doi.return_value = {'title': ['title']}
             search_ena_title.return_value = ['SRP1']
-            self.assertEqual([ffq_srp.return_value], ffq.ffq_doi('doi'))
+            self.assertEqual([ffq_study.return_value], ffq.ffq_doi('doi'))
             get_doi.assert_called_once_with('doi')
             search_ena_title.assert_called_once_with('title')
-            ffq_srp.assert_called_once_with('SRP1')
+            ffq_study.assert_called_once_with('SRP1')
 
     def test_ffq_doi_no_title(self):
         with mock.patch('ffq.ffq.get_doi') as get_doi,\
@@ -286,14 +288,14 @@ class TestFfq(TestMixin, TestCase):
             mock.patch('ffq.ffq.ncbi_search') as ncbi_search,\
             mock.patch('ffq.ffq.ncbi_link') as ncbi_link,\
             mock.patch('ffq.ffq.sra_ids_to_srrs') as sra_ids_to_srrs,\
-            mock.patch('ffq.ffq.ffq_srr') as ffq_srr:
+            mock.patch('ffq.ffq.ffq_run') as ffq_run:
 
             get_doi.return_value = {'title': ['title']}
             search_ena_title.return_value = []
             ncbi_search.return_value = ['PMID1']
             ncbi_link.side_effect = [[], ['SRA1']]
             sra_ids_to_srrs.return_value = ['SRR1']
-            ffq_srr.return_value = {
+            ffq_run.return_value = {
                 'accession': 'SRR1',
                 'study': {
                     'accession': 'SRP1'
@@ -319,4 +321,4 @@ class TestFfq(TestMixin, TestCase):
                 call('pubmed', 'sra', 'PMID1'),
             ])
             sra_ids_to_srrs.assert_called_once_with(['SRA1'])
-            ffq_srr.assert_called_once_with('SRR1')
+            ffq_run.assert_called_once_with('SRR1')
