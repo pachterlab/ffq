@@ -66,7 +66,7 @@ where `[DOIS]` is a space-delimited list of one or more DOIs. The output is a JS
 ## Examples
 Examples are available in the [examples](examples) directory.
 
-### Downloading data
+## Downloading data
 `ffq` is specifically designed to download metadata and to facilitate obtaining links to sequence files. To download raw data from the links obtained with `ffq` consider using one of these tools:
  - [`fasterq dump`](https://github.com/ncbi/sra-tools/wiki/HowTo:-fasterq-dump)
  - [`pysradb`](https://github.com/saketkc/pysradb)
