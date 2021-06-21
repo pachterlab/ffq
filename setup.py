@@ -22,7 +22,7 @@ setup(
     keywords='',
     python_requires='>=3.6',
     license='MIT',
-    packages=find_packages(),
+    packages=find_packages(exclude=('tests', 'tests.*')),
     zip_safe=False,
     include_package_data=True,
     install_requires=read('requirements.txt').strip().split('\n'),
