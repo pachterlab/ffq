@@ -82,11 +82,57 @@ class TestUtils(TestCase):
             cached_get.assert_called_once_with(f'{CROSSREF_URL}/doi')
             self.assertEqual({'key': 'value'}, result)
 
+    def test_search_ena_study_runs(self):
+        with mock.patch('ffq.utils.cached_get') as cached_get:
+            cached_get.return_value = 'run_accession\nSRR13436369\nSRR13436370\nSRR13436371\n'
+            self.assertEqual(['SRR13436369', 'SRR13436370', 'SRR13436371'],
+                             utils.search_ena_study_runs('study'))
+            cached_get.assert_called_once_with(
+                ENA_SEARCH_URL,
+                params={
+                    'query': 'secondary_study_accession="study"',
+                    'result': 'read_run',
+                    'fields': 'run_accession',
+                    'limit': 0,
+                }
+            )
+
+    def test_search_ena_run_study(self):
+        with mock.patch('ffq.utils.cached_get') as cached_get:
+            cached_get.return_value = 'run_accession\tsecondary_study_accession\nSRR13436369\tSRP301759\n'
+            self.assertEqual('SRP301759', utils.search_ena_run_study('run'))
+            cached_get.assert_called_once_with(
+                ENA_SEARCH_URL,
+                params={
+                    'query': 'run_accession="run"',
+                    'result': 'read_run',
+                    'fields': 'secondary_study_accession',
+                    'limit': 0,
+                }
+            )
+
+    def test_search_ena_run_sample(self):
+        with mock.patch('ffq.utils.cached_get') as cached_get:
+            cached_get.return_value = (
+                'run_accession\tsample_accession\tsecondary_sample_accession\n'
+                'SRR13436369\tSAMN17315475\tSRS8031399\n'
+            )
+            self.assertEqual('SRS8031399', utils.search_ena_run_sample('run'))
+            cached_get.assert_called_once_with(
+                ENA_SEARCH_URL,
+                params={
+                    'query': 'run_accession="run"',
+                    'result': 'read_run',
+                    'fields': 'secondary_sample_accession',
+                    'limit': 0,
+                }
+            )
+
     def test_search_ena_title(self):
-        with mock.patch('ffq.utils.requests.get') as get:
-            get.return_value.text = 'study_accession\tsecondary_study_accession\nPRJNA579178\tSRP226764\n'
+        with mock.patch('ffq.utils.cached_get') as cached_get:
+            cached_get.return_value = 'study_accession\tsecondary_study_accession\nPRJNA579178\tSRP226764\n'
             self.assertEqual(['SRP226764'], utils.search_ena_title('title'))
-            get.assert_called_once_with(
+            cached_get.assert_called_once_with(
                 ENA_SEARCH_URL,
                 params={
                     'result': 'study',

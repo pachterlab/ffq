@@ -5,6 +5,7 @@ from functools import lru_cache
 
 import requests
 from bs4 import BeautifulSoup
+from frozendict import frozendict
 
 from .config import (
     CROSSREF_URL,
@@ -111,6 +112,95 @@ def parse_tsv(s):
     return rows
 
 
+def search_ena_study_runs(accession):
+    """Given a study accession (SRP), submit a search request to ENA for all
+    linked run accessions (SRR).
+
+    :param accession: study accession
+    :type accession: str
+
+    :return: list of SRPs
+    :rtype: list
+    """
+    text = cached_get(
+        ENA_SEARCH_URL,
+        params=frozendict({
+            'query': f'secondary_study_accession="{accession}"',
+            'result': 'read_run',
+            'fields': 'run_accession',
+            'limit': 0,
+        })
+    )
+    if not text:
+        return []
+    table = parse_tsv(text)
+    return [t['run_accession'] for t in table]
+
+
+def search_ena_run_study(accession):
+    """Given a run accession (SRR), submit a search request to ENA for its
+    corresponding study accession (SRP).
+
+    :param accession: run accession
+    :type accession: str
+
+    :return: study accession
+    :rtype: str
+    """
+    text = cached_get(
+        ENA_SEARCH_URL,
+        params=frozendict({
+            'query': f'run_accession="{accession}"',
+            'result': 'read_run',
+            'fields': 'secondary_study_accession',
+            'limit': 0,
+        })
+    )
+    if not text:
+        return []
+    table = parse_tsv(text)
+    # Make sure only one study was returned
+    accessions = set(t['secondary_study_accession'] for t in table)
+    if len(accessions) != 1:
+        raise Exception(
+            f'Run {accession} is associated with {len(accessions)} studies, '
+            'but one was expected.'
+        )
+    return list(accessions)[0]
+
+
+def search_ena_run_sample(accession):
+    """Given a run accession (SRR), submit a search request to ENA for its
+    corresponding sample accession (SRS).
+
+    :param accession: run accession
+    :type accession: str
+
+    :return: sample accession
+    :rtype: str
+    """
+    text = cached_get(
+        ENA_SEARCH_URL,
+        params=frozendict({
+            'query': f'run_accession="{accession}"',
+            'result': 'read_run',
+            'fields': 'secondary_sample_accession',
+            'limit': 0,
+        })
+    )
+    if not text:
+        return []
+    table = parse_tsv(text)
+    # Make sure only one study was returned
+    accessions = set(t['secondary_sample_accession'] for t in table)
+    if len(accessions) != 1:
+        raise Exception(
+            f'Run {accession} is associated with {len(accessions)} samples, '
+            'but one was expected.'
+        )
+    return list(accessions)[0]
+
+
 def search_ena_title(title):
     """Given a title, search the ENA for studies (SRPs) corresponding to the title.
 
@@ -120,21 +210,18 @@ def search_ena_title(title):
     :return: list of SRPs
     :rtype: list
     """
-    # TODO: use cached get. Can't be used currently because dictionaries can
-    # not be hashed.
-    response = requests.get(
+    text = cached_get(
         ENA_SEARCH_URL,
-        params={
+        params=frozendict({
             'result': 'study',
             'limit': 0,
             'query': f'study_title="{title}"',
             'fields': 'secondary_study_accession',
-        }
+        })
     )
-    response.raise_for_status()
-    if not response.text:
+    if not text:
         return []
-    table = parse_tsv(response.text)
+    table = parse_tsv(text)
 
     # If there is no secondary_study_accession, need to use bioproject.
     srps = [
