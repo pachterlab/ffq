@@ -15,6 +15,9 @@ from .utils import (
     ncbi_search,
     parse_run_range,
     parse_tsv,
+    search_ena_run_sample,
+    search_ena_run_study,
+    search_ena_study_runs,
     search_ena_title,
     sra_ids_to_srrs,
 )
@@ -42,11 +45,27 @@ def parse_run(soup):
     experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text \
         if soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER) \
         else soup.find('EXPERIMENT_REF')['accession']
-    study = soup.find('ID', text=PROJECT_PARSER).text
-    sample = soup.find('ID', text=SAMPLE_PARSER).text
+    study_parsed = soup.find('ID', text=PROJECT_PARSER)
+    if study_parsed:
+        study = study_parsed.text
+    else:
+        logger.warning(
+            'Failed to parse study information from ENA XML. Falling back to '
+            'ENA search...'
+        )
+        study = search_ena_run_study(accession)
+
+    sample_parsed = soup.find('ID', text=SAMPLE_PARSER)
+    if sample_parsed:
+        sample = sample_parsed.text
+    else:
+        logger.warning(
+            'Failed to parse sample information from ENA XML. Falling back to '
+            'ENA search...'
+        )
+        sample = search_ena_run_sample(accession)
     title = soup.find('TITLE').text
     files = []
-
     # Get FASTQs if available
     for xref in soup.find_all('XREF_LINK'):
         if xref.find('DB').text == 'ENA-FASTQ-FILES':
@@ -188,18 +207,31 @@ def parse_study_with_run(soup):
     abstract = soup.find('STUDY_ABSTRACT').text
 
     # Returns all of the runs associated with a study
-    run = []
-    run_ranges = soup.find('ID', text=RUN_PARSER).text.split(",")
-    for run_range in run_ranges:
-        if '-' in run_range:
-            run += parse_run_range(run_range)
-        else:
-            run.append(run_range)
+    runs = []
+    run_parsed = soup.find('ID', text=RUN_PARSER)
+    if run_parsed:
+        run_ranges = run_parsed.text.split(",")
+        for run_range in run_ranges:
+            if '-' in run_range:
+                runs += parse_run_range(run_range)
+            else:
+                runs.append(run_range)
+    else:
+        logger.warning(
+            'Failed to parse run information from ENA XML. Falling back to '
+            'ENA search...'
+        )
+        # Sometimes the SRP does not contain a list of runs (for whatever reason).
+        # A common trend with such projects is that they use ArrayExpress.
+        # In the case that no runs could be found from the project XML,
+        # fallback to ENA SEARCH.
+        runs = search_ena_study_runs(accession)
+
     return {
         'accession': accession,
         'title': title,
         'abstract': abstract,
-        'runlist': run
+        'runlist': runs
     }
 
 
