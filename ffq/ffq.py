@@ -65,6 +65,10 @@ def parse_run(soup):
         )
         sample = search_ena_run_sample(accession)
     title = soup.find('TITLE').text
+    attributes = {
+        attr.find('RUN_ATTRIBUTE').text: attr.find('VALUE').text
+        for attr in soup.find_all('RUN_ATTRIBUTES')
+    }
     files = []
     # Get FASTQs if available
     for xref in soup.find_all('XREF_LINK'):
