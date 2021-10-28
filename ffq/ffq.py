@@ -8,8 +8,10 @@ from .utils import (
     cached_get,
     geo_id_to_srps,
     geo_ids_to_gses,
+    gsm_id_to_srx,
     get_doi,
     get_gse_search_json,
+    get_gsm_search_json,
     get_xml,
     ncbi_link,
     ncbi_search,
@@ -239,6 +241,47 @@ def parse_study_with_run(soup):
     }
 
 
+def parse_experiment_with_run(soup):
+    """Given a BeautifulSoup object representing a experiment, parse out relevant
+    information.
+
+    :param soup: a BeautifulSoup object representing a experiment
+    :type soup: bs4.BeautifulSoup
+
+    :return: a dictionary containing experiment information and run information
+    :rtype: dict
+    """
+    accession = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text
+    title = soup.find('TITLE').text
+
+    # Returns all of the runs associated with a study
+    runs = []
+    run_parsed = soup.find('ID', text=RUN_PARSER)
+    if run_parsed:
+        run_ranges = run_parsed.text.split(",")
+        for run_range in run_ranges:
+            if '-' in run_range:
+                runs += parse_run_range(run_range)
+            else:
+                runs.append(run_range)
+    else:
+        logger.warning(
+            'Failed to parse run information from ENA XML. Falling back to '
+            'ENA search...'
+        )
+        # Sometimes the SRP does not contain a list of runs (for whatever reason).
+        # A common trend with such projects is that they use ArrayExpress.
+        # In the case that no runs could be found from the project XML,
+        # fallback to ENA SEARCH.
+        runs = search_ena_study_runs(accession)
+
+    return {
+        'accession': accession,
+        'title': title,
+        'runlist': runs
+    }
+
+
 def parse_gse_search(soup):
     """Given a BeautifulSoup object representing a geo study, parse out relevant
     information.
@@ -345,6 +388,54 @@ def ffq_gse(accession):
     studies = [ffq_study(srp) for srp in srps]
     gse.update({'studies': {study['accession']: study for study in studies}})
     return gse
+
+
+def ffq_gsm(accession):
+    """Fetch GSM information.
+
+    This function finds the SRX corresponding to the GSM and calls `ffq_experiment`.
+
+    :param accession: GSM accession
+    :type accession: str
+
+    :return: dictionary containing GSM information
+    :rtype: dict
+    """
+    logger.info(f'Parsing GEO {accession}')
+    gsm = get_gsm_search_json(accession)
+
+    logger.info(f'Getting Study SRX for {accession}')
+    time.sleep(1)
+    srxs = gsm_id_to_srx(gsm.pop('geo_id'))
+    experiments = [ffq_experiment(srx) for srx in srxs]
+    gsm.update({'experiments': {experiment['accession']: experiment for experiment in experiments}})
+    return gsm
+
+
+def ffq_experiment(accession):
+    """Fetch Experiment information.
+
+    :param accession: experiment accession
+    :type accession: str
+
+    :return: dictionary of experiment information. The dictionary contains a
+             'runs' key, which is a dictionary of all the runs in the study, as
+             returned by `ffq_run`.
+    :rtype: dict
+    """
+    logger.info(f'Parsing Experiment {accession}')
+    experiment = parse_experiment_with_run(get_xml(accession))
+    if len(experiment["runlist"]) == 1:
+        logger.warning(f'There is 1 run for {accession}')
+
+    else:
+        logger.warning(f'There are {len(experiment["runlist"])} runs for {accession}')
+
+    runs = {run: ffq_run(run) for run in experiment.pop('runlist')}
+
+    experiment.update({'runs': runs})
+
+    return experiment
 
 
 def ffq_doi(doi):

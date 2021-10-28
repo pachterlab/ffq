@@ -77,6 +77,20 @@ def get_gse_search_json(accession):
     )
 
 
+def get_gsm_search_json(accession):
+    """Given a GSM accession, retrieve the JSON from GEO SEARCH.
+
+    :param accession: a GSM accession
+    :type accession: str
+
+    :return: a BeautifulSoup object of the parsed JSON
+    :rtype: bs4.BeautifulSoup
+    """
+    geo_id = ncbi_search("gds", accession)[-1]
+      
+    return {'accession': accession, 'geo_id': geo_id}
+
+
 def get_gse_summary_json(accession):
     """Given an accession, retrieve the JSON from GEO SUMMARY.
 
@@ -378,6 +392,25 @@ def geo_id_to_srps(id):
     return srps
 
 
+def gsm_id_to_srx(id):
+    """Convert a GEO ID to an SRP.
+    :param id: GEO ID
+    :type id: str
+    :return: SRP accession
+    :rtype: str
+    """
+    summaries = ncbi_summary('gds', id)
+    data = summaries[id]
+
+    # Check if there is a directly linked SRP
+    srps = []
+    if 'extrelations' in data:
+        for value in data['extrelations']:
+            if value['relationtype'] == 'SRA':  # may have manys samples?
+                srps.append(value['targetobject'])
+        return srps
+
+
 def geo_ids_to_gses(ids):
     """Convert GEO IDs (which is a number) to a GSEs (which starts with GSE).
 
@@ -397,6 +430,7 @@ def geo_ids_to_gses(ids):
     )
     response.raise_for_status()
     return sorted(list(set(GSE_PARSER.findall(response.text))))
+
 
 
 def sra_ids_to_srrs(ids):

@@ -5,15 +5,16 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study
+from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_gsm, ffq_experiment
 
 logger = logging.getLogger(__name__)
 
-RUN_TYPES = ('SRR', 'ERR', 'DRR')
-PROJECT_TYPES = ('SRP', 'ERP', 'DRP')  # aka study types
-GEO_TYPES = ('GSE',)
+RUN_TYPES = ('SRR', 'ERR', 'DRR') 
+PROJECT_TYPES = ('SRP', 'ERP', 'DRP')  # aka study types 
+EXPERIMENT_TYPES = ('SRX',)
+GEO_TYPES = ('GSE','GSM')
 OTHER_TYPES = ('DOI',)
-SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + GEO_TYPES + OTHER_TYPES
+SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + GEO_TYPES + OTHER_TYPES
 
 
 def main():
@@ -106,8 +107,12 @@ def main():
             results = [ffq_run(accession) for accession in args.IDs]
         elif args.t in PROJECT_TYPES:
             results = [ffq_study(accession) for accession in args.IDs]
+        elif args.t in EXPERIMENT_TYPES:
+            results = [ffq_experiment(accession) for accession in args.IDs]
         elif args.t == 'GSE':
             results = [ffq_gse(accession) for accession in args.IDs]
+        elif args.t == 'GSM':
+            results = [ffq_gsm(accession) for accession in args.IDs]
         elif args.t == 'DOI':
             results = [study for doi in args.IDs for study in ffq_doi(doi)]
 
