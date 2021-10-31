@@ -128,6 +128,7 @@ def parse_run(soup):
         'study': study,
         'sample': sample,
         'title': title,
+        'attributes': attributes,
         'files': files
     }
 
