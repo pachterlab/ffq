@@ -69,7 +69,7 @@ def parse_run(soup):
     title = soup.find('TITLE').text
     attributes = {
         attr.find('TAG').text: attr.find('VALUE').text
-        for attr in soup.find_all('RUN_ATTRIBUTES')
+        for attr in soup.find_all('RUN_ATTRIBUTE')
     }
     files = []
     # Get FASTQs if available
