@@ -374,7 +374,7 @@ def geo_id_to_srps(id):
         for value in data['extrelations']:
             if value['relationtype'] == 'SRA':  # may have manys samples?
                 srps.append(value['targetobject'])
-        return srps
+    return srps
 
     # No SRA relation was found, but all GSEs have linked bioproject, so
     # search for that instead.
@@ -393,22 +393,22 @@ def geo_id_to_srps(id):
 
 
 def gsm_id_to_srx(id):
-    """Convert a GEO ID to an SRP.
+    """Convert a GEO ID to an SRX.
     :param id: GEO ID
     :type id: str
-    :return: SRP accession
+    :return: SRX accession
     :rtype: str
     """
     summaries = ncbi_summary('gds', id)
     data = summaries[id]
 
-    # Check if there is a directly linked SRP
-    srps = []
+    # Check if there is a directly linked SRX
+    srxs = []
     if 'extrelations' in data:
         for value in data['extrelations']:
             if value['relationtype'] == 'SRA':  # may have manys samples?
-                srps.append(value['targetobject'])
-        return srps
+                srxs.append(value['targetobject'])
+    return srxs
 
 
 def geo_ids_to_gses(ids):
