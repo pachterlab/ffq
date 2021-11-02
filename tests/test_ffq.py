@@ -220,6 +220,35 @@ class TestFfq(TestMixin, TestCase):
             ffq_study.assert_called_once_with('SRP1')
 
 
+
+    def test_ffq_gsm(self):
+        # Need to figure out how to add for loop test for adding individual runs   
+        with mock.patch('ffq.ffq.get_gsm_search_json') as get_gsm_search_json, \
+            mock.patch('ffq.ffq.gsm_id_to_srx') as gsm_id_to_srx, \
+            mock.patch('ffq.ffq.ffq_experiment') as ffq_experiment:
+
+            get_gsm_search_json.return_value = {
+                'accession': 'GSM1',
+                'geo_id': 'GSMID1'
+            }
+            gsm_id_to_srx.return_value = ['SRX1']
+            ffq_experiment.return_value = {'accession': 'SRX1'}
+
+            self.assertEqual({
+                'accession': 'GSM1',
+                'experiments': {
+                    'SRX1': {
+                        'accession': 'SRX1'
+                    }
+                }
+            }, ffq.ffq_gsm('GSM1'))
+            get_gsm_search_json.assert_called_once_with('GSM1')
+            gsm_id_to_srx.assert_called_once_with('GSMID1')
+            ffq_experiment.assert_called_once_with('SRX1')
+
+
+
+
     def test_ffq_run(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
             mock.patch('ffq.ffq.parse_run') as parse_run,\
