@@ -51,6 +51,23 @@ class TestUtils(TestCase):
             )
             self.assertTrue(isinstance(result, BeautifulSoup))
 
+
+
+
+    def test_get_gsm_search_json(self):
+        with mock.patch('ffq.utils.ncbi_search') as ncbi_search:
+            ncbi_search.return_value = ['geo_id', 'gsm_id']
+            result = utils.get_gsm_search_json('accession')
+            ncbi_search.assert_called_once_with(
+                "gds", "accession")
+            self.assertEqual({'accession': 'accession',\
+                            'geo_id': 'gsm_id'}, result)
+            #self.assertTrue(isinstance(result, BeautifulSoup))
+
+
+
+
+
     def test_get_gse_summary_json(self):
         with mock.patch('ffq.utils.cached_get') as cached_get:
             cached_get.return_value = """
