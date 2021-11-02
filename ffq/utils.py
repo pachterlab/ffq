@@ -374,7 +374,7 @@ def geo_id_to_srps(id):
         for value in data['extrelations']:
             if value['relationtype'] == 'SRA':  # may have manys samples?
                 srps.append(value['targetobject'])
-    return srps
+        return srps
 
     # No SRA relation was found, but all GSEs have linked bioproject, so
     # search for that instead.
