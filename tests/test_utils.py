@@ -51,9 +51,6 @@ class TestUtils(TestCase):
             )
             self.assertTrue(isinstance(result, BeautifulSoup))
 
-
-
-
     def test_get_gsm_search_json(self):
         with mock.patch('ffq.utils.ncbi_search') as ncbi_search:
             ncbi_search.return_value = ['geo_id', 'gsm_id']
@@ -63,10 +60,6 @@ class TestUtils(TestCase):
             self.assertEqual({'accession': 'accession',\
                             'geo_id': 'gsm_id'}, result)
             #self.assertTrue(isinstance(result, BeautifulSoup))
-
-
-
-
 
     def test_get_gse_summary_json(self):
         with mock.patch('ffq.utils.cached_get') as cached_get:
@@ -232,6 +225,19 @@ class TestUtils(TestCase):
                 }
             }
             self.assertEqual(['SRP1'], utils.geo_id_to_srps('id'))
+            ncbi_summary.assert_called_once_with('gds', 'id')
+
+    def test_gsm_id_to_srx(self):
+        with mock.patch('ffq.utils.ncbi_summary') as ncbi_summary:
+            ncbi_summary.return_value = {
+                'id': {
+                    'extrelations': [{
+                        'relationtype': 'SRA',
+                        'targetobject': 'SRX1'
+                    }]
+                }
+            }
+            self.assertEqual(['SRX1'], utils.geo_id_to_srps('id'))
             ncbi_summary.assert_called_once_with('gds', 'id')
 
     def test_geo_id_to_srps_bioproject(self):
