@@ -219,6 +219,7 @@ class TestFfq(TestMixin, TestCase):
             geo_id_to_srps.assert_called_once_with('GEOID1')
             ffq_study.assert_called_once_with('SRP1')
 
+
     def test_ffq_run(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
             mock.patch('ffq.ffq.parse_run') as parse_run,\
@@ -262,6 +263,27 @@ class TestFfq(TestMixin, TestCase):
             get_xml.assert_called_once_with('SRP226764')
             self.assertEqual(2, ffq_run.call_count)
             ffq_run.assert_has_calls([call('run1'), call('run2')])
+
+
+    def test_ffq_experiment(self):
+        with mock.patch('ffq.ffq.get_xml') as get_xml,\
+            mock.patch('ffq.ffq.parse_experiment_with_run') as parse_experiment_with_run,\
+            mock.patch('ffq.ffq.ffq_run') as ffq_run:
+
+            experiment = {'runlist': ['run1', 'run2']}
+            run1 = mock.MagicMock()
+            run2 = mock.MagicMock()
+            parse_experiment_with_run.return_value = experiment
+            ffq_run.side_effect = [run1, run2]
+
+            self.assertEqual({'runs': {
+                'run1': run1,
+                'run2': run2
+            }}, ffq.ffq_experiment('SRX7048194'))
+            get_xml.assert_called_once_with('SRX7048194')
+            self.assertEqual(2, ffq_run.call_count)
+            ffq_run.assert_has_calls([call('run1'), call('run2')])
+
 
     def test_ffq_doi(self):
         with mock.patch('ffq.ffq.get_doi') as get_doi,\
