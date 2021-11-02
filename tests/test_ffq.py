@@ -83,7 +83,15 @@ class TestFfq(TestMixin, TestCase):
                         'c9396c2596254831470a9138ae86ded7',
                     'size':
                         '7163216'
-                }]
+                }],
+                "attributes": {
+                    "assembly": "mm10",
+                    "dangling_references": "treat_as_unmapped",
+                    "ENA-SPOT-COUNT": "137766536",
+                    "ENA-BASE-COUNT": "12398988240",
+                    "ENA-FIRST-PUBLIC": "2018-03-30",
+                    "ENA-LAST-UPDATE": "2018-03-30"
+                }    
             }, ffq.parse_run(soup))
 
     def test_parse_sample(self):
