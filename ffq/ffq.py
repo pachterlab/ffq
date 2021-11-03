@@ -22,6 +22,7 @@ from .utils import (
     search_ena_study_runs,
     search_ena_title,
     sra_ids_to_srrs,
+    gsm_to_suppl
 )
 
 logger = logging.getLogger(__name__)
@@ -404,11 +405,14 @@ def ffq_gsm(accession):
     """
     logger.info(f'Parsing GEO {accession}')
     gsm = get_gsm_search_json(accession)
-
-    logger.info(f'Getting Study SRX for {accession}')
+    logger.info(f'Finding supplementary files for GEO {accession}')
     time.sleep(1)
+    gsm.update({'supplementary_files' : gsm_to_suppl(accession)})
+    logger.info(f'Getting Study SRX for {accession}')
+
     srxs = gsm_id_to_srx(gsm.pop('geo_id'))
     experiments = [ffq_experiment(srx) for srx in srxs]
+    
     gsm.update({'experiments': {experiment['accession']: experiment for experiment in experiments}})
     return gsm
 

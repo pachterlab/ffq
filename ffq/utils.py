@@ -4,6 +4,7 @@ import time
 from functools import lru_cache
 
 import requests
+from ftplib import FTP
 from bs4 import BeautifulSoup
 from frozendict import frozendict
 
@@ -19,6 +20,9 @@ from .config import (
     NCBI_LINK_URL,
     NCBI_SEARCH_URL,
     NCBI_SUMMARY_URL,
+    FTP_GEO_URL,
+    FTP_GEO_SAMPLE,
+    FTP_GEO_SUPPL
 )
 
 GSE_PARSER = re.compile(r'Series\t\tAccession: (?P<accession>GSE[0-9]+)\t')
@@ -474,3 +478,18 @@ def parse_run_range(text):
                        int(last[3:]) + 1)
     ]
     return ids
+
+def gsm_to_suppl(accession):
+    """Retrieve supplemental files
+    associated with GSM ID.
+    :param id: GSM ID
+    :type id: str
+    :return: a list of supplemental file links
+    :rtype: list
+    """
+
+    ftp = FTP(FTP_GEO_URL)
+    ftp.login()
+    path = f'{FTP_GEO_SAMPLE}{accession[:-3]}nnn/{accession}{FTP_GEO_SUPPL}'
+    suppl = {entry[0] : f"{FTP_GEO_URL}{path}{entry[0]}" for entry in ftp.mlsd(path) if entry[1].get('type') == 'file'}
+    return suppl
