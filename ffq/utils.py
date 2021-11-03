@@ -296,6 +296,7 @@ def ncbi_summary(db, id):
 
 
 def ncbi_search(db, term):
+    # Note (AGM): consolidate with get_gsm_search_json and get_gse_search_json
     """Search the specified NCBI entrez database for the specified term.
     Documentation: https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch
 
