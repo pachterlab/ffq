@@ -493,15 +493,16 @@ def gsm_to_suppl(accession):
     ftp.login()
     path = f'{FTP_GEO_SAMPLE}{accession[:-3]}nnn/{accession}{FTP_GEO_SUPPL}'
     files = ftp.mlsd(path)
-
-    supp = [
-              [{
-               "filename" : entry[0],
-               "url" : f"{FTP_GEO_URL}{path}{entry[0]}",
-               'size' : entry[1].get('size')
-           }]
-        for entry in files if entry[1].get('type') == 'file'
-    ]
+    try:
+        supp = [
+                 [{
+               'filename' : entry[0],
+                   'url' : f"{FTP_GEO_URL}{path}{entry[0]}",
+                'size' : entry[1].get('size')
+             }]
+         for entry in files if entry[1].get('type') == 'file'
+        ]
+    except:
+        return []
 
     return supp
-

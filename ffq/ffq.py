@@ -407,7 +407,11 @@ def ffq_gsm(accession):
     gsm = get_gsm_search_json(accession)
     logger.info(f'Finding supplementary files for GEO {accession}')
     time.sleep(1)
-    gsm.update({'supplementary_files' : gsm_to_suppl(accession)})
+    supp = gsm_to_suppl(accession)
+    if len(supp) > 0:
+        gsm.update({'supplementary_files' : supp})
+    else:
+        logger.info(f'No supplementary files found for {accession}')        
     logger.info(f'Getting Study SRX for {accession}')
 
     srxs = gsm_id_to_srx(gsm.pop('geo_id'))
