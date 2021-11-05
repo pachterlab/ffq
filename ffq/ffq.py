@@ -15,6 +15,7 @@ from .utils import (
     get_xml,
     ncbi_link,
     ncbi_search,
+    ncbi_summary,
     parse_run_range,
     parse_tsv,
     search_ena_run_sample,
@@ -384,11 +385,12 @@ def ffq_gse(accession):
     logger.info(f'Parsing GEO {accession}')
     gse = parse_gse_search(get_gse_search_json(accession))
 
-    logger.info(f'Getting Study SRP for {accession}')
+    logger.info(f'Getting GSM IDs for {accession}')
     time.sleep(1)
-    srps = geo_id_to_srps(gse.pop('geo_id'))
-    studies = [ffq_study(srp) for srp in srps]
-    gse.update({'studies': {study['accession']: study for study in studies}})
+    gsm_ids = [ncbi_summary("gds",id)[id]["accession"] for id in ncbi_search("gds", accession)[2:] if time.sleep(0.5) is None]
+
+    gsms = [ffq_gsm(gsm_id) for gsm_id in gsm_ids]
+    gse.update({'samples': {sample['accession']: sample for sample in gsms}})
     return gse
 
 
