@@ -22,7 +22,7 @@ from .utils import (
     search_ena_study_runs,
     search_ena_title,
     sra_ids_to_srrs,
-    gsm_to_suppl
+    gsm_to_suppl,
 )
 
 logger = logging.getLogger(__name__)

@@ -479,17 +479,29 @@ def parse_run_range(text):
     ]
     return ids
 
+
 def gsm_to_suppl(accession):
     """Retrieve supplemental files
     associated with GSM ID.
-    :param id: GSM ID
+    :param accession: GSM ID
     :type id: str
-    :return: a list of supplemental file links
+    :return: a list of dictionaries with supplemental file information
     :rtype: list
     """
 
-    ftp = FTP(FTP_GEO_URL)
+    ftp = FTP('ftp.ncbi.nlm.nih.gov')
     ftp.login()
     path = f'{FTP_GEO_SAMPLE}{accession[:-3]}nnn/{accession}{FTP_GEO_SUPPL}'
-    suppl = {entry[0] : f"{FTP_GEO_URL}{path}{entry[0]}" for entry in ftp.mlsd(path) if entry[1].get('type') == 'file'}
-    return suppl
+    files = ftp.mlsd(path)
+
+    supp = [
+              [{
+               "filename" : entry[0],
+               "url" : f"{FTP_GEO_URL}{path}{entry[0]}",
+               'size' : entry[1].get('size')
+           }]
+        for entry in files if entry[1].get('type') == 'file'
+    ]
+
+    return supp
+
