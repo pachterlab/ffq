@@ -297,3 +297,10 @@ class TestUtils(TestCase):
         text = 'SRR01-SRR05'
         self.assertEqual(['SRR01', 'SRR02', 'SRR03', 'SRR04', 'SRR05'],
                          utils.parse_run_range(text))
+
+    def test_gsm_to_suppl(self):
+        self.assertEqual([[{'filename': 'GSM12345.CEL.gz',
+                            'size': '2964920',
+                            'url': 'ftp.ncbi.nlm.nih.gov/geo/samples/GSM12nnn/GSM12345/suppl/GSM12345.CEL.gz'}]],
+                            utils.gsm_to_suppl("GSM12345"))
+                        
