@@ -384,7 +384,7 @@ def ffq_gse(accession):
     """
     logger.info(f'Parsing GEO {accession}')
     gse = parse_gse_search(get_gse_search_json(accession))
-
+    gse.pop('geo_id')
     logger.info(f'Getting GSM IDs for {accession}')
     time.sleep(1)
     gsm_ids = [ncbi_summary("gds",id)[id]["accession"] for id in ncbi_search("gds", accession)[2:] if time.sleep(0.5) is None]

@@ -42,11 +42,11 @@ class TestFfq(TestMixin, TestCase):
                     'size':
                         '7194107512'
                 }],
-                "attributes": {
-                    "ENA-SPOT-COUNT": "109256158",
-                    "ENA-BASE-COUNT": "21984096610",
-                    "ENA-FIRST-PUBLIC": "2019-01-27",
-                    "ENA-LAST-UPDATE": "2019-01-27"
+                'attributes': {
+                    'ENA-SPOT-COUNT': '109256158',
+                    'ENA-BASE-COUNT': '21984096610',
+                    'ENA-FIRST-PUBLIC': '2019-01-27',
+                    'ENA-LAST-UPDATE': '2019-01-27'
                 }         
             }, ffq.parse_run(soup))
 
@@ -84,13 +84,13 @@ class TestFfq(TestMixin, TestCase):
                     'size':
                         '7163216'
                 }],
-                "attributes": {
-                    "assembly": "mm10",
-                    "dangling_references": "treat_as_unmapped",
-                    "ENA-SPOT-COUNT": "137766536",
-                    "ENA-BASE-COUNT": "12398988240",
-                    "ENA-FIRST-PUBLIC": "2018-03-30",
-                    "ENA-LAST-UPDATE": "2018-03-30"
+                'attributes': {
+                    'assembly': 'mm10',
+                    'dangling_references': 'treat_as_unmapped',
+                    'ENA-SPOT-COUNT': '137766536',
+                    'ENA-BASE-COUNT': '12398988240',
+                    'ENA-FIRST-PUBLIC': '2018-03-30',
+                    'ENA-LAST-UPDATE': '2018-03-30'
                 }    
             }, ffq.parse_run(soup))
 
@@ -184,7 +184,7 @@ class TestFfq(TestMixin, TestCase):
             soup = BeautifulSoup(f.read(), 'html.parser')
             self.assertEqual({
                 'accession': 'GSE93374',
-                'geo_id': "200093374"
+                'geo_id': '200093374'
             }, ffq.parse_gse_search(soup))
 
     def test_gse_summary_json(self):
@@ -197,27 +197,35 @@ class TestFfq(TestMixin, TestCase):
         # Need to figure out how to add for loop test for adding individual runs
         with mock.patch('ffq.ffq.get_gse_search_json') as get_gse_search_json, \
             mock.patch('ffq.ffq.parse_gse_search') as parse_gse_search, \
-            mock.patch('ffq.ffq.geo_id_to_srps') as geo_id_to_srps, \
-            mock.patch('ffq.ffq.ffq_study') as ffq_study:
+            mock.patch('ffq.ffq.ncbi_summary') as ncbi_summary, \
+            mock.patch('ffq.ffq.ncbi_search') as ncbi_search, \
+            mock.patch('ffq.ffq.ffq_gsm') as ffq_gsm:
 
             parse_gse_search.return_value = {
                 'accession': 'GSE1',
                 'geo_id': 'GEOID1'
             }
-            geo_id_to_srps.return_value = ['SRP1']
-            ffq_study.return_value = {'accession': 'SRP1'}
+
+            ncbi_search.return_value = ['ID1', 'ID2', 'ID3', 'ID4']
+            ncbi_summary.side_effect = [{'ID3' : {'accession' : 'GSM_1'}}, {'ID4' : {'accession' : 'GSM_2'}}]
+            ffq_gsm.side_effect = [{'accession': 'GSM1'}, {'accession': 'GSM2'}]
 
             self.assertEqual({
                 'accession': 'GSE1',
-                'studies': {
-                    'SRP1': {
-                        'accession': 'SRP1'
+                'samples': {
+                    'GSM1': {
+                        'accession': 'GSM1'
+                    }, 
+                    'GSM2': {
+                        'accession' : 'GSM2'
+                        }
                     }
-                }
-            }, ffq.ffq_gse('GSE1'))
+                 }, ffq.ffq_gse('GSE1'))
+
+            ncbi_summary.assert_has_calls([call('gds', 'ID3'), call('gds', 'ID4')])
             get_gse_search_json.assert_called_once_with('GSE1')
-            geo_id_to_srps.assert_called_once_with('GEOID1')
-            ffq_study.assert_called_once_with('SRP1')
+            ffq_gsm.assert_has_calls([call('GSM_1'), call('GSM_2')])
+
 
     def test_ffq_gsm(self):
         # Need to figure out how to add for loop test for adding individual runs   
