@@ -4,7 +4,7 @@ from unittest.mock import call
 from bs4 import BeautifulSoup
 
 import ffq.utils as utils
-from .config import (
+from ffq.config import (
     CROSSREF_URL,
     ENA_SEARCH_URL,
     ENA_URL,
@@ -307,5 +307,12 @@ class TestUtils(TestCase):
         self.assertEqual([[{'filename': 'GSM12345.CEL.gz',
                             'size': '2964920',
                             'url': 'ftp.ncbi.nlm.nih.gov/geo/samples/GSM12nnn/GSM12345/suppl/GSM12345.CEL.gz'}]],
-                            utils.gsm_to_suppl("GSM12345", "GSM))
+                            utils.geo_to_suppl("GSM12345", "GSM"))
+        self.assertEqual([[{'filename': 'filelist.txt',
+                            'size': '697',
+                            'url': 'ftp.ncbi.nlm.nih.gov/geo/series/GSE102nnn/GSE102592/suppl/filelist.txt'}],
+                            [{'filename': 'GSE102592_RAW.tar',
+                            'size': '176916480',
+                            'url': 'ftp.ncbi.nlm.nih.gov/geo/series/GSE102nnn/GSE102592/suppl/GSE102592_RAW.tar'}]],
+                            utils.geo_to_suppl("GSE102592", "GSE"))
                         
