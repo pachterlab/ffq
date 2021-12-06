@@ -501,13 +501,13 @@ def geo_to_suppl(accession, GEO):
     files = ftp.mlsd(path)
     try:
         supp = [
-                 [{
+                 {
                'filename' : entry[0],
                    'url' : f"{FTP_GEO_URL}{path}{entry[0]}",
                 'size' : entry[1].get('size')
-             }]
-         for entry in files if entry[1].get('type') == 'file'
-        ]
+             }
+         for entry in files if entry[1].get('type') == 'file']
+        
     except:
         return []
 
