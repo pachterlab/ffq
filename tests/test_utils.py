@@ -4,19 +4,24 @@ from unittest.mock import call
 from bs4 import BeautifulSoup
 
 import ffq.utils as utils
-from ffq.config import (
+from .config import (
     CROSSREF_URL,
-    ENA_URL,
     ENA_SEARCH_URL,
+    ENA_URL,
     GSE_SEARCH_URL,
-    GSE_SEARCH_TERMS,
     GSE_SUMMARY_URL,
+    GSE_SEARCH_TERMS,
     GSE_SUMMARY_TERMS,
     NCBI_FETCH_URL,
     NCBI_LINK_URL,
     NCBI_SEARCH_URL,
     NCBI_SUMMARY_URL,
+    FTP_GEO_URL,
+    FTP_GEO_SAMPLE,
+    FTP_GEO_SERIES,
+    FTP_GEO_SUPPL
 )
+
 
 
 class TestUtils(TestCase):
@@ -298,9 +303,9 @@ class TestUtils(TestCase):
         self.assertEqual(['SRR01', 'SRR02', 'SRR03', 'SRR04', 'SRR05'],
                          utils.parse_run_range(text))
 
-    def test_gsm_to_suppl(self):
+    def test_geo_to_suppl(self):
         self.assertEqual([[{'filename': 'GSM12345.CEL.gz',
                             'size': '2964920',
                             'url': 'ftp.ncbi.nlm.nih.gov/geo/samples/GSM12nnn/GSM12345/suppl/GSM12345.CEL.gz'}]],
-                            utils.gsm_to_suppl("GSM12345"))
+                            utils.gsm_to_suppl("GSM12345", "GSM))
                         

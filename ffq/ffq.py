@@ -23,7 +23,7 @@ from .utils import (
     search_ena_study_runs,
     search_ena_title,
     sra_ids_to_srrs,
-    gsm_to_suppl,
+    geo_to_suppl,
 )
 
 logger = logging.getLogger(__name__)
@@ -384,10 +384,18 @@ def ffq_gse(accession):
     """
     logger.info(f'Parsing GEO {accession}')
     gse = parse_gse_search(get_gse_search_json(accession))
+    logger.info(f'Finding supplementary files for GEO {accession}')
+    time.sleep(1)
+    supp = geo_to_suppl(accession, "GSE")
+    if len(supp) > 0:
+        gse.update({'supplementary_files' : supp})
+    else:
+        logger.info(f'No supplementary files found for {accession}')        
+    logger.info(f'Getting Study SRX for {accession}')
     gse.pop('geo_id')
     logger.info(f'Getting GSM IDs for {accession}')
     time.sleep(1)
-    gsm_ids = [ncbi_summary("gds",id)[id]["accession"] for id in ncbi_search("gds", accession)[2:] if time.sleep(0.5) is None]
+    gsm_ids = [ncbi_summary("gds",id)[id]["accession"] for id in ncbi_search("gds", accession) if id.startswith('3') if time.sleep(0.5) is None]
 
     gsms = [ffq_gsm(gsm_id) for gsm_id in gsm_ids]
     gse.update({'samples': {sample['accession']: sample for sample in gsms}})
@@ -409,7 +417,7 @@ def ffq_gsm(accession):
     gsm = get_gsm_search_json(accession)
     logger.info(f'Finding supplementary files for GEO {accession}')
     time.sleep(1)
-    supp = gsm_to_suppl(accession)
+    supp = geo_to_suppl(accession, "GSM")
     if len(supp) > 0:
         gsm.update({'supplementary_files' : supp})
     else:

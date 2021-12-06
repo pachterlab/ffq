@@ -22,6 +22,7 @@ from .config import (
     NCBI_SUMMARY_URL,
     FTP_GEO_URL,
     FTP_GEO_SAMPLE,
+    FTP_GEO_SERIES,
     FTP_GEO_SUPPL
 )
 
@@ -300,7 +301,7 @@ def ncbi_summary(db, id):
 
 
 def ncbi_search(db, term):
-    # Note (AGM): consolidate with get_gsm_search_json and get_gse_search_json
+    # Note (AGM): consolidate with get_gsm_search_json and get_gse_search_json  
     """Search the specified NCBI entrez database for the specified term.
     Documentation: https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch
 
@@ -340,9 +341,9 @@ def ncbi_link(origin, destination, id):
 
     :return: list of ids that match the search
     :rtype: list
-    """
+    """ 
     # TODO: use cached get. Can't be used currently because dictionaries can
-    # not be hashed.
+    # not be hashed.  
     response = requests.get(
         NCBI_LINK_URL,
         params={
@@ -480,18 +481,23 @@ def parse_run_range(text):
     return ids
 
 
-def gsm_to_suppl(accession):
+def geo_to_suppl(accession, GEO):
     """Retrieve supplemental files
-    associated with GSM ID.
-    :param accession: GSM ID
+    associated with a GEO ID.
+    :param accession: GEO ID
+    :type id: str
+    :param GEO: Type of GEO entry, either GSM or GSE
     :type id: str
     :return: a list of dictionaries with supplemental file information
     :rtype: list
     """
-
-    ftp = FTP('ftp.ncbi.nlm.nih.gov')
+    if GEO == "GSM":
+        link = FTP_GEO_SAMPLE
+    elif GEO == "GSE":
+        link = FTP_GEO_SERIES
+    ftp = FTP(FTP_GEO_URL)
     ftp.login()
-    path = f'{FTP_GEO_SAMPLE}{accession[:-3]}nnn/{accession}{FTP_GEO_SUPPL}'
+    path = f'{link}{accession[:-3]}nnn/{accession}{FTP_GEO_SUPPL}'
     files = ftp.mlsd(path)
     try:
         supp = [
