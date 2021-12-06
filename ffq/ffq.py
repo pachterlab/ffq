@@ -387,7 +387,7 @@ def ffq_gse(accession):
     gse.pop('geo_id')
     logger.info(f'Getting GSM IDs for {accession}')
     time.sleep(1)
-    gsm_ids = [ncbi_summary("gds",id)[id]["accession"] for id in ncbi_search("gds", accession)[2:] if time.sleep(0.5) is None]
+    gsm_ids = [ncbi_summary("gds",id)[id]["accession"] for id in ncbi_search("gds", accession) if id.startswith('3') if time.sleep(0.5) is None]
 
     gsms = [ffq_gsm(gsm_id) for gsm_id in gsm_ids]
     gse.update({'samples': {sample['accession']: sample for sample in gsms}})
