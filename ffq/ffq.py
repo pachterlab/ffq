@@ -34,6 +34,10 @@ PROJECT_PARSER = re.compile(r'(SRP.+)|(ERP.+)|(DRP.+)')
 SAMPLE_PARSER = re.compile(r'(SRS.+)|(ERS.+)|(DRS.+)')
 
 
+def validate_accession(accessions, search_types):
+    return [(accession[:3], accession) if accession[:3] in search_types else False for accession in accessions]
+    
+
 def parse_run(soup):
     """Given a BeautifulSoup object representing a run, parse out relevant
     information.
