@@ -151,6 +151,9 @@ def main():
                     results.append(ffq_gse(accession))
                 elif type == 'GSM':
                     results.append(ffq_gsm(accession))
+                elif type == 'DOI':
+                    logger.warning('Searching by DOI may result in missing information.')
+                    results.append(ffq_doi(accession))
 
             keyed = {result['accession']: result for result in results}
 
@@ -162,7 +165,7 @@ def main():
 
     if args.o:
         if args.split:
-            # Split each result into its own JSON.
+            # Split each result into its own JSON.   
             for result in results:
                 os.makedirs(args.o, exist_ok=True)
                 with open(os.path.join(args.o,

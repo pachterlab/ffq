@@ -32,10 +32,12 @@ RUN_PARSER = re.compile(r'(SRR.+)|(ERR.+)|(DRR.+)')
 EXPERIMENT_PARSER = re.compile(r'(SRX.+)|(ERX.+)|(DRX.+)')
 PROJECT_PARSER = re.compile(r'(SRP.+)|(ERP.+)|(DRP.+)')
 SAMPLE_PARSER = re.compile(r'(SRS.+)|(ERS.+)|(DRS.+)')
+DOI_PARSER = re.compile('^10.\d{4,9}\/[-._;()\/:a-z0-9]+')
 
+# To do: just defined doi_parser, need to figure out how to use it and then implement it in validate_accession
 
 def validate_accession(accessions, search_types):
-    return [(accession[:3], accession) if accession[:3] in search_types else False for accession in accessions]
+    return [(accession[:3], accession) if accession[:3] in search_types else False if DOI_PARSER.match(accession) is None else ("DOI", accession) for accession in accessions]
     
 
 def parse_run(soup):
