@@ -9,6 +9,20 @@ from tests.mixins import TestMixin
 
 class TestFfq(TestMixin, TestCase):
 
+
+    def test_validate_accession(self):
+        SEARCH_TYPES = ('SRR', 'ERR', 'DRR', 'SRP', 'ERP', 'DRP', 'SRX', 'GSE','GSM', 'DOI')
+        self.assertEqual([('SRR', 'SRR244234'),
+                            False,
+                            ('DOI', '10.1016/j.cell.2018.06.052'),
+                            False,
+                            ('GSM', 'GSM12345'),
+                            ('GSE', 'GSE567890')
+        ], ffq.validate_accession(["SRR244234", "SRT44322", '10.1016/j.cell.2018.06.052',
+                                   'ASA10.1016/j.cell.2018.06.052', "GSM12345", "GSE567890"],
+                                   SEARCH_TYPES))
+
+
     def test_parse_run(self):
         with mock.patch('ffq.ffq.cached_get') as cached_get:
             with open(self.fastqs_path, 'r') as f:
