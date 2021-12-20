@@ -429,6 +429,14 @@ def ffq_gsm(accession):
     else:
         logger.info(f'No supplementary files found for {accession}')        
     logger.info(f'Getting Study SRX for {accession}')
+    platform_id = ncbi_search("gds",accession)[0]
+
+    if platform_id.startswith('1'):
+        platform_summary = ncbi_summary("gds", platform_id)[platform_id]
+        platform = {k:v for k,v in platform_summary.items() if k in ["accession", "title"]}
+        gsm.update({'platform' : platform})
+    else:
+        pass
 
     srxs = gsm_id_to_srx(gsm.pop('geo_id'))
     experiments = [ffq_experiment(srx) for srx in srxs]
