@@ -512,3 +512,19 @@ def geo_to_suppl(accession, GEO):
         return []
 
     return supp
+
+def gsm_to_platform(accession):
+    """Retrieve platform metadata
+    associated with a GSM ID.
+    :param accession: GSM ID
+    :type id: str
+    :return: a dictionary with platform accession and title
+    :rtype: dict
+    """
+    platform_id = ncbi_search("gds",accession)[0]
+    if platform_id.startswith('1'):
+        platform_summary = ncbi_summary("gds", platform_id)[platform_id]
+        platform = {k:v for k,v in platform_summary.items() if k in ["accession", "title"]}
+        return {'platform' : platform}
+    else:
+        return {}
