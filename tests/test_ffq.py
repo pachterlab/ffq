@@ -249,8 +249,10 @@ class TestFfq(TestMixin, TestCase):
 
 
     def test_ffq_gsm(self):
-        # Need to figure out how to add for loop test for adding individual runs   
+        # Need to figure out how to add for loop test for adding individual runs     
         with mock.patch('ffq.ffq.get_gsm_search_json') as get_gsm_search_json, \
+            mock.patch('ffq.ffq.geo_to_suppl') as geo_to_suppl, \
+            mock.patch('ffq.ffq.gsm_to_platform') as gsm_to_platform, \
             mock.patch('ffq.ffq.gsm_id_to_srx') as gsm_id_to_srx, \
             mock.patch('ffq.ffq.ffq_experiment') as ffq_experiment:
 
@@ -258,11 +260,15 @@ class TestFfq(TestMixin, TestCase):
                 'accession': 'GSM1',
                 'geo_id': 'GSMID1'
             }
+            geo_to_suppl.return_value = {'supplementary_files' : 'supp'}
+            gsm_to_platform.return_value = {'platform' : 'platform'}
             gsm_id_to_srx.return_value = ['SRX1']
             ffq_experiment.return_value = {'accession': 'SRX1'}
 
             self.assertEqual({
                 'accession': 'GSM1',
+                'supplementary_files' : {'supplementary_files' : 'supp'},
+                'platform' : 'platform',
                 'experiments': {
                     'SRX1': {
                         'accession': 'SRX1'
@@ -270,6 +276,8 @@ class TestFfq(TestMixin, TestCase):
                 }
             }, ffq.ffq_gsm('GSM1'))
             get_gsm_search_json.assert_called_once_with('GSM1')
+            geo_to_suppl.assert_called_once_with('GSM1', 'GSM')
+            gsm_to_platform.assert_called_once_with('GSM1')
             gsm_id_to_srx.assert_called_once_with('GSMID1')
             ffq_experiment.assert_called_once_with('SRX1')
 
