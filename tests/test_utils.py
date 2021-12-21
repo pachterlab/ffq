@@ -315,4 +315,10 @@ class TestUtils(TestCase):
                             'size': '176916480',
                             'url': 'ftp.ncbi.nlm.nih.gov/geo/series/GSE102nnn/GSE102592/suppl/GSE102592_RAW.tar'}],
                             utils.geo_to_suppl("GSE102592", "GSE"))
-                        
+
+    def test_gsm_to_platform(self):
+        accession = 'GSM2928379'
+        self.assertEqual({'platform': {'accession': 'GPL21290',
+                          'title': 'Illumina HiSeq 3000 (Homo sapiens)'}},
+                         utils.gsm_to_platform(accession))
+
