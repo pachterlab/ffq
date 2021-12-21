@@ -425,7 +425,7 @@ def ffq_gsm(accession):
     logger.info(f'Finding supplementary files for GEO {accession}')
     time.sleep(1)
     supp = geo_to_suppl(accession, "GSM")
-    if len(supp) > 0:
+    if supp:
         gsm.update({'supplementary_files' : supp})
     else:
         logger.info(f'No supplementary files found for {accession}')        
