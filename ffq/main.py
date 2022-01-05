@@ -70,7 +70,7 @@ def main():
     parser.add_argument(
         '--verbose', help='Print debugging information', action='store_true'
     )
-    # Show help when no arguments are given
+    # Show help when no arguments are given 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)

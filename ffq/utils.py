@@ -141,18 +141,6 @@ def get_experiments_from_study(accession):
     return experiments
 
 
-    # experiment_ids = get_experiments_from_study(accession)
-
-     
-    
-    # Now we need to call ffq_experiment for each experiment:
-
-    # experiments = [ffq_experiment(experiment_id) for experiment_id in experiment_ids]
-    # experiment.update({'experiments': {experiment['accession']: experiment for experiment in experiments}})
-
-    # return experiment
-
-
 def parse_tsv(s):
     """Parse TSV-formatted string into a list of dictionaries.
 
