@@ -29,7 +29,7 @@ from .config import (
 GSE_PARSER = re.compile(r'Series\t\tAccession: (?P<accession>GSE[0-9]+)\t')
 SRP_PARSER = re.compile(r'Study acc="(?P<accession>SRP[0-9]+)"')
 SRR_PARSER = re.compile(r'Run acc="(?P<accession>SRR[0-9]+)"')
-
+EXPERIMENT_PARSER = re.compile(r'(SRX.+)|(ERX.+)|(DRX.+)')
 
 @lru_cache()
 def cached_get(*args, **kwargs):
@@ -109,6 +109,48 @@ def get_gse_summary_json(accession):
         cached_get(f'{GSE_SUMMARY_URL}{accession}{GSE_SUMMARY_TERMS}'),
         'html.parser'
     )
+
+
+def get_experiments_from_study(accession):
+
+    """Given an SRP accession for a study, get list of
+    associated experiments.
+
+    :param accession: an SRP id representing a study
+    :type accession: str
+
+    :return: a list of associated experiment ids (SRXs)
+    :rtype: list
+    """
+    soup = get_xml(accession)
+    experiments_parsed = soup.find("ID", text = EXPERIMENT_PARSER)
+    experiments = []
+    if experiments_parsed:
+        experiments_ranges = experiments_parsed.text.split(',')
+        for experiment_range in experiments_ranges:
+            if '-' in experiment_range:
+                experiments += parse_run_range(experiment_range)  # We will likely change name of function to parse_range
+            else:
+                experiments.append(experiment_range)
+    else:
+            # The original code fell to ENA search if runs were not found. I don't know if this is
+            # necessary, so make a warning to detect it in case it is.      
+        logger.warning('No experiments found for study. Modify code to search through ENA') 
+        return
+
+    return experiments
+
+
+    # experiment_ids = get_experiments_from_study(accession)
+
+     
+    
+    # Now we need to call ffq_experiment for each experiment:
+
+    # experiments = [ffq_experiment(experiment_id) for experiment_id in experiment_ids]
+    # experiment.update({'experiments': {experiment['accession']: experiment for experiment in experiments}})
+
+    # return experiment
 
 
 def parse_tsv(s):
@@ -469,6 +511,11 @@ def parse_run_range(text):
     :return: a list of range of accession numbers
     :rtype: list
     """
+
+
+    # Consider changing name of this function to parse_range because we might be using it
+    # for everything
+
 
     first, last = text.split('-')
     base = re.match(r'^.*?(?=[0-9])', first).group(0)

@@ -5,16 +5,17 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_gsm, ffq_experiment, validate_accession
+from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, validate_accession
 
 logger = logging.getLogger(__name__)
 
 RUN_TYPES = ('SRR', 'ERR', 'DRR') 
 PROJECT_TYPES = ('SRP', 'ERP', 'DRP')  # aka study types 
 EXPERIMENT_TYPES = ('SRX',)
+SAMPLE_TYPES = ('SRS',)
 GEO_TYPES = ('GSE','GSM')
 OTHER_TYPES = ('DOI',)
-SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + GEO_TYPES + OTHER_TYPES
+SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + OTHER_TYPES
 
 
 def main():
@@ -94,7 +95,7 @@ def main():
     if args.t is not None:
 
     # Check IDs depending on type 
-        if args.t in RUN_TYPES + PROJECT_TYPES + GEO_TYPES:
+        if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES :
             for ID in args.IDs:
                 if ID[0:3] != args.t or not ID[3:].isdigit():
                     parser.error((
@@ -112,6 +113,8 @@ def main():
 	            results = [ffq_study(accession) for accession in args.IDs]
             elif args.t in EXPERIMENT_TYPES:
                 results = [ffq_experiment(accession) for accession in args.IDs]
+            elif args.t in SAMPLE_TYPES:
+                results = [ffq_sample(accession) for accession in args.IDs]
             elif args.t == 'GSE':
                 results = [ffq_gse(accession) for accession in args.IDs]
             elif args.t == 'GSM':
@@ -130,9 +133,9 @@ def main():
     #If user does not provide -t 
     else:
         # Validate and extract types of accessions provided
-        type_accessions = validate_accession(args.IDs, RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + GEO_TYPES)
+        type_accessions = validate_accession(args.IDs, RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES)
 
-        # If at least one of the accessions is incorrect: 
+        # If at least one of the accessions is incorrect:  
         if False in type_accessions:
             parser.error(f'{args.IDs[type_accessions.index(False)]} is not a valid ID. IDs can be one of {", ".join(SEARCH_TYPES)}')
             sys.exit(1)
@@ -147,6 +150,8 @@ def main():
                     results.append(ffq_study(accession))
                 elif type in EXPERIMENT_TYPES:
                     results.append(ffq_experiment(accession))
+                elif type in SAMPLE_TYPES:
+                    results.append(ffq_sample(accession))
                 elif type == 'GSE':
                     results.append(ffq_gse(accession))
                 elif type == 'GSM':
