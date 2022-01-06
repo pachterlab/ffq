@@ -283,28 +283,12 @@ class TestFfq(TestMixin, TestCase):
 
     def test_ffq_run(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
-            mock.patch('ffq.ffq.parse_run') as parse_run,\
-            mock.patch('ffq.ffq.parse_sample') as parse_sample,\
-            mock.patch('ffq.ffq.parse_experiment') as parse_experiment,\
-            mock.patch('ffq.ffq.parse_study') as parse_study:
-
+            mock.patch('ffq.ffq.parse_run') as parse_run:
             run = mock.MagicMock()
-            sample = mock.MagicMock()
-            experiment = mock.MagicMock()
-            study = mock.MagicMock()
             parse_run.return_value = run
-            parse_sample.return_value = sample
-            parse_experiment.return_value = experiment
-            parse_study.return_value = study
-
             self.assertEqual(run, ffq.ffq_run('SRR8426358'))
-            self.assertEqual(4, get_xml.call_count)
-            get_xml.assert_has_calls([
-                call('SRR8426358'),
-                call(parse_run()['sample']),
-                call(parse_run()['experiment']),
-                call(parse_run()['study'])
-            ])
+            get_xml.assert_called_once_with('SRR8426358')
+
 
     def test_ffq_study(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
