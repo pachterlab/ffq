@@ -140,7 +140,9 @@ class TestFfq(TestMixin, TestCase):
             'platform':
                 'ILLUMINA',
             'instrument':
-                'Illumina HiSeq 4000'
+                'Illumina HiSeq 4000',
+            'sample':
+                'SRS4237519'
         }, ffq.parse_experiment(soup))
 
     def test_parse_study(self):
@@ -292,22 +294,24 @@ class TestFfq(TestMixin, TestCase):
 
     def test_ffq_study(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
-            mock.patch('ffq.ffq.parse_study_with_run') as parse_study_with_run,\
-            mock.patch('ffq.ffq.ffq_run') as ffq_run:
+            mock.patch('ffq.ffq.parse_study') as parse_study,\
+            mock.patch('ffq.ffq.ffq_experiment') as ffq_experiment,\
+            mock.patch('ffq.ffq.get_experiments_from_study') as get_experiments_from_study:
 
-            study = {'runlist': ['run1', 'run2']}
-            run1 = mock.MagicMock()
-            run2 = mock.MagicMock()
-            parse_study_with_run.return_value = study
-            ffq_run.side_effect = [run1, run2]
 
-            self.assertEqual({'runs': {
-                'run1': run1,
-                'run2': run2
-            }}, ffq.ffq_study('SRP226764'))
+            parse_study.return_value = {'study': 'study_id'}
+            get_experiments_from_study.return_value = ["exp_id1", "exp_id2"]
+            
+            ffq_experiment.side_effect = [{'accession': 'id1'}, {'accession': 'id2'}]
+
+            self.assertEqual({'study': 'study_id',
+                'experiments': {'id1': {'accession': 'id1'},
+                 'id2': {'accession': 'id2'}
+                     },
+            }, ffq.ffq_study('SRP226764'))
             get_xml.assert_called_once_with('SRP226764')
-            self.assertEqual(2, ffq_run.call_count)
-            ffq_run.assert_has_calls([call('run1'), call('run2')])
+            self.assertEqual(2, ffq_experiment.call_count)
+            ffq_experiment.assert_has_calls([call('exp_id1'), call('exp_id2')])
 
     def test_ffq_experiment(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
