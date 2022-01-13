@@ -30,6 +30,8 @@ GSE_PARSER = re.compile(r'Series\t\tAccession: (?P<accession>GSE[0-9]+)\t')
 SRP_PARSER = re.compile(r'Study acc="(?P<accession>SRP[0-9]+)"')
 SRR_PARSER = re.compile(r'Run acc="(?P<accession>SRR[0-9]+)"')
 EXPERIMENT_PARSER = re.compile(r'(SRX.+)|(ERX.+)|(DRX.+)')
+SAMPLE_PARSER = re.compile(r'(SRS.+)|(ERS.+)|(DRS.+)')
+
 
 @lru_cache()
 def cached_get(*args, **kwargs):
@@ -111,34 +113,34 @@ def get_gse_summary_json(accession):
     )
 
 
-def get_experiments_from_study(accession):
+def get_samples_from_study(accession):
 
     """Given an SRP accession for a study, get list of
-    associated experiments.
+    associated samples.
 
     :param accession: an SRP id representing a study
     :type accession: str
 
-    :return: a list of associated experiment ids (SRXs)
+    :return: a list of associated experiment ids (SRSs)
     :rtype: list
     """
     soup = get_xml(accession)
-    experiments_parsed = soup.find("ID", text = EXPERIMENT_PARSER)
-    experiments = []
-    if experiments_parsed:
-        experiments_ranges = experiments_parsed.text.split(',')
-        for experiment_range in experiments_ranges:
-            if '-' in experiment_range:
-                experiments += parse_run_range(experiment_range)  # We will likely change name of function to parse_range
+    samples_parsed = soup.find("ID", text = SAMPLE_PARSER)
+    samples = []
+    if samples_parsed:
+        samples_ranges = samples_parsed.text.split(',')
+        for sample_range in samples_ranges:
+            if '-' in sample_range:
+                samples += parse_run_range(sample_range)  # We will likely change name of function to parse_range
             else:
-                experiments.append(experiment_range)
+                samples.append(sample_range)
     else:
             # The original code fell to ENA search if runs were not found. I don't know if this is
             # necessary, so make a warning to detect it in case it is.      
-        logger.warning('No experiments found for study. Modify code to search through ENA') 
+        logger.warning('No samples found for study. Modify code to search through ENA') 
         return
 
-    return experiments
+    return samples
 
 
 def parse_tsv(s):
@@ -428,27 +430,31 @@ def geo_id_to_srps(id):
     return srps
 
 
-def gsm_id_to_srx(id):
-    """Convert a GEO ID to an SRX.
+def gsm_id_to_srs(id):
+    """Convert a GEO ID to an SRS.
     :param id: GEO ID
     :type id: str
-    :return: SRX accession
+    :return: SRS accession
     :rtype: str
     """
     summaries = ncbi_summary('gds', id)
     data = summaries[id]
 
-    # Check if there is a directly linked SRX
+    # Check if there is a directly linked SRX 
     srxs = []
     if 'extrelations' in data:
         for value in data['extrelations']:
-            if value['relationtype'] == 'SRA':  # may have manys samples?
+            if value['relationtype'] == 'SRA':  # may have manys samples?  
                 srxs.append(value['targetobject'])
-    return srxs
+    for srx in srxs:
+        soup = get_xml(srx)
+        sample = soup.find('ID', text = SAMPLE_PARSER).text
 
+    return sample
+ 
 
 def geo_ids_to_gses(ids):
-    """Convert GEO IDs (which is a number) to a GSEs (which starts with GSE).
+    """Convert GEO IDs (which is a number) to GSE (which start with GSE).
 
     :param id: list of GEO IDs
     :type id: list

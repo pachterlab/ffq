@@ -8,12 +8,12 @@ from .utils import (
     cached_get,
     geo_id_to_srps,
     geo_ids_to_gses,
-    gsm_id_to_srx,
+    gsm_id_to_srs,
     get_doi,
     get_gse_search_json,
     get_gsm_search_json,
     get_xml,
-    get_experiments_from_study,
+    get_samples_from_study,
     ncbi_link,
     ncbi_search,
     ncbi_summary,
@@ -159,15 +159,17 @@ def parse_sample(soup):
         attr.find('TAG').text: attr.find('VALUE').text
         for attr in soup.find_all('SAMPLE_ATTRIBUTE')
     }
+    experiment = soup.find('ID', text = EXPERIMENT_PARSER).text
     return {
         'accession': accession,
         'title': title,
         'organism': organism,
-        'attributes': attributes
+        'attributes': attributes,
+        'experiment': experiment
     }
 
 
-def parse_experiment(soup):
+def parse_experiment_with_run(soup):
     """Given a BeautifulSoup object representing an experiment, parse out relevant
     information.
 
@@ -181,17 +183,43 @@ def parse_experiment(soup):
     title = soup.find('TITLE').text
     platform = soup.find('INSTRUMENT_MODEL').find_parent().name
     instrument = soup.find('INSTRUMENT_MODEL').text
-    sample = soup.find("SAMPLE_DESCRIPTOR").get("accession")
 
-    ## Add sample information here
-    return {
-        'accession': accession,
-        'title': title,
-        'platform': platform,
-        'instrument': instrument,
-        'sample': sample
-    }
+    experiment = {'accession': accession,
+    'title': title,
+    'platform': platform,
+    'instrument': instrument}
 
+    # Returns all of the runs associated with an experiment
+    runs = []
+    run_parsed = soup.find('ID', text=RUN_PARSER)
+    if run_parsed:
+        run_ranges = run_parsed.text.split(",")
+        for run_range in run_ranges:
+            if '-' in run_range:
+                runs += parse_run_range(run_range)
+            else:
+                runs.append(run_range)
+    else:
+        logger.warning(
+            'Failed to parse run information from ENA XML. Falling back to '
+            'ENA search...'
+        )
+        # Sometimes the SRP does not contain a list of runs (for whatever reason).
+        # A common trend with such projects is that they use ArrayExpress.
+        # In the case that no runs could be found from the project XML,
+        # fallback to ENA SEARCH.  
+        runs = search_ena_study_runs(accession)
+
+    if len(runs) == 1:
+        logger.warning(f'There is 1 run for {accession}')
+
+    else:
+        logger.warning(f'There are {len(runs)} runs for {accession}')
+
+    runs = {run: ffq_run(run) for run in runs}
+
+    experiment.update({'runs': runs})
+    return experiment
 
 def parse_study(soup):
     """Given a BeautifulSoup object representing a study, parse out relevant
@@ -224,7 +252,7 @@ def parse_study_with_run(soup):
     title = soup.find('STUDY_TITLE').text
     abstract = soup.find('STUDY_ABSTRACT').text
 
-    # Returns all of the runs associated with a study
+    # Returns all of the runs associated with a study 
     runs = []
     run_parsed = soup.find('ID', text=RUN_PARSER)
     if run_parsed:
@@ -239,19 +267,24 @@ def parse_study_with_run(soup):
             'Failed to parse run information from ENA XML. Falling back to '
             'ENA search...'
         )
-        # Sometimes the SRP does not contain a list of runs (for whatever reason).
+
+        # Sometimes the accession does not contain a list of runs (for whatever reason).
         # A common trend with such projects is that they use ArrayExpress.
         # In the case that no runs could be found from the project XML,
         # fallback to ENA SEARCH.
         runs = search_ena_study_runs(accession)
 
-    return {
-        'accession': accession,
-        'title': title,
-        'abstract': abstract,
-        'runlist': runs
-    }
 
+    if len(runs) == 1:
+        logger.warning(f'There is 1 run for {accession}')
+
+    else:
+        logger.warning(f'There are {len(runs)} runs for {accession}')
+
+    runs = {run: ffq_run(run) for run in runs}
+
+    sample.update({'runs': runs})
+    return sample
 
 def parse_sample_with_run(soup):
     """Given a BeautifulSoup object representing a sample, parse out relevant
@@ -372,22 +405,23 @@ def ffq_study(accession):
     :type accession: str
 
     :return: dictionary of study information. The dictionary contains a
-             'runs' key, which is a dictionary of all the runs in the study, as
-             returned by `ffq_run`.
+             'samples' key, which is a dictionary of all the samples in the study, as
+             returned by `ffq_sample`.
     :rtype: dict
     """
     logger.info(f'Parsing Study SRP {accession}')
     study = parse_study(get_xml(accession))
-    experiment_ids = get_experiments_from_study(accession)
-    experiments = [ffq_experiment(experiment_id) for experiment_id in experiment_ids]
-    study.update({'experiments': {experiment['accession']: experiment for experiment in experiments}})
+    logger.info(f'Getting Sample SRS for {accession}')
+    sample_ids = get_samples_from_study(accession)
+    samples = [ffq_sample(sample_id) for sample_id in sample_ids]
+    study.update({'samples': {samples['accession']: sample for sample in samples}})
     return study
 
 
 def ffq_gse(accession):
     """Fetch GSE information.
 
-    This function finds the SRP corresponding to the GSE and calls `ffq_study`.
+    This function finds the GSMs corresponding to the GSE and calls `ffq_gsm`.
 
     :param accession: GSE accession
     :type accession: str
@@ -420,31 +454,30 @@ def ffq_gse(accession):
 def ffq_gsm(accession):
     """Fetch GSM information.
 
-    This function finds the SRX corresponding to the GSM and calls `ffq_experiment`.
+    This function finds the SRS corresponding to the GSM and calls `ffq_sample`.
 
     :param accession: GSM accession
     :type accession: str
 
     :return: dictionary containing GSM information. The dictionary contains a
-             'experiment' key, which is a dictionary of all the experiments in the GSM, as
-             returned by `ffq_experiment.
+             'sample' key, which is a dictionary of the sample asssociated to the GSM, as
+             returned by `ffq_sample`.
     :rtype: dict
     """
-    logger.info(f'Parsing GEO {accession}')
+    logger.info(f'Parsing GSM {accession}')
     gsm = get_gsm_search_json(accession)
-    logger.info(f'Finding supplementary files for GEO {accession}')
+    logger.info(f'Finding supplementary files for GSM {accession}')
     time.sleep(1)
     supp = geo_to_suppl(accession, "GSM")
     if supp:
         gsm.update({'supplementary_files' : supp})
     else:
         logger.info(f'No supplementary files found for {accession}')        
-    logger.info(f'Getting Study SRX for {accession}')
+
     gsm.update(gsm_to_platform(accession))
-    srxs = gsm_id_to_srx(gsm.pop('geo_id'))
-    experiments = [ffq_experiment(srx) for srx in srxs]
-    
-    gsm.update({'experiments': {experiment['accession']: experiment for experiment in experiments}})
+    srs = gsm_id_to_srs(gsm.pop('geo_id'))
+    sample = ffq_sample(srs)
+    gsm.update({'sample': {sample['accession']: sample }})
     return gsm
 
 
@@ -455,14 +488,12 @@ def ffq_experiment(accession):
     :type accession: str
 
     :return: dictionary of experiment information. The dictionary contains a
-             'sample' key, which is a dictionary of all the runs in the study, as
-             returned by `ffq_sample`.
+             'runs' key, which is a dictionary of all the runs in the study, as
+             returned by `ffq_run`.
     :rtype: dict
     """
     logger.info(f'Parsing Experiment {accession}')
-    experiment = parse_experiment(get_xml(accession))
-    sample = ffq_sample(experiment['sample'])
-    experiment.update({'samples': {sample['accession']: sample}}) 
+    experiment = parse_experiment_with_run(get_xml(accession))
     return experiment
 
 
@@ -478,8 +509,11 @@ def ffq_sample(accession):
              returned by `ffq_run`.
     :rtype: dict
     """
-    logger.debug(f'Parsing sample {accession}')
-    sample = parse_sample_with_run(get_xml(accession))
+    logger.info(f'Parsing sample {accession}')
+    sample = parse_sample(get_xml(accession))
+    logger.info(f'Getting Experiment SRX for {accession}')
+    experiment = ffq_experiment(sample['experiment'])
+    sample.update({'experiment': {experiment['accession']: experiment}})
     return sample
 
 
