@@ -309,7 +309,7 @@ def ffq_study(accession):
     logger.info(f'Getting Sample SRS for {accession}')
     sample_ids = get_samples_from_study(accession)
     samples = [ffq_sample(sample_id) for sample_id in sample_ids]
-    study.update({'samples': {samples['accession']: sample for sample in samples}})
+    study.update({'samples': {sample['accession']: sample for sample in samples}})
     return study
 
 
