@@ -29,7 +29,6 @@ class TestFfq(TestMixin, TestCase):
                 cached_get.return_value = f.read()
             with open(self.run_path, 'r') as f:
                 soup = BeautifulSoup(f.read(), 'xml')
-
             self.assertEqual({
                 'accession':
                     'SRR8426358',
@@ -324,19 +323,14 @@ class TestFfq(TestMixin, TestCase):
             self.assertEqual(run, ffq.ffq_run('SRR8426358'))
             get_xml.assert_called_once_with('SRR8426358')
 
-
     def test_ffq_study(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
             mock.patch('ffq.ffq.parse_study') as parse_study,\
             mock.patch('ffq.ffq.ffq_experiment') as ffq_experiment,\
             mock.patch('ffq.ffq.get_experiments_from_study') as get_experiments_from_study:
-
-
             parse_study.return_value = {'study': 'study_id'}
-            get_experiments_from_study.return_value = ["exp_id1", "exp_id2"]
-            
+            get_experiments_from_study.return_value = ["exp_id1", "exp_id2"]    
             ffq_experiment.side_effect = [{'accession': 'id1'}, {'accession': 'id2'}]
-
             self.assertEqual({'study': 'study_id',
                 'experiments': {'id1': {'accession': 'id1'},
                  'id2': {'accession': 'id2'}
@@ -350,10 +344,6 @@ class TestFfq(TestMixin, TestCase):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
             mock.patch('ffq.ffq.parse_experiment') as parse_experiment,\
             mock.patch('ffq.ffq.ffq_sample') as ffq_sample:
-
-
-            #run1 = mock.MagicMock()
-            #run2 = mock.MagicMock()  
             parse_experiment.return_value = {'experiment': 'experiment', 'sample': 'sample'}
             ffq_sample.return_value = {'accession': 'sample'}
 

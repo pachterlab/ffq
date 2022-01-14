@@ -131,7 +131,7 @@ def get_samples_from_study(accession):
         samples_ranges = samples_parsed.text.split(',')
         for sample_range in samples_ranges:
             if '-' in sample_range:
-                samples += parse_run_range(sample_range)  # We will likely change name of function to parse_range
+                samples += parse_range(sample_range) 
             else:
                 samples.append(sample_range)
     else:
@@ -496,19 +496,15 @@ def sra_ids_to_srrs(ids):
     return sorted(list(set(SRR_PARSER.findall(response.text))))
 
 
-def parse_run_range(text):
-    """Given an a string of run ranges, returns a list of intermediary run numbers.
+def parse_range(text):
+    """Given an a string of any accession ranges, returns a list of intermediary accession numbers.
 
-    :param text: an SRR range (example: 'SRR4340020-SRR4340045') or ERR range (example: 'ERR4340020-ERR4340045')
+    :param text: an SRA range (example: 'SRR4340020-SRR4340045', 'SRS345678-SRS34590, 'ERR4340020-ERR4340045')
     :type text: str
 
     :return: a list of range of accession numbers
     :rtype: list
     """
-
-
-    # Consider changing name of this function to parse_range because we might be using it
-    # for everything
 
 
     first, last = text.split('-')

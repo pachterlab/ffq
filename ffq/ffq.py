@@ -17,7 +17,7 @@ from .utils import (
     ncbi_link,
     ncbi_search,
     ncbi_summary,
-    parse_run_range,
+    parse_range,
     parse_tsv,
     search_ena_run_sample,
     search_ena_run_study,
@@ -196,7 +196,7 @@ def parse_experiment_with_run(soup):
         run_ranges = run_parsed.text.split(",")
         for run_range in run_ranges:
             if '-' in run_range:
-                runs += parse_run_range(run_range)
+                runs += parse_range(run_range)
             else:
                 runs.append(run_range)
     else:

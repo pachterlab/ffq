@@ -92,10 +92,6 @@ class TestUtils(TestCase):
                           'SRX2481516',
                           'SRX2481517',
                           'SRX2481518'], utils.get_experiments_from_study('SRP096361'))
-            
-    
-
-
 
     def test_parse_tsv(self):
         s = 'header1\theader2\theader3\nvalue1\tvalue2\tvalue3'
