@@ -342,16 +342,31 @@ class TestFfq(TestMixin, TestCase):
 
     def test_ffq_experiment(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
-            mock.patch('ffq.ffq.parse_experiment') as parse_experiment,\
-            mock.patch('ffq.ffq.ffq_sample') as ffq_sample:
-            parse_experiment.return_value = {'experiment': 'experiment', 'sample': 'sample'}
-            ffq_sample.return_value = {'accession': 'sample'}
+            mock.patch('ffq.ffq.parse_experiment_with_run') as parse_experiment_with_run:
+            parse_experiment_with_run.return_value = {'experiment': 'experiment', 'runs' : {'run': 'run'}}
 
-            self.assertEqual({'experiment': 'experiment', 'sample': 'sample',
-                'samples': {'sample': {'accession':'sample'
-            }}}, ffq.ffq_experiment('SRX7048194'))
+            self.assertEqual({'experiment': 'experiment', 'runs' : {'run': 'run'
+            }}, ffq.ffq_experiment('SRX7048194'))
             get_xml.assert_called_once_with('SRX7048194')
-            ffq_sample.assert_called_once_with('sample')
+
+
+
+## To use for ffq_sample
+#    def test_ffq_experiment(self):
+#        with mock.patch('ffq.ffq.get_xml') as get_xml,\
+#            mock.patch('ffq.ffq.parse_experiment') as parse_experiment,\
+#            mock.patch('ffq.ffq.ffq_sample') as ffq_sample:
+#            parse_experiment.return_value = {'experiment': 'experiment', 'sample': 'sample'}
+ #           ffq_sample.return_value = {'accession': 'sample'}
+#
+ #           self.assertEqual({'experiment': 'experiment', 'sample': 'sample',
+  #              'samples': {'sample': {'accession':'sample'
+   #         }}}, ffq.ffq_experiment('SRX7048194'))
+     #       get_xml.assert_called_once_with('SRX7048194')
+    #        ffq_sample.assert_called_once_with('sample')
+## To use for ffq_sample
+
+
 
     def test_ffq_doi(self):
         with mock.patch('ffq.ffq.get_doi') as get_doi,\
