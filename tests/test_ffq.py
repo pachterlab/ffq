@@ -287,8 +287,8 @@ class TestFfq(TestMixin, TestCase):
         with mock.patch('ffq.ffq.get_gsm_search_json') as get_gsm_search_json, \
             mock.patch('ffq.ffq.geo_to_suppl') as geo_to_suppl, \
             mock.patch('ffq.ffq.gsm_to_platform') as gsm_to_platform, \
-            mock.patch('ffq.ffq.gsm_id_to_srx') as gsm_id_to_srx, \
-            mock.patch('ffq.ffq.ffq_experiment') as ffq_experiment:
+            mock.patch('ffq.ffq.gsm_id_to_srs') as gsm_id_to_srs, \
+            mock.patch('ffq.ffq.ffq_sample') as ffq_sample:
 
             get_gsm_search_json.return_value = {
                 'accession': 'GSM1',
@@ -296,24 +296,24 @@ class TestFfq(TestMixin, TestCase):
             }
             geo_to_suppl.return_value = {'supplementary_files' : 'supp'}
             gsm_to_platform.return_value = {'platform' : 'platform'}
-            gsm_id_to_srx.return_value = ['SRX1']
-            ffq_experiment.return_value = {'accession': 'SRX1'}
+            gsm_id_to_srs.return_value = 'SRS1'
+            ffq_sample.return_value = {'accession': 'SRS1'}
 
             self.assertEqual({
                 'accession': 'GSM1',
                 'supplementary_files' : {'supplementary_files' : 'supp'},
                 'platform' : 'platform',
-                'experiments': {
-                    'SRX1': {
-                        'accession': 'SRX1'
+                'sample': {
+                    'SRS1': {
+                        'accession': 'SRS1'
                     }
                 }
             }, ffq.ffq_gsm('GSM1'))
             get_gsm_search_json.assert_called_once_with('GSM1')
             geo_to_suppl.assert_called_once_with('GSM1', 'GSM')
             gsm_to_platform.assert_called_once_with('GSM1')
-            gsm_id_to_srx.assert_called_once_with('GSMID1')
-            ffq_experiment.assert_called_once_with('SRX1')
+            gsm_id_to_srs.assert_called_once_with('GSMID1')
+            ffq_sample.assert_called_once_with('SRS1')
 
     def test_ffq_run(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
