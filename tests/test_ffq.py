@@ -326,19 +326,19 @@ class TestFfq(TestMixin, TestCase):
     def test_ffq_study(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
             mock.patch('ffq.ffq.parse_study') as parse_study,\
-            mock.patch('ffq.ffq.ffq_experiment') as ffq_experiment,\
-            mock.patch('ffq.ffq.get_experiments_from_study') as get_experiments_from_study:
+            mock.patch('ffq.ffq.ffq_sample') as ffq_sample,\
+            mock.patch('ffq.ffq.get_samples_from_study') as get_samples_from_study:
             parse_study.return_value = {'study': 'study_id'}
-            get_experiments_from_study.return_value = ["exp_id1", "exp_id2"]    
-            ffq_experiment.side_effect = [{'accession': 'id1'}, {'accession': 'id2'}]
+            get_samples_from_study.return_value = ["sample_id1", "sample_id2"]    
+            ffq_sample.side_effect = [{'accession': 'id1'}, {'accession': 'id2'}]
             self.assertEqual({'study': 'study_id',
-                'experiments': {'id1': {'accession': 'id1'},
+                'samples': {'id1': {'accession': 'id1'},
                  'id2': {'accession': 'id2'}
                      },
             }, ffq.ffq_study('SRP226764'))
             get_xml.assert_called_once_with('SRP226764')
-            self.assertEqual(2, ffq_experiment.call_count)
-            ffq_experiment.assert_has_calls([call('exp_id1'), call('exp_id2')])
+            self.assertEqual(2, ffq_sample.call_count)
+            ffq_sample.assert_has_calls([call('sample_id1'), call('sample_id2')])
 
     def test_ffq_experiment(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
