@@ -5,7 +5,7 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, validate_accession
+from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_ENCODE, validate_accession
 
 logger = logging.getLogger(__name__)
 
@@ -14,8 +14,9 @@ PROJECT_TYPES = ('SRP', 'ERP', 'DRP')  # aka study types
 EXPERIMENT_TYPES = ('SRX',)
 SAMPLE_TYPES = ('SRS',)
 GEO_TYPES = ('GSE','GSM')
+ENCODE_TYPES = ('ENCSR',)
 OTHER_TYPES = ('DOI',)
-SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + OTHER_TYPES
+SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + OTHER_TYPES
 
 
 def main():
@@ -133,7 +134,7 @@ def main():
     #If user does not provide -t 
     else:
         # Validate and extract types of accessions provided
-        type_accessions = validate_accession(args.IDs, RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES)
+        type_accessions = validate_accession(args.IDs, RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES)
 
         # If at least one of the accessions is incorrect:  
         if False in type_accessions:
@@ -156,6 +157,8 @@ def main():
                     results.append(ffq_gse(accession))
                 elif type == 'GSM':
                     results.append(ffq_gsm(accession))
+                elif type == 'ENCSR':
+                    results.append(ffq_ENCODE(accession))
                 elif type == 'DOI':
                     logger.warning('Searching by DOI may result in missing information.')
                     results.append(ffq_doi(accession))

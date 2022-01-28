@@ -23,7 +23,9 @@ from .config import (
     FTP_GEO_URL,
     FTP_GEO_SAMPLE,
     FTP_GEO_SERIES,
-    FTP_GEO_SUPPL
+    FTP_GEO_SUPPL,
+    ENCODE_BIOSAMPLE_URL,
+    ENCODE_JSON
 )
 
 GSE_PARSER = re.compile(r'Series\t\tAccession: (?P<accession>GSE[0-9]+)\t')
@@ -56,6 +58,8 @@ def get_xml(accession):
     """
     return BeautifulSoup(cached_get(f'{ENA_URL}/{accession}/'), 'xml')
 
+def get_ENCODE_json(accession):
+    return json.loads(cached_get(f'{ENCODE_BIOSAMPLE_URL}/{accession}{ENCODE_JSON}'))
 
 def get_doi(doi):
     """Given a DOI, retrieve metadata from CrossRef.
@@ -141,6 +145,63 @@ def get_samples_from_study(accession):
         return
 
     return samples
+
+
+def parse_encode_json(data):
+    
+    """Parse a python dictionary containing
+    ENCODE metadata into a parsed dictionary 
+    with select metadata to be returned by 
+    `ffq_ENCODE`
+
+    :param data: python dictionary containing ENCODE metadata
+    :type s: dict
+
+    :return: dictionary with parsed ENCODE metadata
+    :rtype: dict
+    """
+    keys_encode = ['accession', 'description', 'dbxrefs']
+    encode = {key: (data[key] if key in data.keys() else "") for key in keys_encode}
+
+    replicates_data_list = []
+
+    for replicate in data['replicates']:
+
+        replicate_keys = ['biological_replicate_number', 'technical_replicate_number']
+        replicate_data =  {key: (replicate[key] if key in replicate.keys() else "") for key in replicate_keys }
+
+        keys_library = ['accession', 'dbxrefs']
+        replicate = data['replicates'][0]
+        library = {key: (replicate['library'][key] if key in replicate['library'].keys() else "") for key in keys_library}
+
+        keys_biosample = ['accession', 'dbxrefs', 'genetic_modifications', 'treatments']
+        replicate = data['replicates'][0]
+        biosample = {key: (replicate['library']['biosample'][key] if key in replicate['library']['biosample'].keys() else "") for key in keys_biosample }
+
+        keys_biosample_ontology = ['cell_slims', 'developmental_slims', 'system_slims']
+        replicate = data['replicates'][0]
+        biosample_ontology = {key: (replicate['library']['biosample']['biosample_ontology'][key] if key in replicate['library']['biosample']['biosample_ontology'].keys() else "") for key in keys_biosample_ontology }
+
+        keys_donor = ['accession', 'dbxrefs', 'organism', 'sex', 'life_stage', 'age', 'age_units', 'health_status', 'ethnicity']
+        donor =  {key : (replicate['library']['biosample']['donor'][key] if key in replicate['library']['biosample']['donor'].keys() else "") for key in keys_donor}
+
+        biosample.update(biosample_ontology)
+        biosample.update({'donor' : donor})
+        library.update({'biosample': biosample})
+        replicate_data.update({'library' : library})
+
+        replicates_data_list.append(replicate_data)
+
+    encode.update({'replicates': replicate for replicate in replicates_data_list})
+
+    files_data = []
+    keys_files = ['accession', 'description', 'dbxrefs', 'file_format', 'file_size', 'output_type', 'cloud_metadata']
+    for file in data['files']:
+        files_data.append({key: (file[key] if key in file.keys() else "") for key in keys_files})
+
+    encode.update({'files' : {file['accession'] : file for file in files_data}})
+
+    return encode
 
 
 def parse_tsv(s):

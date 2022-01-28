@@ -13,11 +13,13 @@ from .utils import (
     get_gse_search_json,
     get_gsm_search_json,
     get_xml,
+    get_ENCODE_json,
     get_samples_from_study,
     ncbi_link,
     ncbi_search,
     ncbi_summary,
     parse_range,
+    parse_encode_json,
     parse_tsv,
     search_ena_run_sample,
     search_ena_run_study,
@@ -38,7 +40,8 @@ DOI_PARSER = re.compile('^10.\d{4,9}\/[-._;()\/:a-z0-9]+')
 
 
 def validate_accession(accessions, search_types):
-    return [(accession[:3], accession) if accession[:3] in search_types else False if DOI_PARSER.match(accession) is None else ("DOI", accession) for accession in accessions]
+    ID_types = [re.findall(r"(\D+).+", accession)[0] for accession in accessions]
+    return [(ID_type, accession) if ID_type in search_types else False if DOI_PARSER.match(accession) is None else ("DOI", accession) for accession, ID_type in zip(accessions, ID_types)]
     
 
 def parse_run(soup):
@@ -410,6 +413,12 @@ def ffq_sample(accession):
     experiment = ffq_experiment(sample['experiment'])
     sample.update({'experiment': {experiment['accession']: experiment}})
     return sample
+
+
+def ffq_ENCODE(accession):
+    logger.info(f'Parsing {accession}')
+    encode = parse_encode_json(get_ENCODE_json(accession))
+    return encode
 
 
 def ffq_doi(doi):

@@ -19,3 +19,7 @@ FTP_GEO_URL = 'ftp.ncbi.nlm.nih.gov'
 FTP_GEO_SAMPLE = '/geo/samples/'
 FTP_GEO_SERIES = '/geo/series/'
 FTP_GEO_SUPPL = '/suppl/'
+
+# ENCODE REST API links
+ENCODE_BIOSAMPLE_URL = 'https://www.encodeproject.org/biosamples/'
+ENCODE_JSON = '/?format=json'
