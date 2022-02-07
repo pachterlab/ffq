@@ -5,7 +5,7 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_ENCODE, validate_accession
+from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_ENCODE, ffq_ftp, validate_accession
 
 logger = logging.getLogger(__name__)
 
@@ -66,6 +66,9 @@ def main():
     )
 
     parser.add_argument(
+        '--ftp', help='Skip medatada and return only ftp links for raw data', action='store_true'
+    )
+    parser.add_argument(
         '--split', help='Split runs into their own files.', action='store_true'
     )
     parser.add_argument(
@@ -96,6 +99,9 @@ def main():
     if args.t is not None:
 
     # Check IDs depending on type 
+        ######
+        # NOTE: include ENCODE ID here, and change ID[0:3] by regex search
+        ######
         if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES :
             for ID in args.IDs:
                 if ID[0:3] != args.t or not ID[3:].isdigit():
@@ -106,30 +112,34 @@ def main():
         elif args.t == 'DOI':
             logger.warning('Searching by DOI may result in missing information.')
 
-        try:
-            # run ffq depending on type
-            if args.t in RUN_TYPES:
-	            results = [ffq_run(accession) for accession in args.IDs]
-            elif args.t in PROJECT_TYPES:
-	            results = [ffq_study(accession) for accession in args.IDs]
-            elif args.t in EXPERIMENT_TYPES:
-                results = [ffq_experiment(accession) for accession in args.IDs]
-            elif args.t in SAMPLE_TYPES:
-                results = [ffq_sample(accession) for accession in args.IDs]
-            elif args.t == 'GSE':
-                results = [ffq_gse(accession) for accession in args.IDs]
-            elif args.t == 'GSM':
-                results = [ffq_gsm(accession) for accession in args.IDs]
-            elif args.t == 'DOI':
-                results = [study for doi in args.IDs for study in ffq_doi(doi)]
+        if args.ftp:
+            keyed = "worked"
+        
+        else:
+            try:
+                # run ffq depending on type
+                if args.t in RUN_TYPES:
+                    results = [ffq_run(accession) for accession in args.IDs]
+                elif args.t in PROJECT_TYPES:
+                    results = [ffq_study(accession) for accession in args.IDs]
+                elif args.t in EXPERIMENT_TYPES:
+                    results = [ffq_experiment(accession) for accession in args.IDs]
+                elif args.t in SAMPLE_TYPES:
+                    results = [ffq_sample(accession) for accession in args.IDs]
+                elif args.t == 'GSE':
+                    results = [ffq_gse(accession) for accession in args.IDs]
+                elif args.t == 'GSM':
+                    results = [ffq_gsm(accession) for accession in args.IDs]
+                elif args.t == 'DOI':
+                    results = [study for doi in args.IDs for study in ffq_doi(doi)]
 
-            keyed = {result['accession']: result for result in results}
+                keyed = {result['accession']: result for result in results}
 
-        except Exception as e:
-            if args.verbose:
-                logger.exception(e)
-            else:
-                logger.error(e)
+            except Exception as e:
+                if args.verbose:
+                    logger.exception(e)
+                else:
+                    logger.error(e)
 
     #If user does not provide -t 
     else:
@@ -141,35 +151,46 @@ def main():
             parser.error(f'{args.IDs[type_accessions.index(False)]} is not a valid ID. IDs can be one of {", ".join(SEARCH_TYPES)}')
             sys.exit(1)
 
-        # run ffq depending on type
-        try:
-            results = []
-            for type, accession in type_accessions:
-                if type in RUN_TYPES:
-                    results.append(ffq_run(accession))
-                elif type in PROJECT_TYPES:
-                    results.append(ffq_study(accession))
-                elif type in EXPERIMENT_TYPES:
-                    results.append(ffq_experiment(accession))
-                elif type in SAMPLE_TYPES:
-                    results.append(ffq_sample(accession))
-                elif type == 'GSE':
-                    results.append(ffq_gse(accession))
-                elif type == 'GSM':
-                    results.append(ffq_gsm(accession))
-                elif type == 'ENCSR':
-                    results.append(ffq_ENCODE(accession))
-                elif type == 'DOI':
-                    logger.warning('Searching by DOI may result in missing information.')
-                    results.append(ffq_doi(accession))
+        ############
+        # NOTE: Change `type` by another name
+        ############
+        if args.ftp:
+            ffq_ftp(type_accessions)
+            exit()
 
-            keyed = {result['accession']: result for result in results}
 
-        except Exception as e:
-	        if args.verbose:
-		        logger.exception(e)
-	        else:
-		        logger.error(e)
+
+
+        else:
+            # run ffq depending on type
+            try:
+                results = []
+                for type, accession in type_accessions:
+                    if type in RUN_TYPES:
+                        results.append(ffq_run(accession))
+                    elif type in PROJECT_TYPES:
+                        results.append(ffq_study(accession))
+                    elif type in EXPERIMENT_TYPES:
+                        results.append(ffq_experiment(accession))
+                    elif type in SAMPLE_TYPES:
+                        results.append(ffq_sample(accession))
+                    elif type == 'GSE':
+                        results.append(ffq_gse(accession))
+                    elif type == 'GSM':
+                        results.append(ffq_gsm(accession))
+                    elif type == 'ENCSR':
+                        results.append(ffq_ENCODE(accession))
+                    elif type == 'DOI':
+                        logger.warning('Searching by DOI may result in missing information.')
+                        results.append(ffq_doi(accession))
+
+                keyed = {result['accession']: result for result in results}
+
+            except Exception as e:
+                if args.verbose:
+                    logger.exception(e)
+                else:
+                    logger.error(e)
 
     if args.o:
         if args.split:

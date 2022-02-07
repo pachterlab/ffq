@@ -2,6 +2,7 @@ import json
 import re
 import time
 from functools import lru_cache
+import numpy as np
 
 import requests
 from ftplib import FTP
@@ -28,6 +29,7 @@ from .config import (
     ENCODE_JSON
 )
 
+RUN_PARSER = re.compile(r'(SRR.+)|(ERR.+)|(DRR.+)')
 GSE_PARSER = re.compile(r'Series\t\tAccession: (?P<accession>GSE[0-9]+)\t')
 SRP_PARSER = re.compile(r'Study acc="(?P<accession>SRP[0-9]+)"')
 SRR_PARSER = re.compile(r'Run acc="(?P<accession>SRR[0-9]+)"')
@@ -626,3 +628,100 @@ def gsm_to_platform(accession):
         return {'platform' : platform}
     else:
         return {}
+
+def gse_to_gsms(accession):
+    gse_id = json.loads(get_gse_search_json(accession).text)['esearchresult']['idlist'][-1]
+    gse = ncbi_summary("gds",gse_id)
+    gsms = [sample['accession'] for sample in gse[gse_id]['samples']]
+    gsms.sort()
+    return gsms
+
+
+def gsm_to_srx(accession):
+    id = get_gsm_search_json(accession)['geo_id']
+    srx = ncbi_summary("gds", id)[id]['extrelations'][0]['targetobject']
+    return srx
+
+
+def srs_to_srx(accession):
+    soup = get_xml(accession)
+    return soup.find('ID', text = EXPERIMENT_PARSER).text
+
+
+def srx_to_srrs(accession):
+    soup = get_xml(accession)
+    runs = []
+    run_parsed = soup.find('ID', text=RUN_PARSER)
+    if run_parsed:
+        run_ranges = run_parsed.text.split(",")
+        for run_range in run_ranges:
+            if '-' in run_range:
+                runs += parse_range(run_range)
+            else:
+                runs.append(run_range)
+    else:
+        logger.warning(
+            'Failed to parse run information from ENA XML. Falling back to '
+            'ENA search...'
+        )
+        # Sometimes the SRP does not contain a list of runs (for whatever reason).
+        # A common trend with such projects is that they use ArrayExpress.
+        # In the case that no runs could be found from the project XML,
+        # fallback to ENA SEARCH.  
+        runs = search_ena_study_runs(accession)
+    return runs
+
+
+def get_ftp_links_from_run(soup):
+    files = []
+    # Get FASTQs if available
+    for xref in soup.find_all('XREF_LINK'):
+        if xref.find('DB').text == 'ENA-FASTQ-FILES':
+            fastq_url = xref.find('ID').text
+
+            table = parse_tsv(cached_get(fastq_url))
+            assert len(table) == 1
+
+            urls = table[0].get('fastq_ftp', '')
+            md5s = table[0].get('fastq_md5', '')
+            sizes = table[0].get('fastq_bytes', '')
+            # If any of these are empty, that means no FASTQs are
+            # available. This usually means the data was submitted as a BAM file.
+            if not urls or not md5s or not sizes:
+                break
+
+            files.extend(
+                [{
+                    'url': f'ftp://{url}',
+                    'md5': md5,
+                    'size': size
+                } for url, md5, size in
+                 zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
+            )
+            break
+
+    # Include BAM (in submitted file)
+    for xref in soup.find_all('XREF_LINK'):
+        if xref.find('DB').text == 'ENA-SUBMITTED-FILES':
+            bam_url = xref.find('ID').text
+
+            table = parse_tsv(cached_get(bam_url))
+            assert len(table) == 1
+
+            urls = table[0].get('submitted_ftp', '')
+            md5s = table[0].get('submitted_md5', '')
+            sizes = table[0].get('submitted_bytes', '')
+            formats = table[0].get('submitted_format', '')
+            if not urls or not md5s or not sizes or 'BAM' not in formats:
+                break
+            files.extend(
+                [{
+                    'url': f'ftp://{url}',
+                    'md5': md5,
+                    'size': size
+                } for url, md5, size in
+                 zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
+            )
+            break
+    return files
+

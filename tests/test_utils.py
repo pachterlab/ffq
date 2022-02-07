@@ -2,6 +2,8 @@ from unittest import mock, TestCase
 from unittest.mock import call
 
 from bs4 import BeautifulSoup
+import json
+import re
 
 import ffq.utils as utils
 from ffq.config import (
@@ -21,7 +23,6 @@ from ffq.config import (
     FTP_GEO_SERIES,
     FTP_GEO_SUPPL
 )
-
 
 
 class TestUtils(TestCase):
@@ -335,3 +336,73 @@ class TestUtils(TestCase):
                           'title': 'Illumina HiSeq 3000 (Homo sapiens)'}},
                          utils.gsm_to_platform(accession))
 
+
+
+    def test_gse_to_gsms(self):
+        with mock.patch('ffq.utils.get_gse_search_json') as get_gse_search_json, \
+            mock.patch('ffq.utils.ncbi_summary') as ncbi_summary:
+            get_gse_search_json.return_value = BeautifulSoup(
+                """{"header":{"type":"esearch","version":"0.3"},"esearchresult":{
+                    "count":"16","retmax":"1","retstart":"0","idlist":["200128889"],
+                    "translationset":[],"translationstack":[{"term":"GSE128889[GEO Accession]",
+                    "field":"GEO Accession","count":"16","explode":"N"},"GROUP"],
+                    "querytranslation":"GSE128889[GEO Accession]"}}\n""", 'html.parser'
+                    )
+            
+            ncbi_summary.return_value = {'200128889': {'accession': 'GSE128889',
+                                                       'bioproject': 'PRJNA532348',
+                                                       'entrytype': 'GSE',
+                                                       'samples': [
+                                                           {'accession': 'GSM3717979'},
+                                                           {'accession': 'GSM3717982', 'title': 'BulkRNA-seq_murine_p12_CD142_Rep3'},
+                                                           {'accession': 'GSM3717978'},
+                                                           {'accession': 'GSM3717981', 'title': 'BulkRNA-seq_murine_p12_CD142_Rep2'}
+                                                           ]
+                                                       }
+                                         }
+            self.assertEqual(['GSM3717978', 'GSM3717979', 'GSM3717981', 'GSM3717982'],
+                            utils.gse_to_gsms("accession"))
+                            
+  
+    def test_gsm_to_srx(self):
+        with mock.patch('ffq.utils.get_gsm_search_json') as get_gsm_search_json, \
+            mock.patch('ffq.utils.ncbi_summary') as ncbi_summary:
+                get_gsm_search_json.return_value = {'accession': "GSM3717978",
+                                                    'geo_id': "303717978"}
+                ncbi_summary.return_value = {
+                    '303717978': {
+                        'accession': 'GSM3717978','bioproject': '',
+                        'entrytype': 'GSM','extrelations': [
+                            {'relationtype': 'SRA',
+                             'targetftplink': 'ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX569/SRX5692097/',
+                             'targetobject': 'SRX5692097'}
+                            ]
+                        }
+                    }
+                self.assertEqual("SRX5692097", 
+                             utils.gsm_to_srx("accession"))
+
+
+    def test_srs_to_srx(self):
+        with mock.patch('ffq.utils.get_xml') as get_xml:
+            
+            soup = BeautifulSoup("""<?xml version="1.0" encoding="utf-8"?>
+                                                <SAMPLE_SET>
+                                                <SAMPLE accession="SRS4631628" alias="GSM3717977" broker_name="NCBI">
+                                                <XREF_LINK>
+                                                <DB>ENA-EXPERIMENT</DB>
+                                                <ID>SRX5692096</ID>
+                                                </SAMPLE>
+                                                </SAMPLE_SET>""", 'xml'
+                                                )
+            get_xml.return_value = soup
+            get_xml.assert_called_once_with("SRS4631628")
+            self.assertEqual("SRX5692096", 
+            utils.srs_to_srx("SRS4631628"))  
+        
+        # TO do: No idea why get_xml is giving problems. If we dont use aseert_called_once and not
+        # define a mock get_xml function, everything is good.        
+# def srs_to_srx(accession):
+
+#     soup = get_xml(accession)
+#     return soup.find('ID', text = EXPERIMENT_PARSER).text

@@ -27,7 +27,12 @@ from .utils import (
     search_ena_title,
     sra_ids_to_srrs,
     geo_to_suppl,
-    gsm_to_platform
+    gsm_to_platform,
+    gse_to_gsms,
+    srs_to_srx,
+    gsm_to_srx,
+    srx_to_srrs,
+    get_ftp_links_from_run
 )
 
 logger = logging.getLogger(__name__)
@@ -83,56 +88,7 @@ def parse_run(soup):
         attr.find('TAG').text: attr.find('VALUE').text
         for attr in soup.find_all('RUN_ATTRIBUTE')
     }
-    files = []
-    # Get FASTQs if available
-    for xref in soup.find_all('XREF_LINK'):
-        if xref.find('DB').text == 'ENA-FASTQ-FILES':
-            fastq_url = xref.find('ID').text
-
-            table = parse_tsv(cached_get(fastq_url))
-            assert len(table) == 1
-
-            urls = table[0].get('fastq_ftp', '')
-            md5s = table[0].get('fastq_md5', '')
-            sizes = table[0].get('fastq_bytes', '')
-            # If any of these are empty, that means no FASTQs are
-            # available. This usually means the data was submitted as a BAM file.
-            if not urls or not md5s or not sizes:
-                break
-
-            files.extend(
-                [{
-                    'url': f'ftp://{url}',
-                    'md5': md5,
-                    'size': size
-                } for url, md5, size in
-                 zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
-            )
-            break
-
-    # Include BAM (in submitted file)
-    for xref in soup.find_all('XREF_LINK'):
-        if xref.find('DB').text == 'ENA-SUBMITTED-FILES':
-            bam_url = xref.find('ID').text
-
-            table = parse_tsv(cached_get(bam_url))
-            assert len(table) == 1
-
-            urls = table[0].get('submitted_ftp', '')
-            md5s = table[0].get('submitted_md5', '')
-            sizes = table[0].get('submitted_bytes', '')
-            formats = table[0].get('submitted_format', '')
-            if not urls or not md5s or not sizes or 'BAM' not in formats:
-                break
-            files.extend(
-                [{
-                    'url': f'ftp://{url}',
-                    'md5': md5,
-                    'size': size
-                } for url, md5, size in
-                 zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
-            )
-            break
+    files = get_ftp_links_from_run(soup)
 
     return {
         'accession': accession,
@@ -193,25 +149,7 @@ def parse_experiment_with_run(soup):
     'instrument': instrument}
 
     # Returns all of the runs associated with an experiment
-    runs = []
-    run_parsed = soup.find('ID', text=RUN_PARSER)
-    if run_parsed:
-        run_ranges = run_parsed.text.split(",")
-        for run_range in run_ranges:
-            if '-' in run_range:
-                runs += parse_range(run_range)
-            else:
-                runs.append(run_range)
-    else:
-        logger.warning(
-            'Failed to parse run information from ENA XML. Falling back to '
-            'ENA search...'
-        )
-        # Sometimes the SRP does not contain a list of runs (for whatever reason).
-        # A common trend with such projects is that they use ArrayExpress.
-        # In the case that no runs could be found from the project XML,
-        # fallback to ENA SEARCH.  
-        runs = search_ena_study_runs(accession)
+    runs = srx_to_srrs(accession)
 
     if len(runs) == 1:
         logger.warning(f'There is 1 run for {accession}')
@@ -338,12 +276,18 @@ def ffq_gse(accession):
         gse.update({'supplementary_files' : supp})
     else:
         logger.info(f'No supplementary files found for {accession}')        
-    logger.info(f'Getting Study SRX for {accession}')
     gse.pop('geo_id')
     logger.info(f'Getting GSM IDs for {accession}')
     time.sleep(1)
-    gsm_ids = [ncbi_summary("gds",id)[id]["accession"] for id in ncbi_search("gds", accession) if id.startswith('3') if time.sleep(0.5) is None]
-
+    ########
+    # NOTE: get gsm ids directly trough the ncbi summary like so:
+    # gse_id = parse_gse_search(get_gse_search_json(accession))['geo_id']
+    # gse = ncbi_summary("gds",gse_id)
+    # for sample in gse[gse_id]['samples']:
+    #   print(sample['accession'])
+    ### Replace print by append
+    #########
+    gsm_ids = gse_to_gsms(accession)
     gsms = [ffq_gsm(gsm_id) for gsm_id in gsm_ids]
     gse.update({'samples': {sample['accession']: sample for sample in gsms}})
     return gse
@@ -419,6 +363,62 @@ def ffq_ENCODE(accession):
     logger.info(f'Parsing {accession}')
     encode = parse_encode_json(get_ENCODE_json(accession))
     return encode
+
+
+def ffq_ftp(type_accessions):
+    origin_SRP = False
+    origin_GSE = False
+    for id_type, accession in type_accessions:
+        if id_type == "GSE":
+            origin_GSE = True
+            print(accession)
+            print("-" * len(accession))
+            print('\n')
+            accession = gse_to_gsms(accession) 
+            id_type = "GSM"
+        else:
+            pass 
+        if id_type == "GSM":
+
+            if isinstance(accession, str):
+                accession = [accession]
+            counter = 0
+            for gsm in accession:
+                if origin_GSE:
+                    if counter:
+                        print("\n")
+                    print(gsm)
+
+                srx = gsm_to_srx(gsm)
+                srrs = srx_to_srrs(srx)
+                for srr in srrs:
+                    for file in get_ftp_links_from_run(get_xml(srr)):
+                        print(file['url'])
+                counter +=1
+        if id_type == "SRP":
+            print(accession)
+            print("-" * len(accession))
+            print('\n')
+            accession = get_samples_from_study(accession)
+            id_type = 'SRS'
+            origin_SRP = True
+
+        if id_type == "SRS":
+            counter = 0
+            if isinstance(accession, str):
+                accession = [accession]
+            for srx in accession:
+                if origin_SRP:
+                    if counter:
+                        print('\n')
+                    print(srx)
+                accession = srs_to_srx(srx)
+                id_type = "SRX"
+                srr = srx_to_srrs(accession)
+                for srr in srrs:
+                    for file in get_ftp_links_from_run(get_xml(srr)):
+                        print(file['url'])
+                counter +=1
 
 
 def ffq_doi(doi):
