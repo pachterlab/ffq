@@ -13,12 +13,14 @@ from .utils import (
     get_gse_search_json,
     get_gsm_search_json,
     get_xml,
-    get_ENCODE_json,
+    get_encode_json,
     get_samples_from_study,
     ncbi_link,
     ncbi_search,
     ncbi_summary,
     parse_range,
+    parse_encode_biosample,
+    parse_encode_donor,
     parse_encode_json,
     parse_tsv,
     search_ena_run_sample,
@@ -359,9 +361,9 @@ def ffq_sample(accession):
     return sample
 
 
-def ffq_ENCODE(accession):
+def ffq_encode(accession):
     logger.info(f'Parsing {accession}')
-    encode = parse_encode_json(get_ENCODE_json(accession))
+    encode = parse_encode_json(accession, get_encode_json(accession))
     return encode
 
 

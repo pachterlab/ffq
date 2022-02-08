@@ -5,7 +5,7 @@ import os
 import sys
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_ENCODE, ffq_ftp, validate_accession
+from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_encode, ffq_ftp, validate_accession
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +14,7 @@ PROJECT_TYPES = ('SRP', 'ERP', 'DRP')  # aka study types
 EXPERIMENT_TYPES = ('SRX',)
 SAMPLE_TYPES = ('SRS',)
 GEO_TYPES = ('GSE','GSM')
-ENCODE_TYPES = ('ENCSR',)
+ENCODE_TYPES = ('ENCSR', 'ENCBS', 'ENCDO')
 OTHER_TYPES = ('DOI',)
 SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + OTHER_TYPES
 
@@ -178,8 +178,8 @@ def main():
                         results.append(ffq_gse(accession))
                     elif type == 'GSM':
                         results.append(ffq_gsm(accession))
-                    elif type == 'ENCSR':
-                        results.append(ffq_ENCODE(accession))
+                    elif type[:3] == 'ENC':
+                        results.append(ffq_encode(accession))
                     elif type == 'DOI':
                         logger.warning('Searching by DOI may result in missing information.')
                         results.append(ffq_doi(accession))

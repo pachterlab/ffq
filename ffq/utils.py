@@ -60,7 +60,7 @@ def get_xml(accession):
     """
     return BeautifulSoup(cached_get(f'{ENA_URL}/{accession}/'), 'xml')
 
-def get_ENCODE_json(accession):
+def get_encode_json(accession):
     return json.loads(cached_get(f'{ENCODE_BIOSAMPLE_URL}/{accession}{ENCODE_JSON}'))
 
 def get_doi(doi):
@@ -148,8 +148,23 @@ def get_samples_from_study(accession):
 
     return samples
 
+def parse_encode_biosample(data, accession = ''):
+    keys_biosample = ['accession', 'dbxrefs', 'description', 'genetic_modifications', 'treatments', 'sex', 'life_stage', 'age', 'age_units', 'organism', 'genetic_modifications' ]
+    biosample = {key: data.get(key, '') for key in keys_biosample}
 
-def parse_encode_json(data):
+    keys_biosample_ontology = ['classification', 'term_name', 'organ_slims', 'cell_slims', 'system_slims', 'developmental_slims', 'system_slims', 'treatments', 'genetic_modifications']
+    biosample_ontology = {key: data.get(key, '') for key in keys_biosample_ontology}
+    biosample.update({'biosample_ontology': biosample_ontology})
+    return biosample
+
+
+def parse_encode_donor(data, accession = ''):
+    keys_donor = ['accession', 'dbxrefs', 'organism', 'sex', 'life_stage', 'age', 'age_units', 'health_status', 'ethnicity']
+    donor = {key: data.get(key, '') for key in keys_donor}
+    return donor
+
+
+def parse_encode_json(accession, data):
     
     """Parse a python dictionary containing
     ENCODE metadata into a parsed dictionary 
@@ -162,48 +177,49 @@ def parse_encode_json(data):
     :return: dictionary with parsed ENCODE metadata
     :rtype: dict
     """
-    keys_encode = ['accession', 'description', 'dbxrefs']
-    encode = {key: (data[key] if key in data.keys() else "") for key in keys_encode}
 
-    replicates_data_list = []
+    encode = {}
+    if accession[:5] == "ENCSR":
+        keys_assay = ['accession', 'description', 'dbxrefs']
+        encode.update({key: data.get(key, '') for key in keys_assay})
+        replicates_data_list = []
 
-    for replicate in data['replicates']:
+        for replicate in data['replicates']:
+            keys_replicate = ['biological_replicate_number', 'technical_replicate_number']
+            replicate_data = {key: replicate.get(key, '') for key in keys_replicate}
 
-        replicate_keys = ['biological_replicate_number', 'technical_replicate_number']
-        replicate_data =  {key: (replicate[key] if key in replicate.keys() else "") for key in replicate_keys }
+            library = replicate['library']
+            keys_library = ['accession', 'dbxrefs']
+            library_data = {key: library.get(key, '') for key in keys_library}
 
-        keys_library = ['accession', 'dbxrefs']
-        replicate = data['replicates'][0]
-        library = {key: (replicate['library'][key] if key in replicate['library'].keys() else "") for key in keys_library}
 
-        keys_biosample = ['accession', 'dbxrefs', 'genetic_modifications', 'treatments']
-        replicate = data['replicates'][0]
-        biosample = {key: (replicate['library']['biosample'][key] if key in replicate['library']['biosample'].keys() else "") for key in keys_biosample }
+            biosample = parse_encode_biosample(library['biosample'])
+            donor = parse_encode_donor(library['biosample']['donor'])
+    
+            biosample.update({'donor' : donor})
+            library_data.update({'biosample': biosample})
+            replicate_data.update({'library' : library_data})
+            replicates_data_list.append(replicate_data)
 
-        keys_biosample_ontology = ['cell_slims', 'developmental_slims', 'system_slims']
-        replicate = data['replicates'][0]
-        biosample_ontology = {key: (replicate['library']['biosample']['biosample_ontology'][key] if key in replicate['library']['biosample']['biosample_ontology'].keys() else "") for key in keys_biosample_ontology }
+        encode.update({'replicates': replicate for replicate in replicates_data_list})
 
-        keys_donor = ['accession', 'dbxrefs', 'organism', 'sex', 'life_stage', 'age', 'age_units', 'health_status', 'ethnicity']
-        donor =  {key : (replicate['library']['biosample']['donor'][key] if key in replicate['library']['biosample']['donor'].keys() else "") for key in keys_donor}
+        files_data = []
+        keys_files = ['accession', 'description', 'dbxrefs', 'file_format', 'file_size', 'output_type', 'cloud_metadata']
+        for file in data['files']:
+            files_data.append({key: (file[key] if key in file.keys() else "") for key in keys_files})
 
-        biosample.update(biosample_ontology)
-        biosample.update({'donor' : donor})
-        library.update({'biosample': biosample})
-        replicate_data.update({'library' : library})
+        encode.update({'files' : {file['accession'] : file for file in files_data}})
 
-        replicates_data_list.append(replicate_data)
+        return encode
 
-    encode.update({'replicates': replicate for replicate in replicates_data_list})
+    if accession[:5] == 'ENCBS':
+        encode = parse_encode_biosample(data, accession)
 
-    files_data = []
-    keys_files = ['accession', 'description', 'dbxrefs', 'file_format', 'file_size', 'output_type', 'cloud_metadata']
-    for file in data['files']:
-        files_data.append({key: (file[key] if key in file.keys() else "") for key in keys_files})
-
-    encode.update({'files' : {file['accession'] : file for file in files_data}})
+    if accession[:5] == "ENCDO":
+        encode = parse_encode_donor(data, accession)
 
     return encode
+
 
 
 def parse_tsv(s):
