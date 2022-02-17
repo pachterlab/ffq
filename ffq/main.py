@@ -156,7 +156,7 @@ def main():
         ############
         if args.ftp:
             ffq_ftp(type_accessions)
-            exit()
+            sys.exit(1)
 
 
 

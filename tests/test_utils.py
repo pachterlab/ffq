@@ -406,3 +406,8 @@ class TestUtils(TestCase):
 
 #     soup = get_xml(accession)
 #     return soup.find('ID', text = EXPERIMENT_PARSER).text
+
+
+        # def test_srx_to_srrs(self):
+        # with mock.patch('ffq.utils.get_xml') as get_xml, \
+        #     mock.patch('ffq.utils.parse_range') as parse_range:            

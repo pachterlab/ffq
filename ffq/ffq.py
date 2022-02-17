@@ -3,6 +3,7 @@ import logging
 import re
 import time
 from urllib.parse import urlparse
+import sys
 
 from .utils import (
     cached_get,
@@ -192,10 +193,13 @@ def parse_gse_search(soup):
     :rtype: dict
     """
     data = json.loads(soup.text)
-
-    accession = data['esearchresult']['querytranslation'].split('[')[0]
-    geo_id = data['esearchresult']['idlist'][-1]
-    return {'accession': accession, 'geo_id': geo_id}
+    if data['esearchresult']['idlist']:
+        accession = data['esearchresult']['querytranslation'].split('[')[0]
+        geo_id = data['esearchresult']['idlist'][-1]
+        return {'accession': accession, 'geo_id': geo_id}
+    else:
+        logger.error("Provided GSE accession is invalid")
+        sys.exit(1)
 
 
 def parse_gse_summary(soup):
@@ -319,6 +323,7 @@ def ffq_gsm(accession):
         logger.info(f'No supplementary files found for {accession}')        
 
     gsm.update(gsm_to_platform(accession))
+    logger.info(f'Getting sample SRS for {accession}')
     srs = gsm_id_to_srs(gsm.pop('geo_id'))
     sample = ffq_sample(srs)
     gsm.update({'sample': {sample['accession']: sample }})

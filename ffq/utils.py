@@ -2,12 +2,14 @@ import json
 import re
 import time
 from functools import lru_cache
+import sys
 import numpy as np
 
 import requests
 from ftplib import FTP
 from bs4 import BeautifulSoup
 from frozendict import frozendict
+import logging
 
 from .config import (
     CROSSREF_URL,
@@ -29,6 +31,7 @@ from .config import (
     ENCODE_JSON
 )
 
+
 RUN_PARSER = re.compile(r'(SRR.+)|(ERR.+)|(DRR.+)')
 GSE_PARSER = re.compile(r'Series\t\tAccession: (?P<accession>GSE[0-9]+)\t')
 SRP_PARSER = re.compile(r'Study acc="(?P<accession>SRP[0-9]+)"')
@@ -36,6 +39,7 @@ SRR_PARSER = re.compile(r'Run acc="(?P<accession>SRR[0-9]+)"')
 EXPERIMENT_PARSER = re.compile(r'(SRX.+)|(ERX.+)|(DRX.+)')
 SAMPLE_PARSER = re.compile(r'(SRS.+)|(ERS.+)|(DRS.+)')
 
+logger = logging.getLogger(__name__)
 
 @lru_cache()
 def cached_get(*args, **kwargs):
@@ -44,9 +48,21 @@ def cached_get(*args, **kwargs):
     :return: text of response
     :rtype: str
     """
+
     response = requests.get(*args, **kwargs)
-    response.raise_for_status()
-    return response.text
+
+    try:
+        response.raise_for_status()
+    except requests.HTTPError as exception:
+        logger.error(f'{exception}')
+        logger.error ('Provided SRA accession is invalid')
+        exit(1)
+    text = response.text
+    if not text:
+        logger.warning(f'No metadata found in {args[0]}')
+        sys.exit(1)
+    else:
+        return response.text
 
 
 def get_xml(accession):
@@ -58,7 +74,9 @@ def get_xml(accession):
     :return: a BeautifulSoup object of the parsed XML
     :rtype: bs4.BeautifulSoup
     """
+
     return BeautifulSoup(cached_get(f'{ENA_URL}/{accession}/'), 'xml')
+
 
 def get_encode_json(accession):
     return json.loads(cached_get(f'{ENCODE_BIOSAMPLE_URL}/{accession}{ENCODE_JSON}'))
@@ -99,9 +117,13 @@ def get_gsm_search_json(accession):
     :return: a BeautifulSoup object of the parsed JSON
     :rtype: bs4.BeautifulSoup
     """
-    geo_id = ncbi_search("gds", accession)[-1]
-      
-    return {'accession': accession, 'geo_id': geo_id}
+    geo = ncbi_search("gds", accession)
+    if geo:
+        geo_id = geo_id[-1]
+        return {'accession': accession, 'geo_id': geo_id}
+    else:
+        logger.error('Provided GSM accession is invalid')
+        sys.exit(1)
 
 
 def get_gse_summary_json(accession):
@@ -525,10 +547,13 @@ def gsm_id_to_srs(id):
         for value in data['extrelations']:
             if value['relationtype'] == 'SRA':  # may have manys samples?  
                 srxs.append(value['targetobject'])
-    for srx in srxs:
-        soup = get_xml(srx)
-        sample = soup.find('ID', text = SAMPLE_PARSER).text
-
+    if srxs:
+        for srx in srxs:
+            soup = get_xml(srx)
+            sample = soup.find('ID', text = SAMPLE_PARSER).text
+    else:
+        logger.warning(f'No SRS sample found. Please check if the provided GSM accession is valid')
+        exit(1)
     return sample
  
 
