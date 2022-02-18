@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import sys
+import re
 
 from . import __version__
 from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_encode, ffq_ftp, validate_accession
@@ -102,15 +103,24 @@ def main():
         ######
         # NOTE: include ENCODE ID here, and change ID[0:3] by regex search
         ######
-        if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES :
+        if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES:
             for ID in args.IDs:
-                if ID[0:3] != args.t or not ID[3:].isdigit():
+                ID_type = re.findall(r"(\D+).+", ID)
+                if ID_type not in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES:
                     parser.error((
                         f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
                         ' and end with digits.'
                     ))
         elif args.t == 'DOI':
-            logger.warning('Searching by DOI may result in missing information.')
+            logger.warning('Searching by DOI may result in missing information.')                    
+
+        #         if ID[0:3] != args.t or not ID[3:].isdigit():
+        #             parser.error((
+        #                 f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
+        #                 ' and end with digits.'
+        #             ))
+        # elif args.t == 'DOI':
+        #     logger.warning('Searching by DOI may result in missing information.')
 
         if args.ftp:
             results = [ffq_ftp([(args.t, accession)]) for accession in args.IDs]

@@ -283,17 +283,9 @@ def ffq_gse(accession):
     else:
         logger.info(f'No supplementary files found for {accession}')        
     gse.pop('geo_id')
+    
     logger.info(f'Getting GSM IDs for {accession}')
     time.sleep(1)
-    ########
-    # NOTE: get gsm ids directly trough the ncbi summary like so:
-    # gse_id = parse_gse_search(get_gse_search_json(accession))['geo_id']
-    # gse = ncbi_summary("gds",gse_id)
-    # for sample in gse[gse_id]['samples']:
-    #   print(sample['accession'])
-    ### Replace print by append
-    #########
-
     gsm_ids = gse_to_gsms(accession)
     gsms = [ffq_gsm(gsm_id) for gsm_id in gsm_ids]
     gse.update({'samples': {sample['accession']: sample for sample in gsms}})
