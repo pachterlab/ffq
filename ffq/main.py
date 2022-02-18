@@ -113,7 +113,7 @@ def main():
             logger.warning('Searching by DOI may result in missing information.')
 
         if args.ftp:
-            keyed = "worked"
+            results = [ffq_ftp([(args.t, accession)]) for accession in args.IDs]
         
         else:
             try:

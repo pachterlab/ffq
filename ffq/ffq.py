@@ -378,12 +378,12 @@ def ffq_ftp(type_accessions):
     origin_GSE = False
     for id_type, accession in type_accessions:
         if id_type == "GSE":
-            accession = gse_to_gsms(accession) 
-            id_type = "GSM"
-            origin_GSE = True
             print(accession)
             print("-" * len(accession))
             print('\n')
+            accession = gse_to_gsms(accession) 
+            id_type = "GSM"
+            origin_GSE = True
 
         else:
             pass 

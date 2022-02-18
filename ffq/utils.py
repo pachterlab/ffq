@@ -119,7 +119,7 @@ def get_gsm_search_json(accession):
     """
     geo = ncbi_search("gds", accession)
     if geo:
-        geo_id = geo_id[-1]
+        geo_id = geo[-1]
         return {'accession': accession, 'geo_id': geo_id}
     else:
         logger.error('Provided GSM accession is invalid')
