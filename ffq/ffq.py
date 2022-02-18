@@ -293,6 +293,7 @@ def ffq_gse(accession):
     #   print(sample['accession'])
     ### Replace print by append
     #########
+
     gsm_ids = gse_to_gsms(accession)
     gsms = [ffq_gsm(gsm_id) for gsm_id in gsm_ids]
     gse.update({'samples': {sample['accession']: sample for sample in gsms}})
@@ -377,12 +378,13 @@ def ffq_ftp(type_accessions):
     origin_GSE = False
     for id_type, accession in type_accessions:
         if id_type == "GSE":
+            accession = gse_to_gsms(accession) 
+            id_type = "GSM"
             origin_GSE = True
             print(accession)
             print("-" * len(accession))
             print('\n')
-            accession = gse_to_gsms(accession) 
-            id_type = "GSM"
+
         else:
             pass 
         if id_type == "GSM":

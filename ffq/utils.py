@@ -671,11 +671,29 @@ def gsm_to_platform(accession):
         return {}
 
 def gse_to_gsms(accession):
-    gse_id = json.loads(get_gse_search_json(accession).text)['esearchresult']['idlist'][-1]
-    gse = ncbi_summary("gds",gse_id)
-    gsms = [sample['accession'] for sample in gse[gse_id]['samples']]
-    gsms.sort()
-    return gsms
+    data = json.loads(get_gse_search_json(accession).text)
+    if data['esearchresult']['idlist']:
+        gse_id = data['esearchresult']['idlist'][-1]
+        gse = ncbi_summary("gds",gse_id)
+        gsms = [sample['accession'] for sample in gse[gse_id]['samples']]
+        gsms.sort()
+        return gsms
+    else:
+        logger.error("Provided GSE accession is invalid")
+        sys.exit(1)
+
+
+
+    data = json.loads(soup.text)
+    if data['esearchresult']['idlist']:
+        accession = data['esearchresult']['querytranslation'].split('[')[0]
+        geo_id = data['esearchresult']['idlist'][-1]
+        return {'accession': accession, 'geo_id': geo_id}
+    else:
+        logger.error("Provided GSE accession is invalid")
+        sys.exit(1)
+
+
 
 
 def gsm_to_srx(accession):
