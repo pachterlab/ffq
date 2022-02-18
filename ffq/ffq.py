@@ -426,6 +426,9 @@ def ffq_ftp(type_accessions):
                     for file in get_ftp_links_from_run(get_xml(srr)):
                         print(file['url'])
                 counter +=1
+        if id_type == "SRR":
+            for file in get_ftp_links_from_run(get_xml(accession)):
+                print(file['url'])
 
 
 def ffq_doi(doi):
