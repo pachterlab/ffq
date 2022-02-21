@@ -128,46 +128,49 @@ class TestFfq(TestMixin, TestCase):
             'experiment': 'SRX5234128'
         }, ffq.parse_sample(soup))
 
-    def test_parse_experiment(self):
+    def test_parse_experiment_with_run(self):
         with open(self.experiment_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
 
-        self.assertEqual({
-            'accession':
-                'SRX5234128',
-            'title':
-                'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq',
-            'platform':
-                'ILLUMINA',
-            'instrument':
-                'Illumina HiSeq 4000',
-            'sample':
-                'SRS4237519'
-        }, ffq.parse_experiment(soup))
+        self.assertEqual({'accession': 'SRX5234128',
+ 'instrument': 'Illumina HiSeq 4000',
+ 'platform': 'ILLUMINA',
+ 'runs': {'SRR8426358': {'accession': 'SRR8426358',
+   'attributes': {'ENA-BASE-COUNT': '21984096610',
+    'ENA-FIRST-PUBLIC': '2019-01-27',
+    'ENA-LAST-UPDATE': '2019-01-27',
+    'ENA-SPOT-COUNT': '109256158'},
+   'experiment': 'SRX5234128',
+   'files': [{'md5': 'be7e88cf6f6fd90f1b1170f1cb367123',
+     'size': '5507959060',
+     'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'},
+    {'md5': '2124da22644d876c4caa92ffd9e2402e',
+     'size': '7194107512',
+     'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz'}],
+   'sample': 'SRS4237519',
+   'study': 'SRP178136',
+   'title': 'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq'}},
+ 'title': 'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq'}, ffq.parse_experiment_with_run(soup))
 
     def test_parse_study(self):
         with open(self.study_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
 
-        self.assertEqual({
-            'accession':
-                'SRP178136',
-            'title':
-                'Multi-modal analysis of the aging mouse lung at cellular resolution',
-            'abstract': (
-                'A) Whole lung tissue from 24 months (n=7) and 3 months old '
-                '(n=8) mice was dissociated and single-cell mRNAseq libraries '
-                'generated with Drop-Seq. B) Bulk RNA-seq data was generated '
-                'from whole mouse lung tissue of old (n=3) and young (n=3) '
-                'samples. C) Bulk RNA-seq data was generated from flow-sorted '
-                'macrophages from old (n=7) and young (n=5) mice and '
-                'flow-sorted epithelial cells from old (n=4) and young (n=4) '
-                'mice. Overall design: Integration of bulk RNA-seq from whole '
-                'mouse lung tissue and bulk RNA-seq from flow-sorted lung '
-                'macrophages and epithelial cells was used to validate results '
-                'obtained from single cell RNA-seq of whole lung tissue.'
-            )
-        }, ffq.parse_study(soup))
+        self.assertEqual({'accession': 'SRP178136',
+                          'title': 'Multi-modal analysis of the aging mouse lung at cellular resolution',
+                          'abstract': 'A) Whole lung tissue from 24 months (n=7) '
+                          'and 3 months old (n=8) mice was dissociated and single-cell '
+                          'mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq '
+                          'data was generated from whole mouse lung tissue of old (n=3) '
+                          'and young (n=3) samples. C) Bulk RNA-seq data was generated '
+                          'from flow-sorted macrophages from old (n=7) and young (n=5) '
+                          'mice and flow-sorted epithelial cells from old (n=4) and '
+                          'young (n=4) mice. Overall design: Integration of bulk RNA-seq '
+                          'from whole mouse lung tissue and bulk RNA-seq from flow-sorted '
+                          'lung macrophages and epithelial cells was used to validate results '
+                          'obtained from single cell RNA-seq of whole lung tissue.',
+                          'accession': 'SRP178136'
+                          }, ffq.parse_study(soup))
 
     def test_parse_study_with_run(self):
         with open(self.study_with_run_path, 'r') as f:
