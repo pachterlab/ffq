@@ -283,7 +283,7 @@ def ffq_gse(accession):
     else:
         logger.info(f'No supplementary files found for {accession}')        
     gse.pop('geo_id')
-    
+
     logger.info(f'Getting GSM IDs for {accession}')
     time.sleep(1)
     gsm_ids = gse_to_gsms(accession)
@@ -422,7 +422,7 @@ def ffq_ftp(type_accessions):
                 counter +=1
         if id_type == "SRR":
             for file in get_ftp_links_from_run(get_xml(accession)):
-                print(file['url'])
+                print(file['url'], end = " ")
 
 
 def ffq_doi(doi):
