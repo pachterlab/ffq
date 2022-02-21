@@ -245,8 +245,7 @@ class TestFfq(TestMixin, TestCase):
         # Need to figure out how to add for loop test for adding individual runs
         with mock.patch('ffq.ffq.get_gse_search_json') as get_gse_search_json, \
             mock.patch('ffq.ffq.parse_gse_search') as parse_gse_search, \
-            mock.patch('ffq.ffq.ncbi_summary') as ncbi_summary, \
-            mock.patch('ffq.ffq.ncbi_search') as ncbi_search, \
+            mock.patch('ffq.ffq.gse_to_gsms') as gse_to_gsms, \
             mock.patch('ffq.ffq.ffq_gsm') as ffq_gsm, \
             mock.patch('ffq.ffq.geo_to_suppl') as geo_to_suppl:
 
@@ -255,10 +254,9 @@ class TestFfq(TestMixin, TestCase):
                 'geo_id': 'GEOID1'
             }
 
-            ncbi_search.return_value = ['ID1', 'ID2', '3ID3', '3ID4']
-            ncbi_summary.side_effect = [{'3ID3' : {'accession' : 'GSM_1'}}, {'3ID4' : {'accession' : 'GSM_2'}}]
+            gse_to_gsms.return_value = ['GSM_1', 'GSM_2']
             geo_to_suppl.return_value = {'filename': 'file', 'size': 'size', 'url': 'url'}
-            ffq_gsm.side_effect = [{'accession': 'GSM1'}, {'accession': 'GSM2'}]
+            ffq_gsm.side_effect = [{'accession': 'GSM1'}, {'accession': 'GSM2'}, 'test', 'test']
 
             self.assertEqual({
                 'accession': 'GSE1',
@@ -277,8 +275,8 @@ class TestFfq(TestMixin, TestCase):
                     }
                  }, ffq.ffq_gse('GSE1'))
 
-            ncbi_summary.assert_has_calls([call('gds', '3ID3'), call('gds', '3ID4')])
             get_gse_search_json.assert_called_once_with('GSE1')
+            gse_to_gsms.assert_called_once_with('GSE1')
             ffq_gsm.assert_has_calls([call('GSM_1'), call('GSM_2')])
 
 
