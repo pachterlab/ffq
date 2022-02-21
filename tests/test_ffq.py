@@ -124,7 +124,8 @@ class TestFfq(TestMixin, TestCase):
                 'ENA-BASE-COUNT': '21984096610',
                 'ENA-FIRST-PUBLIC': '2019-01-11',
                 'ENA-LAST-UPDATE': '2019-01-11'
-            }
+            },
+            'experiment': 'SRX5234128'
         }, ffq.parse_sample(soup))
 
     def test_parse_experiment(self):
@@ -193,39 +194,6 @@ class TestFfq(TestMixin, TestCase):
                     'SRR5164444', 'SRR5164445', 'SRR5164446'
                 ]
             }, ffq.parse_study_with_run(soup))
-
-    def test_parse_sample_with_run(self):
-        with open(self.sample_path, 'r') as f:
-            soup = BeautifulSoup(f.read(), 'xml')
-
-        self.assertEqual({
-            'accession': 'SRS4237519',
-            'attributes': {'ENA-BASE-COUNT': '21984096610',
-                            'ENA-FIRST-PUBLIC': '2019-01-11',
-                            'ENA-LAST-UPDATE': '2019-01-11',
-                            'ENA-SPOT-COUNT': '109256158',
-                            'age': '24 months',
-                            'number of cells': '799',
-                            'source_name': 'Whole lung',
-                            'tissue': 'Whole lung'},
-                            'organism': 'Mus musculus',
-                            'runs': {'SRR8426358': {'accession': 'SRR8426358',
-                                        'attributes': {'ENA-BASE-COUNT': '21984096610',
-                                        'ENA-FIRST-PUBLIC': '2019-01-27',
-                                        'ENA-LAST-UPDATE': '2019-01-27',
-                                        'ENA-SPOT-COUNT': '109256158'},
-                            'experiment': 'SRX5234128',
-                            'files': [{'md5': 'be7e88cf6f6fd90f1b1170f1cb367123',
-                                        'size': '5507959060',
-                                        'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'},
-                                     {'md5': '2124da22644d876c4caa92ffd9e2402e',
-                                        'size': '7194107512',
-                                        'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz'}],
-                            'sample': 'SRS4237519',
-                            'study': 'SRP178136',
-                            'title': 'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq'}},
-                            'title': 'old_Dropseq_1'
-        }, ffq.parse_sample_with_run(soup))
 
     def test_gse_search_json(self):
         with open(self.gse_search_path, 'r') as f:

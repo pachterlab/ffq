@@ -283,8 +283,6 @@ def ffq_gse(accession):
     else:
         logger.info(f'No supplementary files found for {accession}')        
     gse.pop('geo_id')
-
-    logger.info(f'Getting GSM IDs for {accession}')
     time.sleep(1)
     gsm_ids = gse_to_gsms(accession)
     gsms = [ffq_gsm(gsm_id) for gsm_id in gsm_ids]
