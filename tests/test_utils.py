@@ -501,11 +501,10 @@ class TestUtils(TestMixin, TestCase):
     def test_get_ftp_links_from_run_bam(self):
         with open(self.run2_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
-        self.assertEqual(	[
+        self.assertEqual([
                 {
                     'md5': '5355fe6a07155026085ce46631268ab1',
                     'size': '17093057664',
                     'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam'
                 }
-            ]
         ], utils.get_ftp_links_from_run(soup))      
