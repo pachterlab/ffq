@@ -89,6 +89,51 @@ class TestUtils(TestMixin, TestCase):
                          utils.get_samples_from_study("SRP194123"))
         
         
+    def test_parse_encode_biosample(self):
+        with open(self.biosample_path, 'r') as f:
+            biosample = json.loads(f.read())
+        self.assertEqual({
+        "accession": "ENCBS941ZTJ",
+        "dbxrefs": [
+            "GEO:SAMN19597695"
+        ],
+        "description": "",
+        "genetic_modifications": [
+        ],
+        "treatments": [
+        ],
+        "sex": "unknown",
+        "life_stage": "unknown",
+        "age": "unknown",
+        "age_units": "",
+        "organism": {
+            "schema_version": "6",
+            "scientific_name": "Mus musculus",
+            "name": "mouse",
+            "status": "released",
+            "taxon_id": "10090",
+            "@id": "/organisms/mouse/",
+            "@type": [
+                "Organism",
+                "Item"
+            ],
+            "uuid": "3413218c-3d86-498b-a0a2-9a406638e786"
+        },
+        "biosample_ontology": {
+            "classification": "",
+            "term_name": "",
+            "organ_slims": "",
+            "cell_slims": "",
+            "system_slims": "",
+            "developmental_slims": "",
+            "treatments": [
+            ],
+            "genetic_modifications": [
+            ]
+        }
+    }, utils.parse_encode_biosample(biosample))
+
+        
     def test_parse_tsv(self):
         s = 'header1\theader2\theader3\nvalue1\tvalue2\tvalue3'
         self.assertEqual([{
