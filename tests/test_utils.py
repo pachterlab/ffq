@@ -377,33 +377,22 @@ class TestUtils(TestMixin, TestCase):
 
 
     def test_srs_to_srx(self):
-        with mock.patch('ffq.utils.get_xml') as get_xml:
             
-            soup = BeautifulSoup("""<?xml version="1.0" encoding="utf-8"?>
-                                                <SAMPLE_SET>
-                                                <SAMPLE accession="SRS4631628" alias="GSM3717977" broker_name="NCBI">
-                                                <XREF_LINK>
-                                                <DB>ENA-EXPERIMENT</DB>
-                                                <ID>SRX5692096</ID>
-                                                </SAMPLE>
-                                                </SAMPLE_SET>""", 'xml'
-                                                )
-            get_xml.return_value = soup
-            get_xml.assert_called_once_with("SRS4631628")
-            self.assertEqual("SRX5692096", 
-            utils.srs_to_srx("SRS4631628"))  
+        soup = BeautifulSoup("""<?xml version="1.0" encoding="utf-8"?>
+                                            <SAMPLE_SET>
+                                            <SAMPLE accession="SRS4631628" alias="GSM3717977" broker_name="NCBI">
+                                            <XREF_LINK>
+                                            <DB>ENA-EXPERIMENT</DB>
+                                            <ID>SRX5692096</ID>
+                                            </SAMPLE>
+                                            </SAMPLE_SET>""", 'xml'
+                                            )
+        self.assertEqual("SRX5692096", utils.srs_to_srx("SRS4631628"))  
         
-        # TO do: No idea why get_xml is giving problems. If we dont use aseert_called_once and not
-        # define a mock get_xml function, everything is good.        
-# def srs_to_srx(accession):
 
-#     soup = get_xml(accession)
-#     return soup.find('ID', text = EXPERIMENT_PARSER).text
-
-
-        # def test_srx_to_srrs(self):
-        # with mock.patch('ffq.utils.get_xml') as get_xml, \
-        #     mock.patch('ffq.utils.parse_range') as parse_range:            
+    def test_srx_to_srrs(self):
+        self.assertEqual(['SRR8984431', 'SRR8984432', 'SRR8984433', 'SRR8984434'],utils.srx_to_srrs("SRX5763720"))
+        
         
     def test_get_ftp_links_from_run(self):
         with open(self.run_path, 'r') as f:
