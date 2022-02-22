@@ -162,19 +162,14 @@ class TestUtils(TestMixin, TestCase):
         "health_status": "",
         "ethnicity": ""
     }, utils.parse_encode_donor(donor))
-        
 
     def test_parse_encode_json(self):
-        #with mock.patch('ffq.utils.parse_encode_biosample') as parse_encode_biosample, \
-            #mock.patch('ffq.utils.parse_encode_donor') as parse_encode_donor:
-                with open(self.encode_experiment_path, 'r') as f:
-                    experiment = json.loads(f.read())
-                with open (self.encode_experiment_output_path, 'r') as f:
-                    output = json.loads(f.read())
-                self.assertEqual(output, utils.parse_encode_json('ENCSR998WNE', experiment))
-                
-            
-        
+        with open(self.encode_experiment_path, 'r') as f:
+            experiment = json.loads(f.read())
+        with open (self.encode_experiment_output_path, 'r') as f:
+            output = json.loads(f.read())
+        self.assertEqual(output, utils.parse_encode_json('ENCSR998WNE', experiment))
+                  
     def test_parse_tsv(self):
         s = 'header1\theader2\theader3\nvalue1\tvalue2\tvalue3'
         self.assertEqual([{
@@ -503,4 +498,14 @@ class TestUtils(TestMixin, TestCase):
             }
         ], utils.get_ftp_links_from_run(soup))
 
-        
+    def test_get_ftp_links_from_run_bam(self):
+        with open(self.run2_path, 'r') as f:
+            soup = BeautifulSoup(f.read(), 'xml')
+        self.assertEqual(	[
+                {
+                    'md5': '5355fe6a07155026085ce46631268ab1',
+                    'size': '17093057664',
+                    'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam'
+                }
+            ]
+        ], utils.get_ftp_links_from_run(soup))      
