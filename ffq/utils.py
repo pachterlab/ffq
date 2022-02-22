@@ -603,7 +603,7 @@ def sra_ids_to_srrs(ids):
 def parse_range(text):
     """Given an a string of any accession ranges, returns a list of intermediary accession numbers.
 
-    :param text: an SRA range (example: 'SRR4340020-SRR4340045', 'SRS345678-SRS34590, 'ERR4340020-ERR4340045')
+    :param text: an accession range (example: 'SRR4340020-SRR4340045', 'SRS345678-SRS34590, 'ERR4340020-ERR4340045')
     :type text: str
 
     :return: a list of range of accession numbers
@@ -615,9 +615,9 @@ def parse_range(text):
     base = re.match(r'^.*?(?=[0-9])', first).group(0)
 
     ids = [
-        f'{base}{str(i).zfill(len(first) - 3)}'
-        for i in range(int(first[3:]),
-                       int(last[3:]) + 1)
+        f'{base}{str(i).zfill(len(first) - len(base))}'
+        for i in range(int(first[len(base):]),
+                       int(last[len(base):]) + 1)
     ]
     return ids
 
