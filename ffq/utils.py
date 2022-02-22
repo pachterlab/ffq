@@ -671,6 +671,13 @@ def gsm_to_platform(accession):
         return {}
 
 def gse_to_gsms(accession):
+    """Given a GSE accession
+    returns all associated GSM ids.
+    :param accession: GSE id
+    :type id: str
+    :return: a list of GSM ids
+    :rtype: list
+    """
     data = json.loads(get_gse_search_json(accession).text)
     if data['esearchresult']['idlist']:
         gse_id = data['esearchresult']['idlist'][-1]
@@ -682,32 +689,51 @@ def gse_to_gsms(accession):
         logger.error("Provided GSE accession is invalid")
         sys.exit(1)
 
-
-
-    data = json.loads(soup.text)
-    if data['esearchresult']['idlist']:
-        accession = data['esearchresult']['querytranslation'].split('[')[0]
-        geo_id = data['esearchresult']['idlist'][-1]
-        return {'accession': accession, 'geo_id': geo_id}
-    else:
-        logger.error("Provided GSE accession is invalid")
-        sys.exit(1)
+    # data = json.loads(soup.text)
+    # if data['esearchresult']['idlist']:
+    #     accession = data['esearchresult']['querytranslation'].split('[')[0]
+    #     geo_id = data['esearchresult']['idlist'][-1]
+    #     return {'accession': accession, 'geo_id': geo_id}
+    # else:
+    #     logger.error("Provided GSE accession is invalid")
+    #     sys.exit(1)
 
 
 
 
 def gsm_to_srx(accession):
+    """Given a GSM accession
+    returns all associated SRX ids.
+    :param accession: GSM id
+    :type id: str
+    :return: a list of SRX ids
+    :rtype: list
+    """
     id = get_gsm_search_json(accession)['geo_id']
     srx = ncbi_summary("gds", id)[id]['extrelations'][0]['targetobject']
     return srx
 
 
 def srs_to_srx(accession):
+    """Given an SRS accession
+    returns all associated SRX ids.
+    :param accession: SRS id
+    :type id: str
+    :return: a list of SRX ids
+    :rtype: list
+    """
     soup = get_xml(accession)
     return soup.find('ID', text = EXPERIMENT_PARSER).text
 
 
 def srx_to_srrs(accession):
+    """Given an SRX accession
+    returns all associated SRR ids.
+    :param accession: SRX id
+    :type id: str
+    :return: a list of SRR ids
+    :rtype: list
+    """
     soup = get_xml(accession)
     runs = []
     run_parsed = soup.find('ID', text=RUN_PARSER)
