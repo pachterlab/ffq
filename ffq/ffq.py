@@ -285,6 +285,7 @@ def ffq_gse(accession):
     gse.pop('geo_id')
     time.sleep(1)
     gsm_ids = gse_to_gsms(accession)
+    logger.warning(f'There are {str(len(gsm_ids))} samples for {accession}')
     gsms = [ffq_gsm(gsm_id) for gsm_id in gsm_ids]
     gse.update({'samples': {sample['accession']: sample for sample in gsms}})
     return gse

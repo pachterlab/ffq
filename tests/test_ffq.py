@@ -275,7 +275,9 @@ class TestFfq(TestMixin, TestCase):
             }}, ffq.ffq_experiment('SRX7048194'))
             get_xml.assert_called_once_with('SRX7048194')
 
-
+    #def test_ffq_ftp_gse(self):
+        
+    # Do one per accession, simply asserting equal to the expected list of links.
 
 ## To use for ffq_sample
 #    def test_ffq_experiment(self):
