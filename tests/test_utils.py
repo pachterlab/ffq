@@ -23,9 +23,10 @@ from ffq.config import (
     FTP_GEO_SERIES,
     FTP_GEO_SUPPL
 )
+from tests.mixins import TestMixin
 
 
-class TestUtils(TestCase):
+class TestUtils(TestMixin, TestCase):
 
     def test_cached_get(self):
         with mock.patch('ffq.utils.requests') as requests:
@@ -403,3 +404,21 @@ class TestUtils(TestCase):
         # def test_srx_to_srrs(self):
         # with mock.patch('ffq.utils.get_xml') as get_xml, \
         #     mock.patch('ffq.utils.parse_range') as parse_range:            
+        
+    def test_get_ftp_links_from_run(self):
+        with open(self.run_path, 'r') as f:
+            soup = BeautifulSoup(f.read(), 'xml')
+        self.assertEqual([
+            {
+                'md5': 'be7e88cf6f6fd90f1b1170f1cb367123',
+                'size': '5507959060',
+                'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'
+            },
+            {
+                'md5': '2124da22644d876c4caa92ffd9e2402e',
+                'size': '7194107512',
+                'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz'
+            }
+        ], utils.get_ftp_links_from_run(soup))
+
+        
