@@ -255,6 +255,7 @@ def ffq_study(accession):
     study = parse_study(get_xml(accession))
     logger.info(f'Getting Sample SRS for {accession}')
     sample_ids = get_samples_from_study(accession)
+    logger.warning(f'There are {str(len(sample_ids))} samples for {accession}')
     samples = [ffq_sample(sample_id) for sample_id in sample_ids]
     study.update({'samples': {sample['accession']: sample for sample in samples}})
     return study
