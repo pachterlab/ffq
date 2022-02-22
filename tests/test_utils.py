@@ -134,6 +134,38 @@ class TestUtils(TestMixin, TestCase):
     }, utils.parse_encode_biosample(biosample))
 
         
+    def test_parse_encode_donor(self):
+        with open(self.donor_path, 'r') as f:
+            donor = json.loads(f.read())
+        self.assertEqual({
+        "accession": "ENCDO072AAA",
+        "dbxrefs": [
+            "GEO:SAMN04284198"
+        ],
+        "organism": {
+            "schema_version": "6",
+            "scientific_name": "Mus musculus",
+            "name": "mouse",
+            "status": "released",
+            "taxon_id": "10090",
+            "@id": "/organisms/mouse/",
+            "@type": [
+                "Organism",
+                "Item"
+            ],
+            "uuid": "3413218c-3d86-498b-a0a2-9a406638e786"
+        },
+        "sex": "",
+        "life_stage": "",
+        "age": "",
+        "age_units": "",
+        "health_status": "",
+        "ethnicity": ""
+    }, utils.parse_encode_donor(donor))
+        
+        
+        
+        
     def test_parse_tsv(self):
         s = 'header1\theader2\theader3\nvalue1\tvalue2\tvalue3'
         self.assertEqual([{

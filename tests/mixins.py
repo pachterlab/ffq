@@ -33,4 +33,4 @@ class TestMixin(TestCase):
         
         # ENCODE
         cls.biosample_path = os.path.join(cls.fixtures_dir, 'ENCBS941ZTJ.txt')
-        
+        cls.donor_path = os.path.join(cls.fixtures_dir, 'ENCDO072AAA.txt')
