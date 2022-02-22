@@ -81,19 +81,6 @@ class TestUtils(TestCase):
             )
             self.assertTrue(isinstance(result, BeautifulSoup))
 
-    def test_get_experiments_from_study(self):
-        self.assertEqual(['SRX2481508',
-                          'SRX2481509',
-                          'SRX2481510',
-                          'SRX2481511',
-                          'SRX2481512',
-                          'SRX2481513',
-                          'SRX2481514',
-                          'SRX2481515',
-                          'SRX2481516',
-                          'SRX2481517',
-                          'SRX2481518'], utils.get_experiments_from_study('SRP096361'))
-
     def test_parse_tsv(self):
         s = 'header1\theader2\theader3\nvalue1\tvalue2\tvalue3'
         self.assertEqual([{
