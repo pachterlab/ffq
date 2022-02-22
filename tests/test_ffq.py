@@ -24,11 +24,11 @@ class TestFfq(TestMixin, TestCase):
 
 
     def test_parse_run(self):
-        with mock.patch('ffq.ffq.cached_get') as cached_get:
-            with open(self.fastqs_path, 'r') as f:
-                cached_get.return_value = f.read()
+        with mock.patch('ffq.ffq.get_ftp_links_from_run') as get_ftp_links_from_run:
             with open(self.run_path, 'r') as f:
                 soup = BeautifulSoup(f.read(), 'xml')
+            
+            get_ftp_links_from_run.return_value = 'files'
             self.assertEqual({
                 'accession':
                     'SRR8426358',
@@ -40,27 +40,13 @@ class TestFfq(TestMixin, TestCase):
                     'SRS4237519',
                 'title':
                     'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq',
-                'files': [{
-                    'url':
-                        'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz',
-                    'md5':
-                        'be7e88cf6f6fd90f1b1170f1cb367123',
-                    'size':
-                        '5507959060'
-                }, {
-                    'url':
-                        'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz',
-                    'md5':
-                        '2124da22644d876c4caa92ffd9e2402e',
-                    'size':
-                        '7194107512'
-                }],
                 'attributes': {
                     'ENA-SPOT-COUNT': '109256158',
                     'ENA-BASE-COUNT': '21984096610',
                     'ENA-FIRST-PUBLIC': '2019-01-27',
                     'ENA-LAST-UPDATE': '2019-01-27'
-                }         
+                },
+                'files': 'files'       
             }, ffq.parse_run(soup))
 
     def test_parse_run_bam(self):
