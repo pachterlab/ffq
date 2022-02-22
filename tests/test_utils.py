@@ -317,10 +317,10 @@ class TestUtils(TestCase):
         self.assertEqual(['XXXX10', 'XXXX11', 'XXXX12', 'XXXX13'],
                          utils.parse_range(text))
 
-    def test_parse_run_range_leading_zero(self):
+    def test_parse_range_leading_zero(self):
         text = 'SRR01-SRR05'
         self.assertEqual(['SRR01', 'SRR02', 'SRR03', 'SRR04', 'SRR05'],
-                         utils.parse_run_range(text))
+                         utils.parse_range(text))
 
     def test_geo_to_suppl(self):
         self.assertEqual([{'filename': 'GSM12345.CEL.gz',
