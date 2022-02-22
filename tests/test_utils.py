@@ -163,8 +163,17 @@ class TestUtils(TestMixin, TestCase):
         "ethnicity": ""
     }, utils.parse_encode_donor(donor))
         
-        
-        
+
+    def test_parse_encode_json(self):
+        #with mock.patch('ffq.utils.parse_encode_biosample') as parse_encode_biosample, \
+            #mock.patch('ffq.utils.parse_encode_donor') as parse_encode_donor:
+                with open(self.encode_experiment_path, 'r') as f:
+                    experiment = json.loads(f.read())
+                with open (self.encode_experiment_output_path, 'r') as f:
+                    output = json.loads(f.read())
+                self.assertEqual(output, utils.parse_encode_json('ENCSR998WNE', experiment))
+                
+            
         
     def test_parse_tsv(self):
         s = 'header1\theader2\theader3\nvalue1\tvalue2\tvalue3'
