@@ -82,6 +82,13 @@ class TestUtils(TestMixin, TestCase):
             )
             self.assertTrue(isinstance(result, BeautifulSoup))
 
+
+    def test_get_samples_from_study(self):
+        self.assertEqual(['SRS4698189','SRS4698190','SRS4698191','SRS4698192',
+                          'SRS4698193','SRS4698194','SRS4698195','SRS4698196','SRS4698197'],
+                         utils.get_samples_from_study("SRP194123"))
+        
+        
     def test_parse_tsv(self):
         s = 'header1\theader2\theader3\nvalue1\tvalue2\tvalue3'
         self.assertEqual([{
