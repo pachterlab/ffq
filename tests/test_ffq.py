@@ -24,11 +24,11 @@ class TestFfq(TestMixin, TestCase):
 
 
     def test_parse_run(self):
-        with mock.patch('ffq.ffq.get_ftp_links_from_run') as get_ftp_links_from_run:
+        with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run:
             with open(self.run_path, 'r') as f:
                 soup = BeautifulSoup(f.read(), 'xml')
             
-            get_ftp_links_from_run.return_value = 'files'
+            get_files_metadata_from_run.return_value = 'files'
             self.assertEqual({
                 'accession':
                     'SRR8426358',
@@ -50,7 +50,7 @@ class TestFfq(TestMixin, TestCase):
             }, ffq.parse_run(soup))
 
     def test_parse_run_bam(self):
-        with mock.patch('ffq.ffq.get_ftp_links_from_run') as get_ftp_links_from_run:
+        with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run:
             with open(self.run2_path, 'r') as f:
                 soup = BeautifulSoup(f.read(), 'xml')
 

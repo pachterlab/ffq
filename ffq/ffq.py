@@ -35,7 +35,7 @@ from .utils import (
     srs_to_srx,
     gsm_to_srx,
     srx_to_srrs,
-    get_ftp_links_from_run
+    get_files_metadata_from_run
 )
 
 logger = logging.getLogger(__name__)
@@ -91,7 +91,7 @@ def parse_run(soup):
         attr.find('TAG').text: attr.find('VALUE').text
         for attr in soup.find_all('RUN_ATTRIBUTE')
     }
-    files = get_ftp_links_from_run(soup)
+    files = get_files_metadata_from_run(soup)
 
     return {
         'accession': accession,
@@ -393,7 +393,7 @@ def ffq_ftp(type_accessions):
                 srx = gsm_to_srx(gsm)
                 srrs = srx_to_srrs(srx)
                 for srr in srrs:
-                    for file in get_ftp_links_from_run(get_xml(srr)):
+                    for file in get_files_metadata_from_run(get_xml(srr)):
                         print(file['url'])
                 counter +=1
         if id_type == "SRP":
@@ -417,11 +417,11 @@ def ffq_ftp(type_accessions):
                 id_type = "SRX"
                 srr = srx_to_srrs(accession)
                 for srr in srrs:
-                    for file in get_ftp_links_from_run(get_xml(srr)):
+                    for file in get_files_metadata_from_run(get_xml(srr)):
                         print(file['url'])
                 counter +=1
         if id_type == "SRR":
-            for file in get_ftp_links_from_run(get_xml(accession)):
+            for file in get_files_metadata_from_run(get_xml(accession)):
                 print(file['url'], end = " ")
 
 

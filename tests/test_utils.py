@@ -482,7 +482,7 @@ class TestUtils(TestMixin, TestCase):
         self.assertEqual(['SRR8984431', 'SRR8984432', 'SRR8984433', 'SRR8984434'],utils.srx_to_srrs("SRX5763720"))
         
         
-    def test_get_ftp_links_from_run(self):
+    def test_get_files_metadata_from_run(self):
         with open(self.run_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
         self.assertEqual([
@@ -496,9 +496,9 @@ class TestUtils(TestMixin, TestCase):
                 'size': '7194107512',
                 'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz'
             }
-        ], utils.get_ftp_links_from_run(soup))
+        ], utils.get_files_metadata_from_run(soup))
 
-    def test_get_ftp_links_from_run_bam(self):
+    def test_get_files_metadata_from_run_bam(self):
         with open(self.run2_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
         self.assertEqual([
@@ -507,4 +507,4 @@ class TestUtils(TestMixin, TestCase):
                     'size': '17093057664',
                     'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam'
                 }
-        ], utils.get_ftp_links_from_run(soup))      
+        ], utils.get_files_metadata_from_run(soup))      

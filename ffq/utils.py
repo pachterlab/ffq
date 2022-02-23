@@ -757,7 +757,15 @@ def srx_to_srrs(accession):
     return runs
 
 
-def get_ftp_links_from_run(soup):
+def get_files_metadata_from_run(soup):
+    """Given a BeautifulSoup object with
+    SRR run metadata, returns list of
+    dictionaries with metadata of associated files
+    :param soup: a BeautifulSoup object with SRR metadata
+    :type id: bs4.BeautifulSoup
+    :return: a list files metadata dictionaries
+    :rtype: list
+    """
     files = []
     # Get FASTQs if available
     for xref in soup.find_all('XREF_LINK'):
