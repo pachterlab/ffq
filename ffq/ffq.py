@@ -360,6 +360,16 @@ def ffq_sample(accession):
 
 
 def ffq_encode(accession):
+    """Fetch ENCODE ids information. This 
+    function receives an ENCSR, ENCBS or ENCD
+    ENCODE id and fetches the associated metadata
+
+    :param accession: an ENCODE id (ENCSR, ENCBS or ENCD)
+    :type accession: str
+
+    :return: dictionary of ENCODE id metadata. 
+    :rtype: dict
+    """
     logger.info(f'Parsing {accession}')
     encode = parse_encode_json(accession, get_encode_json(accession))
     return encode

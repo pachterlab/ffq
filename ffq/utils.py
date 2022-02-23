@@ -142,7 +142,6 @@ def get_gse_summary_json(accession):
 
 
 def get_samples_from_study(accession):
-
     """Given an SRP accession for a study, get list of
     associated samples.
 
@@ -170,7 +169,17 @@ def get_samples_from_study(accession):
 
     return samples
 
-def parse_encode_biosample(data, accession = ''):
+def parse_encode_biosample(data):
+    """Parse a python dictionary containing
+    ENCODE's biosample metadata into a dictionary 
+    with select biosample metadata
+    
+    :param data: python dictionary containing ENCODE' biosample metadata
+    :type s: dict
+
+    :return: dictionary with parsed ENCODE's biosample metadata
+    :rtype: dict
+    """
     keys_biosample = ['accession', 'dbxrefs', 'description', 'genetic_modifications', 'treatments', 'sex', 'life_stage', 'age', 'age_units', 'organism', 'genetic_modifications' ]
     biosample = {key: data.get(key, '') for key in keys_biosample}
 
@@ -180,14 +189,23 @@ def parse_encode_biosample(data, accession = ''):
     return biosample
 
 
-def parse_encode_donor(data, accession = ''):
+def parse_encode_donor(data):
+    """Parse a python dictionary containing
+    ENCODE's donor metadata into a dictionary 
+    with select donor metadata
+    
+    :param data: python dictionary containing ENCODE' donor metadata
+    :type s: dict
+
+    :return: dictionary with parsed ENCODE's donor metadata
+    :rtype: dict
+    """
     keys_donor = ['accession', 'dbxrefs', 'organism', 'sex', 'life_stage', 'age', 'age_units', 'health_status', 'ethnicity']
     donor = {key: data.get(key, '') for key in keys_donor}
     return donor
 
 
 def parse_encode_json(accession, data):
-    
     """Parse a python dictionary containing
     ENCODE metadata into a parsed dictionary 
     with select metadata to be returned by 
