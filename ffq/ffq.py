@@ -404,7 +404,7 @@ def ffq_ftp(type_accessions):
                 srrs = srx_to_srrs(srx)
                 for srr in srrs:
                     for file in get_files_metadata_from_run(get_xml(srr)):
-                        print(file['url'])
+                        print(file['url'], end = " ")
                 counter +=1
         if id_type == "SRP":
             print(accession)
