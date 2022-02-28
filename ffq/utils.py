@@ -217,7 +217,6 @@ def parse_encode_json(accession, data):
     :return: dictionary with parsed ENCODE metadata
     :rtype: dict
     """
-
     encode = {}
     if accession[:5] == "ENCSR":
         keys_assay = ['accession', 'description', 'dbxrefs']
@@ -257,10 +256,8 @@ def parse_encode_json(accession, data):
 
     if accession[:5] == "ENCDO":
         encode = parse_encode_donor(data, accession)
-
+        
     return encode
-
-
 
 def parse_tsv(s):
     """Parse TSV-formatted string into a list of dictionaries.
@@ -836,3 +833,23 @@ def get_files_metadata_from_run(soup):
             break
     return files
 
+def parse_url(url):
+    if "bam" in url:
+        filetype = "bam"
+    elif "fastq" in url:
+        filetype = 'fastq'
+    else:
+        filetype = 'unknown'
+
+    if filetype == 'bam':
+        fileno = '1'
+    elif filetype == 'fastq':
+        if '_R1' in url or '_1' in url:
+            fileno = '1'
+        elif '_R2' in url or '_2' in url:
+            fileno = '2'
+        else:
+            fileno = '1'
+    if filetype == 'unknown':
+        fileno = 'unknown'
+    return filetype, fileno   

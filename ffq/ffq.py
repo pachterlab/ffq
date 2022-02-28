@@ -35,7 +35,8 @@ from .utils import (
     srs_to_srx,
     gsm_to_srx,
     srx_to_srrs,
-    get_files_metadata_from_run
+    get_files_metadata_from_run,
+    parse_url
 )
 
 logger = logging.getLogger(__name__)
@@ -380,9 +381,11 @@ def ffq_ftp(type_accessions):
     origin_GSE = False
     for id_type, accession in type_accessions:
         if id_type == "GSE":
+            
             print(accession)
             print("-" * len(accession))
             print('\n')
+            print("accession\tfiletype\tfilenumber\tlink")
             accession = gse_to_gsms(accession) 
             id_type = "GSM"
             origin_GSE = True
@@ -395,21 +398,22 @@ def ffq_ftp(type_accessions):
                 accession = [accession]
             counter = 0
             for gsm in accession:
-                if origin_GSE:
-                    if counter:
-                        print("\n")
-                    print(gsm)
-
                 srx = gsm_to_srx(gsm)
                 srrs = srx_to_srrs(srx)
                 for srr in srrs:
                     for file in get_files_metadata_from_run(get_xml(srr)):
-                        print(file['url'], end = " ")
+                        url = file['url']
+                        if origin_GSE:
+                            print(gsm, end = '\t')                  
+                            filetype, fileno = parse_url(url)      
+                            print(f'\t{filetype}\t{fileno}\t{url}')
+                        else:
+                            print(url, end = ' ')
                 counter +=1
         if id_type == "SRP":
-            print(accession)
-            print("-" * len(accession))
-            print('\n')
+            # print(accession)
+            # print("-" * len(accession))
+            # print('\n')
             accession = get_samples_from_study(accession)
             id_type = 'SRS'
             origin_SRP = True
@@ -418,18 +422,20 @@ def ffq_ftp(type_accessions):
             counter = 0
             if isinstance(accession, str):
                 accession = [accession]
-            for srx in accession:
-                if origin_SRP:
-                    if counter:
-                        print('\n')
-                    print(srx)
-                accession = srs_to_srx(srx)
+            for srs in accession:
+                accession = srs_to_srx(srs)
                 id_type = "SRX"
-                srr = srx_to_srrs(accession)
-                for srr in srrs:
-                    for file in get_files_metadata_from_run(get_xml(srr)):
-                        print(file['url'])
-                counter +=1
+        if id_type == "SRX":
+            srrs = srx_to_srrs(accession)
+            for srr in srrs:
+                for file in get_files_metadata_from_run(get_xml(srr)):
+                    url = file['url']
+                    if origin_SRP:
+                        print(accession, end = '\t')                  
+                        filetype, fileno = parse_url(url)      
+                        print(f'\t{filetype}\t{fileno}\t{url}')
+                    else:
+                        print(url, end = ' ')
         if id_type == "SRR":
             for file in get_files_metadata_from_run(get_xml(accession)):
                 print(file['url'], end = " ")
