@@ -18,6 +18,7 @@ from .utils import (
     get_samples_from_study,
     ncbi_link,
     ncbi_search,
+    ncbi_fetch_fasta,
     ncbi_summary,
     parse_range,
     parse_encode_biosample,
@@ -36,7 +37,8 @@ from .utils import (
     gsm_to_srx,
     srx_to_srrs,
     get_files_metadata_from_run,
-    parse_url
+    parse_url,
+    parse_ncbi_fetch_fasta
 )
 
 logger = logging.getLogger(__name__)
@@ -376,15 +378,11 @@ def ffq_encode(accession):
     return encode
 
 
-def ffq_ftp(type_accessions):
+def ffq_links(type_accessions, server):
     origin_SRP = False
     origin_GSE = False
     for id_type, accession in type_accessions:
         if id_type == "GSE":
-            
-            print(accession)
-            print("-" * len(accession))
-            print('\n')
             print("accession\tfiletype\tfilenumber\tlink")
             accession = gse_to_gsms(accession) 
             id_type = "GSM"
@@ -401,15 +399,25 @@ def ffq_ftp(type_accessions):
                 srx = gsm_to_srx(gsm)
                 srrs = srx_to_srrs(srx)
                 for srr in srrs:
-                    for file in get_files_metadata_from_run(get_xml(srr)):
-                        url = file['url']
-                        if origin_GSE:
-                            print(gsm, end = '\t')                  
-                            filetype, fileno = parse_url(url)      
-                            print(f'\t{filetype}\t{fileno}\t{url}')
-                        else:
-                            print(url, end = ' ')
-                counter +=1
+                    if server == 'ftp':
+                        for file in get_files_metadata_from_run(get_xml(srr)):
+                            url = file['url']
+                            if origin_GSE:
+                                print(gsm, end = '\t')                  
+                                filetype, fileno = parse_url(url)      
+                                print(f'\t{filetype}\t{fileno}\t{url}')
+                            else:
+                                print(url, end = ' ')
+                    else:
+                        urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
+                        for url in urls:
+                            if origin_GSE:
+                                print(gsm, end = '\t')                  
+                                filetype, fileno = parse_url(url)      
+                                print(f'\t{filetype}\t{fileno}\t{url}')
+                            else:
+                                print(url, end = " ")
+
         if id_type == "SRP":
             # print(accession)
             # print("-" * len(accession))
@@ -428,17 +436,32 @@ def ffq_ftp(type_accessions):
         if id_type == "SRX":
             srrs = srx_to_srrs(accession)
             for srr in srrs:
-                for file in get_files_metadata_from_run(get_xml(srr)):
-                    url = file['url']
-                    if origin_SRP:
-                        print(accession, end = '\t')                  
-                        filetype, fileno = parse_url(url)      
-                        print(f'\t{filetype}\t{fileno}\t{url}')
-                    else:
-                        print(url, end = ' ')
+                if server == 'ftp':
+                    for file in get_files_metadata_from_run(get_xml(srr)):
+                        url = file['url']
+                        if origin_SRP:
+                            print(srr, end = '\t')                  
+                            filetype, fileno = parse_url(url)      
+                            print(f'\t{filetype}\t{fileno}\t{url}')
+                        else:
+                            print(url, end = ' ')
+                else:
+                    urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
+                    for url in urls:
+                        if origin_SRP:
+                            print(srr, end = '\t')                  
+                            filetype, fileno = parse_url(url)      
+                            print(f'\t{filetype}\t{fileno}\t{url}')
+                        else:
+                            print(url, end = " ")
         if id_type == "SRR":
-            for file in get_files_metadata_from_run(get_xml(accession)):
-                print(file['url'], end = " ")
+            if server == 'ftp':
+                for file in get_files_metadata_from_run(get_xml(accession)):
+                    print(file['url'], end = " ")
+            else:
+                urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(accession, 'sra'), server)
+                for url in urls:
+                    print(url, end = " ")
 
 
 def ffq_doi(doi):

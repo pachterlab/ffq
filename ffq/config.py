@@ -1,6 +1,7 @@
 CROSSREF_URL = 'https://api.crossref.org/works'
 ENA_URL = 'https://www.ebi.ac.uk/ena/browser/api/xml'
 ENA_SEARCH_URL = 'https://www.ebi.ac.uk/ena/portal/api/search'
+ENA_FETCH = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
 
 # NCBI entrez urls
 NCBI_LINK_URL = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/elink.fcgi'

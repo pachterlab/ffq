@@ -6,7 +6,7 @@ import sys
 import re
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_encode, ffq_ftp, validate_accession
+from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_encode, ffq_links, validate_accession
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +19,9 @@ ENCODE_TYPES = ('ENCSR', 'ENCBS', 'ENCDO')
 OTHER_TYPES = ('DOI',)
 SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + OTHER_TYPES
 
+####
+#### Add DRS and DRX
+####
 
 def main():
     """Command-line entrypoint.
@@ -69,6 +72,15 @@ def main():
     parser.add_argument(
         '--ftp', help='Skip medatada and return only ftp links for raw data', action='store_true'
     )
+    
+    parser.add_argument(
+        '--aws', help = 'Skip metadata and return only AWS links for raw data (if available)', action='store_true'      
+    )
+    
+    parser.add_argument(
+        '--gcp', help = 'Skip metadata and return only GCP links for raw data (if available)', action='store_true'      
+    )
+    
     parser.add_argument(
         '--split', help='Split runs into their own files.', action='store_true'
     )
@@ -123,8 +135,17 @@ def main():
         #     logger.warning('Searching by DOI may result in missing information.')
 
         if args.ftp:
-            results = [ffq_ftp([(args.t, accession)]) for accession in args.IDs]
-        
+            results = [ffq_links([(args.t, accession)], 'ftp') for accession in args.IDs]
+            sys.exit(1)
+            
+        elif args.aws:
+            results = [ffq_links([(args.t, accession)],'AWS') for accession in args.IDs]
+            sys.exit(1)
+            
+        elif args.gcp:
+            results = [ffq_links([(args.t, accession)],'GCP') for accession in args.IDs]  
+            sys.exit(1)
+                        
         else:
             try:
                 # run ffq depending on type
@@ -165,12 +186,17 @@ def main():
         # NOTE: Change `type` by another name
         ############
         if args.ftp:
-            ffq_ftp(type_accessions)
+            ffq_links(type_accessions, 'ftp')
             sys.exit(1)
 
-
-
-
+        elif args.aws:
+            ffq_links(type_accessions, 'AWS')
+            sys.exit(1)
+            
+        elif args.gcp:
+            ffq_links(type_accessions, 'GCP')
+            sys.exit(1)
+            
         else:
             # run ffq depending on type
             try:

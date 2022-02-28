@@ -417,6 +417,45 @@ def search_ena_title(title):
     return list(set(srps))
 
 
+
+
+
+
+
+
+
+
+
+
+def ncbi_fetch_fasta(accession, db):
+    response = requests.get(
+        NCBI_FETCH_URL,
+        params={
+            'db': db,
+            'id': accession,
+            'rettype': 'fasta',
+            'retmode': 'xml'  # max allowed
+        }
+    )
+    try:
+        response.raise_for_status()
+    except requests.HTTPError as exception:
+        logger.error(f'{exception}')
+        logger.error ('Provided SRA accession is invalid')
+        exit(1)
+    text = response.text
+    if not text:
+        logger.warning(f'No metadata found in {args[0]}')
+        sys.exit(1)
+    else:
+        return BeautifulSoup(response.content, 'xml')
+
+
+
+
+
+
+
 def ncbi_summary(db, id):
     """Fetch a summary from the specified NCBI entrez database for the specified term.
     Documentation: https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESummary
@@ -853,3 +892,13 @@ def parse_url(url):
     if filetype == 'unknown':
         fileno = 'unknown'
     return filetype, fileno   
+
+def parse_ncbi_fetch_fasta(soup, server):
+    links = []
+    for alternative in soup.find_all('Alternatives'):
+        if alternative.get('org') == server:
+            links.append(alternative.get('url'))
+    if 'bam' in links[0] or len(links) > 2:
+        links.pop()
+    return links
+        
