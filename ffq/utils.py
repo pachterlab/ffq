@@ -416,18 +416,20 @@ def search_ena_title(title):
 
     return list(set(srps))
 
-
-
-
-
-
-
-
-
-
-
-
 def ncbi_fetch_fasta(accession, db):
+    """ Fetch fastq files information from the 
+    specified NCBI entrez database for the specified
+    accession
+    
+    :param accession: database id
+    :type: str
+    
+    :param db: ENTREZ database
+    :type: str
+    
+    :return: BeautifulSoup object with fastq files information
+    :rtype: bs4.BeautifulSoup
+    """
     response = requests.get(
         NCBI_FETCH_URL,
         params={
@@ -449,12 +451,6 @@ def ncbi_fetch_fasta(accession, db):
         sys.exit(1)
     else:
         return BeautifulSoup(response.content, 'xml')
-
-
-
-
-
-
 
 def ncbi_summary(db, id):
     """Fetch a summary from the specified NCBI entrez database for the specified term.
@@ -873,6 +869,18 @@ def get_files_metadata_from_run(soup):
     return files
 
 def parse_url(url):
+    """ Given a raw data link, returns
+    the file type and file number of the
+    associated file
+    
+    :param url: raw data download link
+    :type url: str
+    
+    :return: file type (bam, fastq or unknown) and
+    file number (either 1 or 2 for reads 1 and 2 of 
+    fastqs, or 1 for bam, unique fastqs, and unknown files)
+    :rtype: str, str 
+    """
     if "bam" in url:
         filetype = "bam"
     elif "fastq" in url:
@@ -894,6 +902,20 @@ def parse_url(url):
     return filetype, fileno   
 
 def parse_ncbi_fetch_fasta(soup, server):
+    """ Given the output of `ncbi_fetch_fasta` and
+    the server of interest, returns fastq or bam urls 
+    hosted in the specified server
+
+    :param soup: BeautifulSoup object (output of `ncbi_fetch_fasta` 
+    with fastq information
+    :type: bs4.BeautifulSoup object
+    
+    :param server: host server of urls to be returned (FTP, AWS, or GCP)
+    :type: str
+    
+    :rparam: list of urls
+    :rtype: list
+    """
     links = []
     for alternative in soup.find_all('Alternatives'):
         if alternative.get('org') == server:

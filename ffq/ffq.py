@@ -379,6 +379,19 @@ def ffq_encode(accession):
 
 
 def ffq_links(type_accessions, server):
+    """Prints download links for raw data
+    from provided server (FTP, AWS, or GCP)
+    to the terminal
+
+    :param type_accession: tuple of accession type and accession id
+    :type type_accessions: (str, str)
+    
+    :param server: server of desired links
+    "type server: str
+
+    :return: None
+    :rtype: None
+    """
     origin_SRP = False
     origin_GSE = False
     for id_type, accession in type_accessions:
