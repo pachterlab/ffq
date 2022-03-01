@@ -232,7 +232,7 @@ def parse_gse_summary(soup):
 def ffq_run(accession):
     """Fetch Run information.
 
-    :param accession: run accession
+    :param accession: run accession (SRR, ERR or DRR)
     :type accession: str
 
     :return: dictionary of run information
@@ -246,7 +246,7 @@ def ffq_run(accession):
 def ffq_study(accession):
     """Fetch Study information.
 
-    :param accession: study accession
+    :param accession: study accession (SRP, ERP or DRP)
     :type accession: str
 
     :return: dictionary of study information. The dictionary contains a
@@ -254,9 +254,9 @@ def ffq_study(accession):
              returned by `ffq_sample`.
     :rtype: dict
     """
-    logger.info(f'Parsing Study SRP {accession}')
+    logger.info(f'Parsing Study {accession}')
     study = parse_study(get_xml(accession))
-    logger.info(f'Getting Sample SRS for {accession}')
+    logger.info(f'Getting Sample for {accession}')
     sample_ids = get_samples_from_study(accession)
     logger.warning(f'There are {str(len(sample_ids))} samples for {accession}')
     samples = [ffq_sample(sample_id) for sample_id in sample_ids]
@@ -329,7 +329,7 @@ def ffq_gsm(accession):
 def ffq_experiment(accession):
     """Fetch Experiment information.
 
-    :param accession: experiment accession (SRX)
+    :param accession: experiment accession (SRX, ERX or DRX)
     :type accession: str
 
     :return: dictionary of experiment information. The dictionary contains a
@@ -346,7 +346,7 @@ def ffq_sample(accession):
 
     """Fetch Sample information.
 
-    :param accession: sample accession (SRS)
+    :param accession: sample accession (SRS, ERS or DRS)
     :type accession: str
 
     :return: dictionary of sample information. The dictionary contains a
@@ -356,7 +356,7 @@ def ffq_sample(accession):
     """
     logger.info(f'Parsing sample {accession}')
     sample = parse_sample(get_xml(accession))
-    logger.info(f'Getting Experiment SRX for {accession}')
+    logger.info(f'Getting Experiment for {accession}')
     experiment = ffq_experiment(sample['experiment'])
     sample.update({'experiment': {experiment['accession']: experiment}})
     return sample

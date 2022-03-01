@@ -12,8 +12,8 @@ logger = logging.getLogger(__name__)
 
 RUN_TYPES = ('SRR', 'ERR', 'DRR') 
 PROJECT_TYPES = ('SRP', 'ERP', 'DRP')  # aka study types 
-EXPERIMENT_TYPES = ('SRX', 'ERX',)
-SAMPLE_TYPES = ('SRS', 'ERS',)
+EXPERIMENT_TYPES = ('SRX', 'ERX', 'DRX')
+SAMPLE_TYPES = ('SRS', 'ERS', 'DRS')
 GEO_TYPES = ('GSE','GSM')
 ENCODE_TYPES = ('ENCSR', 'ENCBS', 'ENCDO')
 OTHER_TYPES = ('DOI',)
