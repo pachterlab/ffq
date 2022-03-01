@@ -78,9 +78,12 @@ def main():
     )
     
     parser.add_argument(
-        '--gcp', help = 'Skip metadata and return only GCP links for raw data (if available)', action='store_true'      
+        '--ncbi', help = 'Skip metadata and return only NCBI links for raw data (if available)', action='store_true'      
     )
     
+    parser.add_argument(
+        '--gcp', help = 'Skip metadata and return only GCP links for raw data (if available)', action='store_true'      
+    )   
     parser.add_argument(
         '--split', help='Split runs into their own files.', action='store_true'
     )
@@ -136,15 +139,19 @@ def main():
 
         if args.ftp:
             results = [ffq_links([(args.t, accession)], 'ftp') for accession in args.IDs]
-            sys.exit(1)
+            sys.exit(0)
             
         elif args.aws:
             results = [ffq_links([(args.t, accession)],'AWS') for accession in args.IDs]
-            sys.exit(1)
+            sys.exit(0)
             
         elif args.gcp:
             results = [ffq_links([(args.t, accession)],'GCP') for accession in args.IDs]  
-            sys.exit(1)
+            sys.exit(0)
+            
+        elif args.ncbi:
+            results = [ffq_links([(args.t, accession)],'NCBI') for accession in args.IDs]  
+            sys.exit(0)
                         
         else:
             try:
@@ -187,16 +194,20 @@ def main():
         ############
         if args.ftp:
             ffq_links(type_accessions, 'ftp')
-            sys.exit(1)
+            sys.exit(0)
 
         elif args.aws:
             ffq_links(type_accessions, 'AWS')
-            sys.exit(1)
+            sys.exit(0)
             
         elif args.gcp:
             ffq_links(type_accessions, 'GCP')
-            sys.exit(1)
+            sys.exit(0)
             
+        elif args.ncbi:
+            ffq_links(type_accessions, 'NCBI')  
+            sys.exit(0)      
+                  
         else:
             # run ffq depending on type
             try:

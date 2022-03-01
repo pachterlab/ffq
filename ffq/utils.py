@@ -602,7 +602,7 @@ def gsm_id_to_srs(id):
             soup = get_xml(srx)
             sample = soup.find('ID', text = SAMPLE_PARSER).text
     else:
-        logger.warning(f'No SRS sample found. Please check if the provided GSM accession is valid')
+        logger.warning(f'No SRS sample found. Either the provided GSM accession is invalid or raw data was not provided for this record')
         exit(1)
     return sample
  
@@ -760,8 +760,11 @@ def gsm_to_srx(accession):
     :rtype: list
     """
     id = get_gsm_search_json(accession)['geo_id']
-    srx = ncbi_summary("gds", id)[id]['extrelations'][0]['targetobject']
-    return srx
+    summary_extrelations = ncbi_summary("gds", id)[id]['extrelations']
+    if summary_extrelations:
+        return summary_extrelations[0]['targetobject']
+    else:
+        return None
 
 
 def srs_to_srx(accession):
@@ -910,7 +913,7 @@ def parse_ncbi_fetch_fasta(soup, server):
     with fastq information
     :type: bs4.BeautifulSoup object
     
-    :param server: host server of urls to be returned (FTP, AWS, or GCP)
+    :param server: host server of urls to be returned (AWS, GCP or NCBI)
     :type: str
     
     :rparam: list of urls

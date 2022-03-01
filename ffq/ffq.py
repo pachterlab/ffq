@@ -410,27 +410,31 @@ def ffq_links(type_accessions, server):
             counter = 0
             for gsm in accession:
                 srx = gsm_to_srx(gsm)
-                srrs = srx_to_srrs(srx)
-                for srr in srrs:
-                    if server == 'ftp':
-                        for file in get_files_metadata_from_run(get_xml(srr)):
-                            url = file['url']
-                            if origin_GSE:
-                                print(gsm, end = '\t')                  
-                                filetype, fileno = parse_url(url)      
-                                print(f'\t{filetype}\t{fileno}\t{url}')
-                            else:
-                                print(url, end = ' ')
-                    else:
-                        urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
-                        for url in urls:
-                            if origin_GSE:
-                                print(gsm, end = '\t')                  
-                                filetype, fileno = parse_url(url)      
-                                print(f'\t{filetype}\t{fileno}\t{url}')
-                            else:
-                                print(url, end = " ")
-
+                if srx:
+                    srrs = srx_to_srrs(srx)
+                    for srr in srrs:
+                        if server == 'ftp':
+                            for file in get_files_metadata_from_run(get_xml(srr)):
+                                url = file['url']
+                                if origin_GSE:
+                                    print(gsm, end = '\t')                  
+                                    filetype, fileno = parse_url(url)      
+                                    print(f'\t{filetype}\t{fileno}\t{url}')
+                                else:
+                                    print(url, end = ' ')
+                        else:
+                            urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
+                            for url in urls:
+                                if origin_GSE:
+                                    print(gsm, end = '\t')                  
+                                    filetype, fileno = parse_url(url)      
+                                    print(f'\t{filetype}\t{fileno}\t{url}')
+                                else:
+                                    print(url, end = " ")
+                else: 
+                    logger.error("No SRA files were found for the provided GEO entry")
+                    sys.exit(1)
+                
         if id_type == "SRP":
             # print(accession)
             # print("-" * len(accession))
