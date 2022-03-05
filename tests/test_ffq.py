@@ -275,9 +275,50 @@ class TestFfq(TestMixin, TestCase):
             }}, ffq.ffq_experiment('SRX7048194'))
             get_xml.assert_called_once_with('SRX7048194')
 
-    #def test_ffq_ftp_gse(self):
+
         
     # Do one per accession, simply asserting equal to the expected list of links.
+        # def test_ffq_gse:
+            # GSE119212
+            # """"
+            # accession	filetype	filenumber	link
+            # GSM3360833		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767734/GW16_Hippocampus_possorted_genome_bam.bam.1
+            # GSM3360834		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767735/GW18_Hippocampus_possorted_genome_bam.bam.1
+            # GSM3360835		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767736/GW22_Hippocampus_01_possorted_genome_bam.bam.1
+            # GSM3360836		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767737/GW22_Hippocampus_02_possorted_genome_bam.bam.1
+            # GSM3360837		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767738/GW25_Hippocampus_possorted_genome_bam.bam.1
+            # GSM3360838		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767739/GW27_Hippocampus_possorted_genome_bam.bam.1
+            # GSM3770749		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072134/GW20_Hippocampus_01_possorted_genome_bam.bam.1
+            # GSM3770750		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072135/GW20_Hippocampus_02_possorted_genome_bam.bam.1
+            # """"
+            
+            
+        # def test_ffq_gsm:
+            # GSM2905290
+            # 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR642/001/SRR6425161/SRR6425161_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR642/001/SRR6425161/SRR6425161_2.fastq.gz'
+            
+            
+        # def test_ffg_srp:
+            # SRP162461
+            # """
+            # SRX4733412		fastq	1	ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz
+            # SRX4733412		fastq	2	ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz
+            # """
+            
+            
+        # def test_ffq_srs:
+            # SRS3815608
+            # 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz'
+            
+        # def test_ffq_srx:
+            # SRX4733412
+            # 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz'
+            
+        # def test_ffq_srr:
+            # SRR7895953
+            #'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz'
+        
+
 
 ## To use for ffq_sample
 #    def test_ffq_experiment(self):

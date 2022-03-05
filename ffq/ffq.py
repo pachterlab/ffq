@@ -435,7 +435,7 @@ def ffq_links(type_accessions, server):
                     logger.error("No SRA files were found for the provided GEO entry")
                     sys.exit(1)
                 
-        if id_type == "SRP":
+        if id_type == "SRP" or id_type == "ERP" or id_type == "DRP":
             # print(accession)
             # print("-" * len(accession))
             # print('\n')
@@ -443,14 +443,14 @@ def ffq_links(type_accessions, server):
             id_type = 'SRS'
             origin_SRP = True
 
-        if id_type == "SRS":
+        if id_type == "SRS" or id_type == "ERS" or id_type == "DRS":
             counter = 0
             if isinstance(accession, str):
                 accession = [accession]
             for srs in accession:
                 accession = srs_to_srx(srs)
                 id_type = "SRX"
-        if id_type == "SRX":
+        if id_type == "SRX" or id_type == "ERX" or id_type == "DRX":
             srrs = srx_to_srrs(accession)
             for srr in srrs:
                 if server == 'ftp':
@@ -471,7 +471,7 @@ def ffq_links(type_accessions, server):
                             print(f'\t{filetype}\t{fileno}\t{url}')
                         else:
                             print(url, end = " ")
-        if id_type == "SRR":
+        if id_type == "SRR" or id_type == "ERR" or id_type == "DRR":
             if server == 'ftp':
                 for file in get_files_metadata_from_run(get_xml(accession)):
                     print(file['url'], end = " ")
