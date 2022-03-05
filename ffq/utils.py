@@ -898,6 +898,8 @@ def parse_url(url):
             fileno = '1'
         elif '_R2' in url or '_2' in url:
             fileno = '2'
+        elif '_I1' in url:
+            fileno = '3'
         else:
             fileno = '1'
     if filetype == 'unknown':
