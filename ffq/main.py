@@ -19,6 +19,7 @@ ENCODE_TYPES = ('ENCSR', 'ENCBS', 'ENCDO')
 OTHER_TYPES = ('DOI',)
 SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + OTHER_TYPES
 
+
 ####
 #### Add DRS and DRX
 ####
@@ -90,6 +91,11 @@ def main():
     parser.add_argument(
         '--verbose', help='Print debugging information', action='store_true'
     )
+
+    parser.add_argument(
+        '-l', help='Specify the desired level for fetching downstream accessions', type=int
+    )
+
     # Show help when no arguments are given 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
@@ -110,6 +116,9 @@ def main():
     # Check the -o is provided if --split is set
     if args.split and not args.o:
         parser.error('`-o` must be provided when using `--split`')
+
+    if args.l <= 0:
+        parser.error('level `-l` must be equal or greater than 1')
 
     # If user provides -t
     if args.t is not None:
@@ -161,13 +170,13 @@ def main():
                 elif args.t in PROJECT_TYPES:
                     results = [ffq_study(accession) for accession in args.IDs]
                 elif args.t in EXPERIMENT_TYPES:
-                    results = [ffq_experiment(accession) for accession in args.IDs]
+                    results = [ffq_experiment(accession, args.l) for accession in args.IDs]
                 elif args.t in SAMPLE_TYPES:
-                    results = [ffq_sample(accession) for accession in args.IDs]
+                    results = [ffq_sample(accession, args.l) for accession in args.IDs]
                 elif args.t == 'GSE':
-                    results = [ffq_gse(accession) for accession in args.IDs]
+                    results = [ffq_gse(accession, args.l) for accession in args.IDs]
                 elif args.t == 'GSM':
-                    results = [ffq_gsm(accession) for accession in args.IDs]
+                    results = [ffq_gsm(accession, args.l) for accession in args.IDs]
                 elif args.t == 'DOI':
                     results = [study for doi in args.IDs for study in ffq_doi(doi)]
 
@@ -216,15 +225,15 @@ def main():
                     if type in RUN_TYPES:
                         results.append(ffq_run(accession))
                     elif type in PROJECT_TYPES:
-                        results.append(ffq_study(accession))
+                        results.append(ffq_study(accession, args.l))
                     elif type in EXPERIMENT_TYPES:
-                        results.append(ffq_experiment(accession))
+                        results.append(ffq_experiment(accession, args.l))
                     elif type in SAMPLE_TYPES:
-                        results.append(ffq_sample(accession))
+                        results.append(ffq_sample(accession, args.l))
                     elif type == 'GSE':
-                        results.append(ffq_gse(accession))
+                        results.append(ffq_gse(accession, args.l))
                     elif type == 'GSM':
-                        results.append(ffq_gsm(accession))
+                        results.append(ffq_gsm(accession, args.l))
                     elif type[:3] == 'ENC':
                         results.append(ffq_encode(accession))
                     elif type == 'DOI':

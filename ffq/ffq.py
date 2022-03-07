@@ -135,7 +135,7 @@ def parse_sample(soup):
     }
 
 
-def parse_experiment_with_run(soup):
+def parse_experiment_with_run(soup, l):
     """Given a BeautifulSoup object representing an experiment, parse out relevant
     information.
 
@@ -154,20 +154,22 @@ def parse_experiment_with_run(soup):
     'title': title,
     'platform': platform,
     'instrument': instrument}
+    if not l or l > 1:
+        # Returns all of the runs associated with an experiment
+        runs = srx_to_srrs(accession)
 
-    # Returns all of the runs associated with an experiment
-    runs = srx_to_srrs(accession)
+        if len(runs) == 1:
+            logger.warning(f'There is 1 run for {accession}')
 
-    if len(runs) == 1:
-        logger.warning(f'There is 1 run for {accession}')
+        else:
+            logger.warning(f'There are {len(runs)} runs for {accession}')
 
+        runs = {run: ffq_run(run) for run in runs}
+
+        experiment.update({'runs': runs})
+        return experiment
     else:
-        logger.warning(f'There are {len(runs)} runs for {accession}')
-
-    runs = {run: ffq_run(run) for run in runs}
-
-    experiment.update({'runs': runs})
-    return experiment
+        return experiment
 
 def parse_study(soup):
     """Given a BeautifulSoup object representing a study, parse out relevant
@@ -244,7 +246,7 @@ def ffq_run(accession):
     return run
 
 
-def ffq_study(accession):
+def ffq_study(accession, l):
     """Fetch Study information.
 
     :param accession: study accession (SRP, ERP or DRP)
@@ -257,15 +259,19 @@ def ffq_study(accession):
     """
     logger.info(f'Parsing Study {accession}')
     study = parse_study(get_xml(accession))
-    logger.info(f'Getting Sample for {accession}')
-    sample_ids = get_samples_from_study(accession)
-    logger.warning(f'There are {str(len(sample_ids))} samples for {accession}')
-    samples = [ffq_sample(sample_id) for sample_id in sample_ids]
-    study.update({'samples': {sample['accession']: sample for sample in samples}})
-    return study
+    if not l or l != 1:
+        l -= 1
+        logger.info(f'Getting Sample for {accession}')
+        sample_ids = get_samples_from_study(accession)
+        logger.warning(f'There are {str(len(sample_ids))} samples for {accession}')
+        samples = [ffq_sample(sample_id, l) for sample_id in sample_ids]
+        study.update({'samples': {sample['accession']: sample for sample in samples}})
+        return study
+    else:
+        return study
 
 
-def ffq_gse(accession):
+def ffq_gse(accession, l):
     """Fetch GSE information.
 
     This function finds the GSMs corresponding to the GSE and calls `ffq_gsm`.
@@ -288,15 +294,19 @@ def ffq_gse(accession):
     else:
         logger.info(f'No supplementary files found for {accession}')        
     gse.pop('geo_id')
-    time.sleep(1)
-    gsm_ids = gse_to_gsms(accession)
-    logger.warning(f'There are {str(len(gsm_ids))} samples for {accession}')
-    gsms = [ffq_gsm(gsm_id) for gsm_id in gsm_ids]
-    gse.update({'samples': {sample['accession']: sample for sample in gsms}})
-    return gse
+    if not l or l != 1:
+        l -= 1
+        time.sleep(1)
+        gsm_ids = gse_to_gsms(accession)
+        logger.warning(f'There are {str(len(gsm_ids))} samples for {accession}')
+        gsms = [ffq_gsm(gsm_id, l) for gsm_id in gsm_ids]
+        gse.update({'samples': {sample['accession']: sample for sample in gsms}})
+        return gse
+    else:
+        return gse
 
 
-def ffq_gsm(accession):
+def ffq_gsm(accession, l):
     """Fetch GSM information.
 
     This function finds the SRS corresponding to the GSM and calls `ffq_sample`.
@@ -320,14 +330,19 @@ def ffq_gsm(accession):
         logger.info(f'No supplementary files found for {accession}')        
 
     gsm.update(gsm_to_platform(accession))
-    logger.info(f'Getting sample SRS for {accession}')
-    srs = gsm_id_to_srs(gsm.pop('geo_id'))
-    sample = ffq_sample(srs)
-    gsm.update({'sample': {sample['accession']: sample }})
-    return gsm
+
+    if not l or l != 1:
+        l -= 1
+        logger.info(f'Getting sample SRS for {accession}')
+        srs = gsm_id_to_srs(gsm.pop('geo_id'))
+        sample = ffq_sample(srs, l)
+        gsm.update({'sample': {sample['accession']: sample }})
+        return gsm
+    else:
+        return gsm
 
 
-def ffq_experiment(accession):
+def ffq_experiment(accession, l):
     """Fetch Experiment information.
 
     :param accession: experiment accession (SRX, ERX or DRX)
@@ -339,11 +354,11 @@ def ffq_experiment(accession):
     :rtype: dict
     """
     logger.info(f'Parsing Experiment {accession}')
-    experiment = parse_experiment_with_run(get_xml(accession))
+    experiment = parse_experiment_with_run(get_xml(accession), l)
     return experiment
 
 
-def ffq_sample(accession):
+def ffq_sample(accession, l):
 
     """Fetch Sample information.
 
@@ -357,10 +372,14 @@ def ffq_sample(accession):
     """
     logger.info(f'Parsing sample {accession}')
     sample = parse_sample(get_xml(accession))
-    logger.info(f'Getting Experiment for {accession}')
-    experiment = ffq_experiment(sample['experiment'])
-    sample.update({'experiment': {experiment['accession']: experiment}})
-    return sample
+    if not l or l != 1:
+        l -= 1
+        logger.info(f'Getting Experiment for {accession}')
+        experiment = ffq_experiment(sample['experiment'], l)
+        sample.update({'experiment': {experiment['accession']: experiment}})
+        return sample
+    else:
+        return sample
 
 
 def ffq_encode(accession):
@@ -526,7 +545,7 @@ def ffq_doi(doi):
         logger.info(
             f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
         )
-        return [ffq_study(accession) for accession in study_accessions]
+        return [ffq_study(accession, None) for accession in study_accessions]
 
     # If not study with the title is found, search Pubmed, which can be linked
     # to a GEO accession.
