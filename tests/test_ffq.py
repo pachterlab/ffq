@@ -50,45 +50,46 @@ class TestFfq(TestMixin, TestCase):
             }, ffq.parse_run(soup))
 
     def test_parse_run_bam(self):
-        with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run:
-            with open(self.run2_path, 'r') as f:
-                soup = BeautifulSoup(f.read(), 'xml')
+        #with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run:
+        with open(self.run2_path, 'r') as f:
+            soup = BeautifulSoup(f.read(), 'xml')
 
-            self.assertEqual({
-                'accession':
-                    'SRR6835844',
-                'experiment':
-                    'SRX3791763',
-                'study':
-                    'SRP131661',
-                'sample':
-                    'SRS3044236',
-                'title':
-                    'Illumina NovaSeq 6000 sequencing; GSM3040890: library 10X_P4_0; Mus musculus; RNA-Seq',
-                'files': [{
-                    'url':
-                        'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam',
-                    'md5':
-                        '5355fe6a07155026085ce46631268ab1',
-                    'size':
-                        '17093057664'
-                }, {
-                    'url':
-                        'ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR683/SRR6835844/10X_P4_0.bam.bai',
-                    'md5':
-                        'c9396c2596254831470a9138ae86ded7',
-                    'size':
-                        '7163216'
-                }],
-                'attributes': {
-                    'assembly': 'mm10',
-                    'dangling_references': 'treat_as_unmapped',
-                    'ENA-SPOT-COUNT': '137766536',
-                    'ENA-BASE-COUNT': '12398988240',
-                    'ENA-FIRST-PUBLIC': '2018-03-30',
-                    'ENA-LAST-UPDATE': '2018-03-30'
-                }    
-            }, ffq.parse_run(soup))
+        self.assertEqual({
+            'accession':
+                'SRR6835844',
+            'experiment':
+                'SRX3791763',
+            'study':
+                'SRP131661',
+            'sample':
+                'SRS3044236',
+            'title':
+                'Illumina NovaSeq 6000 sequencing; GSM3040890: library 10X_P4_0; Mus musculus; RNA-Seq',
+            'attributes': {
+                'assembly': 'mm10',
+                'dangling_references': 'treat_as_unmapped',
+                'ENA-SPOT-COUNT': '137766536',
+                'ENA-BASE-COUNT': '12398988240',
+                'ENA-FIRST-PUBLIC': '2018-03-30',
+                'ENA-LAST-UPDATE': '2018-03-30'
+            },
+            'files': [{
+                'url':
+                    'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam',
+                'md5':
+                    '5355fe6a07155026085ce46631268ab1',
+                'size':
+                    '17093057664'
+            }, {
+                'url':
+                    'ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR683/SRR6835844/10X_P4_0.bam.bai',
+                'md5':
+                    'c9396c2596254831470a9138ae86ded7',
+                'size':
+                    '7163216'
+            }]
+
+        }, ffq.parse_run(soup))
 
     def test_parse_sample(self):
         with open(self.sample_path, 'r') as f:
@@ -133,7 +134,7 @@ class TestFfq(TestMixin, TestCase):
    'sample': 'SRS4237519',
    'study': 'SRP178136',
    'title': 'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq'}},
- 'title': 'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq'}, ffq.parse_experiment_with_run(soup))
+ 'title': 'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq'}, ffq.parse_experiment_with_run(soup, 10))
 
     def test_parse_study(self):
         with open(self.study_path, 'r') as f:
@@ -201,11 +202,11 @@ class TestFfq(TestMixin, TestCase):
                         'accession' : 'GSM2'
                         }
                     }
-                 }, ffq.ffq_gse('GSE1'))
+                 }, ffq.ffq_gse('GSE1', 10))
 
             get_gse_search_json.assert_called_once_with('GSE1')
             gse_to_gsms.assert_called_once_with('GSE1')
-            ffq_gsm.assert_has_calls([call('GSM_1'), call('GSM_2')])
+            ffq_gsm.assert_has_calls([call('GSM_1', 9), call('GSM_2', 9)])
 
 
     def test_ffq_gsm(self):
@@ -234,12 +235,12 @@ class TestFfq(TestMixin, TestCase):
                         'accession': 'SRS1'
                     }
                 }
-            }, ffq.ffq_gsm('GSM1'))
+            }, ffq.ffq_gsm('GSM1', 10))
             get_gsm_search_json.assert_called_once_with('GSM1')
             geo_to_suppl.assert_called_once_with('GSM1', 'GSM')
             gsm_to_platform.assert_called_once_with('GSM1')
             gsm_id_to_srs.assert_called_once_with('GSMID1')
-            ffq_sample.assert_called_once_with('SRS1')
+            ffq_sample.assert_called_once_with('SRS1', 9)
 
     def test_ffq_run(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
@@ -261,10 +262,10 @@ class TestFfq(TestMixin, TestCase):
                 'samples': {'id1': {'accession': 'id1'},
                  'id2': {'accession': 'id2'}
                      },
-            }, ffq.ffq_study('SRP226764'))
+            }, ffq.ffq_study('SRP226764', 10))
             get_xml.assert_called_once_with('SRP226764')
             self.assertEqual(2, ffq_sample.call_count)
-            ffq_sample.assert_has_calls([call('sample_id1'), call('sample_id2')])
+            ffq_sample.assert_has_calls([call('sample_id1', 9), call('sample_id2', 9)])
 
     def test_ffq_experiment(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
@@ -272,7 +273,7 @@ class TestFfq(TestMixin, TestCase):
             parse_experiment_with_run.return_value = {'experiment': 'experiment', 'runs' : {'run': 'run'}}
 
             self.assertEqual({'experiment': 'experiment', 'runs' : {'run': 'run'
-            }}, ffq.ffq_experiment('SRX7048194'))
+            }}, ffq.ffq_experiment('SRX7048194', 10))
             get_xml.assert_called_once_with('SRX7048194')
 
 
@@ -347,7 +348,7 @@ class TestFfq(TestMixin, TestCase):
             self.assertEqual([ffq_study.return_value], ffq.ffq_doi('doi'))
             get_doi.assert_called_once_with('doi')
             search_ena_title.assert_called_once_with('title')
-            ffq_study.assert_called_once_with('SRP1')
+            ffq_study.assert_called_once_with('SRP1', None)
 
     def test_ffq_doi_no_title(self):
         with mock.patch('ffq.ffq.get_doi') as get_doi,\
