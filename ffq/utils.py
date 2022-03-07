@@ -766,6 +766,23 @@ def gsm_to_srx(accession):
     else:
         return None
 
+def srp_to_srx(accession):
+    soup = get_xml(accession)
+    experiments_parsed = soup.find("ID", text = EXPERIMENT_PARSER)
+    experiments = []
+    if experiments_parsed:
+        experiments_ranges = experiments_parsed.text.split(',')
+        for experiments_range in experiments_ranges:
+            if '-' in experiments_range:
+                experiments += parse_range(experiments_range) 
+            else:
+                experiments.append(experiments_range)
+    else:
+            # The original code fell to ENA search if runs were not found. I don't know if this is
+            # necessary, so make a warning to detect it in case it is.      
+        logger.warning('No experiments found for study. Modify code to search through ENA') 
+        return
+    return experiments
 
 def srs_to_srx(accession):
     """Given an SRS accession

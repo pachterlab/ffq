@@ -33,6 +33,7 @@ from .utils import (
     geo_to_suppl,
     gsm_to_platform,
     gse_to_gsms,
+    srp_to_srx,
     srs_to_srx,
     gsm_to_srx,
     srx_to_srrs,
@@ -392,8 +393,9 @@ def ffq_links(type_accessions, server):
     :return: None
     :rtype: None
     """
-    origin_SRP = False
     origin_GSE = False
+    origin_SRP = False
+    origin_SRS = True
     for id_type, accession in type_accessions:
         if id_type == "GSE":
             print("accession\tfiletype\tfilenumber\tlink")
@@ -439,19 +441,25 @@ def ffq_links(type_accessions, server):
             # print(accession)
             # print("-" * len(accession))
             # print('\n')
-            accession = get_samples_from_study(accession)
-            id_type = 'SRS'
+            srxs = srp_to_srx(accession)
+            id_type = 'SRX'
             origin_SRP = True
-
         if id_type == "SRS" or id_type == "ERS" or id_type == "DRS":
             counter = 0
             if isinstance(accession, str):
                 accession = [accession]
+            srxs = []
             for srs in accession:
-                accession = srs_to_srx(srs)
-                id_type = "SRX"
+                print(srs)
+                srxs.append(srs_to_srx(srs))
+            id_type = "SRX"
+            origin_SRS = True
         if id_type == "SRX" or id_type == "ERX" or id_type == "DRX":
-            srrs = srx_to_srrs(accession)
+            if not origin_SRP and not origin_SRS:
+                srxs = [accession]   
+            srrs = []
+            for srx in srxs:
+                srrs.append(*srx_to_srrs(srx))
             for srr in srrs:
                 if server == 'ftp':
                     for file in get_files_metadata_from_run(get_xml(srr)):
