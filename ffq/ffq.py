@@ -142,6 +142,9 @@ def parse_experiment_with_run(soup, l):
     :param soup: a BeautifulSoup object representing an experiment
     :type soup: bs4.BeautifulSoup
 
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
+
     :return: a dictionary containing experiment information
     :rtype: dict
     """
@@ -252,6 +255,9 @@ def ffq_study(accession, l):
     :param accession: study accession (SRP, ERP or DRP)
     :type accession: str
 
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
+
     :return: dictionary of study information. The dictionary contains a
              'samples' key, which is a dictionary of all the samples in the study, as
              returned by `ffq_sample`.
@@ -278,6 +284,9 @@ def ffq_gse(accession, l):
 
     :param accession: GSE accession
     :type accession: str
+
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
 
     :return: dictionary containing GSE information. The dictionary contains a
              'sample' key, which is a dictionary of all the GSMs in the study, as
@@ -314,6 +323,9 @@ def ffq_gsm(accession, l):
     :param accession: GSM accession
     :type accession: str
 
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
+
     :return: dictionary containing GSM information. The dictionary contains a
              'sample' key, which is a dictionary of the sample asssociated to the GSM, as
              returned by `ffq_sample`.
@@ -348,6 +360,9 @@ def ffq_experiment(accession, l):
     :param accession: experiment accession (SRX, ERX or DRX)
     :type accession: str
 
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
+
     :return: dictionary of experiment information. The dictionary contains a
              'runs' key, which is a dictionary of all the runs in the study, as
              returned by `ffq_run`.
@@ -364,6 +379,9 @@ def ffq_sample(accession, l):
 
     :param accession: sample accession (SRS, ERS or DRS)
     :type accession: str
+
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
 
     :return: dictionary of sample information. The dictionary contains a
              'runs' key, which is a dictionary of all the runs in the study, as

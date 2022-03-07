@@ -168,7 +168,7 @@ def main():
                 if args.t in RUN_TYPES:
                     results = [ffq_run(accession) for accession in args.IDs]
                 elif args.t in PROJECT_TYPES:
-                    results = [ffq_study(accession) for accession in args.IDs]
+                    results = [ffq_study(accession, args.l) for accession in args.IDs]
                 elif args.t in EXPERIMENT_TYPES:
                     results = [ffq_experiment(accession, args.l) for accession in args.IDs]
                 elif args.t in SAMPLE_TYPES:
