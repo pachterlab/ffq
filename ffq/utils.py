@@ -942,9 +942,30 @@ def parse_ncbi_fetch_fasta(soup, server):
     return links
         
 def ena_fetch(accession, db):
+    """ Fetch information from the specified
+    ENA database for the specified accession
+    
+    :param accession: database id
+    :type: str
+    
+    :param db: ENA database
+    :type: str
+    
+    :return: BeautifulSoup object with accession information
+    :rtype: bs4.BeautifulSoup
+    """
     return BeautifulSoup(cached_get(f'{ENA_FETCH}?db={db}&id={accession}', 'xml'), 'lxml')
 
 def parse_bioproject(soup):
+    """ Parse the output of `ena_fetch` for the bioproject
+    database by extracting relevant metadata
+
+    :param soup: BeautifulSoup object (output of `ena_fetch` with db = bioproject)
+    :type: bs4.BeautifulSoup object
+    
+    :rparam: dictionary with metadata
+    :rtype: dict
+    """
     return {'accession': soup.find('archiveid').get('accession'),
           'title': soup.find('title').text,
           'description': soup.find("description").text,

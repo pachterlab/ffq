@@ -435,9 +435,29 @@ def ffq_encode(accession):
 
 
 def ffq_bioproject(accession):
+    """Fetch bioproject ids information. This 
+    function receives a CXR accession
+    and fetches the associated metadata
+
+    :param accession: a bioproject CXR id
+    :type accession: str
+
+    :return: dictionary of bioproject metadata. 
+    :rtype: dict
+    """
     return parse_bioproject(ena_fetch(accession, 'bioproject'))
 
 def ffq_biosample(accession):
+    """Fetch biosample ids information. This 
+    function receives a SAMN accession
+    and fetches the associated metadata
+
+    :param accession: a biosample SAMN id
+    :type accession: str
+
+    :return: dictionary of biosample metadata. 
+    :rtype: dict
+    """
     soup = ena_fetch(accession, 'biosample')
     sample = soup.find('id', text = SAMPLE_PARSER).text
     sample_data = ffq_sample(sample, 2)
@@ -449,7 +469,7 @@ def ffq_biosample(accession):
     }
 
 def ffq_links(type_accessions, server):
-    """Prints download links for raw data
+    """Print download links for raw data
     from provided server (FTP, AWS, or GCP)
     to the terminal
 
