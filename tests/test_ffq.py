@@ -306,7 +306,7 @@ class TestFfq(TestMixin, TestCase):
     def test_ffq_links_gsm_aws(self):
         capturedOutput = io.StringIO()                  # Create StringIO object
         sys.stdout = capturedOutput                     #  and redirect stdout.
-        ffq.ffq_links([('GSM', 'GSM2905290')], 'aws')                                    # Call function.
+        ffq.ffq_links([('GSM', 'GSM2905290')], 'AWS')                                    # Call function.
         sys.stdout = sys.__stdout__
         self.assertEqual(capturedOutput.getvalue(), 
         's3://sra-pub-src-6/SRR6425161/J4_S1_L001_R1_001.fastq.gz s3://sra-pub-src-6/SRR6425161/J4_S1_L001_R2_001.fastq.gz '

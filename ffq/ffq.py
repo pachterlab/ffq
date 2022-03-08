@@ -42,7 +42,7 @@ from .utils import (
     get_files_metadata_from_run,
     parse_url,
     parse_ncbi_fetch_fasta,
-    ena_fetch_bioproject,
+    ena_fetch,
     parse_bioproject
 )
 
@@ -421,7 +421,7 @@ def ffq_encode(accession):
 
 
 def ffq_bioproject(accession):
-    return parse_bioproject(ena_fetch_bioproject(accession))
+    return parse_bioproject(ena_fetch(accession, 'bioproject'))
 
 def ffq_links(type_accessions, server):
     """Prints download links for raw data

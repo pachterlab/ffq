@@ -15,7 +15,7 @@ from .config import (
     CROSSREF_URL,
     ENA_SEARCH_URL,
     ENA_URL,
-    ENA_BIOPROJECT_FETCH,
+    ENA_FETCH,
     GSE_SEARCH_URL,
     GSE_SUMMARY_URL,
     GSE_SEARCH_TERMS,
@@ -947,8 +947,8 @@ def parse_ncbi_fetch_fasta(soup, server):
         links.pop()
     return links
         
-def ena_fetch_bioproject(accession):
-    return BeautifulSoup(cached_get(f'{ENA_BIOPROJECT_FETCH}{accession}', 'xml'), 'lxml')
+def ena_fetch(accession, db):
+    return BeautifulSoup(cached_get(f'{ENA_FETCH}?db={db}&id={accession}', 'xml'), 'lxml')
 
 def parse_bioproject(soup):
     return {'accession': soup.find('archiveid').get('accession'),
