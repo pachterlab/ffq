@@ -4,6 +4,8 @@ import re
 import time
 from urllib.parse import urlparse
 import sys
+from bs4 import BeautifulSoup
+
 
 from .utils import (
     cached_get,
@@ -39,7 +41,9 @@ from .utils import (
     srx_to_srrs,
     get_files_metadata_from_run,
     parse_url,
-    parse_ncbi_fetch_fasta
+    parse_ncbi_fetch_fasta,
+    ena_fetch_bioproject,
+    parse_bioproject
 )
 
 logger = logging.getLogger(__name__)
@@ -265,7 +269,7 @@ def ffq_study(accession, l):
     """
     logger.info(f'Parsing Study {accession}')
     study = parse_study(get_xml(accession))
-    if not l or l != 1:
+    if not l and l != 1:
         l -= 1
         logger.info(f'Getting Sample for {accession}')
         sample_ids = get_samples_from_study(accession)
@@ -303,7 +307,7 @@ def ffq_gse(accession, l):
     else:
         logger.info(f'No supplementary files found for {accession}')        
     gse.pop('geo_id')
-    if not l or l != 1:
+    if not l and l != 1:
         l -= 1
         time.sleep(1)
         gsm_ids = gse_to_gsms(accession)
@@ -343,7 +347,7 @@ def ffq_gsm(accession, l):
 
     gsm.update(gsm_to_platform(accession))
 
-    if not l or l != 1:
+    if not l and l != 1:
         l -= 1
         logger.info(f'Getting sample SRS for {accession}')
         srs = gsm_id_to_srs(gsm.pop('geo_id'))
@@ -390,7 +394,7 @@ def ffq_sample(accession, l):
     """
     logger.info(f'Parsing sample {accession}')
     sample = parse_sample(get_xml(accession))
-    if not l or l != 1:
+    if not l and l != 1:
         l -= 1
         logger.info(f'Getting Experiment for {accession}')
         experiment = ffq_experiment(sample['experiment'], l)
@@ -416,6 +420,9 @@ def ffq_encode(accession):
     return encode
 
 
+def ffq_bioproject(accession):
+    return parse_bioproject(ena_fetch_bioproject(accession))
+
 def ffq_links(type_accessions, server):
     """Prints download links for raw data
     from provided server (FTP, AWS, or GCP)
@@ -430,6 +437,7 @@ def ffq_links(type_accessions, server):
     :return: None
     :rtype: None
     """
+    server = server.upper()
     origin_GSE = False
     origin_SRP = False
     origin_SRS = True
@@ -487,7 +495,6 @@ def ffq_links(type_accessions, server):
                 accession = [accession]
             srxs = []
             for srs in accession:
-                print(srs)
                 srxs.append(srs_to_srx(srs))
             id_type = "SRX"
             origin_SRS = True

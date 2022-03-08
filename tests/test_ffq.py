@@ -1,5 +1,7 @@
 from unittest import mock, TestCase
 from unittest.mock import call
+import io 
+import sys
 
 from bs4 import BeautifulSoup
 
@@ -279,26 +281,53 @@ class TestFfq(TestMixin, TestCase):
 
         
     # Do one per accession, simply asserting equal to the expected list of links.
-        # def test_ffq_gse:
-            # GSE119212
-            # """"
-            # accession	filetype	filenumber	link
-            # GSM3360833		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767734/GW16_Hippocampus_possorted_genome_bam.bam.1
-            # GSM3360834		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767735/GW18_Hippocampus_possorted_genome_bam.bam.1
-            # GSM3360835		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767736/GW22_Hippocampus_01_possorted_genome_bam.bam.1
-            # GSM3360836		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767737/GW22_Hippocampus_02_possorted_genome_bam.bam.1
-            # GSM3360837		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767738/GW25_Hippocampus_possorted_genome_bam.bam.1
-            # GSM3360838		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767739/GW27_Hippocampus_possorted_genome_bam.bam.1
-            # GSM3770749		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072134/GW20_Hippocampus_01_possorted_genome_bam.bam.1
-            # GSM3770750		bam	1	ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072135/GW20_Hippocampus_02_possorted_genome_bam.bam.1
-            # """"
+
+
+    def test_ffq_links_gse_ftp(self):
+        self.maxDiff = None
+        capturedOutput = io.StringIO()                 
+        sys.stdout = capturedOutput                     
+        ffq.ffq_links([('GSE', 'GSE119212')], 'ftp')                                 
+        sys.stdout = sys.__stdout__
+        self.assertEqual(capturedOutput.getvalue(), 
+        'accession\tfiletype\tfilenumber\tlink\nGSM3360833\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767734/GW16_Hippocampus_possorted_genome_bam.bam.1\nGSM3360834\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767735/GW18_Hippocampus_possorted_genome_bam.bam.1\nGSM3360835\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767736/GW22_Hippocampus_01_possorted_genome_bam.bam.1\nGSM3360836\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767737/GW22_Hippocampus_02_possorted_genome_bam.bam.1\nGSM3360837\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767738/GW25_Hippocampus_possorted_genome_bam.bam.1\nGSM3360838\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767739/GW27_Hippocampus_possorted_genome_bam.bam.1\nGSM3770749\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072134/GW20_Hippocampus_01_possorted_genome_bam.bam.1\nGSM3770750\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072135/GW20_Hippocampus_02_possorted_genome_bam.bam.1\n'
+        )                  
+
+
+    def test_ffq_links_srs_ftp(self):
+        capturedOutput = io.StringIO()                  # Create StringIO object
+        sys.stdout = capturedOutput                     #  and redirect stdout.
+        ffq.ffq_links([('SRS', 'SRS3815608')], 'ftp')                                    # Call function.
+        sys.stdout = sys.__stdout__
+        self.assertEqual(capturedOutput.getvalue(), 
+        'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz '
+        )                  
             
-            
-        # def test_ffq_gsm:
-            # GSM2905290
-            # 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR642/001/SRR6425161/SRR6425161_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR642/001/SRR6425161/SRR6425161_2.fastq.gz'
-            
-            
+    def test_ffq_links_gsm_aws(self):
+        capturedOutput = io.StringIO()                  # Create StringIO object
+        sys.stdout = capturedOutput                     #  and redirect stdout.
+        ffq.ffq_links([('GSM', 'GSM2905290')], 'aws')                                    # Call function.
+        sys.stdout = sys.__stdout__
+        self.assertEqual(capturedOutput.getvalue(), 
+        's3://sra-pub-src-6/SRR6425161/J4_S1_L001_R1_001.fastq.gz s3://sra-pub-src-6/SRR6425161/J4_S1_L001_R2_001.fastq.gz '
+        )          
+
+    def test_ffq_links_srp_aws(self):
+        capturedOutput = io.StringIO()                  # Create StringIO object
+        sys.stdout = capturedOutput                     #  and redirect stdout.
+        ffq.ffq_links([('SRP', 'SRP162461')], 'AWS')                                    # Call function.
+        sys.stdout = sys.__stdout__
+        self.assertEqual(capturedOutput.getvalue(), 'SRR7895967\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895967/P3V_DS_Placenta_11_S1_R1_001.fastq.gz\nSRR7895967\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895967/P3V_DS_Placenta_11_S1_R2_001.fastq.gz\nSRR7895966\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895966/P4V_DS_Placenta_5_S1_R1_001.fastq.gz\nSRR7895966\t\tfastq\t2\ts3://sra-pub-src-3/SRR7895966/P4V_DS_Placenta_5_S1_R2_001.fastq.gz\nSRR7895965\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895965/P1V_DS_Placenta_20_S1_R1_001.fastq.gz\nSRR7895965\t\tfastq\t2\ts3://sra-pub-src-3/SRR7895965/P1V_DS_Placenta_20_S1_R2_001.fastq.gz\nSRR7895964\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895964/P2V_DS_Placenta_12_S1_R1_001.fastq.gz\nSRR7895964\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895964/P2V_DS_Placenta_12_S1_R2_001.fastq.gz\nSRR7895963\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895963/P7V_10X_Placenta_17_R1.fastq.gz\nSRR7895963\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895963/P7V_10X_Placenta_17_R2.fastq.gz\nSRR7895962\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895962/P8V_10X_Placenta_23_S2_L002_R1_001.fastq.gz\nSRR7895962\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895962/P8V_10X_Placenta_23_S2_L002_R2_001.fastq.gz\nSRR7895961\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895961/P5V_DS_Placenta_23_S1_R1_001.fastq.gz\nSRR7895961\t\tfastq\t2\ts3://sra-pub-src-3/SRR7895961/P5V_DS_Placenta_23_S1_R2_001.fastq.gz\nSRR7895960\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895960/P6V_DS_Placenta_10_S1_R1_001.fastq.gz\nSRR7895960\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895960/P6V_DS_Placenta_10_S1_R2_001.fastq.gz\nSRR7895959\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895959/P1D_DS_Placenta_20_S1_R1_001.fastq.gz\nSRR7895959\t\tfastq\t2\ts3://sra-pub-src-3/SRR7895959/P1D_DS_Placenta_20_S1_R2_001.fastq.gz\nSRR7895958\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895958/P2D_DS_Placenta_22_S1_R1_001.fastq.gz\nSRR7895958\t\tfastq\t2\ts3://sra-pub-src-3/SRR7895958/P2D_DS_Placenta_22_S1_R2_001.fastq.gz\nSRR7895957\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895957/P3D_DS_Placenta_21_S1_R1_001.fastq.gz\nSRR7895957\t\tfastq\t2\ts3://sra-pub-src-3/SRR7895957/P3D_DS_Placenta_21_S1_R2_001.fastq.gz\nSRR7895956\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895956/P4D_DS_Placenta_23_S1_R1_001.fastq.gz\nSRR7895956\t\tfastq\t2\ts3://sra-pub-src-3/SRR7895956/P4D_DS_Placenta_23_S1_R2_001.fastq.gz\nSRR7895955\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895955/P5D_DS_Placenta_22_S1_R1_001.fastq.gz\nSRR7895955\t\tfastq\t2\ts3://sra-pub-src-3/SRR7895955/P5D_DS_Placenta_22_S1_R2_001.fastq.gz\nSRR7895954\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895954/P6D_10X_Placenta_23_S1_L001_R1_001.fastq.gz\nSRR7895954\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895954/P6D_10X_Placenta_23_S1_L001_R2_001.fastq.gz\nSRR7895953\t\tfastq\t1\ts3://sra-pub-src-3/SRR7895953/T1-01P1_ACAGTG_L007_R1_001.fastq.gz\nSRR7895953\t\tfastq\t2\ts3://sra-pub-src-3/SRR7895953/T1-01P1_ACAGTG_L007_R2_001.fastq.gz\n<'
+        )
+
+
+#########
+        ### Note: make it try twice before jumping to bam links....
+#########
+
+
+
+        ######
         # def test_ffg_srp:
             # SRP162461
             # """
