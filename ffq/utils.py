@@ -661,7 +661,6 @@ def parse_range(text):
     :rtype: list
     """
 
-
     first, last = text.split('-')
     base = re.match(r'^.*?(?=[0-9])', first).group(0)
 
@@ -842,10 +841,8 @@ def get_files_metadata_from_run(soup):
     for xref in soup.find_all('XREF_LINK'):
         if xref.find('DB').text == 'ENA-FASTQ-FILES':
             fastq_url = xref.find('ID').text
-
             table = parse_tsv(cached_get(fastq_url))
             assert len(table) == 1
-
             urls = table[0].get('fastq_ftp', '')
             md5s = table[0].get('fastq_md5', '')
             sizes = table[0].get('fastq_bytes', '')
@@ -863,15 +860,12 @@ def get_files_metadata_from_run(soup):
                  zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
             )
             break
-
     # Include BAM (in submitted file)
     for xref in soup.find_all('XREF_LINK'):
         if xref.find('DB').text == 'ENA-SUBMITTED-FILES':
             bam_url = xref.find('ID').text
-
             table = parse_tsv(cached_get(bam_url))
             assert len(table) == 1
-
             urls = table[0].get('submitted_ftp', '')
             md5s = table[0].get('submitted_md5', '')
             sizes = table[0].get('submitted_bytes', '')

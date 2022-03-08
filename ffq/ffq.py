@@ -70,7 +70,6 @@ def parse_run(soup):
     :return: a dictionary containing run information
     :rtype: dict
     """
-
     accession = soup.find('PRIMARY_ID', text=RUN_PARSER).text
     experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text \
         if soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER) \
@@ -100,7 +99,6 @@ def parse_run(soup):
         for attr in soup.find_all('RUN_ATTRIBUTE')
     }
     files = get_files_metadata_from_run(soup)
-
     return {
         'accession': accession,
         'experiment': experiment,
@@ -253,7 +251,7 @@ def ffq_run(accession):
     return run
 
 
-def ffq_study(accession, l):
+def ffq_study(accession):
     """Fetch Study information.
 
     :param accession: study accession (SRP, ERP or DRP)
@@ -269,7 +267,7 @@ def ffq_study(accession, l):
     """
     logger.info(f'Parsing Study {accession}')
     study = parse_study(get_xml(accession))
-    if not l and l != 1:
+    if l and l != 1:
         l -= 1
         logger.info(f'Getting Sample for {accession}')
         sample_ids = get_samples_from_study(accession)
@@ -395,14 +393,30 @@ def ffq_sample(accession, l):
     logger.info(f'Parsing sample {accession}')
     sample = parse_sample(get_xml(accession))
     if not l and l != 1:
-        l -= 1
+        try:
+            l -= 1
+        except:
+            pass
         logger.info(f'Getting Experiment for {accession}')
-        experiment = ffq_experiment(sample['experiment'], l)
-        sample.update({'experiment': {experiment['accession']: experiment}})
+        exp_id = sample['experiment']
+        if ',' in exp_id:
+            exp_ids = exp_id.split(',')
+            experiments = [ffq_experiment(exp_id, l) for exp_id in exp_ids]
+            sample.update({'experiment': [{experiment['accession']: experiment} for experiment in experiments]})
+            return sample
+        else:
+            experiment = ffq_experiment(exp_id, l)
+            sample.update({'experiment': {experiment['accession']: experiment}})
         return sample
     else:
         return sample
 
+
+# TO do: why SRS6250956 is now failing at the level of 
+# [2022-03-08 11:46:44,908]    INFO Parsing run SRR11233639
+# [2022-03-08 11:46:49,307]   ERROR string indices must be integer
+
+# Also implement the try except for all ffq functions that have l
 
 def ffq_encode(accession):
     """Fetch ENCODE ids information. This 
@@ -422,6 +436,17 @@ def ffq_encode(accession):
 
 def ffq_bioproject(accession):
     return parse_bioproject(ena_fetch(accession, 'bioproject'))
+
+def ffq_biosample(accession):
+    soup = ena_fetch(accession, 'biosample')
+    sample = soup.find('id', text = SAMPLE_PARSER).text
+    sample_data = ffq_sample(sample, 2)
+    return { 
+        accession : {
+            'accession': accession,
+            'sample': sample_data
+        }
+    }
 
 def ffq_links(type_accessions, server):
     """Prints download links for raw data
