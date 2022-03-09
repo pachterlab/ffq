@@ -1,0 +1,23 @@
+{
+    "SAMEA13024994": {
+        "accession": "SAMEA13024994",
+        "sample": {
+            "accession": "SRS5509504",
+            "title": "B1",
+            "organism": "gut metagenome",
+            "attributes": {
+                "host": "Broiler chicken",
+                "isolation_source": "Ileum-B1",
+                "collection_date": "2014-10",
+                "geo_loc_name": "China: Hebei, Zhuozhou",
+                "lat_lon": "39.48 N 115.97 E",
+                "BioSampleModel": "Metagenome or environmental",
+                "ENA-SPOT-COUNT": "35800",
+                "ENA-BASE-COUNT": "17900000",
+                "ENA-FIRST-PUBLIC": "2020-03-02",
+                "ENA-LAST-UPDATE": "2020-03-02"
+            },
+            "experiment": "SRX6986332"
+        }
+    }
+}

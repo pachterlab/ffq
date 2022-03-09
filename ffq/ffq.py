@@ -166,7 +166,7 @@ def parse_experiment_with_run(soup, l):
     'title': title,
     'platform': platform,
     'instrument': instrument}
-    if not l or l > 1:
+    if l or l > 1:
         # Returns all of the runs associated with an experiment
         runs = srx_to_srrs(accession)
 
@@ -274,7 +274,7 @@ def ffq_study(accession):
     """
     logger.info(f'Parsing Study {accession}')
     study = parse_study(get_xml(accession))
-    if l and l != 1:
+    if l is not None and l != 1:
         l -= 1
         logger.info(f'Getting Sample for {accession}')
         sample_ids = get_samples_from_study(accession)
@@ -312,7 +312,11 @@ def ffq_gse(accession, l):
     else:
         logger.info(f'No supplementary files found for {accession}')        
     gse.pop('geo_id')
-    if not l and l != 1:
+    if l is not None and l != 1:
+        try:
+            l -= 1
+        except:
+            pass
         l -= 1
         time.sleep(1)
         gsm_ids = gse_to_gsms(accession)
@@ -351,9 +355,11 @@ def ffq_gsm(accession, l):
         logger.info(f'No supplementary files found for {accession}')        
 
     gsm.update(gsm_to_platform(accession))
-
-    if not l and l != 1:
-        l -= 1
+    if l is not None and l != 1:
+        try:
+            l -= 1
+        except:
+            pass
         logger.info(f'Getting sample SRS for {accession}')
         srs = gsm_id_to_srs(gsm.pop('geo_id'))
         sample = ffq_sample(srs, l)
@@ -399,7 +405,7 @@ def ffq_sample(accession, l):
     """
     logger.info(f'Parsing sample {accession}')
     sample = parse_sample(get_xml(accession))
-    if not l and l != 1:
+    if l is not None and l != 1:
         try:
             l -= 1
         except:
