@@ -17,7 +17,7 @@ SAMPLE_TYPES = ('SRS', 'ERS', 'DRS', 'CRS')
 GEO_TYPES = ('GSE','GSM')
 ENCODE_TYPES = ('ENCSR', 'ENCBS', 'ENCDO')
 BIOPROJECT_TYPES = ('CRX',)
-BIOSAMPLE_TYPES = ('SAMN',)
+BIOSAMPLE_TYPES = ('SAMN', 'SAMD', 'SAMEA', 'SAMEG')
 OTHER_TYPES = ('DOI',)
 SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + OTHER_TYPES
 
@@ -195,7 +195,6 @@ def main():
     else:
         # Validate and extract types of accessions provided
         type_accessions = validate_accession(args.IDs, RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES)
-
         # If at least one of the accessions is incorrect:  
         if False in type_accessions:
             parser.error(f'{args.IDs[type_accessions.index(False)]} is not a valid ID. IDs can be one of {", ".join(SEARCH_TYPES)}')
@@ -241,7 +240,7 @@ def main():
                         results.append(ffq_encode(accession))
                     elif type[:3] in BIOPROJECT_TYPES:
                         results.append(ffq_bioproject(accession))
-                    elif type[:4] in BIOSAMPLE_TYPES:
+                    elif type[:4] in BIOSAMPLE_TYPES or type[:5] in BIOSAMPLE_TYPES:
                         results.append(ffq_biosample(accession))
                     elif type == 'DOI':
                         logger.warning('Searching by DOI may result in missing information.')

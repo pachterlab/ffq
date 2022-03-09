@@ -123,11 +123,18 @@ def parse_sample(soup):
     accession = soup.find('PRIMARY_ID', text=SAMPLE_PARSER).text
     title = soup.find('TITLE').text
     organism = soup.find('SCIENTIFIC_NAME').text
-    attributes = {
-        attr.find('TAG').text: attr.find('VALUE').text
-        for attr in soup.find_all('SAMPLE_ATTRIBUTE')
-    }
-    experiment = soup.find('ID', text = EXPERIMENT_PARSER).text
+    sample_attribute = soup.find_all('SAMPLE_ATTRIBUTE')
+    try:
+        attributes = {
+            attr.find('TAG').text: attr.find('VALUE').text
+            for attr in soup.find_all('SAMPLE_ATTRIBUTE')
+        }
+    except:
+        attributes = ''
+    try: 
+        experiment = soup.find('ID', text = EXPERIMENT_PARSER).text
+    except:
+        experiment = ''
     return {
         'accession': accession,
         'title': title,
@@ -399,14 +406,17 @@ def ffq_sample(accession, l):
             pass
         logger.info(f'Getting Experiment for {accession}')
         exp_id = sample['experiment']
-        if ',' in exp_id:
-            exp_ids = exp_id.split(',')
-            experiments = [ffq_experiment(exp_id, l) for exp_id in exp_ids]
-            sample.update({'experiment': [{experiment['accession']: experiment} for experiment in experiments]})
-            return sample
+        if exp_id:
+            if ',' in exp_id:
+                exp_ids = exp_id.split(',')
+                experiments = [ffq_experiment(exp_id, l) for exp_id in exp_ids]
+                sample.update({'experiment': [{experiment['accession']: experiment} for experiment in experiments]})
+                return sample
+            else:
+                experiment = ffq_experiment(exp_id, l)
+                sample.update({'experiment': {experiment['accession']: experiment}})
         else:
-            experiment = ffq_experiment(exp_id, l)
-            sample.update({'experiment': {experiment['accession']: experiment}})
+             logger.warning(f'No Experiment found for {accession}')   
         return sample
     else:
         return sample
@@ -461,12 +471,11 @@ def ffq_biosample(accession):
     soup = ena_fetch(accession, 'biosample')
     sample = soup.find('id', text = SAMPLE_PARSER).text
     sample_data = ffq_sample(sample, 2)
-    return { 
-        accession : {
+    print(accession)
+    return {
             'accession': accession,
             'sample': sample_data
         }
-    }
 
 def ffq_links(type_accessions, server):
     """Print download links for raw data
