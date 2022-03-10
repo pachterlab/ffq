@@ -204,11 +204,11 @@ class TestFfq(TestMixin, TestCase):
                         'accession' : 'GSM2'
                         }
                     }
-                 }, ffq.ffq_gse('GSE1', 10))
+                 }, ffq.ffq_gse('GSE1'))
 
             get_gse_search_json.assert_called_once_with('GSE1')
             gse_to_gsms.assert_called_once_with('GSE1')
-            ffq_gsm.assert_has_calls([call('GSM_1', 9), call('GSM_2', 9)])
+            ffq_gsm.assert_has_calls([call('GSM_1', None), call('GSM_2', None)])
 
 
     def test_ffq_gsm(self):
@@ -237,12 +237,12 @@ class TestFfq(TestMixin, TestCase):
                         'accession': 'SRS1'
                     }
                 }
-            }, ffq.ffq_gsm('GSM1', 10))
+            }, ffq.ffq_gsm('GSM1'))
             get_gsm_search_json.assert_called_once_with('GSM1')
             geo_to_suppl.assert_called_once_with('GSM1', 'GSM')
             gsm_to_platform.assert_called_once_with('GSM1')
             gsm_id_to_srs.assert_called_once_with('GSMID1')
-            ffq_sample.assert_called_once_with('SRS1', 9)
+            ffq_sample.assert_called_once_with('SRS1', None)
 
     def test_ffq_run(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
@@ -264,10 +264,10 @@ class TestFfq(TestMixin, TestCase):
                 'samples': {'id1': {'accession': 'id1'},
                  'id2': {'accession': 'id2'}
                      },
-            }, ffq.ffq_study('SRP226764', 10))
+            }, ffq.ffq_study('SRP226764'))
             get_xml.assert_called_once_with('SRP226764')
             self.assertEqual(2, ffq_sample.call_count)
-            ffq_sample.assert_has_calls([call('sample_id1', 9), call('sample_id2', 9)])
+            ffq_sample.assert_has_calls([call('sample_id1', None), call('sample_id2', None)])
 
     def test_ffq_experiment(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
@@ -275,7 +275,7 @@ class TestFfq(TestMixin, TestCase):
             parse_experiment_with_run.return_value = {'experiment': 'experiment', 'runs' : {'run': 'run'}}
 
             self.assertEqual({'experiment': 'experiment', 'runs' : {'run': 'run'
-            }}, ffq.ffq_experiment('SRX7048194', 10))
+            }}, ffq.ffq_experiment('SRX7048194'))
             get_xml.assert_called_once_with('SRX7048194')
 
 

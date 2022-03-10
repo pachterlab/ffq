@@ -258,7 +258,7 @@ def ffq_run(accession):
     return run
 
 
-def ffq_study(accession, l):
+def ffq_study(accession, l = None):
     """Fetch Study information.
 
     :param accession: study accession (SRP, ERP or DRP)
@@ -275,7 +275,10 @@ def ffq_study(accession, l):
     logger.info(f'Parsing Study {accession}')
     study = parse_study(get_xml(accession))
     if l is None or l != 1:
-        l -= 1
+        try:
+            l -= 1
+        except:
+            pass
         logger.info(f'Getting Sample for {accession}')
         sample_ids = get_samples_from_study(accession)
         logger.warning(f'There are {str(len(sample_ids))} samples for {accession}')
@@ -286,7 +289,7 @@ def ffq_study(accession, l):
         return study
 
 
-def ffq_gse(accession, l):
+def ffq_gse(accession, l = None):
     """Fetch GSE information.
 
     This function finds the GSMs corresponding to the GSE and calls `ffq_gsm`.
@@ -317,7 +320,6 @@ def ffq_gse(accession, l):
             l -= 1
         except:
             pass
-        l -= 1
         time.sleep(1)
         gsm_ids = gse_to_gsms(accession)
         logger.warning(f'There are {str(len(gsm_ids))} samples for {accession}')
@@ -328,7 +330,7 @@ def ffq_gse(accession, l):
         return gse
 
 
-def ffq_gsm(accession, l):
+def ffq_gsm(accession, l = None):
     """Fetch GSM information.
 
     This function finds the SRS corresponding to the GSM and calls `ffq_sample`.
@@ -372,7 +374,7 @@ def ffq_gsm(accession, l):
         return gsm
 
 
-def ffq_experiment(accession, l):
+def ffq_experiment(accession, l = None):
     """Fetch Experiment information.
 
     :param accession: experiment accession (SRX, ERX or DRX)
@@ -391,7 +393,7 @@ def ffq_experiment(accession, l):
     return experiment
 
 
-def ffq_sample(accession, l):
+def ffq_sample(accession, l = None):
 
     """Fetch Sample information.
 
