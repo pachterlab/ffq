@@ -364,7 +364,6 @@ def ffq_gsm(accession, l):
         srs = gsm_id_to_srs(gsm.pop('geo_id'))
         if srs:
             sample = ffq_sample(srs, l)
-            print('a')
             gsm.update({'sample': {sample['accession']: sample }})
         else:
             return gsm
