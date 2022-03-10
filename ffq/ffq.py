@@ -166,7 +166,7 @@ def parse_experiment_with_run(soup, l):
     'title': title,
     'platform': platform,
     'instrument': instrument}
-    if l or l > 1:
+    if l is None or l > 1:
         # Returns all of the runs associated with an experiment
         runs = srx_to_srrs(accession)
 
@@ -362,9 +362,11 @@ def ffq_gsm(accession, l):
             pass
         logger.info(f'Getting sample SRS for {accession}')
         srs = gsm_id_to_srs(gsm.pop('geo_id'))
-        sample = ffq_sample(srs, l)
-        gsm.update({'sample': {sample['accession']: sample }})
-        return gsm
+        if srs:
+            sample = ffq_sample(srs, l)
+            gsm.update({'sample': {sample['accession']: sample }})
+        else:
+            return gsm
     else:
         return gsm
 

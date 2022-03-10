@@ -600,8 +600,12 @@ def gsm_id_to_srs(id):
                 srxs.append(value['targetobject'])
     if srxs:
         for srx in srxs:
-            soup = get_xml(srx)
-            sample = soup.find('ID', text = SAMPLE_PARSER).text
+            try: 
+                soup = get_xml(srx)
+                sample = soup.find('ID', text = SAMPLE_PARSER).text
+            except:
+                logger.warning ('No SRS sample found')
+                return 
     else:
         logger.warning(f'No SRS sample found. Either the provided GSM accession is invalid or raw data was not provided for this record')
         exit(1)
@@ -966,6 +970,10 @@ def parse_bioproject(soup):
     :rparam: dictionary with metadata
     :rtype: dict
     """
+    # Exception for: the followin bioproject ID is not public 
+
+
+    
     print('yes')
     try:
         target_material = soup.find('target').get('material')
