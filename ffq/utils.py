@@ -972,9 +972,6 @@ def parse_bioproject(soup):
     """
     # Exception for: the followin bioproject ID is not public 
 
-
-    
-    print('yes')
     try:
         target_material = soup.find('target').get('material')
     except:

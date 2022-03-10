@@ -465,7 +465,7 @@ def ffq_bioproject(accession):
     """
     return parse_bioproject(ena_fetch(accession, 'bioproject'))
 
-def ffq_biosample(accession):
+def ffq_biosample(accession, l):
     """Fetch biosample ids information. This 
     function receives a SAMN accession
     and fetches the associated metadata
@@ -478,7 +478,7 @@ def ffq_biosample(accession):
     """
     soup = ena_fetch(accession, 'biosample')
     sample = soup.find('id', text = SAMPLE_PARSER).text
-    sample_data = ffq_sample(sample, 2)
+    sample_data = ffq_sample(sample, l-1)
     print(accession)
     return {
             'accession': accession,

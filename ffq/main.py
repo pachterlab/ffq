@@ -241,7 +241,7 @@ def main():
                     elif type[:3] in BIOPROJECT_TYPES:
                         results.append(ffq_bioproject(accession))
                     elif type[:4] in BIOSAMPLE_TYPES or type[:5] in BIOSAMPLE_TYPES:
-                        results.append(ffq_biosample(accession))
+                        results.append(ffq_biosample(accession, args.l))
                     elif type == 'DOI':
                         logger.warning('Searching by DOI may result in missing information.')
                         results.append(ffq_doi(accession))
