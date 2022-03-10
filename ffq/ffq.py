@@ -258,7 +258,7 @@ def ffq_run(accession):
     return run
 
 
-def ffq_study(accession):
+def ffq_study(accession, l):
     """Fetch Study information.
 
     :param accession: study accession (SRP, ERP or DRP)
@@ -274,7 +274,7 @@ def ffq_study(accession):
     """
     logger.info(f'Parsing Study {accession}')
     study = parse_study(get_xml(accession))
-    if l is None and l != 1:
+    if l is None or l != 1:
         l -= 1
         logger.info(f'Getting Sample for {accession}')
         sample_ids = get_samples_from_study(accession)
