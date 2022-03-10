@@ -971,7 +971,9 @@ def parse_bioproject(soup):
     :rtype: dict
     """
     # Exception for: the followin bioproject ID is not public 
-
+    if 'is not public in BioProject' in soup.text:
+        logger.error('The provided ID is not public in BioProject. Exiting')
+        sys.exit(0)
     try:
         target_material = soup.find('target').get('material')
     except:
