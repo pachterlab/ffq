@@ -966,10 +966,16 @@ def parse_bioproject(soup):
     :rparam: dictionary with metadata
     :rtype: dict
     """
+    print('yes')
+    try:
+        target_material = soup.find('target').get('material')
+    except:
+        target_material = ''
+    print(soup)
     return {'accession': soup.find('archiveid').get('accession'),
           'title': soup.find('title').text,
           'description': soup.find("description").text,
           'dbxref': soup.find('id').text,
           'organism': soup.find('organismname').text,
-          'target_material': soup.find('target').get('material')
+          'target_material': target_material
     }
