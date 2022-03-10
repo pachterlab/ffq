@@ -978,7 +978,6 @@ def parse_bioproject(soup):
         target_material = soup.find('target').get('material')
     except:
         target_material = ''
-    print(soup)
     return {'accession': soup.find('archiveid').get('accession'),
           'title': soup.find('title').text,
           'description': soup.find("description").text,

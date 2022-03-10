@@ -480,7 +480,6 @@ def ffq_biosample(accession, l):
     soup = ena_fetch(accession, 'biosample')
     sample = soup.find('id', text = SAMPLE_PARSER).text
     sample_data = ffq_sample(sample, l-1)
-    print(accession)
     return {
             'accession': accession,
             'sample': sample_data
