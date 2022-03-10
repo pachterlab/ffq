@@ -524,7 +524,7 @@ def ffq_links(type_accessions, server):
                 if srx:
                     srrs = srx_to_srrs(srx)
                     for srr in srrs:
-                        if server == 'ftp':
+                        if server == 'FTP':
                             for file in get_files_metadata_from_run(get_xml(srr)):
                                 url = file['url']
                                 if origin_GSE:
