@@ -364,9 +364,11 @@ def ffq_gsm(accession, l):
         srs = gsm_id_to_srs(gsm.pop('geo_id'))
         if srs:
             sample = ffq_sample(srs, l)
+            print('a')
             gsm.update({'sample': {sample['accession']: sample }})
         else:
             return gsm
+        return gsm
     else:
         return gsm
 
@@ -424,7 +426,7 @@ def ffq_sample(accession, l):
                 experiment = ffq_experiment(exp_id, l)
                 sample.update({'experiment': {experiment['accession']: experiment}})
         else:
-             logger.warning(f'No Experiment found for {accession}')   
+            logger.warning(f'No Experiment found for {accession}')   
         return sample
     else:
         return sample
