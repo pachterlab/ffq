@@ -504,7 +504,7 @@ def ffq_links(type_accessions, server):
     server = server.upper()
     origin_GSE = False
     origin_SRP = False
-    origin_SRS = True
+    origin_SRS = False
     for id_type, accession in type_accessions:
         if id_type == "GSE":
             print("accession\tfiletype\tfilenumber\tlink")
@@ -554,6 +554,7 @@ def ffq_links(type_accessions, server):
             id_type = 'SRX'
             origin_SRP = True
         if id_type == "SRS" or id_type == "ERS" or id_type == "DRS":
+            origin_SRS = True
             counter = 0
             if isinstance(accession, str):
                 accession = [accession]
@@ -564,7 +565,7 @@ def ffq_links(type_accessions, server):
             origin_SRS = True
         if id_type == "SRX" or id_type == "ERX" or id_type == "DRX":
             if not origin_SRP and not origin_SRS:
-                srxs = [accession]   
+                srxs = [accession]
             srrs = []
             for srx in srxs:
                 srrs.append(*srx_to_srrs(srx))
