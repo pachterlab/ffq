@@ -596,6 +596,8 @@ def ffq_links(type_accessions, server):
                 urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(accession, 'sra'), server)
                 for url in urls:
                     print(url, end = " ")
+        else:
+            logger.error('Invalid accession. Download links can only be retrieved from GEO or SRA ids.')
 
 
 def ffq_doi(doi):
