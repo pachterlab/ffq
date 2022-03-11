@@ -531,8 +531,10 @@ def ffq_links(type_accessions, server):
                                     print(gsm, end = '\t')                  
                                     filetype, fileno = parse_url(url)      
                                     print(f'\t{filetype}\t{fileno}\t{url}')
+                                    
                                 else:
                                     print(url, end = ' ')
+                            sys.exit(0)        
                         else:
                             urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
                             for url in urls:
@@ -542,6 +544,7 @@ def ffq_links(type_accessions, server):
                                     print(f'\t{filetype}\t{fileno}\t{url}')
                                 else:
                                     print(url, end = " ")
+                            sys.exit(0)
                 else: 
                     logger.error("No SRA files were found for the provided GEO entry")
                     sys.exit(1)
@@ -579,6 +582,7 @@ def ffq_links(type_accessions, server):
                             print(f'\t{filetype}\t{fileno}\t{url}')
                         else:
                             print(url, end = ' ')
+                    sys.exit(0)
                 else:
                     urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
                     for url in urls:
@@ -588,6 +592,7 @@ def ffq_links(type_accessions, server):
                             print(f'\t{filetype}\t{fileno}\t{url}')
                         else:
                             print(url, end = " ")
+                    sys.exit(0)
         if id_type == "SRR" or id_type == "ERR" or id_type == "DRR":
             if server == 'FTP':
                 for file in get_files_metadata_from_run(get_xml(accession)):
@@ -596,9 +601,10 @@ def ffq_links(type_accessions, server):
                 urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(accession, 'sra'), server)
                 for url in urls:
                     print(url, end = " ")
+                sys.exit(0)
         else:
             logger.error('Invalid accession. Download links can only be retrieved from GEO or SRA ids.')
-
+            sys.exit(1)
 
 def ffq_doi(doi):
     """Fetch DOI information.
