@@ -57,41 +57,27 @@ class TestFfq(TestMixin, TestCase):
             soup = BeautifulSoup(f.read(), 'xml')
 
         self.assertEqual({
-            'accession':
-                'SRR6835844',
-            'experiment':
-                'SRX3791763',
-            'study':
-                'SRP131661',
-            'sample':
-                'SRS3044236',
-            'title':
-                'Illumina NovaSeq 6000 sequencing; GSM3040890: library 10X_P4_0; Mus musculus; RNA-Seq',
+            'accession': 'SRR6835844',
             'attributes': {
-                'assembly': 'mm10',
-                'dangling_references': 'treat_as_unmapped',
-                'ENA-SPOT-COUNT': '137766536',
                 'ENA-BASE-COUNT': '12398988240',
                 'ENA-FIRST-PUBLIC': '2018-03-30',
-                'ENA-LAST-UPDATE': '2018-03-30'
+                'ENA-LAST-UPDATE': '2018-03-30',
+                'ENA-SPOT-COUNT': '137766536',
+                'assembly': 'mm10',
+                'dangling_references': 'treat_as_unmapped'
             },
-            'files': [{
-                'url':
-                    'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam',
-                'md5':
-                    '5355fe6a07155026085ce46631268ab1',
-                'size':
-                    '17093057664'
-            }, {
-                'url':
-                    'ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR683/SRR6835844/10X_P4_0.bam.bai',
-                'md5':
-                    'c9396c2596254831470a9138ae86ded7',
-                'size':
-                    '7163216'
-            }]
-
-        }, ffq.parse_run(soup))
+            'experiment': 'SRX3791763',
+            'files': [
+                {
+                    'md5': '5355fe6a07155026085ce46631268ab1',
+                    'size': '17093057664',
+                    'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam'
+                }
+            ],
+            'sample': 'SRS3044236',
+            'study': 'SRP131661',
+            'title': 'Illumina NovaSeq 6000 sequencing; GSM3040890: library 10X_P4_0; Mus musculus; RNA-Seq'
+}, ffq.parse_run(soup))
 
     def test_parse_sample(self):
         with open(self.sample_path, 'r') as f:
