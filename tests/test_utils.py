@@ -508,3 +508,8 @@ class TestUtils(TestMixin, TestCase):
                     'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam'
                 }
         ], utils.get_files_metadata_from_run(soup))      
+    
+    def test_parse_url(self):
+        self.assertEqual(('fastq', '1'), 
+                         utils.parse_url('ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'))
+        

@@ -448,7 +448,7 @@ def ncbi_fetch_fasta(accession, db):
         response.raise_for_status()
     except requests.HTTPError as exception:
         logger.error(f'{exception}')
-        logger.error ('Provided SRA accession is invalid')
+        logger.error ('Provided accession is invalid')
         exit(1)
     text = response.text
     if not text:
