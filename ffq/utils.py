@@ -55,9 +55,13 @@ def cached_get(*args, **kwargs):
     try:
         response.raise_for_status()
     except requests.HTTPError as exception:
-        logger.error(f'{exception}')
-        logger.error ('Provided SRA accession is invalid')
-        exit(1)
+        if exception.getcode() == 429:
+            logger.error('429 Client Error: Too Many Requests. Please try again later')
+            exit(1)
+        else:
+            logger.error(f'{exception}')
+            logger.error ('Provided accession is invalid')
+            exit(1)
     text = response.text
     if not text:
         logger.warning(f'No metadata found in {args[0]}')
