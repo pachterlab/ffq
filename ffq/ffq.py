@@ -4,6 +4,7 @@ import re
 import time
 from urllib.parse import urlparse
 import sys
+from xml.dom.minidom import Identified
 from bs4 import BeautifulSoup
 
 
@@ -56,6 +57,8 @@ DOI_PARSER = re.compile('^10.\d{4,9}\/[-._;()\/:a-z0-9]+')
 
 
 def validate_accession(accessions, search_types):
+    print('yes')
+    print(accessions)
     ID_types = [re.findall(r"(\D+).+", accession)[0] for accession in accessions]
     return [(ID_type, accession) if ID_type in search_types else False if DOI_PARSER.match(accession) is None else ("DOI", accession) for accession, ID_type in zip(accessions, ID_types)]
     

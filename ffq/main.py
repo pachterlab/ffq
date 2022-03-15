@@ -215,6 +215,7 @@ def main():
         else:
             # run ffq depending on type
             try:
+
                 results = []
                 for id_type, accession in type_accessions:
                     if id_type in RUN_TYPES:
@@ -233,12 +234,12 @@ def main():
                         results.append(ffq_encode(accession))
                     elif id_type[:3] in BIOPROJECT_TYPES:
                         results.append(ffq_bioproject(accession))
-                    elif id_type[:4] in BIOSAMPLE_TYPES or type[:5] in BIOSAMPLE_TYPES:
+                    elif id_type[:4] in BIOSAMPLE_TYPES or id_type[:5] in BIOSAMPLE_TYPES:
                         results.append(ffq_biosample(accession, args.l))
                     elif id_type == 'DOI':
                         logger.warning('Searching by DOI may result in missing information.')
                         results.append(ffq_doi(accession))
-            
+
                 keyed = {result['accession']: result for result in results}
 
             except Exception as e:
