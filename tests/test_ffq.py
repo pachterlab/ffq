@@ -321,51 +321,6 @@ class TestFfq(TestMixin, TestCase):
         sys.stdout = sys.__stdout__
         self.assertEqual(capturedOutput.getvalue(), 'https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-2/SRR7895953/SRR7895953.1 '
         )
-#########
-        ### Note: make it try twice before jumping to bam links....
-#########
-
-
-
-        ######
-        # def test_ffg_srp:
-            # SRP162461
-            # """
-            # SRX4733412		fastq	1	ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz
-            # SRX4733412		fastq	2	ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz
-            # """
-            
-            
-        # def test_ffq_srs:
-            # SRS3815608
-            # 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz'
-            
-        # def test_ffq_srx:
-            # SRX4733412
-            # 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz'
-            
-        # def test_ffq_srr:
-            # SRR7895953
-            #'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz'
-        
-
-
-## To use for ffq_sample
-#    def test_ffq_experiment(self):
-#        with mock.patch('ffq.ffq.get_xml') as get_xml,\
-#            mock.patch('ffq.ffq.parse_experiment') as parse_experiment,\
-#            mock.patch('ffq.ffq.ffq_sample') as ffq_sample:
-#            parse_experiment.return_value = {'experiment': 'experiment', 'sample': 'sample'}
- #           ffq_sample.return_value = {'accession': 'sample'}
-#
- #           self.assertEqual({'experiment': 'experiment', 'sample': 'sample',
-  #              'samples': {'sample': {'accession':'sample'
-   #         }}}, ffq.ffq_experiment('SRX7048194'))
-     #       get_xml.assert_called_once_with('SRX7048194')
-    #        ffq_sample.assert_called_once_with('sample')
-## To use for ffq_sample
-
-
 
     def test_ffq_doi(self):
         with mock.patch('ffq.ffq.get_doi') as get_doi,\

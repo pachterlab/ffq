@@ -22,10 +22,6 @@ OTHER_TYPES = ('DOI',)
 SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + OTHER_TYPES
 
 
-####
-#### Add DRS and DRX
-####
-
 def main():
     """Command-line entrypoint.
     """
@@ -127,9 +123,6 @@ def main():
     if args.t is not None:
 
     # Check IDs depending on type 
-        ######
-        # NOTE: include ENCODE ID here, and change ID[0:3] by regex search
-        ######
         if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
             for ID in args.IDs:
                 ID_type = re.findall(r"(\D+).+", ID)
@@ -223,29 +216,29 @@ def main():
             # run ffq depending on type
             try:
                 results = []
-                for type, accession in type_accessions:
-                    if type in RUN_TYPES:
+                for id_type, accession in type_accessions:
+                    if id_type in RUN_TYPES:
                         results.append(ffq_run(accession))
-                    elif type in PROJECT_TYPES:
+                    elif id_type in PROJECT_TYPES:
                         results.append(ffq_study(accession, args.l))
-                    elif type in EXPERIMENT_TYPES:
+                    elif id_type in EXPERIMENT_TYPES:
                         results.append(ffq_experiment(accession, args.l))
-                    elif type in SAMPLE_TYPES:
+                    elif id_type in SAMPLE_TYPES:
                         results.append(ffq_sample(accession, args.l))
-                    elif type == 'GSE':
+                    elif id_type == 'GSE':
                         results.append(ffq_gse(accession, args.l))
-                    elif type == 'GSM':
+                    elif id_type == 'GSM':
                         results.append(ffq_gsm(accession, args.l))
-                    elif type[:3] == 'ENC':
+                    elif id_type[:3] == 'ENC':
                         results.append(ffq_encode(accession))
-                    elif type[:3] in BIOPROJECT_TYPES:
+                    elif id_type[:3] in BIOPROJECT_TYPES:
                         results.append(ffq_bioproject(accession))
-                    elif type[:4] in BIOSAMPLE_TYPES or type[:5] in BIOSAMPLE_TYPES:
+                    elif id_type[:4] in BIOSAMPLE_TYPES or type[:5] in BIOSAMPLE_TYPES:
                         results.append(ffq_biosample(accession, args.l))
-                    elif type == 'DOI':
+                    elif id_type == 'DOI':
                         logger.warning('Searching by DOI may result in missing information.')
                         results.append(ffq_doi(accession))
-
+            
                 keyed = {result['accession']: result for result in results}
 
             except Exception as e:

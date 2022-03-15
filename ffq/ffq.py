@@ -433,12 +433,6 @@ def ffq_sample(accession, l = None):
         return sample
 
 
-# TO do: why SRS6250956 is now failing at the level of 
-# [2022-03-08 11:46:44,908]    INFO Parsing run SRR11233639
-# [2022-03-08 11:46:49,307]   ERROR string indices must be integer
-
-# Also implement the try except for all ffq functions that have l
-
 def ffq_encode(accession):
     """Fetch ENCODE ids information. This 
     function receives an ENCSR, ENCBS or ENCD
@@ -554,9 +548,6 @@ def ffq_links(type_accessions, server):
                     sys.exit(1)
                 
         if id_type == "SRP" or id_type == "ERP" or id_type == "DRP":
-            # print(accession)
-            # print("-" * len(accession))
-            # print('\n')
             srxs = srp_to_srx(accession)
             id_type = 'SRX'
             origin_SRP = True
