@@ -1,0 +1,100 @@
+{
+    "SRS6216589": {
+        "accession": "SRS6216589",
+        "title": "BALF, C141 (scRNA-seq)",
+        "organism": "Homo sapiens",
+        "attributes": {
+            "source_name": "BALF",
+            "disease state": "Coronavirus infected disease-19 (COVID-19)",
+            "patient group": "mild",
+            "tissue": "lung",
+            "sample type": "BALF",
+            "cell subsets": "Total cell",
+            "ENA-SPOT-COUNT": "2825449586",
+            "ENA-BASE-COUNT": "177690492174",
+            "ENA-FIRST-PUBLIC": "2020-04-23",
+            "ENA-LAST-UPDATE": "2020-04-24"
+        },
+        "experiment": {
+            "SRX7802546": {
+                "accession": "SRX7802546",
+                "title": "BGISEQ-500 paired end sequencing; GSM4339769: BALF, C141 (scRNA-seq); Homo sapiens; RNA-Seq",
+                "platform": "BGISEQ",
+                "instrument": "BGISEQ-500",
+                "runs": {
+                    "SRR11181954": {
+                        "accession": "SRR11181954",
+                        "experiment": "SRX7802546",
+                        "study": "SRP250732",
+                        "sample": "SRS6216589",
+                        "title": "BGISEQ-500 paired end sequencing; GSM4339769: BALF, C141 (scRNA-seq); Homo sapiens; RNA-Seq",
+                        "attributes": {
+                            "loader": "fastq-load.py",
+                            "options": "--read1PairFiles=\"C141_R1.fastq.gz\"   --read2PairFiles=\"C141_R2.fastq.gz\"",
+                            "ENA-SPOT-COUNT": "2825449586",
+                            "ENA-BASE-COUNT": "177690492174",
+                            "ENA-FIRST-PUBLIC": "2020-04-23",
+                            "ENA-LAST-UPDATE": "2020-07-30"
+                        },
+                        "files": [
+                            {
+                                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR111/054/SRR11181954/SRR11181954.fastq.gz",
+                                "md5": "366a3a273a85e820bddbcb1e58df383b",
+                                "size": "147793265862"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "SRS6216590": {
+        "accession": "SRS6216590",
+        "title": "BALF, C142 (scRNA-seq)",
+        "organism": "Homo sapiens",
+        "attributes": {
+            "source_name": "BALF",
+            "disease state": "Coronavirus infected disease-19 (COVID-19)",
+            "patient group": "mild",
+            "tissue": "lung",
+            "sample type": "BALF",
+            "cell subsets": "Total cell",
+            "ENA-SPOT-COUNT": "2464780618",
+            "ENA-BASE-COUNT": "154973836954",
+            "ENA-FIRST-PUBLIC": "2020-04-23",
+            "ENA-LAST-UPDATE": "2020-04-24"
+        },
+        "experiment": {
+            "SRX7802547": {
+                "accession": "SRX7802547",
+                "title": "BGISEQ-500 paired end sequencing; GSM4339770: BALF, C142 (scRNA-seq); Homo sapiens; RNA-Seq",
+                "platform": "BGISEQ",
+                "instrument": "BGISEQ-500",
+                "runs": {
+                    "SRR11181955": {
+                        "accession": "SRR11181955",
+                        "experiment": "SRX7802547",
+                        "study": "SRP250732",
+                        "sample": "SRS6216590",
+                        "title": "BGISEQ-500 paired end sequencing; GSM4339770: BALF, C142 (scRNA-seq); Homo sapiens; RNA-Seq",
+                        "attributes": {
+                            "loader": "fastq-load.py",
+                            "options": "--read1PairFiles=\"C142_R1.fastq.gz\"   --read2PairFiles=\"C142_R2.fastq.gz\"",
+                            "ENA-SPOT-COUNT": "2464780618",
+                            "ENA-BASE-COUNT": "154973836954",
+                            "ENA-FIRST-PUBLIC": "2020-04-23",
+                            "ENA-LAST-UPDATE": "2020-07-30"
+                        },
+                        "files": [
+                            {
+                                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR111/055/SRR11181955/SRR11181955.fastq.gz",
+                                "md5": "edc6f8fd31d797d9a4112bb1334f0bde",
+                                "size": "129430871014"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}

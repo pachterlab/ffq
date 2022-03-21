@@ -1,0 +1,65 @@
+{
+    "accession": "GSM4339771",
+    "supplementary_files": [
+        {
+            "filename": "GSM4339771_C143_filtered_feature_bc_matrix.h5",
+            "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM4339nnn/GSM4339771/suppl/GSM4339771_C143_filtered_feature_bc_matrix.h5",
+            "size": "53660847"
+        }
+    ],
+    "platform": {
+        "accession": "GPL23227",
+        "title": "BGISEQ-500 (Homo sapiens)"
+    },
+    "sample": {
+        "SRS6216591": {
+            "accession": "SRS6216591",
+            "title": "BALF, C143 (scRNA-seq)",
+            "organism": "Homo sapiens",
+            "attributes": {
+                "source_name": "BALF",
+                "disease state": "Coronavirus infected disease-19 (COVID-19)",
+                "patient group": "severe",
+                "tissue": "lung",
+                "sample type": "BALF",
+                "cell subsets": "Total cell",
+                "ENA-SPOT-COUNT": "2835372634",
+                "ENA-BASE-COUNT": "178372867658",
+                "ENA-FIRST-PUBLIC": "2020-04-23",
+                "ENA-LAST-UPDATE": "2020-04-24"
+            },
+            "experiment": {
+                "SRX7802548": {
+                    "accession": "SRX7802548",
+                    "title": "BGISEQ-500 paired end sequencing; GSM4339771: BALF, C143 (scRNA-seq); Homo sapiens; RNA-Seq",
+                    "platform": "BGISEQ",
+                    "instrument": "BGISEQ-500",
+                    "runs": {
+                        "SRR11181956": {
+                            "accession": "SRR11181956",
+                            "experiment": "SRX7802548",
+                            "study": "SRP250732",
+                            "sample": "SRS6216591",
+                            "title": "BGISEQ-500 paired end sequencing; GSM4339771: BALF, C143 (scRNA-seq); Homo sapiens; RNA-Seq",
+                            "attributes": {
+                                "loader": "fastq-load.py",
+                                "options": "--read1PairFiles=\"C143_R1.fastq.gz\"   --read2PairFiles=\"C143_R2.fastq.gz\"",
+                                "ENA-SPOT-COUNT": "2835372634",
+                                "ENA-BASE-COUNT": "178372867658",
+                                "ENA-FIRST-PUBLIC": "2020-04-23",
+                                "ENA-LAST-UPDATE": "2020-07-30"
+                            },
+                            "files": [
+                                {
+                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR111/056/SRR11181956/SRR11181956.fastq.gz",
+                                    "md5": "bd99affef5ca502a9e16e94d2ef04434",
+                                    "size": "148485489095"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

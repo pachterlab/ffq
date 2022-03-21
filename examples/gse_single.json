@@ -1,179 +1,282 @@
 {
-    "GSE135326": {
-        "accession": "GSE135326",
-        "geo_id": "200135326",
-        "study": {
-            "accession": "SRP217236",
-            "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
-            "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)",
-            "runs": {
-                "SRR9895509": {
-                    "accession": "SRR9895509",
-                    "experiment": {
-                        "accession": "SRX6647876",
-                        "title": "HiSeq X Ten sequencing; GSM4005492: Artis_A3; Mus musculus; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "HiSeq X Ten"
-                    },
-                    "study": {
-                        "accession": "SRP217236",
-                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
-                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
-                    },
-                    "sample": {
-                        "accession": "SRS5208565",
-                        "title": "Artis_A3",
-                        "organism": "Mus musculus",
-                        "attributes": {
-                            "source_name": "medial prefrontal cortex (mPFC)",
-                            "age": "adult",
-                            "brain region": "medial prefrontal cortex",
-                            "treatment": "Antibiotic-treated",
-                            "ENA-SPOT-COUNT": "200444657",
-                            "ENA-BASE-COUNT": "19242687072",
-                            "ENA-FIRST-PUBLIC": "2019-08-07",
-                            "ENA-LAST-UPDATE": "2019-08-07"
-                        }
-                    },
-                    "title": "HiSeq X Ten sequencing; GSM4005492: Artis_A3; Mus musculus; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895509/Artis_A3_possorted_genome_bam.bam",
-                            "md5": "3252eefb72814201f2baff7ae7fd1e3d",
-                            "size": "21797401053"
-                        },
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895509/Artis_A3_possorted_genome_bam.bam.bai",
-                            "md5": "fe90ce27170fb6a2db9cffc80495684e",
-                            "size": "12068048"
-                        }
-                    ]
+    "GSE115469": {
+        "accession": "GSE115469",
+        "supplementary_files": [
+            {
+                "filename": "GSE115469_Data.csv.gz",
+                "url": "ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115469/suppl/GSE115469_Data.csv.gz",
+                "size": "108065293"
+            },
+            {
+                "filename": "GSE115469_CellClusterType.txt.gz",
+                "url": "ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115469/suppl/GSE115469_CellClusterType.txt.gz",
+                "size": "78393"
+            }
+        ],
+        "samples": {
+            "GSM3178782": {
+                "accession": "GSM3178782",
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
                 },
-                "SRR9895510": {
-                    "accession": "SRR9895510",
-                    "experiment": {
-                        "accession": "SRX6647877",
-                        "title": "HiSeq X Ten sequencing; GSM4005493: Artis_A4; Mus musculus; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "HiSeq X Ten"
-                    },
-                    "study": {
-                        "accession": "SRP217236",
-                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
-                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
-                    },
-                    "sample": {
-                        "accession": "SRS5208562",
-                        "title": "Artis_A4",
-                        "organism": "Mus musculus",
+                "sample": {
+                    "SRS3391629": {
+                        "accession": "SRS3391629",
+                        "title": "Patient 1 Total Liver Homogenate",
+                        "organism": "Homo sapiens",
                         "attributes": {
-                            "source_name": "medial prefrontal cortex (mPFC)",
-                            "age": "adult",
-                            "brain region": "medial prefrontal cortex",
-                            "treatment": "Antibiotic-treated",
-                            "ENA-SPOT-COUNT": "182375428",
-                            "ENA-BASE-COUNT": "17508041088",
-                            "ENA-FIRST-PUBLIC": "2019-08-07",
-                            "ENA-LAST-UPDATE": "2019-08-07"
-                        }
-                    },
-                    "title": "HiSeq X Ten sequencing; GSM4005493: Artis_A4; Mus musculus; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895510/Artis_A4_possorted_genome_bam.bam",
-                            "md5": "99823f55a89ec19b66ecd16472f27f73",
-                            "size": "20387309051"
+                            "source_name": "Liver",
+                            "tissue": "Total Liver Homogenate",
+                            "ENA-SPOT-COUNT": "166595045",
+                            "ENA-BASE-COUNT": "16326314410",
+                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                            "ENA-LAST-UPDATE": "2018-10-23"
                         },
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895510/Artis_A4_possorted_genome_bam.bam.bai",
-                            "md5": "3b5d12057ed0297aa92165eb70943b9c",
-                            "size": "11409872"
+                        "experiment": {
+                            "SRX4180079": {
+                                "accession": "SRX4180079",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178782: Patient 1 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR7276474": {
+                                        "accession": "SRR7276474",
+                                        "experiment": "SRX4180079",
+                                        "study": "SRP149989",
+                                        "sample": "SRS3391629",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178782: Patient 1 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "assembly": "hg38",
+                                            "ENA-SPOT-COUNT": "166595045",
+                                            "ENA-BASE-COUNT": "16326314410",
+                                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                                            "ENA-LAST-UPDATE": "2018-10-23"
+                                        },
+                                        "files": [
+                                            {
+                                                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P1TLH.bam",
+                                                "md5": "d0fde6bf21d9f97bdf349a3d6f0a8787",
+                                                "size": "48545467653"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
                         }
-                    ]
+                    }
+                }
+            },
+            "GSM3178783": {
+                "accession": "GSM3178783",
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
                 },
-                "SRR9895511": {
-                    "accession": "SRR9895511",
-                    "experiment": {
-                        "accession": "SRX6647878",
-                        "title": "HiSeq X Ten sequencing; GSM4005494: Artis_B3; Mus musculus; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "HiSeq X Ten"
-                    },
-                    "study": {
-                        "accession": "SRP217236",
-                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
-                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
-                    },
-                    "sample": {
-                        "accession": "SRS5208563",
-                        "title": "Artis_B3",
-                        "organism": "Mus musculus",
+                "sample": {
+                    "SRS3391631": {
+                        "accession": "SRS3391631",
+                        "title": "Patient 2 Total Liver Homogenate",
+                        "organism": "Homo sapiens",
                         "attributes": {
-                            "source_name": "medial prefrontal cortex (mPFC)",
-                            "age": "adult",
-                            "brain region": "medial prefrontal cortex",
-                            "treatment": "Control",
-                            "ENA-SPOT-COUNT": "187244844",
-                            "ENA-BASE-COUNT": "17975505024",
-                            "ENA-FIRST-PUBLIC": "2019-08-07",
-                            "ENA-LAST-UPDATE": "2019-08-07"
-                        }
-                    },
-                    "title": "HiSeq X Ten sequencing; GSM4005494: Artis_B3; Mus musculus; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895511/Artis_B3_possorted_genome_bam.bam",
-                            "md5": "3b8459752bafb76bd4152ea5e7facf02",
-                            "size": "20824036139"
+                            "source_name": "Liver",
+                            "tissue": "Total Liver Homogenate",
+                            "ENA-SPOT-COUNT": "392750718",
+                            "ENA-BASE-COUNT": "38489570364",
+                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                            "ENA-LAST-UPDATE": "2018-10-23"
                         },
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895511/Artis_B3_possorted_genome_bam.bam.bai",
-                            "md5": "8fd99342fcd71628f1a04c32abc37c44",
-                            "size": "11767224"
+                        "experiment": {
+                            "SRX4180080": {
+                                "accession": "SRX4180080",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178783: Patient 2 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR7276475": {
+                                        "accession": "SRR7276475",
+                                        "experiment": "SRX4180080",
+                                        "study": "SRP149989",
+                                        "sample": "SRS3391631",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178783: Patient 2 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "assembly": "hg38",
+                                            "ENA-SPOT-COUNT": "392750718",
+                                            "ENA-BASE-COUNT": "38489570364",
+                                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                                            "ENA-LAST-UPDATE": "2018-10-23"
+                                        },
+                                        "files": [
+                                            {
+                                                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P2TLH.bam",
+                                                "md5": "b13f5e760b6d9d6b4d51b40705202983",
+                                                "size": "69477495465"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
                         }
-                    ]
+                    }
+                }
+            },
+            "GSM3178784": {
+                "accession": "GSM3178784",
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
                 },
-                "SRR9895512": {
-                    "accession": "SRR9895512",
-                    "experiment": {
-                        "accession": "SRX6647879",
-                        "title": "HiSeq X Ten sequencing; GSM4005495: Artis_B4; Mus musculus; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "HiSeq X Ten"
-                    },
-                    "study": {
-                        "accession": "SRP217236",
-                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
-                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
-                    },
-                    "sample": {
-                        "accession": "SRS5208564",
-                        "title": "Artis_B4",
-                        "organism": "Mus musculus",
+                "sample": {
+                    "SRS3391630": {
+                        "accession": "SRS3391630",
+                        "title": "Patient 3 Total Liver Homogenate",
+                        "organism": "Homo sapiens",
                         "attributes": {
-                            "source_name": "medial prefrontal cortex (mPFC)",
-                            "age": "adult",
-                            "brain region": "medial prefrontal cortex",
-                            "treatment": "Control",
-                            "ENA-SPOT-COUNT": "209920123",
-                            "ENA-BASE-COUNT": "20152331808",
-                            "ENA-FIRST-PUBLIC": "2019-08-07",
-                            "ENA-LAST-UPDATE": "2019-08-07"
-                        }
-                    },
-                    "title": "HiSeq X Ten sequencing; GSM4005495: Artis_B4; Mus musculus; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895512/Artis_B4_possorted_genome_bam.bam",
-                            "md5": "988778036055cb793d5f56073d58a64d",
-                            "size": "22812618518"
+                            "source_name": "Liver",
+                            "tissue": "Total Liver Homogenate",
+                            "ENA-SPOT-COUNT": "165902306",
+                            "ENA-BASE-COUNT": "16258425988",
+                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                            "ENA-LAST-UPDATE": "2018-10-23"
                         },
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895512/Artis_B4_possorted_genome_bam.bam.bai",
-                            "md5": "bdb687b29bec887d2249c1dba511caf3",
-                            "size": "12143208"
+                        "experiment": {
+                            "SRX4180081": {
+                                "accession": "SRX4180081",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178784: Patient 3 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR7276476": {
+                                        "accession": "SRR7276476",
+                                        "experiment": "SRX4180081",
+                                        "study": "SRP149989",
+                                        "sample": "SRS3391630",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178784: Patient 3 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "assembly": "hg38",
+                                            "ENA-SPOT-COUNT": "165902306",
+                                            "ENA-BASE-COUNT": "16258425988",
+                                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                                            "ENA-LAST-UPDATE": "2018-10-23"
+                                        },
+                                        "files": [
+                                            {
+                                                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P3TLH.bam",
+                                                "md5": "d1ef981eee539acf769524dca92fc962",
+                                                "size": "40823222969"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
                         }
-                    ]
+                    }
+                }
+            },
+            "GSM3178785": {
+                "accession": "GSM3178785",
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
+                },
+                "sample": {
+                    "SRS3391632": {
+                        "accession": "SRS3391632",
+                        "title": "Patient 4 Total Liver Homogenate",
+                        "organism": "Homo sapiens",
+                        "attributes": {
+                            "source_name": "Liver",
+                            "tissue": "Total Liver Homogenate",
+                            "ENA-SPOT-COUNT": "171900077",
+                            "ENA-BASE-COUNT": "16846207546",
+                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                            "ENA-LAST-UPDATE": "2018-10-23"
+                        },
+                        "experiment": {
+                            "SRX4180082": {
+                                "accession": "SRX4180082",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178785: Patient 4 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR7276477": {
+                                        "accession": "SRR7276477",
+                                        "experiment": "SRX4180082",
+                                        "study": "SRP149989",
+                                        "sample": "SRS3391632",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178785: Patient 4 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "assembly": "hg38",
+                                            "ENA-SPOT-COUNT": "171900077",
+                                            "ENA-BASE-COUNT": "16846207546",
+                                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                                            "ENA-LAST-UPDATE": "2018-10-23"
+                                        },
+                                        "files": [
+                                            {
+                                                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P4TLH.bam",
+                                                "md5": "3ed9267611b815b2916e487e4f329a16",
+                                                "size": "50474306271"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "GSM3178786": {
+                "accession": "GSM3178786",
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
+                },
+                "sample": {
+                    "SRS3391633": {
+                        "accession": "SRS3391633",
+                        "title": "Patient 5 Total Liver Homogenate",
+                        "organism": "Homo sapiens",
+                        "attributes": {
+                            "source_name": "Liver",
+                            "tissue": "Total Liver Homogenate",
+                            "ENA-SPOT-COUNT": "153310090",
+                            "ENA-BASE-COUNT": "15024388820",
+                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                            "ENA-LAST-UPDATE": "2018-10-23"
+                        },
+                        "experiment": {
+                            "SRX4180083": {
+                                "accession": "SRX4180083",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178786: Patient 5 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR7276478": {
+                                        "accession": "SRR7276478",
+                                        "experiment": "SRX4180083",
+                                        "study": "SRP149989",
+                                        "sample": "SRS3391633",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178786: Patient 5 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "assembly": "hg38",
+                                            "ENA-SPOT-COUNT": "153310090",
+                                            "ENA-BASE-COUNT": "15024388820",
+                                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                                            "ENA-LAST-UPDATE": "2018-10-23"
+                                        },
+                                        "files": [
+                                            {
+                                                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P5TLH.bam",
+                                                "md5": "50b4d1f193192acb6676524bb27b5381",
+                                                "size": "40628679317"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
