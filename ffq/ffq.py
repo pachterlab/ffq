@@ -99,7 +99,16 @@ def parse_run(soup):
         attr.find('TAG').text: attr.find('VALUE').text
         for attr in soup.find_all('RUN_ATTRIBUTE')
     }
+    
+    if attributes:
+        attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
+        attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
+        
     files = get_files_metadata_from_run(soup)
+    if files:
+        for file in files:
+            file['size'] = int(file['size'])
+            
     return {
         'accession': accession,
         'experiment': experiment,
@@ -132,6 +141,9 @@ def parse_sample(soup):
         }
     except:
         attributes = ''
+    if attributes:
+        attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
+        attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
     try: 
         experiment = soup.find('ID', text = EXPERIMENT_PARSER).text
     except:
