@@ -71,10 +71,12 @@ def parse_run(soup):
     :return: a dictionary containing run information
     :rtype: dict
     """
+    
     accession = soup.find('PRIMARY_ID', text=RUN_PARSER).text
     experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text \
         if soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER) \
         else soup.find('EXPERIMENT_REF')['accession']
+
     study_parsed = soup.find('ID', text=PROJECT_PARSER)
     if study_parsed:
         study = study_parsed.text
@@ -95,20 +97,26 @@ def parse_run(soup):
         )
         sample = search_ena_run_sample(accession)
     title = soup.find('TITLE').text
-    attributes = {
-        attr.find('TAG').text: attr.find('VALUE').text
-        for attr in soup.find_all('RUN_ATTRIBUTE')
-    }
-    
+
+    attributes = {}
+
+    for attr in soup.find_all('RUN_ATTRIBUTE'):
+        try:
+            tag = attr.find('TAG').text
+            value = attr.find('VALUE').text
+            attributes[tag] = value
+        except:
+            pass
     if attributes:
-        attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
-        attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
-        
+        try:
+            attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
+            attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
+        except:
+            pass
     files = get_files_metadata_from_run(soup)
     if files:
         for file in files:
             file['size'] = int(file['size'])
-            
     return {
         'accession': accession,
         'experiment': experiment,
@@ -142,12 +150,22 @@ def parse_sample(soup):
     except:
         attributes = ''
     if attributes:
-        attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
-        attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
-    try: 
-        experiment = soup.find('ID', text = EXPERIMENT_PARSER).text
+        try:
+            attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
+            attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
+        except:
+            pass
+    try:
+        
+        try: 
+            experiment = soup.find('ID', text = EXPERIMENT_PARSER).text
+        except:
+            experiment = soup.find('PRIMARY_ID', text = EXPERIMENT_PARSER).text   
+    
     except:
         experiment = ''
+        logger.warning('No experiment found')
+        
     return {
         'accession': accession,
         'title': title,

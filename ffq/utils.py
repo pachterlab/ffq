@@ -606,12 +606,15 @@ def gsm_id_to_srs(id):
         for srx in srxs:
             try: 
                 soup = get_xml(srx)
-                sample = soup.find('ID', text = SAMPLE_PARSER).text
+                try:
+                    sample = soup.find('ID', text = SAMPLE_PARSER).text
+                except:
+                    sample = soup.find('PRIMARY_ID', text = SAMPLE_PARSER).text                    
             except:
-                logger.warning ('No SRS sample found')
-                return 
+                logger.warning ('No sample found')
+                return                
     else:
-        logger.warning(f'No SRS sample found. Either the provided GSM accession is invalid or raw data was not provided for this record')
+        logger.warning(f'No sample found. Either the provided GSM accession is invalid or raw data was not provided for this record')
         exit(1)
     return sample
  
