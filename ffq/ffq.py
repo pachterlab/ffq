@@ -563,7 +563,7 @@ def ffq_links(type_accessions, server):
                                     
                                 else:
                                     print(url, end = ' ')
-                            sys.exit(0)        
+                                  
                         else:
                             urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
                             for url in urls:
@@ -573,7 +573,7 @@ def ffq_links(type_accessions, server):
                                     print(f'\t{filetype}\t{fileno}\t{url}')
                                 else:
                                     print(url, end = " ")
-                            sys.exit(0)
+                    sys.exit(0)
                 else: 
                     logger.error("No SRA files were found for the provided GEO entry")
                     sys.exit(1)
