@@ -49,9 +49,7 @@ def cached_get(*args, **kwargs):
     :return: text of response
     :rtype: str
     """
-
     response = requests.get(*args, **kwargs)
-
     try:
         response.raise_for_status()
     except requests.HTTPError as exception:

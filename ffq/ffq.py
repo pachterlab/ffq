@@ -71,7 +71,6 @@ def parse_run(soup):
     :return: a dictionary containing run information
     :rtype: dict
     """
-    
     accession = soup.find('PRIMARY_ID', text=RUN_PARSER).text
     experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text \
         if soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER) \
@@ -86,7 +85,6 @@ def parse_run(soup):
             'ENA search...'
         )
         study = search_ena_run_study(accession)
-
     sample_parsed = soup.find('ID', text=SAMPLE_PARSER)
     if sample_parsed:
         sample = sample_parsed.text
@@ -117,6 +115,10 @@ def parse_run(soup):
     if files:
         for file in files:
             file['size'] = int(file['size'])
+    alt_links_soup = ncbi_fetch_fasta(accession, 'sra')
+    aws_link = parse_ncbi_fetch_fasta(alt_links_soup, 'AWS')
+    gcp_link = parse_ncbi_fetch_fasta(alt_links_soup, 'GCP')   
+    ncbi_link = parse_ncbi_fetch_fasta(alt_links_soup, 'NCBI')
     return {
         'accession': accession,
         'experiment': experiment,
@@ -573,11 +575,11 @@ def ffq_links(type_accessions, server):
                                     print(f'\t{filetype}\t{fileno}\t{url}')
                                 else:
                                     print(url, end = " ")
-                    sys.exit(0)
+                    
                 else: 
                     logger.error("No SRA files were found for the provided GEO entry")
                     sys.exit(1)
-                
+            sys.exit(0)       
         if id_type == "SRP" or id_type == "ERP" or id_type == "DRP":
             srxs = srp_to_srx(accession)
             id_type = 'SRX'
