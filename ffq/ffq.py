@@ -111,14 +111,20 @@ def parse_run(soup):
             attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
         except:
             pass
-    files = get_files_metadata_from_run(soup)
-    if files:
-        for file in files:
+    ftp_files = get_files_metadata_from_run(soup)
+    if ftp_files:
+        for file in ftp_files:
             file['size'] = int(file['size'])
     alt_links_soup = ncbi_fetch_fasta(accession, 'sra')
-    aws_link = parse_ncbi_fetch_fasta(alt_links_soup, 'AWS')
-    gcp_link = parse_ncbi_fetch_fasta(alt_links_soup, 'GCP')   
-    ncbi_link = parse_ncbi_fetch_fasta(alt_links_soup, 'NCBI')
+    aws_links = parse_ncbi_fetch_fasta(alt_links_soup, 'AWS')
+    gcp_links = parse_ncbi_fetch_fasta(alt_links_soup, 'GCP')   
+    ncbi_links = parse_ncbi_fetch_fasta(alt_links_soup, 'NCBI')
+    files = {
+        'FTP': ftp_files,
+        'AWS': [{'url': link} for link in aws_links],
+        'GCP': [{'url': link} for link in gcp_links],
+        'NCBI': [{'url': link} for link in ncbi_links],        
+    }
     return {
         'accession': accession,
         'experiment': experiment,
