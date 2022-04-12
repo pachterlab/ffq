@@ -552,7 +552,6 @@ def ffq_links(type_accessions, server):
         else:
             pass 
         if id_type == "GSM":
-
             if isinstance(accession, str):
                 accession = [accession]
             counter = 0
@@ -605,7 +604,8 @@ def ffq_links(type_accessions, server):
                 srxs = [accession]
             srrs = []
             for srx in srxs:
-                srrs.append(*srx_to_srrs(srx))
+                for srr in srx_to_srrs(srx):
+                    srrs.append(srr)
             for srr in srrs:
                 if server == 'FTP':
                     for file in get_files_metadata_from_run(get_xml(srr)):
