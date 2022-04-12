@@ -603,30 +603,31 @@ def ffq_links(type_accessions, server):
             if not origin_SRP and not origin_SRS:
                 srxs = [accession]
             srrs = []
+            
             for srx in srxs:
                 for srr in srx_to_srrs(srx):
                     srrs.append(srr)
-            for srr in srrs:
-                if server == 'FTP':
-                    for file in get_files_metadata_from_run(get_xml(srr)):
-                        url = file['url']
-                        if origin_SRP:
-                            print(srr, end = '\t')                  
-                            filetype, fileno = parse_url(url)      
-                            print(f'\t{filetype}\t{fileno}\t{url}')
-                        else:
-                            print(url, end = ' ')
-                    sys.exit(0)
-                else:
-                    urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
-                    for url in urls:
-                        if origin_SRP:
-                            print(srr, end = '\t')                  
-                            filetype, fileno = parse_url(url)      
-                            print(f'\t{filetype}\t{fileno}\t{url}')
-                        else:
-                            print(url, end = " ")
-                    sys.exit(0)
+
+                for srr in srrs:
+                    if server == 'FTP':
+                        for file in get_files_metadata_from_run(get_xml(srr)):
+                            url = file['url']
+                            if origin_SRP:
+                                print(srr, end = '\t')                  
+                                filetype, fileno = parse_url(url)      
+                                print(f'\t{filetype}\t{fileno}\t{url}')
+                            else:
+                                print(url, end = ' ')
+                    else:
+                        urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
+                        for url in urls:
+                            if origin_SRP:
+                                print(srr, end = '\t')                  
+                                filetype, fileno = parse_url(url)      
+                                print(f'\t{filetype}\t{fileno}\t{url}')
+                            else:
+                                print(url, end = " ")
+            sys.exit(0)
         if id_type == "SRR" or id_type == "ERR" or id_type == "DRR":
             if server == 'FTP':
                 for file in get_files_metadata_from_run(get_xml(accession)):
@@ -634,7 +635,8 @@ def ffq_links(type_accessions, server):
             else:
                 urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(accession, 'sra'), server)
                 for url in urls:
-                    print(url, end = " ")
+                    if accession in url:
+                        print(url, end = " ")
                 sys.exit(0)
         else:
             logger.error('Invalid accession. Download links can only be retrieved from GEO or SRA ids.')
