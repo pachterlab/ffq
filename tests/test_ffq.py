@@ -46,18 +46,18 @@ class TestFfq(TestMixin, TestCase):
                     'ENA-LAST-UPDATE': '2019-01-27'
                 },
                 'files' : {
-                    'FTP': [{'size': 1}],
-                    'AWS': [
+                    'ftp': [{'size': 1}],
+                    'aws': [
                         {
                             'url': 'link'
                         }
                     ],
-                    'GCP': [
+                    'gcp': [
                         {
                             'url': 'link'
                         }
                     ],
-                    'NCBI': [
+                    'ncbi': [
                         {
                             'url': 'link'
                         }
@@ -136,7 +136,7 @@ class TestFfq(TestMixin, TestCase):
                             "ENA-LAST-UPDATE": "2019-01-27"
                         },
                         "files": {
-                            "FTP": [
+                            "ftp": [
                                 {
                                     "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz",
                                     "md5": "be7e88cf6f6fd90f1b1170f1cb367123",
@@ -148,7 +148,7 @@ class TestFfq(TestMixin, TestCase):
                                     "size": 7194107512
                                 }
                             ],
-                            "AWS": [
+                            "aws": [
                                 {
                                     "url": "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
                                 },
@@ -156,7 +156,7 @@ class TestFfq(TestMixin, TestCase):
                                     "url": "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
                                 }
                             ],
-                            "GCP": [
+                            "gcp": [
                                 {
                                     "url": "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
                                 },
@@ -164,7 +164,7 @@ class TestFfq(TestMixin, TestCase):
                                     "url": "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
                                 }
                             ],
-                            "NCBI": [
+                            "ncbi": [
                                 {
                                     "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-2/SRR8426358/SRR8426358.1"
                                 }
