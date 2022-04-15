@@ -32,7 +32,7 @@ class TestFfq(TestMixin, TestCase):
                 soup = BeautifulSoup(f.read(), 'xml')
             
             get_files_metadata_from_run.return_value = [{'size': "1"}]
-            parse_ncbi_fetch_fasta.return_value = 'link'
+            parse_ncbi_fetch_fasta.return_value = ['link']
             self.assertEqual({
                 'accession': 'SRR8426358',
                 'experiment': 'SRX5234128',
@@ -46,7 +46,7 @@ class TestFfq(TestMixin, TestCase):
                     'ENA-LAST-UPDATE': '2019-01-27'
                 },
                 'files' : {
-                    'FTP': [{'size': "1"}],
+                    'FTP': [{'size': 1}],
                     'AWS': [
                         {
                             'url': 'link'

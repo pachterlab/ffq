@@ -120,10 +120,10 @@ def parse_run(soup):
     gcp_links = parse_ncbi_fetch_fasta(alt_links_soup, 'GCP')   
     ncbi_links = parse_ncbi_fetch_fasta(alt_links_soup, 'NCBI')
     files = {
-        'FTP': ftp_files,
-        'AWS': [{'url': link} for link in aws_links],
-        'GCP': [{'url': link} for link in gcp_links],
-        'NCBI': [{'url': link} for link in ncbi_links],        
+        'ftp': ftp_files,
+        'aws': [{'url': link} for link in aws_links],
+        'gcp': [{'url': link} for link in gcp_links],
+        'ncbi': [{'url': link} for link in ncbi_links],        
     }
     return {
         'accession': accession,
