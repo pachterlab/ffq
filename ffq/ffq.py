@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 import sys
 from xml.dom.minidom import Identified
 from bs4 import BeautifulSoup
-
+import time
 
 from .utils import (
     cached_get,
@@ -556,6 +556,7 @@ def ffq_links(type_accessions, server):
                 accession = [accession]
             counter = 0
             for gsm in accession:
+                time.sleep(0.1)
                 srx = gsm_to_srx(gsm)
                 if srx:
                     srrs = srx_to_srrs(srx)
@@ -584,7 +585,7 @@ def ffq_links(type_accessions, server):
                 else: 
                     logger.error("No SRA files were found for the provided GEO entry")
                     sys.exit(1)
-            sys.exit(0)       
+            return
         if id_type == "SRP" or id_type == "ERP" or id_type == "DRP":
             srxs = srp_to_srx(accession)
             id_type = 'SRX'
@@ -605,6 +606,7 @@ def ffq_links(type_accessions, server):
             srrs = []
             
             for srx in srxs:
+                time.sleep(0.1)
                 for srr in srx_to_srrs(srx):
                     srrs.append(srr)
 
@@ -627,7 +629,7 @@ def ffq_links(type_accessions, server):
                                 print(f'\t{filetype}\t{fileno}\t{url}')
                             else:
                                 print(url, end = " ")
-            sys.exit(0)
+            return
         if id_type == "SRR" or id_type == "ERR" or id_type == "DRR":
             if server == 'FTP':
                 for file in get_files_metadata_from_run(get_xml(accession)):
@@ -637,7 +639,7 @@ def ffq_links(type_accessions, server):
                 for url in urls:
                     if accession in url:
                         print(url, end = " ")
-                sys.exit(0)
+                return
         else:
             logger.error('Invalid accession. Download links can only be retrieved from GEO or SRA ids.')
             sys.exit(1)
