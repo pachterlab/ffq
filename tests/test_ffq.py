@@ -69,29 +69,46 @@ class TestFfq(TestMixin, TestCase):
         #with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run:
         with open(self.run2_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
-
+        self.maxDiff = None
         self.assertEqual({
-            'accession': 'SRR6835844',
-            'attributes': {
-                'ENA-BASE-COUNT': '12398988240',
-                'ENA-FIRST-PUBLIC': '2018-03-30',
-                'ENA-LAST-UPDATE': '2018-03-30',
-                'ENA-SPOT-COUNT': '137766536',
-                'assembly': 'mm10',
-                'dangling_references': 'treat_as_unmapped'
-            },
-            'experiment': 'SRX3791763',
-            'files': [
+        'accession': 'SRR6835844',
+        'attributes': {
+            'ENA-BASE-COUNT': 12398988240,
+            'ENA-FIRST-PUBLIC': '2018-03-30',
+            'ENA-LAST-UPDATE': '2018-03-30',
+            'ENA-SPOT-COUNT': 137766536,
+            'assembly': 'mm10',
+            'dangling_references': 'treat_as_unmapped'
+        },
+        'experiment': 'SRX3791763',
+        'files': {
+            'aws': [
+                {
+                    'url': 'https://sra-pub-src-1.s3.amazonaws.com/SRR6835844/10X_P4_0.bam.1'
+                }
+            ],
+            'ftp': [
                 {
                     'md5': '5355fe6a07155026085ce46631268ab1',
-                    'size': '17093057664',
+                    'size': 17093057664,
                     'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam'
                 }
             ],
-            'sample': 'SRS3044236',
-            'study': 'SRP131661',
-            'title': 'Illumina NovaSeq 6000 sequencing; GSM3040890: library 10X_P4_0; Mus musculus; RNA-Seq'
-}, ffq.parse_run(soup))
+            'gcp': [
+                {
+                    'url': 'gs://sra-pub-src-1/SRR6835844/10X_P4_0.bam.1'
+                }
+            ],
+            'ncbi': [
+                {
+                    'url': 'https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-13/SRR6835844/SRR6835844.1'
+                }
+            ]
+        },
+        'sample': 'SRS3044236',
+        'study': 'SRP131661',
+        'title': 'Illumina NovaSeq 6000 sequencing; GSM3040890: library 10X_P4_0; Mus musculus; RNA-Seq'
+    }, ffq.parse_run(soup))
 
     def test_parse_sample(self):
         with open(self.sample_path, 'r') as f:
@@ -106,8 +123,8 @@ class TestFfq(TestMixin, TestCase):
                 'tissue': 'Whole lung',
                 'age': '24 months',
                 'number of cells': '799',
-                'ENA-SPOT-COUNT': '109256158',
-                'ENA-BASE-COUNT': '21984096610',
+                'ENA-SPOT-COUNT': 109256158,
+                'ENA-BASE-COUNT': 21984096610,
                 'ENA-FIRST-PUBLIC': '2019-01-11',
                 'ENA-LAST-UPDATE': '2019-01-11'
             },
