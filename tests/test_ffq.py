@@ -104,25 +104,64 @@ class TestFfq(TestMixin, TestCase):
         with open(self.experiment_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
 
-        self.assertEqual({'accession': 'SRX5234128',
- 'instrument': 'Illumina HiSeq 4000',
- 'platform': 'ILLUMINA',
- 'runs': {'SRR8426358': {'accession': 'SRR8426358',
-   'attributes': {'ENA-BASE-COUNT': '21984096610',
-    'ENA-FIRST-PUBLIC': '2019-01-27',
-    'ENA-LAST-UPDATE': '2019-01-27',
-    'ENA-SPOT-COUNT': '109256158'},
-   'experiment': 'SRX5234128',
-   'files': [{'md5': 'be7e88cf6f6fd90f1b1170f1cb367123',
-     'size': '5507959060',
-     'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'},
-    {'md5': '2124da22644d876c4caa92ffd9e2402e',
-     'size': '7194107512',
-     'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz'}],
-   'sample': 'SRS4237519',
-   'study': 'SRP178136',
-   'title': 'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq'}},
- 'title': 'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq'}, ffq.parse_experiment_with_run(soup, 10))
+        self.assertEqual({
+            "SRX5234128": {
+                "accession": "SRX5234128",
+                "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
+                "platform": "ILLUMINA",
+                "instrument": "Illumina HiSeq 4000",
+                "runs": {
+                    "SRR8426358": {
+                        "accession": "SRR8426358",
+                        "experiment": "SRX5234128",
+                        "study": "SRP178136",
+                        "sample": "SRS4237519",
+                        "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
+                        "attributes": {
+                            "ENA-SPOT-COUNT": 109256158,
+                            "ENA-BASE-COUNT": 21984096610,
+                            "ENA-FIRST-PUBLIC": "2019-01-27",
+                            "ENA-LAST-UPDATE": "2019-01-27"
+                        },
+                        "files": {
+                            "FTP": [
+                                {
+                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz",
+                                    "md5": "be7e88cf6f6fd90f1b1170f1cb367123",
+                                    "size": 5507959060
+                                },
+                                {
+                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz",
+                                    "md5": "2124da22644d876c4caa92ffd9e2402e",
+                                    "size": 7194107512
+                                }
+                            ],
+                            "AWS": [
+                                {
+                                    "url": "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
+                                },
+                                {
+                                    "url": "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
+                                }
+                            ],
+                            "GCP": [
+                                {
+                                    "url": "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
+                                },
+                                {
+                                    "url": "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
+                                }
+                            ],
+                            "NCBI": [
+                                {
+                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-2/SRR8426358/SRR8426358.1"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }, ffq.parse_experiment_with_run(soup, 10))
 
     def test_parse_study(self):
         with open(self.study_path, 'r') as f:
