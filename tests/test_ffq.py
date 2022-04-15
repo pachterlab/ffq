@@ -26,30 +26,44 @@ class TestFfq(TestMixin, TestCase):
 
 
     def test_parse_run(self):
-        with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run:
+        with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run, \
+            mock.patch('ffq.ffq.parse_ncbi_fetch_fasta') as parse_ncbi_fetch_fasta:
             with open(self.run_path, 'r') as f:
                 soup = BeautifulSoup(f.read(), 'xml')
             
-            get_files_metadata_from_run.return_value = 'files'
+            get_files_metadata_from_run.return_value = [{'size': "1"}]
+            parse_ncbi_fetch_fasta.return_value = 'link'
             self.assertEqual({
-                'accession':
-                    'SRR8426358',
-                'experiment':
-                    'SRX5234128',
-                'study':
-                    'SRP178136',
-                'sample':
-                    'SRS4237519',
-                'title':
-                    'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq',
+                'accession': 'SRR8426358',
+                'experiment': 'SRX5234128',
+                'study': 'SRP178136',
+                'sample': 'SRS4237519',
+                'title': 'Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq',
                 'attributes': {
-                    'ENA-SPOT-COUNT': '109256158',
-                    'ENA-BASE-COUNT': '21984096610',
+                    'ENA-SPOT-COUNT': 109256158,
+                    'ENA-BASE-COUNT': 21984096610,
                     'ENA-FIRST-PUBLIC': '2019-01-27',
                     'ENA-LAST-UPDATE': '2019-01-27'
                 },
-                'files': 'files'       
-            }, ffq.parse_run(soup))
+                'files' : {
+                    'FTP': [{'size': "1"}],
+                    'AWS': [
+                        {
+                            'url': 'link'
+                        }
+                    ],
+                    'GCP': [
+                        {
+                            'url': 'link'
+                        }
+                    ],
+                    'NCBI': [
+                        {
+                            'url': 'link'
+                        }
+                    ],
+                }
+                }, ffq.parse_run(soup))
 
     def test_parse_run_bam(self):
         #with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run:
@@ -103,10 +117,8 @@ class TestFfq(TestMixin, TestCase):
     def test_parse_experiment_with_run(self):
         with open(self.experiment_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
-
-        self.assertEqual({
-            "SRX5234128": {
-                "accession": "SRX5234128",
+        self.maxDiff = None
+        self.assertEqual({"accession": "SRX5234128",
                 "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
                 "platform": "ILLUMINA",
                 "instrument": "Illumina HiSeq 4000",
@@ -160,8 +172,7 @@ class TestFfq(TestMixin, TestCase):
                         }
                     }
                 }
-            }
-        }, ffq.parse_experiment_with_run(soup, 10))
+            }, ffq.parse_experiment_with_run(soup, 10))
 
     def test_parse_study(self):
         with open(self.study_path, 'r') as f:
