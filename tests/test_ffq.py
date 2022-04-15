@@ -182,7 +182,7 @@ class TestFfq(TestMixin, TestCase):
                     'size': 'size',
                     'url': 'url'
                 },    
-                'samples': {
+                'geo_samples': {
                     'GSM1': {
                         'accession': 'GSM1'
                     }, 
