@@ -128,7 +128,7 @@ class TestFfq(TestMixin, TestCase):
                 'ENA-FIRST-PUBLIC': '2019-01-11',
                 'ENA-LAST-UPDATE': '2019-01-11'
             },
-            'experiment': 'SRX5234128'
+            'experiments': 'SRX5234128'
         }, ffq.parse_sample(soup))
 
     def test_parse_experiment_with_run(self):
@@ -285,7 +285,7 @@ class TestFfq(TestMixin, TestCase):
                 'accession': 'GSM1',
                 'supplementary_files' : {'supplementary_files' : 'supp'},
                 'platform' : 'platform',
-                'sample': {
+                'samples': {
                     'SRS1': {
                         'accession': 'SRS1'
                     }
@@ -325,9 +325,9 @@ class TestFfq(TestMixin, TestCase):
     def test_ffq_experiment(self):
         with mock.patch('ffq.ffq.get_xml') as get_xml,\
             mock.patch('ffq.ffq.parse_experiment_with_run') as parse_experiment_with_run:
-            parse_experiment_with_run.return_value = {'experiment': 'experiment', 'runs' : {'run': 'run'}}
+            parse_experiment_with_run.return_value = {'experiments': 'experiment', 'runs' : {'run': 'run'}}
 
-            self.assertEqual({'experiment': 'experiment', 'runs' : {'run': 'run'
+            self.assertEqual({'experiments': 'experiment', 'runs' : {'run': 'run'
             }}, ffq.ffq_experiment('SRX7048194'))
             get_xml.assert_called_once_with('SRX7048194')
 

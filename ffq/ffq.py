@@ -179,7 +179,7 @@ def parse_sample(soup):
         'title': title,
         'organism': organism,
         'attributes': attributes,
-        'experiment': experiment
+        'experiments': experiment
     }
 
 
@@ -401,11 +401,11 @@ def ffq_gsm(accession, l = None):
             l -= 1
         except:
             pass
-        logger.info(f'Getting sample SRS for {accession}')
+        logger.info(f'Getting sample for {accession}')
         srs = gsm_id_to_srs(gsm.pop('geo_id'))
         if srs:
             sample = ffq_sample(srs, l)
-            gsm.update({'sample': {sample['accession']: sample }})
+            gsm.update({'samples': {sample['accession']: sample }})
         else:
             return gsm
         return gsm
@@ -455,16 +455,16 @@ def ffq_sample(accession, l = None):
         except:
             pass
         logger.info(f'Getting Experiment for {accession}')
-        exp_id = sample['experiment']
+        exp_id = sample['experiments']
         if exp_id:
             if ',' in exp_id:
                 exp_ids = exp_id.split(',')
                 experiments = [ffq_experiment(exp_id, l) for exp_id in exp_ids]
-                sample.update({'experiment': [{experiment['accession']: experiment} for experiment in experiments]})
+                sample.update({'experiments': [{experiment['accession']: experiment} for experiment in experiments]})
                 return sample
             else:
                 experiment = ffq_experiment(exp_id, l)
-                sample.update({'experiment': {experiment['accession']: experiment}})
+                sample.update({'experiments': {experiment['accession']: experiment}})
         else:
             logger.warning(f'No Experiment found for {accession}')   
         return sample
@@ -521,7 +521,7 @@ def ffq_biosample(accession, l):
     sample_data = ffq_sample(sample, l)
     return {
             'accession': accession,
-            'sample': sample_data
+            'samples': sample_data
         }
 
 def ffq_links(type_accessions, server):
