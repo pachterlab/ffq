@@ -255,10 +255,10 @@ def parse_encode_json(accession, data):
         return encode
 
     if accession[:5] == 'ENCBS':
-        encode = parse_encode_biosample(data, accession)
+        encode = parse_encode_biosample(data)
 
     if accession[:5] == "ENCDO":
-        encode = parse_encode_donor(data, accession)
+        encode = parse_encode_donor(data)
         
     return encode
 
