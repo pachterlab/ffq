@@ -117,11 +117,11 @@ def main():
 
     if args.l:
         if args.l <= 0:
-            arser.error('level `-l` must be equal or greater than 1')
-
+            parser.error('level `-l` must be equal or greater than 1')
+    args.IDs = [id.upper() for id in args.IDs]
     # If user provides -t
     if args.t is not None:
-
+    
     # Check IDs depending on type 
         if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
             for ID in args.IDs:
