@@ -7,7 +7,13 @@
 [![pypi downloads](https://img.shields.io/pypi/dm/ffq)](https://pypi.org/project/ffq/)
 [![license](https://img.shields.io/pypi/l/ffq)](LICENSE)
 
-Fetch metadata information from GEO, SRA, EMBL-EBI, DDBJ, Biosample and ENCODE accession ids. 
+Fetch metadata information from the following databases:
+- [Gene Expression Omnibus (GEO)](https://www.ncbi.nlm.nih.gov/geo/), 
+- [Sequence Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra), 
+- [European Molecular BIology Laboratory’s European BIoinformatics Institute (EMBL-EBI)](https://www.ebi.ac.uk/), 
+- [DNA Data Bank of Japan (DDBJ)](https://www.ddbj.nig.ac.jp/index-e.html), 
+- [NIH Biosample](https://www.ncbi.nlm.nih.gov/biosample) and 
+- [The Encyclopedia of DNA Elements (ENCODE)](https://www.encodeproject.org/). 
 
 `ffq` receives an accession and returns the metadata for that accession as well as the metadata for all downstream accessions following the interconnection between GEO and SRA, EMBL-EBI, DDBJ, Biosample:
 
