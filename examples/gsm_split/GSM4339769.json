@@ -11,7 +11,7 @@
         "accession": "GPL23227",
         "title": "BGISEQ-500 (Homo sapiens)"
     },
-    "sample": {
+    "samples": {
         "SRS6216589": {
             "accession": "SRS6216589",
             "title": "BALF, C141 (scRNA-seq)",
@@ -23,12 +23,12 @@
                 "tissue": "lung",
                 "sample type": "BALF",
                 "cell subsets": "Total cell",
-                "ENA-SPOT-COUNT": "2825449586",
-                "ENA-BASE-COUNT": "177690492174",
+                "ENA-SPOT-COUNT": 2825449586,
+                "ENA-BASE-COUNT": 177690492174,
                 "ENA-FIRST-PUBLIC": "2020-04-23",
                 "ENA-LAST-UPDATE": "2020-04-24"
             },
-            "experiment": {
+            "experiments": {
                 "SRX7802546": {
                     "accession": "SRX7802546",
                     "title": "BGISEQ-500 paired end sequencing; GSM4339769: BALF, C141 (scRNA-seq); Homo sapiens; RNA-Seq",
@@ -44,18 +44,41 @@
                             "attributes": {
                                 "loader": "fastq-load.py",
                                 "options": "--read1PairFiles=\"C141_R1.fastq.gz\"   --read2PairFiles=\"C141_R2.fastq.gz\"",
-                                "ENA-SPOT-COUNT": "2825449586",
-                                "ENA-BASE-COUNT": "177690492174",
+                                "ENA-SPOT-COUNT": 2825449586,
+                                "ENA-BASE-COUNT": 177690492174,
                                 "ENA-FIRST-PUBLIC": "2020-04-23",
                                 "ENA-LAST-UPDATE": "2020-07-30"
                             },
-                            "files": [
-                                {
-                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR111/054/SRR11181954/SRR11181954.fastq.gz",
-                                    "md5": "366a3a273a85e820bddbcb1e58df383b",
-                                    "size": "147793265862"
-                                }
-                            ]
+                            "files": {
+                                "ftp": [
+                                    {
+                                        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR111/054/SRR11181954/SRR11181954.fastq.gz",
+                                        "md5": "366a3a273a85e820bddbcb1e58df383b",
+                                        "size": 147793265862
+                                    }
+                                ],
+                                "aws": [
+                                    {
+                                        "url": "https://sra-pub-sars-cov2.s3.amazonaws.com/sra-src/SRR11181954/C141_R1.fastq.1"
+                                    },
+                                    {
+                                        "url": "https://sra-pub-sars-cov2.s3.amazonaws.com/sra-src/SRR11181954/C141_R2.fastq.1"
+                                    }
+                                ],
+                                "gcp": [
+                                    {
+                                        "url": "https://storage.googleapis.com/nih-sequence-read-archive/sra-src/SRR11181954/C141_R1.fastq.1"
+                                    },
+                                    {
+                                        "url": "https://storage.googleapis.com/nih-sequence-read-archive/sra-src/SRR11181954/C141_R2.fastq.1"
+                                    }
+                                ],
+                                "ncbi": [
+                                    {
+                                        "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-19/SRR11181954/SRR11181954.2"
+                                    }
+                                ]
+                            }
                         }
                     }
                 }

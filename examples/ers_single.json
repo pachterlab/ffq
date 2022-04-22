@@ -15,12 +15,12 @@
             "clinical information": "First trimister",
             "facs sorting": "CD45+",
             "ENA-CHECKLIST": "ERC000011",
-            "ENA-SPOT-COUNT": "633403448",
-            "ENA-BASE-COUNT": "47505258600",
+            "ENA-SPOT-COUNT": 633403448,
+            "ENA-BASE-COUNT": 47505258600,
             "ENA-FIRST-PUBLIC": "2019-10-11",
             "ENA-LAST-UPDATE": "2019-10-09"
         },
-        "experiment": {
+        "experiments": {
             "ERX3581438": {
                 "accession": "ERX3581438",
                 "title": "Illumina HiSeq 4000 sequencing; Human fetal liver, skin and kidney single cell transcriptome data",
@@ -34,18 +34,35 @@
                         "sample": "ERS3861775",
                         "title": "Illumina HiSeq 4000 sequencing; Human fetal liver, skin and kidney single cell transcriptome data",
                         "attributes": {
-                            "ENA-SPOT-COUNT": "633403448",
-                            "ENA-BASE-COUNT": "47505258600",
+                            "ENA-SPOT-COUNT": 633403448,
+                            "ENA-BASE-COUNT": 47505258600,
                             "ENA-FIRST-PUBLIC": "2019-10-11",
                             "ENA-LAST-UPDATE": "2019-10-09"
                         },
-                        "files": [
-                            {
-                                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/ERR358/ERR3585496/4834STDY7002879.bam",
-                                "md5": "38fe968f11e70c80915c605df3e14349",
-                                "size": "70751309526"
-                            }
-                        ]
+                        "files": {
+                            "ftp": [
+                                {
+                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/ERR358/ERR3585496/4834STDY7002879.bam",
+                                    "md5": "38fe968f11e70c80915c605df3e14349",
+                                    "size": 70751309526
+                                }
+                            ],
+                            "aws": [
+                                {
+                                    "url": "s3://sra-pub-src-17/ERR3585496/4834STDY7002879.bam.1"
+                                }
+                            ],
+                            "gcp": [
+                                {
+                                    "url": "gs://sra-pub-src-17/ERR3585496/4834STDY7002879.bam.1"
+                                }
+                            ],
+                            "ncbi": [
+                                {
+                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-20/ERR3585496/ERR3585496.1"
+                                }
+                            ]
+                        }
                     }
                 }
             }

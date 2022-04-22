@@ -13,23 +13,46 @@
                 "title": "Illumina HiSeq 2500 paired end sequencing; GSM4213824: T84_invivo; Homo sapiens; RNA-Seq",
                 "attributes": {
                     "loader": "latf-load",
-                    "ENA-SPOT-COUNT": "624886427",
-                    "ENA-BASE-COUNT": "131960930154",
+                    "ENA-SPOT-COUNT": 624886427,
+                    "ENA-BASE-COUNT": 131960930154,
                     "ENA-FIRST-PUBLIC": "2020-04-14",
                     "ENA-LAST-UPDATE": "2020-04-14"
                 },
-                "files": [
-                    {
-                        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz",
-                        "md5": "bf8078b5a9cc62b0fee98059f5b87fa7",
-                        "size": "31876537192"
-                    },
-                    {
-                        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz",
-                        "md5": "351df47dca211c1f66ef327e280bd4fd",
-                        "size": "43760586944"
-                    }
-                ]
+                "files": {
+                    "ftp": [
+                        {
+                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz",
+                            "md5": "bf8078b5a9cc62b0fee98059f5b87fa7",
+                            "size": 31876537192
+                        },
+                        {
+                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz",
+                            "md5": "351df47dca211c1f66ef327e280bd4fd",
+                            "size": 43760586944
+                        }
+                    ],
+                    "aws": [
+                        {
+                            "url": "s3://sra-pub-src-6/SRR10668798/T84_S1_L001_R1_001.fastq.1"
+                        },
+                        {
+                            "url": "s3://sra-pub-src-6/SRR10668798/T84_S1_L001_R2_001.fastq.1"
+                        }
+                    ],
+                    "gcp": [
+                        {
+                            "url": "gs://sra-pub-src-6/SRR10668798/T84_S1_L001_R1_001.fastq.1"
+                        },
+                        {
+                            "url": "gs://sra-pub-src-6/SRR10668798/T84_S1_L001_R2_001.fastq.1"
+                        }
+                    ],
+                    "ncbi": [
+                        {
+                            "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR1066879/SRR10668798.1"
+                        }
+                    ]
+                }
             }
         }
     }
