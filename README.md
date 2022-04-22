@@ -12,7 +12,7 @@ Fetch metadata information from the following databases:
 - [SRA](https://www.ncbi.nlm.nih.gov/sra): Sequence Read Archive, 
 - [EMBL-EBI](https://www.ebi.ac.uk/): European Molecular BIology Laboratory’s European BIoinformatics Institute, 
 - [DDBJ](https://www.ddbj.nig.ac.jp/index-e.html): DNA Data Bank of Japan, 
-- [NIH Biosample](https://www.ncbi.nlm.nih.gov/biosample) and 
+- [NIH Biosample](https://www.ncbi.nlm.nih.gov/biosample), 
 - [ENCODE](https://www.encodeproject.org/): The Encyclopedia of DNA Elements. 
 
 `ffq` receives an accession and returns the metadata for that accession as well as the metadata for all downstream accessions following the interconnection between GEO and SRA, EMBL-EBI, DDBJ, Biosample:
