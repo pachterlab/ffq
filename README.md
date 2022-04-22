@@ -8,7 +8,7 @@
 [![license](https://img.shields.io/pypi/l/ffq)](LICENSE)
 
 Fetch metadata information from the following databases:
-- [Gene Expression Omnibus (GEO)](https://www.ncbi.nlm.nih.gov/geo/), 
+- [GEO](https://www.ncbi.nlm.nih.gov/geo/): Gene Expression Omnibus, 
 - [Sequence Read Archive (SRA)](https://www.ncbi.nlm.nih.gov/sra), 
 - [European Molecular BIology Laboratory’s European BIoinformatics Institute (EMBL-EBI)](https://www.ebi.ac.uk/), 
 - [DNA Data Bank of Japan (DDBJ)](https://www.ddbj.nig.ac.jp/index-e.html), 
