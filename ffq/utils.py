@@ -12,26 +12,12 @@ from frozendict import frozendict
 import logging
 
 from .config import (
-    CROSSREF_URL,
-    ENA_SEARCH_URL,
-    ENA_URL,
-    ENA_FETCH,
-    GSE_SEARCH_URL,
-    GSE_SUMMARY_URL,
-    GSE_SEARCH_TERMS,
-    GSE_SUMMARY_TERMS,
-    NCBI_FETCH_URL,
-    NCBI_LINK_URL,
-    NCBI_SEARCH_URL,
-    NCBI_SUMMARY_URL,
-    FTP_GEO_URL,
-    FTP_GEO_SAMPLE,
-    FTP_GEO_SERIES,
-    FTP_GEO_SUPPL,
-    ENCODE_BIOSAMPLE_URL,
+    CROSSREF_URL, ENA_SEARCH_URL, ENA_URL, ENA_FETCH, GSE_SEARCH_URL,
+    GSE_SUMMARY_URL, GSE_SEARCH_TERMS, GSE_SUMMARY_TERMS, NCBI_FETCH_URL,
+    NCBI_LINK_URL, NCBI_SEARCH_URL, NCBI_SUMMARY_URL, FTP_GEO_URL,
+    FTP_GEO_SAMPLE, FTP_GEO_SERIES, FTP_GEO_SUPPL, ENCODE_BIOSAMPLE_URL,
     ENCODE_JSON
 )
-
 
 RUN_PARSER = re.compile(r'(SRR.+)|(ERR.+)|(DRR.+)')
 GSE_PARSER = re.compile(r'Series\t\tAccession: (?P<accession>GSE[0-9]+)\t')
@@ -41,6 +27,7 @@ EXPERIMENT_PARSER = re.compile(r'(SRX.+)|(ERX.+)|(DRX.+)')
 SAMPLE_PARSER = re.compile(r'(SRS.+)|(ERS.+)|(DRS.+)')
 
 logger = logging.getLogger(__name__)
+
 
 @lru_cache()
 def cached_get(*args, **kwargs):
@@ -54,11 +41,13 @@ def cached_get(*args, **kwargs):
         response.raise_for_status()
     except requests.HTTPError as exception:
         if exception.getcode() == 429:
-            logger.error('429 Client Error: Too Many Requests. Please try again later')
+            logger.error(
+                '429 Client Error: Too Many Requests. Please try again later'
+            )
             exit(1)
         else:
             logger.error(f'{exception}')
-            logger.error ('Provided accession is invalid')
+            logger.error('Provided accession is invalid')
             exit(1)
     text = response.text
     if not text:
@@ -82,7 +71,10 @@ def get_xml(accession):
 
 
 def get_encode_json(accession):
-    return json.loads(cached_get(f'{ENCODE_BIOSAMPLE_URL}/{accession}{ENCODE_JSON}'))
+    return json.loads(
+        cached_get(f'{ENCODE_BIOSAMPLE_URL}/{accession}{ENCODE_JSON}')
+    )
+
 
 def get_doi(doi):
     """Given a DOI, retrieve metadata from CrossRef.
@@ -155,22 +147,25 @@ def get_samples_from_study(accession):
     :rtype: list
     """
     soup = get_xml(accession)
-    samples_parsed = soup.find("ID", text = SAMPLE_PARSER)
+    samples_parsed = soup.find("ID", text=SAMPLE_PARSER)
     samples = []
     if samples_parsed:
         samples_ranges = samples_parsed.text.split(',')
         for sample_range in samples_ranges:
             if '-' in sample_range:
-                samples += parse_range(sample_range) 
+                samples += parse_range(sample_range)
             else:
                 samples.append(sample_range)
     else:
-            # The original code fell to ENA search if runs were not found. I don't know if this is
-            # necessary, so make a warning to detect it in case it is.      
-        logger.warning('No samples found for study. Modify code to search through ENA') 
+        # The original code fell to ENA search if runs were not found. I don't know if this is
+        # necessary, so make a warning to detect it in case it is.
+        logger.warning(
+            'No samples found for study. Modify code to search through ENA'
+        )
         return
 
     return samples
+
 
 def parse_encode_biosample(data):
     """Parse a python dictionary containing
@@ -183,11 +178,22 @@ def parse_encode_biosample(data):
     :return: dictionary with parsed ENCODE's biosample metadata
     :rtype: dict
     """
-    keys_biosample = ['accession', 'dbxrefs', 'description', 'genetic_modifications', 'treatments', 'sex', 'life_stage', 'age', 'age_units', 'organism', 'genetic_modifications' ]
+    keys_biosample = [
+        'accession', 'dbxrefs', 'description', 'genetic_modifications',
+        'treatments', 'sex', 'life_stage', 'age', 'age_units', 'organism',
+        'genetic_modifications'
+    ]
     biosample = {key: data.get(key, '') for key in keys_biosample}
 
-    keys_biosample_ontology = ['classification', 'term_name', 'organ_slims', 'cell_slims', 'system_slims', 'developmental_slims', 'system_slims', 'treatments', 'genetic_modifications']
-    biosample_ontology = {key: data.get(key, '') for key in keys_biosample_ontology}
+    keys_biosample_ontology = [
+        'classification', 'term_name', 'organ_slims', 'cell_slims',
+        'system_slims', 'developmental_slims', 'system_slims', 'treatments',
+        'genetic_modifications'
+    ]
+    biosample_ontology = {
+        key: data.get(key, '')
+        for key in keys_biosample_ontology
+    }
     biosample.update({'biosample_ontology': biosample_ontology})
     return biosample
 
@@ -203,7 +209,10 @@ def parse_encode_donor(data):
     :return: dictionary with parsed ENCODE's donor metadata
     :rtype: dict
     """
-    keys_donor = ['accession', 'dbxrefs', 'organism', 'sex', 'life_stage', 'age', 'age_units', 'health_status', 'ethnicity']
+    keys_donor = [
+        'accession', 'dbxrefs', 'organism', 'sex', 'life_stage', 'age',
+        'age_units', 'health_status', 'ethnicity'
+    ]
     donor = {key: data.get(key, '') for key in keys_donor}
     return donor
 
@@ -227,30 +236,46 @@ def parse_encode_json(accession, data):
         replicates_data_list = []
 
         for replicate in data['replicates']:
-            keys_replicate = ['biological_replicate_number', 'technical_replicate_number']
-            replicate_data = {key: replicate.get(key, '') for key in keys_replicate}
+            keys_replicate = [
+                'biological_replicate_number', 'technical_replicate_number'
+            ]
+            replicate_data = {
+                key: replicate.get(key, '')
+                for key in keys_replicate
+            }
 
             library = replicate['library']
             keys_library = ['accession', 'dbxrefs']
             library_data = {key: library.get(key, '') for key in keys_library}
 
-
             biosample = parse_encode_biosample(library['biosample'])
             donor = parse_encode_donor(library['biosample']['donor'])
-    
-            biosample.update({'donor' : donor})
+
+            biosample.update({'donor': donor})
             library_data.update({'biosample': biosample})
-            replicate_data.update({'library' : library_data})
+            replicate_data.update({'library': library_data})
             replicates_data_list.append(replicate_data)
 
-        encode.update({'replicates': replicate for replicate in replicates_data_list})
+        encode.update({
+            'replicates': replicate
+            for replicate in replicates_data_list
+        })
 
         files_data = []
-        keys_files = ['accession', 'description', 'dbxrefs', 'file_format', 'file_size', 'output_type', 'cloud_metadata']
+        keys_files = [
+            'accession', 'description', 'dbxrefs', 'file_format', 'file_size',
+            'output_type', 'cloud_metadata'
+        ]
         for file in data['files']:
-            files_data.append({key: (file[key] if key in file.keys() else "") for key in keys_files})
+            files_data.append({
+                key: (file[key] if key in file.keys() else "")
+                for key in keys_files
+            })
 
-        encode.update({'files' : {file['accession'] : file for file in files_data}})
+        encode.update({
+            'files': {file['accession']: file
+                      for file in files_data}
+        })
 
         return encode
 
@@ -259,8 +284,9 @@ def parse_encode_json(accession, data):
 
     if accession[:5] == "ENCDO":
         encode = parse_encode_donor(data)
-        
+
     return encode
+
 
 def parse_tsv(s):
     """Parse TSV-formatted string into a list of dictionaries.
@@ -419,6 +445,7 @@ def search_ena_title(title):
 
     return list(set(srps))
 
+
 def ncbi_fetch_fasta(accession, db):
     """ Fetch fastq files information from the 
     specified NCBI entrez database for the specified
@@ -446,7 +473,7 @@ def ncbi_fetch_fasta(accession, db):
         response.raise_for_status()
     except requests.HTTPError as exception:
         logger.error(f'{exception}')
-        logger.error ('Provided accession is invalid')
+        logger.error('Provided accession is invalid')
         exit(1)
     text = response.text
     if not text:
@@ -454,6 +481,7 @@ def ncbi_fetch_fasta(accession, db):
         sys.exit(1)
     else:
         return BeautifulSoup(response.content, 'xml')
+
 
 def ncbi_summary(db, id):
     """Fetch a summary from the specified NCBI entrez database for the specified term.
@@ -487,7 +515,7 @@ def ncbi_summary(db, id):
 
 
 def ncbi_search(db, term):
-    # Note (AGM): consolidate with get_gsm_search_json and get_gse_search_json  
+    # Note (AGM): consolidate with get_gsm_search_json and get_gse_search_json
     """Search the specified NCBI entrez database for the specified term.
     Documentation: https://www.ncbi.nlm.nih.gov/books/NBK25499/#chapter4.ESearch
 
@@ -527,9 +555,9 @@ def ncbi_link(origin, destination, id):
 
     :return: list of ids that match the search
     :rtype: list
-    """ 
+    """
     # TODO: use cached get. Can't be used currently because dictionaries can
-    # not be hashed.  
+    # not be hashed.
     response = requests.get(
         NCBI_LINK_URL,
         params={
@@ -594,28 +622,30 @@ def gsm_id_to_srs(id):
     summaries = ncbi_summary('gds', id)
     data = summaries[id]
 
-    # Check if there is a directly linked SRX 
+    # Check if there is a directly linked SRX
     srxs = []
     if 'extrelations' in data:
         for value in data['extrelations']:
-            if value['relationtype'] == 'SRA':  # may have manys samples?  
+            if value['relationtype'] == 'SRA':  # may have manys samples?
                 srxs.append(value['targetobject'])
     if srxs:
         for srx in srxs:
-            try: 
+            try:
                 soup = get_xml(srx)
                 try:
-                    sample = soup.find('ID', text = SAMPLE_PARSER).text
+                    sample = soup.find('ID', text=SAMPLE_PARSER).text
                 except:
-                    sample = soup.find('PRIMARY_ID', text = SAMPLE_PARSER).text                    
+                    sample = soup.find('PRIMARY_ID', text=SAMPLE_PARSER).text
             except:
-                logger.warning ('No sample found')
-                return                
+                logger.warning('No sample found')
+                return
     else:
-        logger.warning(f'No sample found. Either the provided GSM accession is invalid or raw data was not provided for this record')
+        logger.warning(
+            f'No sample found. Either the provided GSM accession is invalid or raw data was not provided for this record'
+        )
         exit(1)
     return sample
- 
+
 
 def geo_ids_to_gses(ids):
     """Convert GEO IDs (which is a number) to GSE (which start with GSE).
@@ -636,7 +666,6 @@ def geo_ids_to_gses(ids):
     )
     response.raise_for_status()
     return sorted(list(set(GSE_PARSER.findall(response.text))))
-
 
 
 def sra_ids_to_srrs(ids):
@@ -700,18 +729,17 @@ def geo_to_suppl(accession, GEO):
     path = f'{link}{accession[:-3]}nnn/{accession}{FTP_GEO_SUPPL}'
     files = ftp.mlsd(path)
     try:
-        supp = [
-                 {
-               'filename' : entry[0],
-                   'url' : f"{FTP_GEO_URL}{path}{entry[0]}",
-                'size' : entry[1].get('size')
-             }
-         for entry in files if entry[1].get('type') == 'file']
-        
+        supp = [{
+            'filename': entry[0],
+            'url': f"{FTP_GEO_URL}{path}{entry[0]}",
+            'size': entry[1].get('size')
+        } for entry in files if entry[1].get('type') == 'file']
+
     except:
         return []
 
     return supp
+
 
 def gsm_to_platform(accession):
     """Retrieve platform metadata
@@ -721,13 +749,18 @@ def gsm_to_platform(accession):
     :return: a dictionary with platform accession and title
     :rtype: dict
     """
-    platform_id = ncbi_search("gds",accession)[0]
+    platform_id = ncbi_search("gds", accession)[0]
     if platform_id.startswith('1'):
         platform_summary = ncbi_summary("gds", platform_id)[platform_id]
-        platform = {k:v for k,v in platform_summary.items() if k in ["accession", "title"]}
-        return {'platform' : platform}
+        platform = {
+            k: v
+            for k, v in platform_summary.items()
+            if k in ["accession", "title"]
+        }
+        return {'platform': platform}
     else:
         return {}
+
 
 def gse_to_gsms(accession):
     """Given a GSE accession
@@ -740,7 +773,7 @@ def gse_to_gsms(accession):
     data = json.loads(get_gse_search_json(accession).text)
     if data['esearchresult']['idlist']:
         gse_id = data['esearchresult']['idlist'][-1]
-        gse = ncbi_summary("gds",gse_id)
+        gse = ncbi_summary("gds", gse_id)
         gsms = [sample['accession'] for sample in gse[gse_id]['samples']]
         gsms.sort()
         return gsms
@@ -758,8 +791,6 @@ def gse_to_gsms(accession):
     #     sys.exit(1)
 
 
-
-
 def gsm_to_srx(accession):
     """Given a GSM accession
     returns all associated SRX ids.
@@ -775,23 +806,27 @@ def gsm_to_srx(accession):
     else:
         return None
 
+
 def srp_to_srx(accession):
     soup = get_xml(accession)
-    experiments_parsed = soup.find("ID", text = EXPERIMENT_PARSER)
+    experiments_parsed = soup.find("ID", text=EXPERIMENT_PARSER)
     experiments = []
     if experiments_parsed:
         experiments_ranges = experiments_parsed.text.split(',')
         for experiments_range in experiments_ranges:
             if '-' in experiments_range:
-                experiments += parse_range(experiments_range) 
+                experiments += parse_range(experiments_range)
             else:
                 experiments.append(experiments_range)
     else:
-            # The original code fell to ENA search if runs were not found. I don't know if this is
-            # necessary, so make a warning to detect it in case it is.      
-        logger.warning('No experiments found for study. Modify code to search through ENA') 
+        # The original code fell to ENA search if runs were not found. I don't know if this is
+        # necessary, so make a warning to detect it in case it is.
+        logger.warning(
+            'No experiments found for study. Modify code to search through ENA'
+        )
         return
     return experiments
+
 
 def srs_to_srx(accession):
     """Given an SRS accession
@@ -802,7 +837,7 @@ def srs_to_srx(accession):
     :rtype: list
     """
     soup = get_xml(accession)
-    return soup.find('ID', text = EXPERIMENT_PARSER).text
+    return soup.find('ID', text=EXPERIMENT_PARSER).text
 
 
 def srx_to_srrs(accession):
@@ -831,7 +866,7 @@ def srx_to_srrs(accession):
         # Sometimes the SRP does not contain a list of runs (for whatever reason).
         # A common trend with such projects is that they use ArrayExpress.
         # In the case that no runs could be found from the project XML,
-        # fallback to ENA SEARCH.  
+        # fallback to ENA SEARCH.
         runs = search_ena_study_runs(accession)
     return runs
 
@@ -892,6 +927,7 @@ def get_files_metadata_from_run(soup):
             break
     return files
 
+
 def parse_url(url):
     """ Given a raw data link, returns
     the file type and file number of the
@@ -925,7 +961,8 @@ def parse_url(url):
             fileno = '1'
     if filetype == 'unknown':
         fileno = 'unknown'
-    return filetype, fileno   
+    return filetype, fileno
+
 
 def parse_ncbi_fetch_fasta(soup, server):
     """ Given the output of `ncbi_fetch_fasta` and
@@ -949,7 +986,8 @@ def parse_ncbi_fetch_fasta(soup, server):
     if 'bam' in links[0] or len(links) > 2:
         links.pop()
     return links
-        
+
+
 def ena_fetch(accession, db):
     """ Fetch information from the specified
     ENA database for the specified accession
@@ -963,7 +1001,10 @@ def ena_fetch(accession, db):
     :return: BeautifulSoup object with accession information
     :rtype: bs4.BeautifulSoup
     """
-    return BeautifulSoup(cached_get(f'{ENA_FETCH}?db={db}&id={accession}', 'xml'), 'lxml')
+    return BeautifulSoup(
+        cached_get(f'{ENA_FETCH}?db={db}&id={accession}', 'xml'), 'lxml'
+    )
+
 
 def parse_bioproject(soup):
     """ Parse the output of `ena_fetch` for the bioproject
@@ -975,7 +1016,7 @@ def parse_bioproject(soup):
     :rparam: dictionary with metadata
     :rtype: dict
     """
-    # Exception for: the followin bioproject ID is not public 
+    # Exception for: the followin bioproject ID is not public
     if 'is not public in BioProject' in soup.text:
         logger.error('The provided ID is not public in BioProject. Exiting')
         sys.exit(0)
@@ -983,10 +1024,11 @@ def parse_bioproject(soup):
         target_material = soup.find('target').get('material')
     except:
         target_material = ''
-    return {'accession': soup.find('archiveid').get('accession'),
-          'title': soup.find('title').text,
-          'description': soup.find("description").text,
-          'dbxref': soup.find('id').text,
-          'organism': soup.find('organismname').text,
-          'target_material': target_material
+    return {
+        'accession': soup.find('archiveid').get('accession'),
+        'title': soup.find('title').text,
+        'description': soup.find("description").text,
+        'dbxref': soup.find('id').text,
+        'organism': soup.find('organismname').text,
+        'target_material': target_material
     }

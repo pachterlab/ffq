@@ -15,7 +15,7 @@ GSE_SEARCH_TERMS = '%5bGEO%20Accession&retmax=1&retmode=json'
 GSE_SUMMARY_URL = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=gds&id='
 GSE_SUMMARY_TERMS = '&retmode=json'
 
-# GEO entrez ftp links  
+# GEO entrez ftp links
 FTP_GEO_URL = 'ftp.ncbi.nlm.nih.gov'
 FTP_GEO_SAMPLE = '/geo/samples/'
 FTP_GEO_SERIES = '/geo/series/'

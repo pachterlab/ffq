@@ -10,11 +10,23 @@ from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_
 
 logger = logging.getLogger(__name__)
 
-RUN_TYPES = ('SRR', 'ERR', 'DRR',)#, 'CRR') 
-PROJECT_TYPES = ('SRP', 'ERP', 'DRP',)#, 'CRP')  # aka study types 
-EXPERIMENT_TYPES = ('SRX', 'ERX', 'DRX',)#, 'CRX')  # CAREFUL, I don't think CRX accessions should go here (see bioproject)
+RUN_TYPES = (
+    'SRR',
+    'ERR',
+    'DRR',
+)  #, 'CRR')
+PROJECT_TYPES = (
+    'SRP',
+    'ERP',
+    'DRP',
+)  #, 'CRP')  # aka study types
+EXPERIMENT_TYPES = (
+    'SRX',
+    'ERX',
+    'DRX',
+)  #, 'CRX')  # CAREFUL, I don't think CRX accessions should go here (see bioproject)
 SAMPLE_TYPES = ('SRS', 'ERS', 'DRS', 'CRS')
-GEO_TYPES = ('GSE','GSM')
+GEO_TYPES = ('GSE', 'GSM')
 ENCODE_TYPES = ('ENCSR', 'ENCBS', 'ENCDO')
 BIOPROJECT_TYPES = ('CRX',)
 BIOSAMPLE_TYPES = ('SAMN', 'SAMD', 'SAMEA', 'SAMEG')
@@ -69,20 +81,31 @@ def main():
     )
 
     parser.add_argument(
-        '--ftp', help='Skip medatada and return only ftp links for raw data', action='store_true'
+        '--ftp',
+        help='Skip medatada and return only ftp links for raw data',
+        action='store_true'
     )
-    
+
     parser.add_argument(
-        '--aws', help = 'Skip metadata and return only AWS links for raw data (if available)', action='store_true'      
+        '--aws',
+        help=
+        'Skip metadata and return only AWS links for raw data (if available)',
+        action='store_true'
     )
-    
+
     parser.add_argument(
-        '--ncbi', help = 'Skip metadata and return only NCBI links for raw data (if available)', action='store_true'      
+        '--ncbi',
+        help=
+        'Skip metadata and return only NCBI links for raw data (if available)',
+        action='store_true'
     )
-    
+
     parser.add_argument(
-        '--gcp', help = 'Skip metadata and return only GCP links for raw data (if available)', action='store_true'      
-    )   
+        '--gcp',
+        help=
+        'Skip metadata and return only GCP links for raw data (if available)',
+        action='store_true'
+    )
     parser.add_argument(
         '--split', help='Split runs into their own files.', action='store_true'
     )
@@ -91,10 +114,12 @@ def main():
     )
 
     parser.add_argument(
-        '-l', help='Specify the desired level for fetching downstream accessions', type=int
+        '-l',
+        help='Specify the desired level for fetching downstream accessions',
+        type=int
     )
 
-    # Show help when no arguments are given 
+    # Show help when no arguments are given
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
@@ -121,8 +146,8 @@ def main():
     args.IDs = [id.upper() for id in args.IDs]
     # If user provides -t
     if args.t is not None:
-    
-    # Check IDs depending on type 
+
+        # Check IDs depending on type
         if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
             for ID in args.IDs:
                 ID_type = re.findall(r"(\D+).+", ID)
@@ -132,7 +157,9 @@ def main():
                         ' and end with digits.'
                     ))
         elif args.t == 'DOI':
-            logger.warning('Searching by DOI may result in missing information.')                    
+            logger.warning(
+                'Searching by DOI may result in missing information.'
+            )
 
         #         if ID[0:3] != args.t or not ID[3:].isdigit():
         #             parser.error((
@@ -143,38 +170,63 @@ def main():
         #     logger.warning('Searching by DOI may result in missing information.')
 
         if args.ftp:
-            results = [ffq_links([(args.t, accession)], 'ftp') for accession in args.IDs]
+            results = [
+                ffq_links([(args.t, accession)], 'ftp')
+                for accession in args.IDs
+            ]
             sys.exit(0)
-            
+
         elif args.aws:
-            results = [ffq_links([(args.t, accession)],'AWS') for accession in args.IDs]
+            results = [
+                ffq_links([(args.t, accession)], 'AWS')
+                for accession in args.IDs
+            ]
             sys.exit(0)
-            
+
         elif args.gcp:
-            results = [ffq_links([(args.t, accession)],'GCP') for accession in args.IDs]  
+            results = [
+                ffq_links([(args.t, accession)], 'GCP')
+                for accession in args.IDs
+            ]
             sys.exit(0)
-            
+
         elif args.ncbi:
-            results = [ffq_links([(args.t, accession)],'NCBI') for accession in args.IDs]  
+            results = [
+                ffq_links([(args.t, accession)], 'NCBI')
+                for accession in args.IDs
+            ]
             sys.exit(0)
-                        
+
         else:
             try:
                 # run ffq depending on type
                 if args.t in RUN_TYPES:
                     results = [ffq_run(accession) for accession in args.IDs]
                 elif args.t in PROJECT_TYPES:
-                    results = [ffq_study(accession, args.l) for accession in args.IDs]
+                    results = [
+                        ffq_study(accession, args.l) for accession in args.IDs
+                    ]
                 elif args.t in EXPERIMENT_TYPES:
-                    results = [ffq_experiment(accession, args.l) for accession in args.IDs]
+                    results = [
+                        ffq_experiment(accession, args.l)
+                        for accession in args.IDs
+                    ]
                 elif args.t in SAMPLE_TYPES:
-                    results = [ffq_sample(accession, args.l) for accession in args.IDs]
+                    results = [
+                        ffq_sample(accession, args.l) for accession in args.IDs
+                    ]
                 elif args.t == 'GSE':
-                    results = [ffq_gse(accession, args.l) for accession in args.IDs]
+                    results = [
+                        ffq_gse(accession, args.l) for accession in args.IDs
+                    ]
                 elif args.t == 'GSM':
-                    results = [ffq_gsm(accession, args.l) for accession in args.IDs]
+                    results = [
+                        ffq_gsm(accession, args.l) for accession in args.IDs
+                    ]
                 elif args.t == 'DOI':
-                    results = [study for doi in args.IDs for study in ffq_doi(doi)]
+                    results = [
+                        study for doi in args.IDs for study in ffq_doi(doi)
+                    ]
 
                 keyed = {result['accession']: result for result in results}
 
@@ -184,13 +236,19 @@ def main():
                 else:
                     logger.error(e)
 
-    #If user does not provide -t 
+    #If user does not provide -t
     else:
         # Validate and extract types of accessions provided
-        type_accessions = validate_accession(args.IDs, RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES)
-        # If at least one of the accessions is incorrect:  
+        type_accessions = validate_accession(
+            args.IDs,
+            RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES +
+            GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES
+        )
+        # If at least one of the accessions is incorrect:
         if False in type_accessions:
-            parser.error(f'{args.IDs[type_accessions.index(False)]} is not a valid ID. IDs can be one of {", ".join(SEARCH_TYPES)}')
+            parser.error(
+                f'{args.IDs[type_accessions.index(False)]} is not a valid ID. IDs can be one of {", ".join(SEARCH_TYPES)}'
+            )
             sys.exit(1)
 
         ############
@@ -203,15 +261,15 @@ def main():
         elif args.aws:
             ffq_links(type_accessions, 'AWS')
             sys.exit(0)
-            
+
         elif args.gcp:
             ffq_links(type_accessions, 'GCP')
             sys.exit(0)
-            
+
         elif args.ncbi:
-            ffq_links(type_accessions, 'NCBI')  
-            sys.exit(0)      
-                  
+            ffq_links(type_accessions, 'NCBI')
+            sys.exit(0)
+
         else:
             # run ffq depending on type
             try:
@@ -234,10 +292,14 @@ def main():
                         results.append(ffq_encode(accession))
                     elif id_type[:3] in BIOPROJECT_TYPES:
                         results.append(ffq_bioproject(accession))
-                    elif id_type[:4] in BIOSAMPLE_TYPES or id_type[:5] in BIOSAMPLE_TYPES:
+                    elif id_type[:4
+                                 ] in BIOSAMPLE_TYPES or id_type[:5
+                                                                 ] in BIOSAMPLE_TYPES:
                         results.append(ffq_biosample(accession, args.l))
                     elif id_type == 'DOI':
-                        logger.warning('Searching by DOI may result in missing information.')
+                        logger.warning(
+                            'Searching by DOI may result in missing information.'
+                        )
                         results.append(ffq_doi(accession))
 
                 keyed = {result['accession']: result for result in results}
@@ -250,21 +312,18 @@ def main():
 
     if args.o:
         if args.split:
-            # Split each result into its own JSON.   
+            # Split each result into its own JSON.
             for result in results:
                 os.makedirs(args.o, exist_ok=True)
-                with open(os.path.join(args.o,
-                              f'{result["accession"]}.json'),
-                              'w') as f:
+                with open(os.path.join(args.o, f'{result["accession"]}.json'),
+                          'w') as f:
                     json.dump(result, f, indent=4)
         else:
             # Otherwise, write a single JSON with result accession as keys.
             if os.path.dirname(
-                    args.o
-            ) != '':  # handles case where file is in current dir
+                    args.o) != '':  # handles case where file is in current dir
                 os.makedirs(os.path.dirname(args.o), exist_ok=True)
             with open(args.o, 'w') as f:
                 json.dump(keyed, f, indent=4)
     else:
         print(json.dumps(keyed, indent=4))
-

@@ -9,42 +9,15 @@ from bs4 import BeautifulSoup
 import time
 
 from .utils import (
-    cached_get,
-    geo_id_to_srps,
-    geo_ids_to_gses,
-    gsm_id_to_srs,
-    get_doi,
-    get_gse_search_json,
-    get_gsm_search_json,
-    get_xml,
-    get_encode_json,
-    get_samples_from_study,
-    ncbi_link,
-    ncbi_search,
-    ncbi_fetch_fasta,
-    ncbi_summary,
-    parse_range,
-    parse_encode_biosample,
-    parse_encode_donor,
-    parse_encode_json,
-    parse_tsv,
-    search_ena_run_sample,
-    search_ena_run_study,
-    search_ena_study_runs,
-    search_ena_title,
-    sra_ids_to_srrs,
-    geo_to_suppl,
-    gsm_to_platform,
-    gse_to_gsms,
-    srp_to_srx,
-    srs_to_srx,
-    gsm_to_srx,
-    srx_to_srrs,
-    get_files_metadata_from_run,
-    parse_url,
-    parse_ncbi_fetch_fasta,
-    ena_fetch,
-    parse_bioproject
+    cached_get, geo_id_to_srps, geo_ids_to_gses, gsm_id_to_srs, get_doi,
+    get_gse_search_json, get_gsm_search_json, get_xml, get_encode_json,
+    get_samples_from_study, ncbi_link, ncbi_search, ncbi_fetch_fasta,
+    ncbi_summary, parse_range, parse_encode_biosample, parse_encode_donor,
+    parse_encode_json, parse_tsv, search_ena_run_sample, search_ena_run_study,
+    search_ena_study_runs, search_ena_title, sra_ids_to_srrs, geo_to_suppl,
+    gsm_to_platform, gse_to_gsms, srp_to_srx, srs_to_srx, gsm_to_srx,
+    srx_to_srrs, get_files_metadata_from_run, parse_url, parse_ncbi_fetch_fasta,
+    ena_fetch, parse_bioproject
 )
 
 logger = logging.getLogger(__name__)
@@ -57,9 +30,14 @@ DOI_PARSER = re.compile('^10.\d{4,9}\/[-._;()\/:a-z0-9]+')
 
 
 def validate_accession(accessions, search_types):
-    ID_types = [re.findall(r"(\D+).+", accession)[0] for accession in accessions]
-    return [(ID_type, accession) if ID_type in search_types else False if DOI_PARSER.match(accession) is None else ("DOI", accession) for accession, ID_type in zip(accessions, ID_types)]
-    
+    ID_types = [
+        re.findall(r"(\D+).+", accession)[0] for accession in accessions
+    ]
+    return [(ID_type, accession) if ID_type in search_types else
+            False if DOI_PARSER.match(accession) is None else
+            ("DOI", accession)
+            for accession, ID_type in zip(accessions, ID_types)]
+
 
 def parse_run(soup):
     """Given a BeautifulSoup object representing a run, parse out relevant
@@ -108,7 +86,7 @@ def parse_run(soup):
     if attributes:
         try:
             attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
-            attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
+            attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT'])
         except:
             pass
     ftp_files = get_files_metadata_from_run(soup)
@@ -117,13 +95,19 @@ def parse_run(soup):
             file['size'] = int(file['size'])
     alt_links_soup = ncbi_fetch_fasta(accession, 'sra')
     aws_links = parse_ncbi_fetch_fasta(alt_links_soup, 'AWS')
-    gcp_links = parse_ncbi_fetch_fasta(alt_links_soup, 'GCP')   
+    gcp_links = parse_ncbi_fetch_fasta(alt_links_soup, 'GCP')
     ncbi_links = parse_ncbi_fetch_fasta(alt_links_soup, 'NCBI')
     files = {
         'ftp': ftp_files,
-        'aws': [{'url': link} for link in aws_links],
-        'gcp': [{'url': link} for link in gcp_links],
-        'ncbi': [{'url': link} for link in ncbi_links],        
+        'aws': [{
+            'url': link
+        } for link in aws_links],
+        'gcp': [{
+            'url': link
+        } for link in gcp_links],
+        'ncbi': [{
+            'url': link
+        } for link in ncbi_links],
     }
     return {
         'accession': accession,
@@ -160,20 +144,20 @@ def parse_sample(soup):
     if attributes:
         try:
             attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
-            attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
+            attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT'])
         except:
             pass
     try:
-        
-        try: 
-            experiment = soup.find('ID', text = EXPERIMENT_PARSER).text
+
+        try:
+            experiment = soup.find('ID', text=EXPERIMENT_PARSER).text
         except:
-            experiment = soup.find('PRIMARY_ID', text = EXPERIMENT_PARSER).text   
-    
+            experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text
+
     except:
         experiment = ''
         logger.warning('No experiment found')
-        
+
     return {
         'accession': accession,
         'title': title,
@@ -201,10 +185,12 @@ def parse_experiment_with_run(soup, l):
     platform = soup.find('INSTRUMENT_MODEL').find_parent().name
     instrument = soup.find('INSTRUMENT_MODEL').text
 
-    experiment = {'accession': accession,
-    'title': title,
-    'platform': platform,
-    'instrument': instrument}
+    experiment = {
+        'accession': accession,
+        'title': title,
+        'platform': platform,
+        'instrument': instrument
+    }
     if l is None or l > 1:
         # Returns all of the runs associated with an experiment
         runs = srx_to_srrs(accession)
@@ -221,6 +207,7 @@ def parse_experiment_with_run(soup, l):
         return experiment
     else:
         return experiment
+
 
 def parse_study(soup):
     """Given a BeautifulSoup object representing a study, parse out relevant
@@ -297,7 +284,7 @@ def ffq_run(accession):
     return run
 
 
-def ffq_study(accession, l = None):
+def ffq_study(accession, l=None):
     """Fetch Study information.
 
     :param accession: study accession (SRP, ERP or DRP)
@@ -320,15 +307,20 @@ def ffq_study(accession, l = None):
             pass
         logger.info(f'Getting Sample for {accession}')
         sample_ids = get_samples_from_study(accession)
-        logger.warning(f'There are {str(len(sample_ids))} samples for {accession}')
+        logger.warning(
+            f'There are {str(len(sample_ids))} samples for {accession}'
+        )
         samples = [ffq_sample(sample_id, l) for sample_id in sample_ids]
-        study.update({'samples': {sample['accession']: sample for sample in samples}})
+        study.update({
+            'samples': {sample['accession']: sample
+                        for sample in samples}
+        })
         return study
     else:
         return study
 
 
-def ffq_gse(accession, l = None):
+def ffq_gse(accession, l=None):
     """Fetch GSE information.
 
     This function finds the GSMs corresponding to the GSE and calls `ffq_gsm`.
@@ -350,9 +342,9 @@ def ffq_gse(accession, l = None):
     time.sleep(1)
     supp = geo_to_suppl(accession, "GSE")
     if len(supp) > 0:
-        gse.update({'supplementary_files' : supp})
+        gse.update({'supplementary_files': supp})
     else:
-        logger.info(f'No supplementary files found for {accession}')        
+        logger.info(f'No supplementary files found for {accession}')
     gse.pop('geo_id')
     if l is None or l != 1:
         try:
@@ -363,13 +355,16 @@ def ffq_gse(accession, l = None):
         gsm_ids = gse_to_gsms(accession)
         logger.warning(f'There are {str(len(gsm_ids))} samples for {accession}')
         gsms = [ffq_gsm(gsm_id, l) for gsm_id in gsm_ids]
-        gse.update({'geo_samples': {sample['accession']: sample for sample in gsms}})
+        gse.update({
+            'geo_samples': {sample['accession']: sample
+                            for sample in gsms}
+        })
         return gse
     else:
         return gse
 
 
-def ffq_gsm(accession, l = None):
+def ffq_gsm(accession, l=None):
     """Fetch GSM information.
 
     This function finds the SRS corresponding to the GSM and calls `ffq_sample`.
@@ -391,9 +386,9 @@ def ffq_gsm(accession, l = None):
     time.sleep(1)
     supp = geo_to_suppl(accession, "GSM")
     if supp:
-        gsm.update({'supplementary_files' : supp})
+        gsm.update({'supplementary_files': supp})
     else:
-        logger.info(f'No supplementary files found for {accession}')        
+        logger.info(f'No supplementary files found for {accession}')
 
     gsm.update(gsm_to_platform(accession))
     if l is None or l != 1:
@@ -405,7 +400,7 @@ def ffq_gsm(accession, l = None):
         srs = gsm_id_to_srs(gsm.pop('geo_id'))
         if srs:
             sample = ffq_sample(srs, l)
-            gsm.update({'samples': {sample['accession']: sample }})
+            gsm.update({'samples': {sample['accession']: sample}})
         else:
             return gsm
         return gsm
@@ -413,7 +408,7 @@ def ffq_gsm(accession, l = None):
         return gsm
 
 
-def ffq_experiment(accession, l = None):
+def ffq_experiment(accession, l=None):
     """Fetch Experiment information.
 
     :param accession: experiment accession (SRX, ERX or DRX)
@@ -432,8 +427,7 @@ def ffq_experiment(accession, l = None):
     return experiment
 
 
-def ffq_sample(accession, l = None):
-
+def ffq_sample(accession, l=None):
     """Fetch Sample information.
 
     :param accession: sample accession (SRS, ERS or DRS)
@@ -460,13 +454,21 @@ def ffq_sample(accession, l = None):
             if ',' in exp_id:
                 exp_ids = exp_id.split(',')
                 experiments = [ffq_experiment(exp_id, l) for exp_id in exp_ids]
-                sample.update({'experiments': [{experiment['accession']: experiment} for experiment in experiments]})
+                sample.update({
+                    'experiments': [{
+                        experiment['accession']: experiment
+                    } for experiment in experiments]
+                })
                 return sample
             else:
                 experiment = ffq_experiment(exp_id, l)
-                sample.update({'experiments': {experiment['accession']: experiment}})
+                sample.update({
+                    'experiments': {
+                        experiment['accession']: experiment
+                    }
+                })
         else:
-            logger.warning(f'No Experiment found for {accession}')   
+            logger.warning(f'No Experiment found for {accession}')
         return sample
     else:
         return sample
@@ -501,6 +503,7 @@ def ffq_bioproject(accession):
     """
     return parse_bioproject(ena_fetch(accession, 'bioproject'))
 
+
 def ffq_biosample(accession, l):
     """Fetch biosample ids information. This 
     function receives a SAMN accession
@@ -513,16 +516,14 @@ def ffq_biosample(accession, l):
     :rtype: dict
     """
     soup = ena_fetch(accession, 'biosample')
-    sample = soup.find('id', text = SAMPLE_PARSER).text
+    sample = soup.find('id', text=SAMPLE_PARSER).text
     try:
-        l = l-1
+        l = l - 1
     except:
         pass
     sample_data = ffq_sample(sample, l)
-    return {
-            'accession': accession,
-            'samples': sample_data
-        }
+    return {'accession': accession, 'samples': sample_data}
+
 
 def ffq_links(type_accessions, server):
     """Print download links for raw data
@@ -545,12 +546,12 @@ def ffq_links(type_accessions, server):
     for id_type, accession in type_accessions:
         if id_type == "GSE":
             print("accession\tfiletype\tfilenumber\tlink")
-            accession = gse_to_gsms(accession) 
+            accession = gse_to_gsms(accession)
             id_type = "GSM"
             origin_GSE = True
 
         else:
-            pass 
+            pass
         if id_type == "GSM":
             if isinstance(accession, str):
                 accession = [accession]
@@ -562,28 +563,33 @@ def ffq_links(type_accessions, server):
                     srrs = srx_to_srrs(srx)
                     for srr in srrs:
                         if server == 'FTP':
-                            for file in get_files_metadata_from_run(get_xml(srr)):
+                            for file in get_files_metadata_from_run(get_xml(srr)
+                                                                    ):
                                 url = file['url']
                                 if origin_GSE:
-                                    print(gsm, end = '\t')                  
-                                    filetype, fileno = parse_url(url)      
+                                    print(gsm, end='\t')
+                                    filetype, fileno = parse_url(url)
                                     print(f'\t{filetype}\t{fileno}\t{url}')
-                                    
+
                                 else:
-                                    print(url, end = ' ')
-                                  
+                                    print(url, end=' ')
+
                         else:
-                            urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
+                            urls = parse_ncbi_fetch_fasta(
+                                ncbi_fetch_fasta(srr, 'sra'), server
+                            )
                             for url in urls:
                                 if origin_GSE:
-                                    print(gsm, end = '\t')                  
-                                    filetype, fileno = parse_url(url)      
+                                    print(gsm, end='\t')
+                                    filetype, fileno = parse_url(url)
                                     print(f'\t{filetype}\t{fileno}\t{url}')
                                 else:
-                                    print(url, end = " ")
-                    
-                else: 
-                    logger.error("No SRA files were found for the provided GEO entry")
+                                    print(url, end=" ")
+
+                else:
+                    logger.error(
+                        "No SRA files were found for the provided GEO entry"
+                    )
                     sys.exit(1)
             return
         if id_type == "SRP" or id_type == "ERP" or id_type == "DRP":
@@ -604,7 +610,7 @@ def ffq_links(type_accessions, server):
             if not origin_SRP and not origin_SRS:
                 srxs = [accession]
             srrs = []
-            
+
             for srx in srxs:
                 time.sleep(0.1)
                 for srr in srx_to_srrs(srx):
@@ -615,34 +621,41 @@ def ffq_links(type_accessions, server):
                         for file in get_files_metadata_from_run(get_xml(srr)):
                             url = file['url']
                             if origin_SRP:
-                                print(srr, end = '\t')                  
-                                filetype, fileno = parse_url(url)      
+                                print(srr, end='\t')
+                                filetype, fileno = parse_url(url)
                                 print(f'\t{filetype}\t{fileno}\t{url}')
                             else:
-                                print(url, end = ' ')
+                                print(url, end=' ')
                     else:
-                        urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
+                        urls = parse_ncbi_fetch_fasta(
+                            ncbi_fetch_fasta(srr, 'sra'), server
+                        )
                         for url in urls:
                             if origin_SRP:
-                                print(srr, end = '\t')                  
-                                filetype, fileno = parse_url(url)      
+                                print(srr, end='\t')
+                                filetype, fileno = parse_url(url)
                                 print(f'\t{filetype}\t{fileno}\t{url}')
                             else:
-                                print(url, end = " ")
+                                print(url, end=" ")
             return
         if id_type == "SRR" or id_type == "ERR" or id_type == "DRR":
             if server == 'FTP':
                 for file in get_files_metadata_from_run(get_xml(accession)):
-                    print(file['url'], end = " ")
+                    print(file['url'], end=" ")
             else:
-                urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(accession, 'sra'), server)
+                urls = parse_ncbi_fetch_fasta(
+                    ncbi_fetch_fasta(accession, 'sra'), server
+                )
                 for url in urls:
                     if accession in url:
-                        print(url, end = " ")
+                        print(url, end=" ")
                 return
         else:
-            logger.error('Invalid accession. Download links can only be retrieved from GEO or SRA ids.')
+            logger.error(
+                'Invalid accession. Download links can only be retrieved from GEO or SRA ids.'
+            )
             sys.exit(1)
+
 
 def ffq_doi(doi):
     """Fetch DOI information.
