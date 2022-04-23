@@ -2,24 +2,31 @@ from unittest import mock, TestCase
 from unittest.mock import call
 
 from bs4 import BeautifulSoup
+import json
+import re
 
 import ffq.utils as utils
 from ffq.config import (
     CROSSREF_URL,
-    ENA_URL,
     ENA_SEARCH_URL,
+    ENA_URL,
     GSE_SEARCH_URL,
-    GSE_SEARCH_TERMS,
     GSE_SUMMARY_URL,
+    GSE_SEARCH_TERMS,
     GSE_SUMMARY_TERMS,
     NCBI_FETCH_URL,
     NCBI_LINK_URL,
     NCBI_SEARCH_URL,
     NCBI_SUMMARY_URL,
+    FTP_GEO_URL,
+    FTP_GEO_SAMPLE,
+    FTP_GEO_SERIES,
+    FTP_GEO_SUPPL
 )
+from tests.mixins import TestMixin
 
 
-class TestUtils(TestCase):
+class TestUtils(TestMixin, TestCase):
 
     def test_cached_get(self):
         with mock.patch('ffq.utils.requests') as requests:
@@ -51,6 +58,16 @@ class TestUtils(TestCase):
             )
             self.assertTrue(isinstance(result, BeautifulSoup))
 
+    def test_get_gsm_search_json(self):
+        with mock.patch('ffq.utils.ncbi_search') as ncbi_search:
+            ncbi_search.return_value = ['geo_id', 'gsm_id']
+            result = utils.get_gsm_search_json('accession')
+            ncbi_search.assert_called_once_with(
+                "gds", "accession")
+            self.assertEqual({'accession': 'accession',\
+                            'geo_id': 'gsm_id'}, result)
+            #self.assertTrue(isinstance(result, BeautifulSoup))
+
     def test_get_gse_summary_json(self):
         with mock.patch('ffq.utils.cached_get') as cached_get:
             cached_get.return_value = """
@@ -65,6 +82,94 @@ class TestUtils(TestCase):
             )
             self.assertTrue(isinstance(result, BeautifulSoup))
 
+
+    def test_get_samples_from_study(self):
+        self.assertEqual(['SRS4698189','SRS4698190','SRS4698191','SRS4698192',
+                          'SRS4698193','SRS4698194','SRS4698195','SRS4698196','SRS4698197'],
+                         utils.get_samples_from_study("SRP194123"))
+        
+        
+    def test_parse_encode_biosample(self):
+        with open(self.biosample_path, 'r') as f:
+            biosample = json.loads(f.read())
+        self.assertEqual({
+        "accession": "ENCBS941ZTJ",
+        "dbxrefs": [
+            "GEO:SAMN19597695"
+        ],
+        "description": "",
+        "genetic_modifications": [
+        ],
+        "treatments": [
+        ],
+        "sex": "unknown",
+        "life_stage": "unknown",
+        "age": "unknown",
+        "age_units": "",
+        "organism": {
+            "schema_version": "6",
+            "scientific_name": "Mus musculus",
+            "name": "mouse",
+            "status": "released",
+            "taxon_id": "10090",
+            "@id": "/organisms/mouse/",
+            "@type": [
+                "Organism",
+                "Item"
+            ],
+            "uuid": "3413218c-3d86-498b-a0a2-9a406638e786"
+        },
+        "biosample_ontology": {
+            "classification": "",
+            "term_name": "",
+            "organ_slims": "",
+            "cell_slims": "",
+            "system_slims": "",
+            "developmental_slims": "",
+            "treatments": [
+            ],
+            "genetic_modifications": [
+            ]
+        }
+    }, utils.parse_encode_biosample(biosample))
+
+        
+    def test_parse_encode_donor(self):
+        with open(self.donor_path, 'r') as f:
+            donor = json.loads(f.read())
+        self.assertEqual({
+        "accession": "ENCDO072AAA",
+        "dbxrefs": [
+            "GEO:SAMN04284198"
+        ],
+        "organism": {
+            "schema_version": "6",
+            "scientific_name": "Mus musculus",
+            "name": "mouse",
+            "status": "released",
+            "taxon_id": "10090",
+            "@id": "/organisms/mouse/",
+            "@type": [
+                "Organism",
+                "Item"
+            ],
+            "uuid": "3413218c-3d86-498b-a0a2-9a406638e786"
+        },
+        "sex": "",
+        "life_stage": "",
+        "age": "",
+        "age_units": "",
+        "health_status": "",
+        "ethnicity": ""
+    }, utils.parse_encode_donor(donor))
+
+    def test_parse_encode_json(self):
+        with open(self.encode_experiment_path, 'r') as f:
+            experiment = json.loads(f.read())
+        with open (self.encode_experiment_output_path, 'r') as f:
+            output = json.loads(f.read())
+        self.assertEqual(output, utils.parse_encode_json('ENCSR998WNE', experiment))
+                  
     def test_parse_tsv(self):
         s = 'header1\theader2\theader3\nvalue1\tvalue2\tvalue3'
         self.assertEqual([{
@@ -217,6 +322,19 @@ class TestUtils(TestCase):
             self.assertEqual(['SRP1'], utils.geo_id_to_srps('id'))
             ncbi_summary.assert_called_once_with('gds', 'id')
 
+    def test_gsm_id_to_srx(self):
+        with mock.patch('ffq.utils.ncbi_summary') as ncbi_summary:
+            ncbi_summary.return_value = {
+                'id': {
+                    'extrelations': [{
+                        'relationtype': 'SRA',
+                        'targetobject': 'SRX1'
+                    }]
+                }
+            }
+            self.assertEqual(['SRX1'], utils.geo_id_to_srps('id'))
+            ncbi_summary.assert_called_once_with('gds', 'id')
+
     def test_geo_id_to_srps_bioproject(self):
         with mock.patch('ffq.utils.ncbi_summary') as ncbi_summary,\
             mock.patch('ffq.utils.ncbi_search') as ncbi_search,\
@@ -265,12 +383,133 @@ class TestUtils(TestCase):
                 }
             )
 
-    def test_parse_run_range(self):
+    def test_parse_range_srr(self):
         text = 'SRR10-SRR13'
         self.assertEqual(['SRR10', 'SRR11', 'SRR12', 'SRR13'],
-                         utils.parse_run_range(text))
+                         utils.parse_range(text))
+        
+    def test_parse_range_arbitrary(self):
+        text = 'XXXX10-XXXX13'
+        self.assertEqual(['XXXX10', 'XXXX11', 'XXXX12', 'XXXX13'],
+                         utils.parse_range(text))
 
-    def test_parse_run_range_leading_zero(self):
+    def test_parse_range_leading_zero(self):
         text = 'SRR01-SRR05'
         self.assertEqual(['SRR01', 'SRR02', 'SRR03', 'SRR04', 'SRR05'],
-                         utils.parse_run_range(text))
+                         utils.parse_range(text))
+
+    def test_geo_to_suppl(self):
+        self.assertEqual([{'filename': 'GSM12345.CEL.gz',
+                            'size': '2964920',
+                            'url': 'ftp.ncbi.nlm.nih.gov/geo/samples/GSM12nnn/GSM12345/suppl/GSM12345.CEL.gz'}],
+                            utils.geo_to_suppl("GSM12345", "GSM"))
+        self.assertEqual([{'filename': 'filelist.txt',
+                            'size': '697',
+                            'url': 'ftp.ncbi.nlm.nih.gov/geo/series/GSE102nnn/GSE102592/suppl/filelist.txt'},
+                            {'filename': 'GSE102592_RAW.tar',
+                            'size': '176916480',
+                            'url': 'ftp.ncbi.nlm.nih.gov/geo/series/GSE102nnn/GSE102592/suppl/GSE102592_RAW.tar'}],
+                            utils.geo_to_suppl("GSE102592", "GSE"))
+
+    def test_gsm_to_platform(self):
+        accession = 'GSM2928379'
+        self.assertEqual({'platform': {'accession': 'GPL21290',
+                          'title': 'Illumina HiSeq 3000 (Homo sapiens)'}},
+                         utils.gsm_to_platform(accession))
+
+
+
+    def test_gse_to_gsms(self):
+        with mock.patch('ffq.utils.get_gse_search_json') as get_gse_search_json, \
+            mock.patch('ffq.utils.ncbi_summary') as ncbi_summary:
+            get_gse_search_json.return_value = BeautifulSoup(
+                """{"header":{"type":"esearch","version":"0.3"},"esearchresult":{
+                    "count":"16","retmax":"1","retstart":"0","idlist":["200128889"],
+                    "translationset":[],"translationstack":[{"term":"GSE128889[GEO Accession]",
+                    "field":"GEO Accession","count":"16","explode":"N"},"GROUP"],
+                    "querytranslation":"GSE128889[GEO Accession]"}}\n""", 'html.parser'
+                    )
+            
+            ncbi_summary.return_value = {'200128889': {'accession': 'GSE128889',
+                                                       'bioproject': 'PRJNA532348',
+                                                       'entrytype': 'GSE',
+                                                       'samples': [
+                                                           {'accession': 'GSM3717979'},
+                                                           {'accession': 'GSM3717982', 'title': 'BulkRNA-seq_murine_p12_CD142_Rep3'},
+                                                           {'accession': 'GSM3717978'},
+                                                           {'accession': 'GSM3717981', 'title': 'BulkRNA-seq_murine_p12_CD142_Rep2'}
+                                                           ]
+                                                       }
+                                         }
+            self.assertEqual(['GSM3717978', 'GSM3717979', 'GSM3717981', 'GSM3717982'],
+                            utils.gse_to_gsms("accession"))
+                            
+  
+    def test_gsm_to_srx(self):
+        with mock.patch('ffq.utils.get_gsm_search_json') as get_gsm_search_json, \
+            mock.patch('ffq.utils.ncbi_summary') as ncbi_summary:
+                get_gsm_search_json.return_value = {'accession': "GSM3717978",
+                                                    'geo_id': "303717978"}
+                ncbi_summary.return_value = {
+                    '303717978': {
+                        'accession': 'GSM3717978','bioproject': '',
+                        'entrytype': 'GSM','extrelations': [
+                            {'relationtype': 'SRA',
+                             'targetftplink': 'ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX569/SRX5692097/',
+                             'targetobject': 'SRX5692097'}
+                            ]
+                        }
+                    }
+                self.assertEqual("SRX5692097", 
+                             utils.gsm_to_srx("accession"))
+
+
+    def test_srs_to_srx(self):
+            
+        soup = BeautifulSoup("""<?xml version="1.0" encoding="utf-8"?>
+                                            <SAMPLE_SET>
+                                            <SAMPLE accession="SRS4631628" alias="GSM3717977" broker_name="NCBI">
+                                            <XREF_LINK>
+                                            <DB>ENA-EXPERIMENT</DB>
+                                            <ID>SRX5692096</ID>
+                                            </SAMPLE>
+                                            </SAMPLE_SET>""", 'xml'
+                                            )
+        self.assertEqual("SRX5692096", utils.srs_to_srx("SRS4631628"))  
+        
+
+    def test_srx_to_srrs(self):
+        self.assertEqual(['SRR8984431', 'SRR8984432', 'SRR8984433', 'SRR8984434'],utils.srx_to_srrs("SRX5763720"))
+        
+        
+    def test_get_files_metadata_from_run(self):
+        with open(self.run_path, 'r') as f:
+            soup = BeautifulSoup(f.read(), 'xml')
+        self.assertEqual([
+            {
+                'md5': 'be7e88cf6f6fd90f1b1170f1cb367123',
+                'size': '5507959060',
+                'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'
+            },
+            {
+                'md5': '2124da22644d876c4caa92ffd9e2402e',
+                'size': '7194107512',
+                'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz'
+            }
+        ], utils.get_files_metadata_from_run(soup))
+
+    def test_get_files_metadata_from_run_bam(self):
+        with open(self.run2_path, 'r') as f:
+            soup = BeautifulSoup(f.read(), 'xml')
+        self.assertEqual([
+                {
+                    'md5': '5355fe6a07155026085ce46631268ab1',
+                    'size': '17093057664',
+                    'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam'
+                }
+        ], utils.get_files_metadata_from_run(soup))      
+    
+    def test_parse_url(self):
+        self.assertEqual(('fastq', '1'), 
+                         utils.parse_url('ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'))
+        

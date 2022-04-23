@@ -1,0 +1,266 @@
+{
+    "GSM4339769": {
+        "accession": "GSM4339769",
+        "supplementary_files": [
+            {
+                "filename": "GSM4339769_C141_filtered_feature_bc_matrix.h5",
+                "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM4339nnn/GSM4339769/suppl/GSM4339769_C141_filtered_feature_bc_matrix.h5",
+                "size": "21360104"
+            }
+        ],
+        "platform": {
+            "accession": "GPL23227",
+            "title": "BGISEQ-500 (Homo sapiens)"
+        },
+        "samples": {
+            "SRS6216589": {
+                "accession": "SRS6216589",
+                "title": "BALF, C141 (scRNA-seq)",
+                "organism": "Homo sapiens",
+                "attributes": {
+                    "source_name": "BALF",
+                    "disease state": "Coronavirus infected disease-19 (COVID-19)",
+                    "patient group": "mild",
+                    "tissue": "lung",
+                    "sample type": "BALF",
+                    "cell subsets": "Total cell",
+                    "ENA-SPOT-COUNT": 2825449586,
+                    "ENA-BASE-COUNT": 177690492174,
+                    "ENA-FIRST-PUBLIC": "2020-04-23",
+                    "ENA-LAST-UPDATE": "2020-04-24"
+                },
+                "experiments": {
+                    "SRX7802546": {
+                        "accession": "SRX7802546",
+                        "title": "BGISEQ-500 paired end sequencing; GSM4339769: BALF, C141 (scRNA-seq); Homo sapiens; RNA-Seq",
+                        "platform": "BGISEQ",
+                        "instrument": "BGISEQ-500",
+                        "runs": {
+                            "SRR11181954": {
+                                "accession": "SRR11181954",
+                                "experiment": "SRX7802546",
+                                "study": "SRP250732",
+                                "sample": "SRS6216589",
+                                "title": "BGISEQ-500 paired end sequencing; GSM4339769: BALF, C141 (scRNA-seq); Homo sapiens; RNA-Seq",
+                                "attributes": {
+                                    "loader": "fastq-load.py",
+                                    "options": "--read1PairFiles=\"C141_R1.fastq.gz\"   --read2PairFiles=\"C141_R2.fastq.gz\"",
+                                    "ENA-SPOT-COUNT": 2825449586,
+                                    "ENA-BASE-COUNT": 177690492174,
+                                    "ENA-FIRST-PUBLIC": "2020-04-23",
+                                    "ENA-LAST-UPDATE": "2020-07-30"
+                                },
+                                "files": {
+                                    "ftp": [
+                                        {
+                                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR111/054/SRR11181954/SRR11181954.fastq.gz",
+                                            "md5": "366a3a273a85e820bddbcb1e58df383b",
+                                            "size": 147793265862
+                                        }
+                                    ],
+                                    "aws": [
+                                        {
+                                            "url": "https://sra-pub-sars-cov2.s3.amazonaws.com/sra-src/SRR11181954/C141_R1.fastq.1"
+                                        },
+                                        {
+                                            "url": "https://sra-pub-sars-cov2.s3.amazonaws.com/sra-src/SRR11181954/C141_R2.fastq.1"
+                                        }
+                                    ],
+                                    "gcp": [
+                                        {
+                                            "url": "https://storage.googleapis.com/nih-sequence-read-archive/sra-src/SRR11181954/C141_R1.fastq.1"
+                                        },
+                                        {
+                                            "url": "https://storage.googleapis.com/nih-sequence-read-archive/sra-src/SRR11181954/C141_R2.fastq.1"
+                                        }
+                                    ],
+                                    "ncbi": [
+                                        {
+                                            "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-19/SRR11181954/SRR11181954.2"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "GSM4339770": {
+        "accession": "GSM4339770",
+        "supplementary_files": [
+            {
+                "filename": "GSM4339770_C142_filtered_feature_bc_matrix.h5",
+                "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM4339nnn/GSM4339770/suppl/GSM4339770_C142_filtered_feature_bc_matrix.h5",
+                "size": "21138285"
+            }
+        ],
+        "platform": {
+            "accession": "GPL23227",
+            "title": "BGISEQ-500 (Homo sapiens)"
+        },
+        "samples": {
+            "SRS6216590": {
+                "accession": "SRS6216590",
+                "title": "BALF, C142 (scRNA-seq)",
+                "organism": "Homo sapiens",
+                "attributes": {
+                    "source_name": "BALF",
+                    "disease state": "Coronavirus infected disease-19 (COVID-19)",
+                    "patient group": "mild",
+                    "tissue": "lung",
+                    "sample type": "BALF",
+                    "cell subsets": "Total cell",
+                    "ENA-SPOT-COUNT": 2464780618,
+                    "ENA-BASE-COUNT": 154973836954,
+                    "ENA-FIRST-PUBLIC": "2020-04-23",
+                    "ENA-LAST-UPDATE": "2020-04-24"
+                },
+                "experiments": {
+                    "SRX7802547": {
+                        "accession": "SRX7802547",
+                        "title": "BGISEQ-500 paired end sequencing; GSM4339770: BALF, C142 (scRNA-seq); Homo sapiens; RNA-Seq",
+                        "platform": "BGISEQ",
+                        "instrument": "BGISEQ-500",
+                        "runs": {
+                            "SRR11181955": {
+                                "accession": "SRR11181955",
+                                "experiment": "SRX7802547",
+                                "study": "SRP250732",
+                                "sample": "SRS6216590",
+                                "title": "BGISEQ-500 paired end sequencing; GSM4339770: BALF, C142 (scRNA-seq); Homo sapiens; RNA-Seq",
+                                "attributes": {
+                                    "loader": "fastq-load.py",
+                                    "options": "--read1PairFiles=\"C142_R1.fastq.gz\"   --read2PairFiles=\"C142_R2.fastq.gz\"",
+                                    "ENA-SPOT-COUNT": 2464780618,
+                                    "ENA-BASE-COUNT": 154973836954,
+                                    "ENA-FIRST-PUBLIC": "2020-04-23",
+                                    "ENA-LAST-UPDATE": "2020-07-30"
+                                },
+                                "files": {
+                                    "ftp": [
+                                        {
+                                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR111/055/SRR11181955/SRR11181955.fastq.gz",
+                                            "md5": "edc6f8fd31d797d9a4112bb1334f0bde",
+                                            "size": 129430871014
+                                        }
+                                    ],
+                                    "aws": [
+                                        {
+                                            "url": "s3://sra-pub-src-11/SRR11181955/C142_R1.fastq.1"
+                                        },
+                                        {
+                                            "url": "s3://sra-pub-src-11/SRR11181955/C142_R2.fastq.1"
+                                        }
+                                    ],
+                                    "gcp": [
+                                        {
+                                            "url": "gs://sra-pub-src-11/SRR11181955/C142_R1.fastq.1"
+                                        },
+                                        {
+                                            "url": "gs://sra-pub-src-11/SRR11181955/C142_R2.fastq.1"
+                                        }
+                                    ],
+                                    "ncbi": [
+                                        {
+                                            "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-20/SRR11181955/SRR11181955.2"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "GSM4339771": {
+        "accession": "GSM4339771",
+        "supplementary_files": [
+            {
+                "filename": "GSM4339771_C143_filtered_feature_bc_matrix.h5",
+                "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM4339nnn/GSM4339771/suppl/GSM4339771_C143_filtered_feature_bc_matrix.h5",
+                "size": "53660847"
+            }
+        ],
+        "platform": {
+            "accession": "GPL23227",
+            "title": "BGISEQ-500 (Homo sapiens)"
+        },
+        "samples": {
+            "SRS6216591": {
+                "accession": "SRS6216591",
+                "title": "BALF, C143 (scRNA-seq)",
+                "organism": "Homo sapiens",
+                "attributes": {
+                    "source_name": "BALF",
+                    "disease state": "Coronavirus infected disease-19 (COVID-19)",
+                    "patient group": "severe",
+                    "tissue": "lung",
+                    "sample type": "BALF",
+                    "cell subsets": "Total cell",
+                    "ENA-SPOT-COUNT": 2835372634,
+                    "ENA-BASE-COUNT": 178372867658,
+                    "ENA-FIRST-PUBLIC": "2020-04-23",
+                    "ENA-LAST-UPDATE": "2020-04-24"
+                },
+                "experiments": {
+                    "SRX7802548": {
+                        "accession": "SRX7802548",
+                        "title": "BGISEQ-500 paired end sequencing; GSM4339771: BALF, C143 (scRNA-seq); Homo sapiens; RNA-Seq",
+                        "platform": "BGISEQ",
+                        "instrument": "BGISEQ-500",
+                        "runs": {
+                            "SRR11181956": {
+                                "accession": "SRR11181956",
+                                "experiment": "SRX7802548",
+                                "study": "SRP250732",
+                                "sample": "SRS6216591",
+                                "title": "BGISEQ-500 paired end sequencing; GSM4339771: BALF, C143 (scRNA-seq); Homo sapiens; RNA-Seq",
+                                "attributes": {
+                                    "loader": "fastq-load.py",
+                                    "options": "--read1PairFiles=\"C143_R1.fastq.gz\"   --read2PairFiles=\"C143_R2.fastq.gz\"",
+                                    "ENA-SPOT-COUNT": 2835372634,
+                                    "ENA-BASE-COUNT": 178372867658,
+                                    "ENA-FIRST-PUBLIC": "2020-04-23",
+                                    "ENA-LAST-UPDATE": "2020-07-30"
+                                },
+                                "files": {
+                                    "ftp": [
+                                        {
+                                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR111/056/SRR11181956/SRR11181956.fastq.gz",
+                                            "md5": "bd99affef5ca502a9e16e94d2ef04434",
+                                            "size": 148485489095
+                                        }
+                                    ],
+                                    "aws": [
+                                        {
+                                            "url": "https://sra-pub-sars-cov2.s3.amazonaws.com/sra-src/SRR11181956/C143_R1.fastq.1"
+                                        },
+                                        {
+                                            "url": "https://sra-pub-sars-cov2.s3.amazonaws.com/sra-src/SRR11181956/C143_R2.fastq.1"
+                                        }
+                                    ],
+                                    "gcp": [
+                                        {
+                                            "url": "https://storage.googleapis.com/nih-sequence-read-archive/sra-src/SRR11181956/C143_R1.fastq.1"
+                                        },
+                                        {
+                                            "url": "https://storage.googleapis.com/nih-sequence-read-archive/sra-src/SRR11181956/C143_R2.fastq.1"
+                                        }
+                                    ],
+                                    "ncbi": [
+                                        {
+                                            "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-19/SRR11181956/SRR11181956.2"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

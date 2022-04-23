@@ -1,930 +1,595 @@
 {
-    "GSE135326": {
-        "accession": "GSE135326",
-        "geo_id": "200135326",
-        "study": {
-            "accession": "SRP217236",
-            "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
-            "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)",
-            "runs": {
-                "SRR9895509": {
-                    "accession": "SRR9895509",
-                    "experiment": {
-                        "accession": "SRX6647876",
-                        "title": "HiSeq X Ten sequencing; GSM4005492: Artis_A3; Mus musculus; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "HiSeq X Ten"
-                    },
-                    "study": {
-                        "accession": "SRP217236",
-                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
-                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
-                    },
-                    "sample": {
-                        "accession": "SRS5208565",
-                        "title": "Artis_A3",
-                        "organism": "Mus musculus",
-                        "attributes": {
-                            "source_name": "medial prefrontal cortex (mPFC)",
-                            "age": "adult",
-                            "brain region": "medial prefrontal cortex",
-                            "treatment": "Antibiotic-treated",
-                            "ENA-SPOT-COUNT": "200444657",
-                            "ENA-BASE-COUNT": "19242687072",
-                            "ENA-FIRST-PUBLIC": "2019-08-07",
-                            "ENA-LAST-UPDATE": "2019-08-07"
-                        }
-                    },
-                    "title": "HiSeq X Ten sequencing; GSM4005492: Artis_A3; Mus musculus; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895509/Artis_A3_possorted_genome_bam.bam",
-                            "md5": "3252eefb72814201f2baff7ae7fd1e3d",
-                            "size": "21797401053"
-                        },
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895509/Artis_A3_possorted_genome_bam.bam.bai",
-                            "md5": "fe90ce27170fb6a2db9cffc80495684e",
-                            "size": "12068048"
-                        }
-                    ]
+    "GSE115469": {
+        "accession": "GSE115469",
+        "supplementary_files": [
+            {
+                "filename": "GSE115469_Data.csv.gz",
+                "url": "ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115469/suppl/GSE115469_Data.csv.gz",
+                "size": "108065293"
+            },
+            {
+                "filename": "GSE115469_CellClusterType.txt.gz",
+                "url": "ftp.ncbi.nlm.nih.gov/geo/series/GSE115nnn/GSE115469/suppl/GSE115469_CellClusterType.txt.gz",
+                "size": "78393"
+            }
+        ],
+        "geo_samples": {
+            "GSM3178782": {
+                "accession": "GSM3178782",
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
                 },
-                "SRR9895510": {
-                    "accession": "SRR9895510",
-                    "experiment": {
-                        "accession": "SRX6647877",
-                        "title": "HiSeq X Ten sequencing; GSM4005493: Artis_A4; Mus musculus; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "HiSeq X Ten"
-                    },
-                    "study": {
-                        "accession": "SRP217236",
-                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
-                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
-                    },
-                    "sample": {
-                        "accession": "SRS5208562",
-                        "title": "Artis_A4",
-                        "organism": "Mus musculus",
+                "samples": {
+                    "SRS3391629": {
+                        "accession": "SRS3391629",
+                        "title": "Patient 1 Total Liver Homogenate",
+                        "organism": "Homo sapiens",
                         "attributes": {
-                            "source_name": "medial prefrontal cortex (mPFC)",
-                            "age": "adult",
-                            "brain region": "medial prefrontal cortex",
-                            "treatment": "Antibiotic-treated",
-                            "ENA-SPOT-COUNT": "182375428",
-                            "ENA-BASE-COUNT": "17508041088",
-                            "ENA-FIRST-PUBLIC": "2019-08-07",
-                            "ENA-LAST-UPDATE": "2019-08-07"
-                        }
-                    },
-                    "title": "HiSeq X Ten sequencing; GSM4005493: Artis_A4; Mus musculus; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895510/Artis_A4_possorted_genome_bam.bam",
-                            "md5": "99823f55a89ec19b66ecd16472f27f73",
-                            "size": "20387309051"
+                            "source_name": "Liver",
+                            "tissue": "Total Liver Homogenate",
+                            "ENA-SPOT-COUNT": 166595045,
+                            "ENA-BASE-COUNT": 16326314410,
+                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                            "ENA-LAST-UPDATE": "2018-10-23"
                         },
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895510/Artis_A4_possorted_genome_bam.bam.bai",
-                            "md5": "3b5d12057ed0297aa92165eb70943b9c",
-                            "size": "11409872"
+                        "experiments": {
+                            "SRX4180079": {
+                                "accession": "SRX4180079",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178782: Patient 1 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR7276474": {
+                                        "accession": "SRR7276474",
+                                        "experiment": "SRX4180079",
+                                        "study": "SRP149989",
+                                        "sample": "SRS3391629",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178782: Patient 1 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "assembly": "hg38",
+                                            "ENA-SPOT-COUNT": 166595045,
+                                            "ENA-BASE-COUNT": 16326314410,
+                                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                                            "ENA-LAST-UPDATE": "2018-10-23"
+                                        },
+                                        "files": {
+                                            "ftp": [
+                                                {
+                                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P1TLH.bam",
+                                                    "md5": "d0fde6bf21d9f97bdf349a3d6f0a8787",
+                                                    "size": 48545467653
+                                                }
+                                            ],
+                                            "aws": [
+                                                {
+                                                    "url": "https://sra-pub-src-1.s3.amazonaws.com/SRR7276474/P1TLH.bam.1"
+                                                }
+                                            ],
+                                            "gcp": [
+                                                {
+                                                    "url": "gs://sra-pub-src-1/SRR7276474/P1TLH.bam.1"
+                                                }
+                                            ],
+                                            "ncbi": [
+                                                {
+                                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR7276474/SRR7276474.1"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    ]
+                    }
+                }
+            },
+            "GSM3178783": {
+                "accession": "GSM3178783",
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
                 },
-                "SRR9895511": {
-                    "accession": "SRR9895511",
-                    "experiment": {
-                        "accession": "SRX6647878",
-                        "title": "HiSeq X Ten sequencing; GSM4005494: Artis_B3; Mus musculus; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "HiSeq X Ten"
-                    },
-                    "study": {
-                        "accession": "SRP217236",
-                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
-                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
-                    },
-                    "sample": {
-                        "accession": "SRS5208563",
-                        "title": "Artis_B3",
-                        "organism": "Mus musculus",
+                "samples": {
+                    "SRS3391631": {
+                        "accession": "SRS3391631",
+                        "title": "Patient 2 Total Liver Homogenate",
+                        "organism": "Homo sapiens",
                         "attributes": {
-                            "source_name": "medial prefrontal cortex (mPFC)",
-                            "age": "adult",
-                            "brain region": "medial prefrontal cortex",
-                            "treatment": "Control",
-                            "ENA-SPOT-COUNT": "187244844",
-                            "ENA-BASE-COUNT": "17975505024",
-                            "ENA-FIRST-PUBLIC": "2019-08-07",
-                            "ENA-LAST-UPDATE": "2019-08-07"
-                        }
-                    },
-                    "title": "HiSeq X Ten sequencing; GSM4005494: Artis_B3; Mus musculus; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895511/Artis_B3_possorted_genome_bam.bam",
-                            "md5": "3b8459752bafb76bd4152ea5e7facf02",
-                            "size": "20824036139"
+                            "source_name": "Liver",
+                            "tissue": "Total Liver Homogenate",
+                            "ENA-SPOT-COUNT": 392750718,
+                            "ENA-BASE-COUNT": 38489570364,
+                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                            "ENA-LAST-UPDATE": "2018-10-23"
                         },
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895511/Artis_B3_possorted_genome_bam.bam.bai",
-                            "md5": "8fd99342fcd71628f1a04c32abc37c44",
-                            "size": "11767224"
+                        "experiments": {
+                            "SRX4180080": {
+                                "accession": "SRX4180080",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178783: Patient 2 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR7276475": {
+                                        "accession": "SRR7276475",
+                                        "experiment": "SRX4180080",
+                                        "study": "SRP149989",
+                                        "sample": "SRS3391631",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178783: Patient 2 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "assembly": "hg38",
+                                            "ENA-SPOT-COUNT": 392750718,
+                                            "ENA-BASE-COUNT": 38489570364,
+                                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                                            "ENA-LAST-UPDATE": "2018-10-23"
+                                        },
+                                        "files": {
+                                            "ftp": [
+                                                {
+                                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P2TLH.bam",
+                                                    "md5": "b13f5e760b6d9d6b4d51b40705202983",
+                                                    "size": 69477495465
+                                                }
+                                            ],
+                                            "aws": [
+                                                {
+                                                    "url": "https://sra-pub-src-1.s3.amazonaws.com/SRR7276475/P2TLH.bam.1"
+                                                }
+                                            ],
+                                            "gcp": [
+                                                {
+                                                    "url": "gs://sra-pub-src-1/SRR7276475/P2TLH.bam.1"
+                                                }
+                                            ],
+                                            "ncbi": [
+                                                {
+                                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR7276475/SRR7276475.1"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    ]
+                    }
+                }
+            },
+            "GSM3178784": {
+                "accession": "GSM3178784",
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
                 },
-                "SRR9895512": {
-                    "accession": "SRR9895512",
-                    "experiment": {
-                        "accession": "SRX6647879",
-                        "title": "HiSeq X Ten sequencing; GSM4005495: Artis_B4; Mus musculus; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "HiSeq X Ten"
-                    },
-                    "study": {
-                        "accession": "SRP217236",
-                        "title": "The intestinal microbiota regulate neuronal function and fear extinction learning",
-                        "abstract": "Assessing gene expression changes in the medial prefrontal cortex of adult mice associated with antibiotic treatment Overall design: Single nucleus RNA sequencing of medial prefrontal cortex isolated from 4 adult mice (two treated with antibiotics, two control)"
-                    },
-                    "sample": {
-                        "accession": "SRS5208564",
-                        "title": "Artis_B4",
-                        "organism": "Mus musculus",
+                "samples": {
+                    "SRS3391630": {
+                        "accession": "SRS3391630",
+                        "title": "Patient 3 Total Liver Homogenate",
+                        "organism": "Homo sapiens",
                         "attributes": {
-                            "source_name": "medial prefrontal cortex (mPFC)",
-                            "age": "adult",
-                            "brain region": "medial prefrontal cortex",
-                            "treatment": "Control",
-                            "ENA-SPOT-COUNT": "209920123",
-                            "ENA-BASE-COUNT": "20152331808",
-                            "ENA-FIRST-PUBLIC": "2019-08-07",
-                            "ENA-LAST-UPDATE": "2019-08-07"
-                        }
-                    },
-                    "title": "HiSeq X Ten sequencing; GSM4005495: Artis_B4; Mus musculus; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895512/Artis_B4_possorted_genome_bam.bam",
-                            "md5": "988778036055cb793d5f56073d58a64d",
-                            "size": "22812618518"
+                            "source_name": "Liver",
+                            "tissue": "Total Liver Homogenate",
+                            "ENA-SPOT-COUNT": 165902306,
+                            "ENA-BASE-COUNT": 16258425988,
+                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                            "ENA-LAST-UPDATE": "2018-10-23"
                         },
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR989/SRR9895512/Artis_B4_possorted_genome_bam.bam.bai",
-                            "md5": "bdb687b29bec887d2249c1dba511caf3",
-                            "size": "12143208"
+                        "experiments": {
+                            "SRX4180081": {
+                                "accession": "SRX4180081",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178784: Patient 3 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR7276476": {
+                                        "accession": "SRR7276476",
+                                        "experiment": "SRX4180081",
+                                        "study": "SRP149989",
+                                        "sample": "SRS3391630",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178784: Patient 3 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "assembly": "hg38",
+                                            "ENA-SPOT-COUNT": 165902306,
+                                            "ENA-BASE-COUNT": 16258425988,
+                                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                                            "ENA-LAST-UPDATE": "2018-10-23"
+                                        },
+                                        "files": {
+                                            "ftp": [
+                                                {
+                                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P3TLH.bam",
+                                                    "md5": "d1ef981eee539acf769524dca92fc962",
+                                                    "size": 40823222969
+                                                }
+                                            ],
+                                            "aws": [
+                                                {
+                                                    "url": "https://sra-pub-src-1.s3.amazonaws.com/SRR7276476/P3TLH.bam.1"
+                                                }
+                                            ],
+                                            "gcp": [
+                                                {
+                                                    "url": "gs://sra-pub-src-1/SRR7276476/P3TLH.bam.1"
+                                                }
+                                            ],
+                                            "ncbi": [
+                                                {
+                                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR7276476/SRR7276476.1"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    ]
+                    }
+                }
+            },
+            "GSM3178785": {
+                "accession": "GSM3178785",
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
+                },
+                "samples": {
+                    "SRS3391632": {
+                        "accession": "SRS3391632",
+                        "title": "Patient 4 Total Liver Homogenate",
+                        "organism": "Homo sapiens",
+                        "attributes": {
+                            "source_name": "Liver",
+                            "tissue": "Total Liver Homogenate",
+                            "ENA-SPOT-COUNT": 171900077,
+                            "ENA-BASE-COUNT": 16846207546,
+                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                            "ENA-LAST-UPDATE": "2018-10-23"
+                        },
+                        "experiments": {
+                            "SRX4180082": {
+                                "accession": "SRX4180082",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178785: Patient 4 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR7276477": {
+                                        "accession": "SRR7276477",
+                                        "experiment": "SRX4180082",
+                                        "study": "SRP149989",
+                                        "sample": "SRS3391632",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178785: Patient 4 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "assembly": "hg38",
+                                            "ENA-SPOT-COUNT": 171900077,
+                                            "ENA-BASE-COUNT": 16846207546,
+                                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                                            "ENA-LAST-UPDATE": "2018-10-23"
+                                        },
+                                        "files": {
+                                            "ftp": [
+                                                {
+                                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P4TLH.bam",
+                                                    "md5": "3ed9267611b815b2916e487e4f329a16",
+                                                    "size": 50474306271
+                                                }
+                                            ],
+                                            "aws": [
+                                                {
+                                                    "url": "https://sra-pub-src-1.s3.amazonaws.com/SRR7276477/P4TLH.bam.1"
+                                                }
+                                            ],
+                                            "gcp": [
+                                                {
+                                                    "url": "gs://sra-pub-src-1/SRR7276477/P4TLH.bam.1"
+                                                }
+                                            ],
+                                            "ncbi": [
+                                                {
+                                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR7276477/SRR7276477.1"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "GSM3178786": {
+                "accession": "GSM3178786",
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
+                },
+                "samples": {
+                    "SRS3391633": {
+                        "accession": "SRS3391633",
+                        "title": "Patient 5 Total Liver Homogenate",
+                        "organism": "Homo sapiens",
+                        "attributes": {
+                            "source_name": "Liver",
+                            "tissue": "Total Liver Homogenate",
+                            "ENA-SPOT-COUNT": 153310090,
+                            "ENA-BASE-COUNT": 15024388820,
+                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                            "ENA-LAST-UPDATE": "2018-10-23"
+                        },
+                        "experiments": {
+                            "SRX4180083": {
+                                "accession": "SRX4180083",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178786: Patient 5 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR7276478": {
+                                        "accession": "SRR7276478",
+                                        "experiment": "SRX4180083",
+                                        "study": "SRP149989",
+                                        "sample": "SRS3391633",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3178786: Patient 5 Total Liver Homogenate; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "assembly": "hg38",
+                                            "ENA-SPOT-COUNT": 153310090,
+                                            "ENA-BASE-COUNT": 15024388820,
+                                            "ENA-FIRST-PUBLIC": "2018-10-23",
+                                            "ENA-LAST-UPDATE": "2018-10-23"
+                                        },
+                                        "files": {
+                                            "ftp": [
+                                                {
+                                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P5TLH.bam",
+                                                    "md5": "50b4d1f193192acb6676524bb27b5381",
+                                                    "size": 40628679317
+                                                }
+                                            ],
+                                            "aws": [
+                                                {
+                                                    "url": "https://sra-pub-src-1.s3.amazonaws.com/SRR7276478/P5TLH.bam.1"
+                                                }
+                                            ],
+                                            "gcp": [
+                                                {
+                                                    "url": "gs://sra-pub-src-1/SRR7276478/P5TLH.bam.1"
+                                                }
+                                            ],
+                                            "ncbi": [
+                                                {
+                                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR7276478/SRR7276478.1"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
     },
-    "GSE124494": {
-        "accession": "GSE124494",
-        "geo_id": "200124494",
-        "study": {
-            "accession": "SRP175077",
-            "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-            "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000.",
-            "runs": {
-                "SRR8387856": {
-                    "accession": "SRR8387856",
-                    "experiment": {
-                        "accession": "SRX5197633",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535276: AXLN1; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
+    "GSE130073": {
+        "accession": "GSE130073",
+        "supplementary_files": [
+            {
+                "filename": "filelist.txt",
+                "url": "ftp.ncbi.nlm.nih.gov/geo/series/GSE130nnn/GSE130073/suppl/filelist.txt",
+                "size": "435"
+            },
+            {
+                "filename": "GSE130073_RAW.tar",
+                "url": "ftp.ncbi.nlm.nih.gov/geo/series/GSE130nnn/GSE130073/suppl/GSE130073_RAW.tar",
+                "size": "85841920"
+            }
+        ],
+        "geo_samples": {
+            "GSM3731527": {
+                "accession": "GSM3731527",
+                "supplementary_files": [
+                    {
+                        "filename": "GSM3731527_Human_liver_organoids_barcodes.tsv.gz",
+                        "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM3731nnn/GSM3731527/suppl/GSM3731527_Human_liver_organoids_barcodes.tsv.gz",
+                        "size": "17212"
                     },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
+                    {
+                        "filename": "GSM3731527_Human_liver_organoids_cloupe.cloupe.gz",
+                        "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM3731nnn/GSM3731527/suppl/GSM3731527_Human_liver_organoids_cloupe.cloupe.gz",
+                        "size": "55634023"
                     },
-                    "sample": {
-                        "accession": "SRS4203422",
-                        "title": "AXLN1",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN1 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 1",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "345300524",
-                            "ENA-BASE-COUNT": "26242839824",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
+                    {
+                        "filename": "GSM3731527_Human_liver_organoids_genes.tsv.gz",
+                        "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM3731nnn/GSM3731527/suppl/GSM3731527_Human_liver_organoids_genes.tsv.gz",
+                        "size": "257294"
                     },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535276: AXLN1; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/006/SRR8387856/SRR8387856.fastq.gz",
-                            "md5": "c149fcffaf5c1c17a4afcc75aaf3428a",
-                            "size": "10758070270"
-                        }
-                    ]
+                    {
+                        "filename": "GSM3731527_Human_liver_organoids_matrix.mtx.gz",
+                        "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM3731nnn/GSM3731527/suppl/GSM3731527_Human_liver_organoids_matrix.mtx.gz",
+                        "size": "29926848"
+                    }
+                ],
+                "platform": {
+                    "accession": "GPL16791",
+                    "title": "Illumina HiSeq 2500 (Homo sapiens)"
                 },
-                "SRR8387857": {
-                    "accession": "SRR8387857",
-                    "experiment": {
-                        "accession": "SRX5197633",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535276: AXLN1; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203422",
-                        "title": "AXLN1",
+                "samples": {
+                    "SRS4651465": {
+                        "accession": "SRS4651465",
+                        "title": "Human liver organoids",
                         "organism": "Homo sapiens",
                         "attributes": {
-                            "source_name": "AXLN1 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 1",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "345300524",
-                            "ENA-BASE-COUNT": "26242839824",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
+                            "source_name": "Human liver organoids",
+                            "cell type": "iPSC derived human liver organoids",
+                            "cultured day": "day33",
+                            "ENA-SPOT-COUNT": 100085280,
+                            "ENA-BASE-COUNT": 14712536160,
+                            "ENA-FIRST-PUBLIC": "2019-08-01",
+                            "ENA-LAST-UPDATE": "2019-08-01"
+                        },
+                        "experiments": {
+                            "SRX5712719": {
+                                "accession": "SRX5712719",
+                                "title": "Illumina HiSeq 2500 paired end sequencing; GSM3731527: Human liver organoids; Homo sapiens; RNA-Seq",
+                                "platform": "ILLUMINA",
+                                "instrument": "Illumina HiSeq 2500",
+                                "runs": {
+                                    "SRR8931977": {
+                                        "accession": "SRR8931977",
+                                        "experiment": "SRX5712719",
+                                        "study": "SRP193091",
+                                        "sample": "SRS4651465",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3731527: Human liver organoids; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "loader": "fastq-load.py",
+                                            "options": "--readTypes=TTB --read1PairFiles=10X_20933_3hrs_S1_L001_I1_001.fastq.gz --read2PairFiles=10X_20933_3hrs_S1_L001_R1_001.fastq.gz --read3PairFiles=10X_20933_3hrs_S1_L001_R2_001.fastq.gz",
+                                            "ENA-SPOT-COUNT": 48893369,
+                                            "ENA-BASE-COUNT": 7187325243,
+                                            "ENA-FIRST-PUBLIC": "2019-08-01",
+                                            "ENA-LAST-UPDATE": "2019-08-01"
+                                        },
+                                        "files": {
+                                            "ftp": [
+                                                {
+                                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR893/007/SRR8931977/SRR8931977.fastq.gz",
+                                                    "md5": "9f211978e973b36cefc37b82b1dfaa59",
+                                                    "size": 5422810285
+                                                }
+                                            ],
+                                            "aws": [
+                                                {
+                                                    "url": "s3://sra-pub-src-16/SRR8931977/10X_20933_3hrs_S1_L001_I1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "s3://sra-pub-src-18/SRR8931977/10X_20933_3hrs_S1_L001_R1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "s3://sra-pub-src-17/SRR8931977/10X_20933_3hrs_S1_L001_R2_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR8931977/SRR8931977"
+                                                },
+                                                {
+                                                    "url": "s3://sra-pub-src-15/SRR8931978/10X_20933_3hrs_S1_L002_I1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "s3://sra-pub-src-15/SRR8931978/10X_20933_3hrs_S1_L002_R1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "s3://sra-pub-src-17/SRR8931978/10X_20933_3hrs_S1_L002_R2_001.fastq.gz"
+                                                }
+                                            ],
+                                            "gcp": [
+                                                {
+                                                    "url": "gs://sra-pub-src-17/SRR8931977/10X_20933_3hrs_S1_L001_I1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-src-16/SRR8931977/10X_20933_3hrs_S1_L001_R1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-src-15/SRR8931977/10X_20933_3hrs_S1_L001_R2_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-run-7/SRR8931977/SRR8931977.1"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-src-18/SRR8931978/10X_20933_3hrs_S1_L002_I1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-src-18/SRR8931978/10X_20933_3hrs_S1_L002_R1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-src-17/SRR8931978/10X_20933_3hrs_S1_L002_R2_001.fastq.gz"
+                                                }
+                                            ],
+                                            "ncbi": [
+                                                {
+                                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR8931977/SRR8931977.1"
+                                                },
+                                                {
+                                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR8931978/SRR8931978.1"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "SRR8931978": {
+                                        "accession": "SRR8931978",
+                                        "experiment": "SRX5712719",
+                                        "study": "SRP193091",
+                                        "sample": "SRS4651465",
+                                        "title": "Illumina HiSeq 2500 paired end sequencing; GSM3731527: Human liver organoids; Homo sapiens; RNA-Seq",
+                                        "attributes": {
+                                            "loader": "fastq-load.py",
+                                            "options": "--readTypes=TTB --read1PairFiles=10X_20933_3hrs_S1_L002_I1_001.fastq.gz --read2PairFiles=10X_20933_3hrs_S1_L002_R1_001.fastq.gz --read3PairFiles=10X_20933_3hrs_S1_L002_R2_001.fastq.gz",
+                                            "ENA-SPOT-COUNT": 51191911,
+                                            "ENA-BASE-COUNT": 7525210917,
+                                            "ENA-FIRST-PUBLIC": "2019-08-01",
+                                            "ENA-LAST-UPDATE": "2019-08-01"
+                                        },
+                                        "files": {
+                                            "ftp": [
+                                                {
+                                                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR893/008/SRR8931978/SRR8931978.fastq.gz",
+                                                    "md5": "a85a097da94935ff827be797bdf26781",
+                                                    "size": 5730738161
+                                                }
+                                            ],
+                                            "aws": [
+                                                {
+                                                    "url": "s3://sra-pub-src-16/SRR8931977/10X_20933_3hrs_S1_L001_I1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "s3://sra-pub-src-18/SRR8931977/10X_20933_3hrs_S1_L001_R1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "s3://sra-pub-src-17/SRR8931977/10X_20933_3hrs_S1_L001_R2_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR8931977/SRR8931977"
+                                                },
+                                                {
+                                                    "url": "s3://sra-pub-src-15/SRR8931978/10X_20933_3hrs_S1_L002_I1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "s3://sra-pub-src-15/SRR8931978/10X_20933_3hrs_S1_L002_R1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "s3://sra-pub-src-17/SRR8931978/10X_20933_3hrs_S1_L002_R2_001.fastq.gz"
+                                                }
+                                            ],
+                                            "gcp": [
+                                                {
+                                                    "url": "gs://sra-pub-src-17/SRR8931977/10X_20933_3hrs_S1_L001_I1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-src-16/SRR8931977/10X_20933_3hrs_S1_L001_R1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-src-15/SRR8931977/10X_20933_3hrs_S1_L001_R2_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-run-7/SRR8931977/SRR8931977.1"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-src-18/SRR8931978/10X_20933_3hrs_S1_L002_I1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-src-18/SRR8931978/10X_20933_3hrs_S1_L002_R1_001.fastq.gz"
+                                                },
+                                                {
+                                                    "url": "gs://sra-pub-src-17/SRR8931978/10X_20933_3hrs_S1_L002_R2_001.fastq.gz"
+                                                }
+                                            ],
+                                            "ncbi": [
+                                                {
+                                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR8931977/SRR8931977.1"
+                                                },
+                                                {
+                                                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR8931978/SRR8931978.1"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
                         }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535276: AXLN1; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/007/SRR8387857/SRR8387857.fastq.gz",
-                            "md5": "982f27da40d35d359d765c625b06061b",
-                            "size": "8855552020"
-                        }
-                    ]
-                },
-                "SRR8387858": {
-                    "accession": "SRR8387858",
-                    "experiment": {
-                        "accession": "SRX5197634",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535277: AXLN2; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203423",
-                        "title": "AXLN2",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN2 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 1",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "243148535",
-                            "ENA-BASE-COUNT": "18479288660",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535277: AXLN2; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/008/SRR8387858/SRR8387858.fastq.gz",
-                            "md5": "0654c8373e39300f0274124f1834fd89",
-                            "size": "7023099297"
-                        }
-                    ]
-                },
-                "SRR8387859": {
-                    "accession": "SRR8387859",
-                    "experiment": {
-                        "accession": "SRX5197634",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535277: AXLN2; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203423",
-                        "title": "AXLN2",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN2 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 1",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "243148535",
-                            "ENA-BASE-COUNT": "18479288660",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535277: AXLN2; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/009/SRR8387859/SRR8387859.fastq.gz",
-                            "md5": "d5e8171ccac3ff92bd5be149d1ddfe06",
-                            "size": "7110576722"
-                        }
-                    ]
-                },
-                "SRR8387860": {
-                    "accession": "SRR8387860",
-                    "experiment": {
-                        "accession": "SRX5197635",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203424",
-                        "title": "AXLN3",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN3 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 2",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "429169380",
-                            "ENA-BASE-COUNT": "32616872880",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/000/SRR8387860/SRR8387860.fastq.gz",
-                            "md5": "b855941e03aa91012ab3886047952d58",
-                            "size": "1568267708"
-                        }
-                    ]
-                },
-                "SRR8387861": {
-                    "accession": "SRR8387861",
-                    "experiment": {
-                        "accession": "SRX5197635",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203424",
-                        "title": "AXLN3",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN3 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 2",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "429169380",
-                            "ENA-BASE-COUNT": "32616872880",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/001/SRR8387861/SRR8387861.fastq.gz",
-                            "md5": "10f0d4dfd16f106f8dea5227e7284942",
-                            "size": "1586214570"
-                        }
-                    ]
-                },
-                "SRR8387862": {
-                    "accession": "SRR8387862",
-                    "experiment": {
-                        "accession": "SRX5197635",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203424",
-                        "title": "AXLN3",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN3 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 2",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "429169380",
-                            "ENA-BASE-COUNT": "32616872880",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/002/SRR8387862/SRR8387862.fastq.gz",
-                            "md5": "90a35f58cf6db60d5df36c4cd1cecc9c",
-                            "size": "1744501315"
-                        }
-                    ]
-                },
-                "SRR8387863": {
-                    "accession": "SRR8387863",
-                    "experiment": {
-                        "accession": "SRX5197635",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203424",
-                        "title": "AXLN3",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN3 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 2",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "429169380",
-                            "ENA-BASE-COUNT": "32616872880",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/003/SRR8387863/SRR8387863.fastq.gz",
-                            "md5": "14e63d788f52f229ede9e165d19553cb",
-                            "size": "1647790470"
-                        }
-                    ]
-                },
-                "SRR8387864": {
-                    "accession": "SRR8387864",
-                    "experiment": {
-                        "accession": "SRX5197635",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203424",
-                        "title": "AXLN3",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN3 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 2",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "429169380",
-                            "ENA-BASE-COUNT": "32616872880",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/004/SRR8387864/SRR8387864.fastq.gz",
-                            "md5": "9fa144e70845ffc91abbab12d76c1378",
-                            "size": "1619615219"
-                        }
-                    ]
-                },
-                "SRR8387865": {
-                    "accession": "SRR8387865",
-                    "experiment": {
-                        "accession": "SRX5197635",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203424",
-                        "title": "AXLN3",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN3 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 2",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "429169380",
-                            "ENA-BASE-COUNT": "32616872880",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/005/SRR8387865/SRR8387865.fastq.gz",
-                            "md5": "ae69ad7b2568d5f955e9d377ff522e9c",
-                            "size": "327058187"
-                        }
-                    ]
-                },
-                "SRR8387866": {
-                    "accession": "SRR8387866",
-                    "experiment": {
-                        "accession": "SRX5197635",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203424",
-                        "title": "AXLN3",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN3 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 2",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "429169380",
-                            "ENA-BASE-COUNT": "32616872880",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/006/SRR8387866/SRR8387866.fastq.gz",
-                            "md5": "1541b5b5504e6901618c7d103779232a",
-                            "size": "1505009923"
-                        }
-                    ]
-                },
-                "SRR8387867": {
-                    "accession": "SRR8387867",
-                    "experiment": {
-                        "accession": "SRX5197635",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203424",
-                        "title": "AXLN3",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN3 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 2",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "429169380",
-                            "ENA-BASE-COUNT": "32616872880",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/007/SRR8387867/SRR8387867.fastq.gz",
-                            "md5": "b6b212c90cf59475c82fb9de0651bd57",
-                            "size": "1298007721"
-                        }
-                    ]
-                },
-                "SRR8387868": {
-                    "accession": "SRR8387868",
-                    "experiment": {
-                        "accession": "SRX5197635",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203424",
-                        "title": "AXLN3",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN3 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 2",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "429169380",
-                            "ENA-BASE-COUNT": "32616872880",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535278: AXLN3; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/008/SRR8387868/SRR8387868.fastq.gz",
-                            "md5": "974f7e138f972479384a730b70387fa1",
-                            "size": "1384174904"
-                        }
-                    ]
-                },
-                "SRR8387869": {
-                    "accession": "SRR8387869",
-                    "experiment": {
-                        "accession": "SRX5197636",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535279: AXLN4; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203425",
-                        "title": "AXLN4",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN4 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 3",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "516259487",
-                            "ENA-BASE-COUNT": "51109689213",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535279: AXLN4; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/009/SRR8387869/SRR8387869.fastq.gz",
-                            "md5": "81ae563e4f5d12f147b8fa6571d53757",
-                            "size": "11759292043"
-                        }
-                    ]
-                },
-                "SRR8387870": {
-                    "accession": "SRR8387870",
-                    "experiment": {
-                        "accession": "SRX5197636",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535279: AXLN4; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203425",
-                        "title": "AXLN4",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN4 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 3",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "516259487",
-                            "ENA-BASE-COUNT": "51109689213",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535279: AXLN4; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/000/SRR8387870/SRR8387870.fastq.gz",
-                            "md5": "93f9516e40030893c9979b462c981c19",
-                            "size": "12131071884"
-                        }
-                    ]
-                },
-                "SRR8387871": {
-                    "accession": "SRR8387871",
-                    "experiment": {
-                        "accession": "SRX5197636",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535279: AXLN4; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203425",
-                        "title": "AXLN4",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "AXLN4 lymphatic endothelial cells",
-                            "tissue": "Axillary lymph node",
-                            "individual": "Individual 3",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "516259487",
-                            "ENA-BASE-COUNT": "51109689213",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535279: AXLN4; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/001/SRR8387871/SRR8387871.fastq.gz",
-                            "md5": "0d2ce708f40257a7a6badf6a9fd6931b",
-                            "size": "12609611677"
-                        }
-                    ]
-                },
-                "SRR8387872": {
-                    "accession": "SRR8387872",
-                    "experiment": {
-                        "accession": "SRX5197637",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535280: HNLN1; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203426",
-                        "title": "HNLN1",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "HNLN1 lymphatic endothelial cells",
-                            "tissue": "Head and neck lymph node",
-                            "individual": "Individual 4",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "317650802",
-                            "ENA-BASE-COUNT": "31447429398",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535280: HNLN1; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/002/SRR8387872/SRR8387872.fastq.gz",
-                            "md5": "1660f85bd7b56296c293be7c75fe9020",
-                            "size": "11265659466"
-                        }
-                    ]
-                },
-                "SRR8387873": {
-                    "accession": "SRR8387873",
-                    "experiment": {
-                        "accession": "SRX5197637",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535280: HNLN1; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203426",
-                        "title": "HNLN1",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "HNLN1 lymphatic endothelial cells",
-                            "tissue": "Head and neck lymph node",
-                            "individual": "Individual 4",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "317650802",
-                            "ENA-BASE-COUNT": "31447429398",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535280: HNLN1; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/003/SRR8387873/SRR8387873.fastq.gz",
-                            "md5": "29bf55f85b0f09540d399caae936b28e",
-                            "size": "11165986000"
-                        }
-                    ]
-                },
-                "SRR8387874": {
-                    "accession": "SRR8387874",
-                    "experiment": {
-                        "accession": "SRX5197638",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535281: HNLN2; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203427",
-                        "title": "HNLN2",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "HNLN2 lymphatic endothelial cells",
-                            "tissue": "Head and neck lymph node",
-                            "individual": "Individual 5",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "343615247",
-                            "ENA-BASE-COUNT": "34017909453",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535281: HNLN2; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/004/SRR8387874/SRR8387874.fastq.gz",
-                            "md5": "48c2cd4e9ce72912ee6b83a3458687ed",
-                            "size": "12013488527"
-                        }
-                    ]
-                },
-                "SRR8387875": {
-                    "accession": "SRR8387875",
-                    "experiment": {
-                        "accession": "SRX5197638",
-                        "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535281: HNLN2; Homo sapiens; RNA-Seq",
-                        "platform": "ILLUMINA",
-                        "instrument": "Illumina HiSeq 3000"
-                    },
-                    "study": {
-                        "accession": "SRP175077",
-                        "title": "Single-cell survey of human lymphatics unveils marked endothelial cell heterogeneity and mechanisms of homing for neutrophils",
-                        "abstract": "Lymphatic vessels form a critical component in the regulation of human health and disease. While their functional significance is increasingly being recognized, the comprehensive heterogeneity of lymphatics remains uncharacterized. Here, we report the profiling of 33,000 lymphatic endothelial cells (LECs) in human lymph nodes (LNs) by single-cell RNA sequencing. Unbiased clustering revealed six major types of human LECs. LECs lining the sub-capsular sinus (SCS) of LNs abundantly expressed neutrophil chemoattractants, whereas LECs lining the medullary sinus (MS) expressed a C-type lectin CD209. Binding of a carbohydrate Lewis X (CD15) to CD209 mediated neutrophil binding to the MS. The neutrophil-selective homing by MS LECs may retain neutrophils in the LN medulla and allow lymph-borne pathogens to clear, preventing their spread through LNs in humans. Our study provides a comprehensive characterization of LEC heterogeneity and unveils a previously undefined role for medullary LECs in human immunity. Overall design: Droplet-based single-cell RNA sequencing (scRNAseq) of human CD45- CD31+ PDPN+ cells from the axillary LNs (AXLNs) and head and neck LNs (HNLNs). ScRNAseq was performed using 10X Genomics Single Cell 3' solution, version 2 according to manufacture's instructions. Libraries were sequenced on HiSeq3000."
-                    },
-                    "sample": {
-                        "accession": "SRS4203427",
-                        "title": "HNLN2",
-                        "organism": "Homo sapiens",
-                        "attributes": {
-                            "source_name": "HNLN2 lymphatic endothelial cells",
-                            "tissue": "Head and neck lymph node",
-                            "individual": "Individual 5",
-                            "cell type": "LN CD45- PDPN+ CD31+ cells",
-                            "ENA-SPOT-COUNT": "343615247",
-                            "ENA-BASE-COUNT": "34017909453",
-                            "ENA-FIRST-PUBLIC": "2019-08-09",
-                            "ENA-LAST-UPDATE": "2019-08-09"
-                        }
-                    },
-                    "title": "Illumina HiSeq 3000 paired end sequencing; GSM3535281: HNLN2; Homo sapiens; RNA-Seq",
-                    "files": [
-                        {
-                            "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR838/005/SRR8387875/SRR8387875.fastq.gz",
-                            "md5": "f5ee7f647a80b780f6980ea4bd36e789",
-                            "size": "11899282337"
-                        }
-                    ]
+                    }
                 }
             }
         }

@@ -1,0 +1,228 @@
+{
+    "accession": "GSE130073",
+    "supplementary_files": [
+        {
+            "filename": "filelist.txt",
+            "url": "ftp.ncbi.nlm.nih.gov/geo/series/GSE130nnn/GSE130073/suppl/filelist.txt",
+            "size": "435"
+        },
+        {
+            "filename": "GSE130073_RAW.tar",
+            "url": "ftp.ncbi.nlm.nih.gov/geo/series/GSE130nnn/GSE130073/suppl/GSE130073_RAW.tar",
+            "size": "85841920"
+        }
+    ],
+    "geo_samples": {
+        "GSM3731527": {
+            "accession": "GSM3731527",
+            "supplementary_files": [
+                {
+                    "filename": "GSM3731527_Human_liver_organoids_barcodes.tsv.gz",
+                    "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM3731nnn/GSM3731527/suppl/GSM3731527_Human_liver_organoids_barcodes.tsv.gz",
+                    "size": "17212"
+                },
+                {
+                    "filename": "GSM3731527_Human_liver_organoids_cloupe.cloupe.gz",
+                    "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM3731nnn/GSM3731527/suppl/GSM3731527_Human_liver_organoids_cloupe.cloupe.gz",
+                    "size": "55634023"
+                },
+                {
+                    "filename": "GSM3731527_Human_liver_organoids_genes.tsv.gz",
+                    "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM3731nnn/GSM3731527/suppl/GSM3731527_Human_liver_organoids_genes.tsv.gz",
+                    "size": "257294"
+                },
+                {
+                    "filename": "GSM3731527_Human_liver_organoids_matrix.mtx.gz",
+                    "url": "ftp.ncbi.nlm.nih.gov/geo/samples/GSM3731nnn/GSM3731527/suppl/GSM3731527_Human_liver_organoids_matrix.mtx.gz",
+                    "size": "29926848"
+                }
+            ],
+            "platform": {
+                "accession": "GPL16791",
+                "title": "Illumina HiSeq 2500 (Homo sapiens)"
+            },
+            "samples": {
+                "SRS4651465": {
+                    "accession": "SRS4651465",
+                    "title": "Human liver organoids",
+                    "organism": "Homo sapiens",
+                    "attributes": {
+                        "source_name": "Human liver organoids",
+                        "cell type": "iPSC derived human liver organoids",
+                        "cultured day": "day33",
+                        "ENA-SPOT-COUNT": 100085280,
+                        "ENA-BASE-COUNT": 14712536160,
+                        "ENA-FIRST-PUBLIC": "2019-08-01",
+                        "ENA-LAST-UPDATE": "2019-08-01"
+                    },
+                    "experiments": {
+                        "SRX5712719": {
+                            "accession": "SRX5712719",
+                            "title": "Illumina HiSeq 2500 paired end sequencing; GSM3731527: Human liver organoids; Homo sapiens; RNA-Seq",
+                            "platform": "ILLUMINA",
+                            "instrument": "Illumina HiSeq 2500",
+                            "runs": {
+                                "SRR8931977": {
+                                    "accession": "SRR8931977",
+                                    "experiment": "SRX5712719",
+                                    "study": "SRP193091",
+                                    "sample": "SRS4651465",
+                                    "title": "Illumina HiSeq 2500 paired end sequencing; GSM3731527: Human liver organoids; Homo sapiens; RNA-Seq",
+                                    "attributes": {
+                                        "loader": "fastq-load.py",
+                                        "options": "--readTypes=TTB --read1PairFiles=10X_20933_3hrs_S1_L001_I1_001.fastq.gz --read2PairFiles=10X_20933_3hrs_S1_L001_R1_001.fastq.gz --read3PairFiles=10X_20933_3hrs_S1_L001_R2_001.fastq.gz",
+                                        "ENA-SPOT-COUNT": 48893369,
+                                        "ENA-BASE-COUNT": 7187325243,
+                                        "ENA-FIRST-PUBLIC": "2019-08-01",
+                                        "ENA-LAST-UPDATE": "2019-08-01"
+                                    },
+                                    "files": {
+                                        "ftp": [
+                                            {
+                                                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR893/007/SRR8931977/SRR8931977.fastq.gz",
+                                                "md5": "9f211978e973b36cefc37b82b1dfaa59",
+                                                "size": 5422810285
+                                            }
+                                        ],
+                                        "aws": [
+                                            {
+                                                "url": "s3://sra-pub-src-16/SRR8931977/10X_20933_3hrs_S1_L001_I1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "s3://sra-pub-src-18/SRR8931977/10X_20933_3hrs_S1_L001_R1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "s3://sra-pub-src-17/SRR8931977/10X_20933_3hrs_S1_L001_R2_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR8931977/SRR8931977"
+                                            },
+                                            {
+                                                "url": "s3://sra-pub-src-15/SRR8931978/10X_20933_3hrs_S1_L002_I1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "s3://sra-pub-src-15/SRR8931978/10X_20933_3hrs_S1_L002_R1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "s3://sra-pub-src-17/SRR8931978/10X_20933_3hrs_S1_L002_R2_001.fastq.gz"
+                                            }
+                                        ],
+                                        "gcp": [
+                                            {
+                                                "url": "gs://sra-pub-src-17/SRR8931977/10X_20933_3hrs_S1_L001_I1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-src-16/SRR8931977/10X_20933_3hrs_S1_L001_R1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-src-15/SRR8931977/10X_20933_3hrs_S1_L001_R2_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-run-7/SRR8931977/SRR8931977.1"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-src-18/SRR8931978/10X_20933_3hrs_S1_L002_I1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-src-18/SRR8931978/10X_20933_3hrs_S1_L002_R1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-src-17/SRR8931978/10X_20933_3hrs_S1_L002_R2_001.fastq.gz"
+                                            }
+                                        ],
+                                        "ncbi": [
+                                            {
+                                                "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR8931977/SRR8931977.1"
+                                            },
+                                            {
+                                                "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR8931978/SRR8931978.1"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "SRR8931978": {
+                                    "accession": "SRR8931978",
+                                    "experiment": "SRX5712719",
+                                    "study": "SRP193091",
+                                    "sample": "SRS4651465",
+                                    "title": "Illumina HiSeq 2500 paired end sequencing; GSM3731527: Human liver organoids; Homo sapiens; RNA-Seq",
+                                    "attributes": {
+                                        "loader": "fastq-load.py",
+                                        "options": "--readTypes=TTB --read1PairFiles=10X_20933_3hrs_S1_L002_I1_001.fastq.gz --read2PairFiles=10X_20933_3hrs_S1_L002_R1_001.fastq.gz --read3PairFiles=10X_20933_3hrs_S1_L002_R2_001.fastq.gz",
+                                        "ENA-SPOT-COUNT": 51191911,
+                                        "ENA-BASE-COUNT": 7525210917,
+                                        "ENA-FIRST-PUBLIC": "2019-08-01",
+                                        "ENA-LAST-UPDATE": "2019-08-01"
+                                    },
+                                    "files": {
+                                        "ftp": [
+                                            {
+                                                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR893/008/SRR8931978/SRR8931978.fastq.gz",
+                                                "md5": "a85a097da94935ff827be797bdf26781",
+                                                "size": 5730738161
+                                            }
+                                        ],
+                                        "aws": [
+                                            {
+                                                "url": "s3://sra-pub-src-16/SRR8931977/10X_20933_3hrs_S1_L001_I1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "s3://sra-pub-src-18/SRR8931977/10X_20933_3hrs_S1_L001_R1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "s3://sra-pub-src-17/SRR8931977/10X_20933_3hrs_S1_L001_R2_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR8931977/SRR8931977"
+                                            },
+                                            {
+                                                "url": "s3://sra-pub-src-15/SRR8931978/10X_20933_3hrs_S1_L002_I1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "s3://sra-pub-src-15/SRR8931978/10X_20933_3hrs_S1_L002_R1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "s3://sra-pub-src-17/SRR8931978/10X_20933_3hrs_S1_L002_R2_001.fastq.gz"
+                                            }
+                                        ],
+                                        "gcp": [
+                                            {
+                                                "url": "gs://sra-pub-src-17/SRR8931977/10X_20933_3hrs_S1_L001_I1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-src-16/SRR8931977/10X_20933_3hrs_S1_L001_R1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-src-15/SRR8931977/10X_20933_3hrs_S1_L001_R2_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-run-7/SRR8931977/SRR8931977.1"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-src-18/SRR8931978/10X_20933_3hrs_S1_L002_I1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-src-18/SRR8931978/10X_20933_3hrs_S1_L002_R1_001.fastq.gz"
+                                            },
+                                            {
+                                                "url": "gs://sra-pub-src-17/SRR8931978/10X_20933_3hrs_S1_L002_R2_001.fastq.gz"
+                                            }
+                                        ],
+                                        "ncbi": [
+                                            {
+                                                "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR8931977/SRR8931977.1"
+                                            },
+                                            {
+                                                "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR8931978/SRR8931978.1"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

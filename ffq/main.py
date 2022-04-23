@@ -3,17 +3,23 @@ import json
 import logging
 import os
 import sys
+import re
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study
+from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_encode, ffq_bioproject, ffq_biosample, ffq_links, validate_accession
 
 logger = logging.getLogger(__name__)
 
-RUN_TYPES = ('SRR', 'ERR', 'DRR')
-PROJECT_TYPES = ('SRP', 'ERP', 'DRP')  # aka study types
-GEO_TYPES = ('GSE',)
+RUN_TYPES = ('SRR', 'ERR', 'DRR',)#, 'CRR') 
+PROJECT_TYPES = ('SRP', 'ERP', 'DRP',)#, 'CRP')  # aka study types 
+EXPERIMENT_TYPES = ('SRX', 'ERX', 'DRX',)#, 'CRX')  # CAREFUL, I don't think CRX accessions should go here (see bioproject)
+SAMPLE_TYPES = ('SRS', 'ERS', 'DRS', 'CRS')
+GEO_TYPES = ('GSE','GSM')
+ENCODE_TYPES = ('ENCSR', 'ENCBS', 'ENCDO')
+BIOPROJECT_TYPES = ('CRX',)
+BIOSAMPLE_TYPES = ('SAMN', 'SAMD', 'SAMEA', 'SAMEG')
 OTHER_TYPES = ('DOI',)
-SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + GEO_TYPES + OTHER_TYPES
+SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + OTHER_TYPES
 
 
 def main():
@@ -52,23 +58,43 @@ def main():
         '-t',
         metavar='TYPE',
         help=(
-            'The type of term used to query data. Can be one of '
+            'The type of term used to query data. Can be one of'
             f'{", ".join(SEARCH_TYPES)} '
             '(default: SRR)'
         ),
         type=str,
         required=False,
-        choices=SEARCH_TYPES,
-        default='SRR'
+        choices=SEARCH_TYPES
+        #default='None'
     )
 
+    parser.add_argument(
+        '--ftp', help='Skip medatada and return only ftp links for raw data', action='store_true'
+    )
+    
+    parser.add_argument(
+        '--aws', help = 'Skip metadata and return only AWS links for raw data (if available)', action='store_true'      
+    )
+    
+    parser.add_argument(
+        '--ncbi', help = 'Skip metadata and return only NCBI links for raw data (if available)', action='store_true'      
+    )
+    
+    parser.add_argument(
+        '--gcp', help = 'Skip metadata and return only GCP links for raw data (if available)', action='store_true'      
+    )   
     parser.add_argument(
         '--split', help='Split runs into their own files.', action='store_true'
     )
     parser.add_argument(
         '--verbose', help='Print debugging information', action='store_true'
     )
-    # Show help when no arguments are given
+
+    parser.add_argument(
+        '-l', help='Specify the desired level for fetching downstream accessions', type=int
+    )
+
+    # Show help when no arguments are given 
     if len(sys.argv) == 1:
         parser.print_help(sys.stderr)
         sys.exit(1)
@@ -89,51 +115,156 @@ def main():
     if args.split and not args.o:
         parser.error('`-o` must be provided when using `--split`')
 
-    # Check IDs depending on type
-    if args.t in RUN_TYPES + PROJECT_TYPES + GEO_TYPES:
-        for ID in args.IDs:
-            if ID[0:3] != args.t or not ID[3:].isdigit():
-                parser.error((
-                    f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
-                    ' and end with digits.'
-                ))
-    elif args.t == 'DOI':
-        logger.warning('Searching by DOI may result in missing information.')
-
-    try:
-        # run ffq depending on type
-        if args.t in RUN_TYPES:
-            results = [ffq_run(accession) for accession in args.IDs]
-        elif args.t in PROJECT_TYPES:
-            results = [ffq_study(accession) for accession in args.IDs]
-        elif args.t == 'GSE':
-            results = [ffq_gse(accession) for accession in args.IDs]
+    if args.l:
+        if args.l <= 0:
+            parser.error('level `-l` must be equal or greater than 1')
+    args.IDs = [id.upper() for id in args.IDs]
+    # If user provides -t
+    if args.t is not None:
+    
+    # Check IDs depending on type 
+        if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
+            for ID in args.IDs:
+                ID_type = re.findall(r"(\D+).+", ID)
+                if ID_type not in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
+                    parser.error((
+                        f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
+                        ' and end with digits.'
+                    ))
         elif args.t == 'DOI':
-            results = [study for doi in args.IDs for study in ffq_doi(doi)]
+            logger.warning('Searching by DOI may result in missing information.')                    
 
-        keyed = {result['accession']: result for result in results}
+        #         if ID[0:3] != args.t or not ID[3:].isdigit():
+        #             parser.error((
+        #                 f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
+        #                 ' and end with digits.'
+        #             ))
+        # elif args.t == 'DOI':
+        #     logger.warning('Searching by DOI may result in missing information.')
 
-        if args.o:
-            if args.split:
-                # Split each result into its own JSON.
-                for result in results:
-                    os.makedirs(args.o, exist_ok=True)
-                    with open(os.path.join(args.o,
-                                           f'{result["accession"]}.json'),
+        if args.ftp:
+            results = [ffq_links([(args.t, accession)], 'ftp') for accession in args.IDs]
+            sys.exit(0)
+            
+        elif args.aws:
+            results = [ffq_links([(args.t, accession)],'AWS') for accession in args.IDs]
+            sys.exit(0)
+            
+        elif args.gcp:
+            results = [ffq_links([(args.t, accession)],'GCP') for accession in args.IDs]  
+            sys.exit(0)
+            
+        elif args.ncbi:
+            results = [ffq_links([(args.t, accession)],'NCBI') for accession in args.IDs]  
+            sys.exit(0)
+                        
+        else:
+            try:
+                # run ffq depending on type
+                if args.t in RUN_TYPES:
+                    results = [ffq_run(accession) for accession in args.IDs]
+                elif args.t in PROJECT_TYPES:
+                    results = [ffq_study(accession, args.l) for accession in args.IDs]
+                elif args.t in EXPERIMENT_TYPES:
+                    results = [ffq_experiment(accession, args.l) for accession in args.IDs]
+                elif args.t in SAMPLE_TYPES:
+                    results = [ffq_sample(accession, args.l) for accession in args.IDs]
+                elif args.t == 'GSE':
+                    results = [ffq_gse(accession, args.l) for accession in args.IDs]
+                elif args.t == 'GSM':
+                    results = [ffq_gsm(accession, args.l) for accession in args.IDs]
+                elif args.t == 'DOI':
+                    results = [study for doi in args.IDs for study in ffq_doi(doi)]
+
+                keyed = {result['accession']: result for result in results}
+
+            except Exception as e:
+                if args.verbose:
+                    logger.exception(e)
+                else:
+                    logger.error(e)
+
+    #If user does not provide -t 
+    else:
+        # Validate and extract types of accessions provided
+        type_accessions = validate_accession(args.IDs, RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES)
+        # If at least one of the accessions is incorrect:  
+        if False in type_accessions:
+            parser.error(f'{args.IDs[type_accessions.index(False)]} is not a valid ID. IDs can be one of {", ".join(SEARCH_TYPES)}')
+            sys.exit(1)
+
+        ############
+        # NOTE: Change `type` by another name
+        ############
+        if args.ftp:
+            ffq_links(type_accessions, 'ftp')
+            sys.exit(0)
+
+        elif args.aws:
+            ffq_links(type_accessions, 'AWS')
+            sys.exit(0)
+            
+        elif args.gcp:
+            ffq_links(type_accessions, 'GCP')
+            sys.exit(0)
+            
+        elif args.ncbi:
+            ffq_links(type_accessions, 'NCBI')  
+            sys.exit(0)      
+                  
+        else:
+            # run ffq depending on type
+            try:
+
+                results = []
+                for id_type, accession in type_accessions:
+                    if id_type in RUN_TYPES:
+                        results.append(ffq_run(accession))
+                    elif id_type in PROJECT_TYPES:
+                        results.append(ffq_study(accession, args.l))
+                    elif id_type in EXPERIMENT_TYPES:
+                        results.append(ffq_experiment(accession, args.l))
+                    elif id_type in SAMPLE_TYPES:
+                        results.append(ffq_sample(accession, args.l))
+                    elif id_type == 'GSE':
+                        results.append(ffq_gse(accession, args.l))
+                    elif id_type == 'GSM':
+                        results.append(ffq_gsm(accession, args.l))
+                    elif id_type[:3] == 'ENC':
+                        results.append(ffq_encode(accession))
+                    elif id_type[:3] in BIOPROJECT_TYPES:
+                        results.append(ffq_bioproject(accession))
+                    elif id_type[:4] in BIOSAMPLE_TYPES or id_type[:5] in BIOSAMPLE_TYPES:
+                        results.append(ffq_biosample(accession, args.l))
+                    elif id_type == 'DOI':
+                        logger.warning('Searching by DOI may result in missing information.')
+                        results.append(ffq_doi(accession))
+
+                keyed = {result['accession']: result for result in results}
+
+            except Exception as e:
+                if args.verbose:
+                    logger.exception(e)
+                else:
+                    logger.error(e)
+
+    if args.o:
+        if args.split:
+            # Split each result into its own JSON.   
+            for result in results:
+                os.makedirs(args.o, exist_ok=True)
+                with open(os.path.join(args.o,
+                              f'{result["accession"]}.json'),
                               'w') as f:
-                        json.dump(result, f, indent=4)
-            else:
-                # Otherwise, write a single JSON with result accession as keys.
-                if os.path.dirname(
-                        args.o
-                ) != '':  # handles case where file is in current dir
-                    os.makedirs(os.path.dirname(args.o), exist_ok=True)
-                with open(args.o, 'w') as f:
-                    json.dump(keyed, f, indent=4)
+                    json.dump(result, f, indent=4)
         else:
-            print(json.dumps(keyed, indent=4))
-    except Exception as e:
-        if args.verbose:
-            logger.exception(e)
-        else:
-            logger.error(e)
+            # Otherwise, write a single JSON with result accession as keys.
+            if os.path.dirname(
+                    args.o
+            ) != '':  # handles case where file is in current dir
+                os.makedirs(os.path.dirname(args.o), exist_ok=True)
+            with open(args.o, 'w') as f:
+                json.dump(keyed, f, indent=4)
+    else:
+        print(json.dumps(keyed, indent=4))
+

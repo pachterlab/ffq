@@ -3,23 +3,48 @@ import logging
 import re
 import time
 from urllib.parse import urlparse
+import sys
+from xml.dom.minidom import Identified
+from bs4 import BeautifulSoup
+import time
 
 from .utils import (
     cached_get,
     geo_id_to_srps,
     geo_ids_to_gses,
+    gsm_id_to_srs,
     get_doi,
     get_gse_search_json,
+    get_gsm_search_json,
     get_xml,
+    get_encode_json,
+    get_samples_from_study,
     ncbi_link,
     ncbi_search,
-    parse_run_range,
+    ncbi_fetch_fasta,
+    ncbi_summary,
+    parse_range,
+    parse_encode_biosample,
+    parse_encode_donor,
+    parse_encode_json,
     parse_tsv,
     search_ena_run_sample,
     search_ena_run_study,
     search_ena_study_runs,
     search_ena_title,
     sra_ids_to_srrs,
+    geo_to_suppl,
+    gsm_to_platform,
+    gse_to_gsms,
+    srp_to_srx,
+    srs_to_srx,
+    gsm_to_srx,
+    srx_to_srrs,
+    get_files_metadata_from_run,
+    parse_url,
+    parse_ncbi_fetch_fasta,
+    ena_fetch,
+    parse_bioproject
 )
 
 logger = logging.getLogger(__name__)
@@ -28,7 +53,13 @@ RUN_PARSER = re.compile(r'(SRR.+)|(ERR.+)|(DRR.+)')
 EXPERIMENT_PARSER = re.compile(r'(SRX.+)|(ERX.+)|(DRX.+)')
 PROJECT_PARSER = re.compile(r'(SRP.+)|(ERP.+)|(DRP.+)')
 SAMPLE_PARSER = re.compile(r'(SRS.+)|(ERS.+)|(DRS.+)')
+DOI_PARSER = re.compile('^10.\d{4,9}\/[-._;()\/:a-z0-9]+')
 
+
+def validate_accession(accessions, search_types):
+    ID_types = [re.findall(r"(\D+).+", accession)[0] for accession in accessions]
+    return [(ID_type, accession) if ID_type in search_types else False if DOI_PARSER.match(accession) is None else ("DOI", accession) for accession, ID_type in zip(accessions, ID_types)]
+    
 
 def parse_run(soup):
     """Given a BeautifulSoup object representing a run, parse out relevant
@@ -40,11 +71,11 @@ def parse_run(soup):
     :return: a dictionary containing run information
     :rtype: dict
     """
-
     accession = soup.find('PRIMARY_ID', text=RUN_PARSER).text
     experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text \
         if soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER) \
         else soup.find('EXPERIMENT_REF')['accession']
+
     study_parsed = soup.find('ID', text=PROJECT_PARSER)
     if study_parsed:
         study = study_parsed.text
@@ -54,7 +85,6 @@ def parse_run(soup):
             'ENA search...'
         )
         study = search_ena_run_study(accession)
-
     sample_parsed = soup.find('ID', text=SAMPLE_PARSER)
     if sample_parsed:
         sample = sample_parsed.text
@@ -65,63 +95,43 @@ def parse_run(soup):
         )
         sample = search_ena_run_sample(accession)
     title = soup.find('TITLE').text
-    files = []
-    # Get FASTQs if available
-    for xref in soup.find_all('XREF_LINK'):
-        if xref.find('DB').text == 'ENA-FASTQ-FILES':
-            fastq_url = xref.find('ID').text
 
-            table = parse_tsv(cached_get(fastq_url))
-            assert len(table) == 1
+    attributes = {}
 
-            urls = table[0].get('fastq_ftp', '')
-            md5s = table[0].get('fastq_md5', '')
-            sizes = table[0].get('fastq_bytes', '')
-            # If any of these are empty, that means no FASTQs are
-            # available. This usually means the data was submitted as a BAM file.
-            if not urls or not md5s or not sizes:
-                break
-
-            files.extend(
-                [{
-                    'url': f'ftp://{url}',
-                    'md5': md5,
-                    'size': size
-                } for url, md5, size in
-                 zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
-            )
-            break
-
-    # Include BAM (in submitted file)
-    for xref in soup.find_all('XREF_LINK'):
-        if xref.find('DB').text == 'ENA-SUBMITTED-FILES':
-            bam_url = xref.find('ID').text
-
-            table = parse_tsv(cached_get(bam_url))
-            assert len(table) == 1
-
-            urls = table[0].get('submitted_ftp', '')
-            md5s = table[0].get('submitted_md5', '')
-            sizes = table[0].get('submitted_bytes', '')
-            formats = table[0].get('submitted_format', '')
-            if not urls or not md5s or not sizes or 'BAM' not in formats:
-                break
-            files.extend(
-                [{
-                    'url': f'ftp://{url}',
-                    'md5': md5,
-                    'size': size
-                } for url, md5, size in
-                 zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
-            )
-            break
-
+    for attr in soup.find_all('RUN_ATTRIBUTE'):
+        try:
+            tag = attr.find('TAG').text
+            value = attr.find('VALUE').text
+            attributes[tag] = value
+        except:
+            pass
+    if attributes:
+        try:
+            attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
+            attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
+        except:
+            pass
+    ftp_files = get_files_metadata_from_run(soup)
+    if ftp_files:
+        for file in ftp_files:
+            file['size'] = int(file['size'])
+    alt_links_soup = ncbi_fetch_fasta(accession, 'sra')
+    aws_links = parse_ncbi_fetch_fasta(alt_links_soup, 'AWS')
+    gcp_links = parse_ncbi_fetch_fasta(alt_links_soup, 'GCP')   
+    ncbi_links = parse_ncbi_fetch_fasta(alt_links_soup, 'NCBI')
+    files = {
+        'ftp': ftp_files,
+        'aws': [{'url': link} for link in aws_links],
+        'gcp': [{'url': link} for link in gcp_links],
+        'ncbi': [{'url': link} for link in ncbi_links],        
+    }
     return {
         'accession': accession,
         'experiment': experiment,
         'study': study,
         'sample': sample,
         'title': title,
+        'attributes': attributes,
         'files': files
     }
 
@@ -139,24 +149,49 @@ def parse_sample(soup):
     accession = soup.find('PRIMARY_ID', text=SAMPLE_PARSER).text
     title = soup.find('TITLE').text
     organism = soup.find('SCIENTIFIC_NAME').text
-    attributes = {
-        attr.find('TAG').text: attr.find('VALUE').text
-        for attr in soup.find_all('SAMPLE_ATTRIBUTE')
-    }
+    sample_attribute = soup.find_all('SAMPLE_ATTRIBUTE')
+    try:
+        attributes = {
+            attr.find('TAG').text: attr.find('VALUE').text
+            for attr in soup.find_all('SAMPLE_ATTRIBUTE')
+        }
+    except:
+        attributes = ''
+    if attributes:
+        try:
+            attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
+            attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT']) 
+        except:
+            pass
+    try:
+        
+        try: 
+            experiment = soup.find('ID', text = EXPERIMENT_PARSER).text
+        except:
+            experiment = soup.find('PRIMARY_ID', text = EXPERIMENT_PARSER).text   
+    
+    except:
+        experiment = ''
+        logger.warning('No experiment found')
+        
     return {
         'accession': accession,
         'title': title,
         'organism': organism,
-        'attributes': attributes
+        'attributes': attributes,
+        'experiments': experiment
     }
 
 
-def parse_experiment(soup):
+def parse_experiment_with_run(soup, l):
     """Given a BeautifulSoup object representing an experiment, parse out relevant
     information.
 
     :param soup: a BeautifulSoup object representing an experiment
     :type soup: bs4.BeautifulSoup
+
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
 
     :return: a dictionary containing experiment information
     :rtype: dict
@@ -166,13 +201,26 @@ def parse_experiment(soup):
     platform = soup.find('INSTRUMENT_MODEL').find_parent().name
     instrument = soup.find('INSTRUMENT_MODEL').text
 
-    return {
-        'accession': accession,
-        'title': title,
-        'platform': platform,
-        'instrument': instrument
-    }
+    experiment = {'accession': accession,
+    'title': title,
+    'platform': platform,
+    'instrument': instrument}
+    if l is None or l > 1:
+        # Returns all of the runs associated with an experiment
+        runs = srx_to_srrs(accession)
 
+        if len(runs) == 1:
+            logger.warning(f'There is 1 run for {accession}')
+
+        else:
+            logger.warning(f'There are {len(runs)} runs for {accession}')
+
+        runs = {run: ffq_run(run) for run in runs}
+
+        experiment.update({'runs': runs})
+        return experiment
+    else:
+        return experiment
 
 def parse_study(soup):
     """Given a BeautifulSoup object representing a study, parse out relevant
@@ -188,51 +236,7 @@ def parse_study(soup):
     title = soup.find('STUDY_TITLE').text
     abstract = soup.find('STUDY_ABSTRACT'
                          ).text if soup.find('STUDY_ABSTRACT') else ""
-
     return {'accession': accession, 'title': title, 'abstract': abstract}
-
-
-def parse_study_with_run(soup):
-    """Given a BeautifulSoup object representing a study, parse out relevant
-    information.
-
-    :param soup: a BeautifulSoup object representing a study
-    :type soup: bs4.BeautifulSoup
-
-    :return: a dictionary containing study information and run information
-    :rtype: dict
-    """
-    accession = soup.find('PRIMARY_ID', text=PROJECT_PARSER).text
-    title = soup.find('STUDY_TITLE').text
-    abstract = soup.find('STUDY_ABSTRACT').text
-
-    # Returns all of the runs associated with a study
-    runs = []
-    run_parsed = soup.find('ID', text=RUN_PARSER)
-    if run_parsed:
-        run_ranges = run_parsed.text.split(",")
-        for run_range in run_ranges:
-            if '-' in run_range:
-                runs += parse_run_range(run_range)
-            else:
-                runs.append(run_range)
-    else:
-        logger.warning(
-            'Failed to parse run information from ENA XML. Falling back to '
-            'ENA search...'
-        )
-        # Sometimes the SRP does not contain a list of runs (for whatever reason).
-        # A common trend with such projects is that they use ArrayExpress.
-        # In the case that no runs could be found from the project XML,
-        # fallback to ENA SEARCH.
-        runs = search_ena_study_runs(accession)
-
-    return {
-        'accession': accession,
-        'title': title,
-        'abstract': abstract,
-        'runlist': runs
-    }
 
 
 def parse_gse_search(soup):
@@ -246,10 +250,13 @@ def parse_gse_search(soup):
     :rtype: dict
     """
     data = json.loads(soup.text)
-
-    accession = data['esearchresult']['querytranslation'].split('[')[0]
-    geo_id = data['esearchresult']['idlist'][-1]
-    return {'accession': accession, 'geo_id': geo_id}
+    if data['esearchresult']['idlist']:
+        accession = data['esearchresult']['querytranslation'].split('[')[0]
+        geo_id = data['esearchresult']['idlist'][-1]
+        return {'accession': accession, 'geo_id': geo_id}
+    else:
+        logger.error("Provided GSE accession is invalid")
+        sys.exit(1)
 
 
 def parse_gse_summary(soup):
@@ -279,7 +286,7 @@ def parse_gse_summary(soup):
 def ffq_run(accession):
     """Fetch Run information.
 
-    :param accession: run accession
+    :param accession: run accession (SRR, ERR or DRR)
     :type accession: str
 
     :return: dictionary of run information
@@ -287,61 +294,355 @@ def ffq_run(accession):
     """
     logger.info(f'Parsing run {accession}')
     run = parse_run(get_xml(accession))
-    logger.debug(f'Parsing sample {run["sample"]}')
-    sample = parse_sample(get_xml(run['sample']))
-    logger.debug(f'Parsing experiment {run["experiment"]}')
-    experiment = parse_experiment(get_xml(run['experiment']))
-    logger.debug(f'Parsing study {run["study"]}')
-    study = parse_study(get_xml(run['study']))
-
-    run.update({'sample': sample, 'experiment': experiment, 'study': study})
     return run
 
 
-def ffq_study(accession):
+def ffq_study(accession, l = None):
     """Fetch Study information.
 
-    :param accession: study accession
+    :param accession: study accession (SRP, ERP or DRP)
     :type accession: str
 
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
+
     :return: dictionary of study information. The dictionary contains a
-             'runs' key, which is a dictionary of all the runs in the study, as
-             returned by `ffq_run`.
+             'samples' key, which is a dictionary of all the samples in the study, as
+             returned by `ffq_sample`.
     :rtype: dict
     """
-    logger.info(f'Parsing Study SRP {accession}')
-    study = parse_study_with_run(get_xml(accession))
+    logger.info(f'Parsing Study {accession}')
+    study = parse_study(get_xml(accession))
+    if l is None or l != 1:
+        try:
+            l -= 1
+        except:
+            pass
+        logger.info(f'Getting Sample for {accession}')
+        sample_ids = get_samples_from_study(accession)
+        logger.warning(f'There are {str(len(sample_ids))} samples for {accession}')
+        samples = [ffq_sample(sample_id, l) for sample_id in sample_ids]
+        study.update({'samples': {sample['accession']: sample for sample in samples}})
+        return study
+    else:
+        return study
 
-    logger.warning(f'There are {len(study["runlist"])} runs for {accession}')
 
-    runs = {run: ffq_run(run) for run in study.pop('runlist')}
-
-    study.update({'runs': runs})
-
-    return study
-
-
-def ffq_gse(accession):
+def ffq_gse(accession, l = None):
     """Fetch GSE information.
 
-    This function finds the SRP corresponding to the GSE and calls `ffq_study`.
+    This function finds the GSMs corresponding to the GSE and calls `ffq_gsm`.
 
     :param accession: GSE accession
     :type accession: str
 
-    :return: dictionary containing GSE information
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
+
+    :return: dictionary containing GSE information. The dictionary contains a
+             'sample' key, which is a dictionary of all the GSMs in the study, as
+             returned by `ffq_gsm`.
     :rtype: dict
     """
     logger.info(f'Parsing GEO {accession}')
     gse = parse_gse_search(get_gse_search_json(accession))
-
-    logger.info(f'Getting Study SRP for {accession}')
+    logger.info(f'Finding supplementary files for GEO {accession}')
     time.sleep(1)
-    srps = geo_id_to_srps(gse.pop('geo_id'))
-    studies = [ffq_study(srp) for srp in srps]
-    gse.update({'studies': {study['accession']: study for study in studies}})
-    return gse
+    supp = geo_to_suppl(accession, "GSE")
+    if len(supp) > 0:
+        gse.update({'supplementary_files' : supp})
+    else:
+        logger.info(f'No supplementary files found for {accession}')        
+    gse.pop('geo_id')
+    if l is None or l != 1:
+        try:
+            l -= 1
+        except:
+            pass
+        time.sleep(1)
+        gsm_ids = gse_to_gsms(accession)
+        logger.warning(f'There are {str(len(gsm_ids))} samples for {accession}')
+        gsms = [ffq_gsm(gsm_id, l) for gsm_id in gsm_ids]
+        gse.update({'geo_samples': {sample['accession']: sample for sample in gsms}})
+        return gse
+    else:
+        return gse
 
+
+def ffq_gsm(accession, l = None):
+    """Fetch GSM information.
+
+    This function finds the SRS corresponding to the GSM and calls `ffq_sample`.
+
+    :param accession: GSM accession
+    :type accession: str
+
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
+
+    :return: dictionary containing GSM information. The dictionary contains a
+             'sample' key, which is a dictionary of the sample asssociated to the GSM, as
+             returned by `ffq_sample`.
+    :rtype: dict
+    """
+    logger.info(f'Parsing GSM {accession}')
+    gsm = get_gsm_search_json(accession)
+    logger.info(f'Finding supplementary files for GSM {accession}')
+    time.sleep(1)
+    supp = geo_to_suppl(accession, "GSM")
+    if supp:
+        gsm.update({'supplementary_files' : supp})
+    else:
+        logger.info(f'No supplementary files found for {accession}')        
+
+    gsm.update(gsm_to_platform(accession))
+    if l is None or l != 1:
+        try:
+            l -= 1
+        except:
+            pass
+        logger.info(f'Getting sample for {accession}')
+        srs = gsm_id_to_srs(gsm.pop('geo_id'))
+        if srs:
+            sample = ffq_sample(srs, l)
+            gsm.update({'samples': {sample['accession']: sample }})
+        else:
+            return gsm
+        return gsm
+    else:
+        return gsm
+
+
+def ffq_experiment(accession, l = None):
+    """Fetch Experiment information.
+
+    :param accession: experiment accession (SRX, ERX or DRX)
+    :type accession: str
+
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
+
+    :return: dictionary of experiment information. The dictionary contains a
+             'runs' key, which is a dictionary of all the runs in the study, as
+             returned by `ffq_run`.
+    :rtype: dict
+    """
+    logger.info(f'Parsing Experiment {accession}')
+    experiment = parse_experiment_with_run(get_xml(accession), l)
+    return experiment
+
+
+def ffq_sample(accession, l = None):
+
+    """Fetch Sample information.
+
+    :param accession: sample accession (SRS, ERS or DRS)
+    :type accession: str
+
+    :param l: positive integer representing how many downstream accession levels should be fetched.
+    :type l: int
+
+    :return: dictionary of sample information. The dictionary contains a
+             'runs' key, which is a dictionary of all the runs in the study, as
+             returned by `ffq_run`.
+    :rtype: dict
+    """
+    logger.info(f'Parsing sample {accession}')
+    sample = parse_sample(get_xml(accession))
+    if l is None or l != 1:
+        try:
+            l -= 1
+        except:
+            pass
+        logger.info(f'Getting Experiment for {accession}')
+        exp_id = sample['experiments']
+        if exp_id:
+            if ',' in exp_id:
+                exp_ids = exp_id.split(',')
+                experiments = [ffq_experiment(exp_id, l) for exp_id in exp_ids]
+                sample.update({'experiments': [{experiment['accession']: experiment} for experiment in experiments]})
+                return sample
+            else:
+                experiment = ffq_experiment(exp_id, l)
+                sample.update({'experiments': {experiment['accession']: experiment}})
+        else:
+            logger.warning(f'No Experiment found for {accession}')   
+        return sample
+    else:
+        return sample
+
+
+def ffq_encode(accession):
+    """Fetch ENCODE ids information. This 
+    function receives an ENCSR, ENCBS or ENCD
+    ENCODE id and fetches the associated metadata
+
+    :param accession: an ENCODE id (ENCSR, ENCBS or ENCD)
+    :type accession: str
+
+    :return: dictionary of ENCODE id metadata. 
+    :rtype: dict
+    """
+    logger.info(f'Parsing {accession}')
+    encode = parse_encode_json(accession, get_encode_json(accession))
+    return encode
+
+
+def ffq_bioproject(accession):
+    """Fetch bioproject ids information. This 
+    function receives a CXR accession
+    and fetches the associated metadata
+
+    :param accession: a bioproject CXR id
+    :type accession: str
+
+    :return: dictionary of bioproject metadata. 
+    :rtype: dict
+    """
+    return parse_bioproject(ena_fetch(accession, 'bioproject'))
+
+def ffq_biosample(accession, l):
+    """Fetch biosample ids information. This 
+    function receives a SAMN accession
+    and fetches the associated metadata
+
+    :param accession: a biosample SAMN id
+    :type accession: str
+
+    :return: dictionary of biosample metadata. 
+    :rtype: dict
+    """
+    soup = ena_fetch(accession, 'biosample')
+    sample = soup.find('id', text = SAMPLE_PARSER).text
+    try:
+        l = l-1
+    except:
+        pass
+    sample_data = ffq_sample(sample, l)
+    return {
+            'accession': accession,
+            'samples': sample_data
+        }
+
+def ffq_links(type_accessions, server):
+    """Print download links for raw data
+    from provided server (FTP, AWS, or GCP)
+    to the terminal
+
+    :param type_accession: tuple of accession type and accession id
+    :type type_accessions: (str, str)
+    
+    :param server: server of desired links
+    "type server: str
+
+    :return: None
+    :rtype: None
+    """
+    server = server.upper()
+    origin_GSE = False
+    origin_SRP = False
+    origin_SRS = False
+    for id_type, accession in type_accessions:
+        if id_type == "GSE":
+            print("accession\tfiletype\tfilenumber\tlink")
+            accession = gse_to_gsms(accession) 
+            id_type = "GSM"
+            origin_GSE = True
+
+        else:
+            pass 
+        if id_type == "GSM":
+            if isinstance(accession, str):
+                accession = [accession]
+            counter = 0
+            for gsm in accession:
+                time.sleep(0.1)
+                srx = gsm_to_srx(gsm)
+                if srx:
+                    srrs = srx_to_srrs(srx)
+                    for srr in srrs:
+                        if server == 'FTP':
+                            for file in get_files_metadata_from_run(get_xml(srr)):
+                                url = file['url']
+                                if origin_GSE:
+                                    print(gsm, end = '\t')                  
+                                    filetype, fileno = parse_url(url)      
+                                    print(f'\t{filetype}\t{fileno}\t{url}')
+                                    
+                                else:
+                                    print(url, end = ' ')
+                                  
+                        else:
+                            urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
+                            for url in urls:
+                                if origin_GSE:
+                                    print(gsm, end = '\t')                  
+                                    filetype, fileno = parse_url(url)      
+                                    print(f'\t{filetype}\t{fileno}\t{url}')
+                                else:
+                                    print(url, end = " ")
+                    
+                else: 
+                    logger.error("No SRA files were found for the provided GEO entry")
+                    sys.exit(1)
+            return
+        if id_type == "SRP" or id_type == "ERP" or id_type == "DRP":
+            srxs = srp_to_srx(accession)
+            id_type = 'SRX'
+            origin_SRP = True
+        if id_type == "SRS" or id_type == "ERS" or id_type == "DRS":
+            origin_SRS = True
+            counter = 0
+            if isinstance(accession, str):
+                accession = [accession]
+            srxs = []
+            for srs in accession:
+                srxs.append(srs_to_srx(srs))
+            id_type = "SRX"
+            origin_SRS = True
+        if id_type == "SRX" or id_type == "ERX" or id_type == "DRX":
+            if not origin_SRP and not origin_SRS:
+                srxs = [accession]
+            srrs = []
+            
+            for srx in srxs:
+                time.sleep(0.1)
+                for srr in srx_to_srrs(srx):
+                    srrs.append(srr)
+
+                for srr in srrs:
+                    if server == 'FTP':
+                        for file in get_files_metadata_from_run(get_xml(srr)):
+                            url = file['url']
+                            if origin_SRP:
+                                print(srr, end = '\t')                  
+                                filetype, fileno = parse_url(url)      
+                                print(f'\t{filetype}\t{fileno}\t{url}')
+                            else:
+                                print(url, end = ' ')
+                    else:
+                        urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(srr, 'sra'), server)
+                        for url in urls:
+                            if origin_SRP:
+                                print(srr, end = '\t')                  
+                                filetype, fileno = parse_url(url)      
+                                print(f'\t{filetype}\t{fileno}\t{url}')
+                            else:
+                                print(url, end = " ")
+            return
+        if id_type == "SRR" or id_type == "ERR" or id_type == "DRR":
+            if server == 'FTP':
+                for file in get_files_metadata_from_run(get_xml(accession)):
+                    print(file['url'], end = " ")
+            else:
+                urls = parse_ncbi_fetch_fasta(ncbi_fetch_fasta(accession, 'sra'), server)
+                for url in urls:
+                    if accession in url:
+                        print(url, end = " ")
+                return
+        else:
+            logger.error('Invalid accession. Download links can only be retrieved from GEO or SRA ids.')
+            sys.exit(1)
 
 def ffq_doi(doi):
     """Fetch DOI information.
@@ -380,7 +681,7 @@ def ffq_doi(doi):
         logger.info(
             f'Found {len(study_accessions)} studies that match this title: {", ".join(study_accessions)}'
         )
-        return [ffq_study(accession) for accession in study_accessions]
+        return [ffq_study(accession, None) for accession in study_accessions]
 
     # If not study with the title is found, search Pubmed, which can be linked
     # to a GEO accession.

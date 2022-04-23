@@ -1,44 +1,530 @@
 {
-    "SRR8426358": {
-        "accession": "SRR8426358",
-        "experiment": {
-            "accession": "SRX5234128",
-            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
-            "platform": "ILLUMINA",
-            "instrument": "Illumina HiSeq 4000"
+    "SRR9990627": {
+        "accession": "SRR9990627",
+        "experiment": "SRX6730010",
+        "study": "SRP218652",
+        "sample": "SRS5281869",
+        "title": "Illumina HiSeq 4000 paired end sequencing; GSM4037981: Macula-8mm-rpe-cho-donor-1; Homo sapiens; RNA-Seq",
+        "attributes": {
+            "ENA-SPOT-COUNT": 10536649,
+            "ENA-BASE-COUNT": 3182067998,
+            "ENA-FIRST-PUBLIC": "2019-10-31",
+            "ENA-LAST-UPDATE": "2019-10-31"
         },
-        "study": {
-            "accession": "SRP178136",
-            "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
-            "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
-        },
-        "sample": {
-            "accession": "SRS4237519",
-            "title": "old_Dropseq_1",
-            "organism": "Mus musculus",
-            "attributes": {
-                "source_name": "Whole lung",
-                "tissue": "Whole lung",
-                "age": "24 months",
-                "number of cells": "799",
-                "ENA-SPOT-COUNT": "109256158",
-                "ENA-BASE-COUNT": "21984096610",
-                "ENA-FIRST-PUBLIC": "2019-01-11",
-                "ENA-LAST-UPDATE": "2019-01-11"
-            }
-        },
-        "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
-        "files": [
-            {
-                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz",
-                "md5": "be7e88cf6f6fd90f1b1170f1cb367123",
-                "size": "5507959060"
-            },
-            {
-                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz",
-                "md5": "2124da22644d876c4caa92ffd9e2402e",
-                "size": "7194107512"
-            }
-        ]
+        "files": {
+            "ftp": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR999/007/SRR9990627/SRR9990627_1.fastq.gz",
+                    "md5": "1d3dd5779d70b6a629cb7a14ceae97f7",
+                    "size": 837403098
+                },
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR999/007/SRR9990627/SRR9990627_2.fastq.gz",
+                    "md5": "1048c601c2a0cf842e505ea17bb7c457",
+                    "size": 537158000
+                }
+            ],
+            "aws": [
+                {
+                    "url": "s3://sra-pub-src-16/SRR9990627/macula_donor_1_S100_L004_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990627/macula_donor_1_S100_L004_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990627/SRR9990627"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990628/macula_donor_1_S35_L002_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990628/macula_donor_1_S35_L002_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990628/SRR9990628"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990629/macula_donor_1_S36_L002_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990629/macula_donor_1_S36_L002_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990629/SRR9990629"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990630/macula_donor_1_S3_L001_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-16/SRR9990630/macula_donor_1_S3_L001_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990630/SRR9990630"
+                },
+                {
+                    "url": "s3://sra-pub-src-16/SRR9990631/macula_donor_1_S4_L001_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990631/macula_donor_1_S4_L001_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990631/SRR9990631"
+                },
+                {
+                    "url": "s3://sra-pub-src-16/SRR9990632/macula_donor_1_S65_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990632/macula_donor_1_S65_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990632/SRR9990632"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990633/macula_donor_1_S66_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990633/macula_donor_1_S66_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990633/SRR9990633"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990634/macula_donor_1_S67_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-16/SRR9990634/macula_donor_1_S67_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990634/SRR9990634"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990635/macula_donor_1_S68_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990635/macula_donor_1_S68_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990635/SRR9990635"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990636/macula_donor_1_S74_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990636/macula_donor_1_S74_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990636/SRR9990636"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990637/macula_donor_1_S75_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990637/macula_donor_1_S75_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990637/SRR9990637"
+                },
+                {
+                    "url": "s3://sra-pub-src-16/SRR9990638/macula_donor_1_S141_L007_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990638/macula_donor_1_S141_L007_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990638/SRR9990638"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990639/macula_donor_1_S76_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990639/macula_donor_1_S76_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990639/SRR9990639"
+                },
+                {
+                    "url": "s3://sra-pub-src-16/SRR9990640/macula_donor_1_S77_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990640/macula_donor_1_S77_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990640/SRR9990640"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990641/macula_donor_1_S97_L004_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990641/macula_donor_1_S97_L004_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990641/SRR9990641"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990642/macula_donor_1_S98_L004_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990642/macula_donor_1_S98_L004_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990642/SRR9990642"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990643/macula_donor_1_S99_L004_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990643/macula_donor_1_S99_L004_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990643/SRR9990643"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990644/macula_donor_1_S142_L007_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-16/SRR9990644/macula_donor_1_S142_L007_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990644/SRR9990644"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990645/macula_donor_1_S143_L007_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990645/macula_donor_1_S143_L007_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990645/SRR9990645"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990646/macula_donor_1_S144_L007_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990646/macula_donor_1_S144_L007_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990646/SRR9990646"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990647/macula_donor_1_S1_L001_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990647/macula_donor_1_S1_L001_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990647/SRR9990647"
+                },
+                {
+                    "url": "s3://sra-pub-src-16/SRR9990648/macula_donor_1_S2_L001_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-17/SRR9990648/macula_donor_1_S2_L001_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990648/SRR9990648"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990649/macula_donor_1_S33_L002_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990649/macula_donor_1_S33_L002_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR9990649/SRR9990649"
+                },
+                {
+                    "url": "s3://sra-pub-src-15/SRR9990650/macula_donor_1_S34_L002_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "s3://sra-pub-src-18/SRR9990650/macula_donor_1_S34_L002_R2_001.fastq.gz.1"
+                }
+            ],
+            "gcp": [
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990627/macula_donor_1_S100_L004_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990627/macula_donor_1_S100_L004_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990627/SRR9990627.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-15/SRR9990628/macula_donor_1_S35_L002_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990628/macula_donor_1_S35_L002_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990628/SRR9990628.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990629/macula_donor_1_S36_L002_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990629/macula_donor_1_S36_L002_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990629/SRR9990629.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990630/macula_donor_1_S3_L001_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990630/macula_donor_1_S3_L001_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990630/SRR9990630.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990631/macula_donor_1_S4_L001_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990631/macula_donor_1_S4_L001_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990631/SRR9990631.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990632/macula_donor_1_S65_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990632/macula_donor_1_S65_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990632/SRR9990632.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-15/SRR9990633/macula_donor_1_S66_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990633/macula_donor_1_S66_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990633/SRR9990633.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990634/macula_donor_1_S67_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990634/macula_donor_1_S67_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990634/SRR9990634.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990635/macula_donor_1_S68_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-15/SRR9990635/macula_donor_1_S68_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990635/SRR9990635.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-15/SRR9990636/macula_donor_1_S74_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990636/macula_donor_1_S74_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990636/SRR9990636.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-15/SRR9990637/macula_donor_1_S75_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990637/macula_donor_1_S75_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990637/SRR9990637.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990638/macula_donor_1_S141_L007_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990638/macula_donor_1_S141_L007_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990638/SRR9990638.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990639/macula_donor_1_S76_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990639/macula_donor_1_S76_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-1/SRR9990639/SRR9990639.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990640/macula_donor_1_S77_L003_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990640/macula_donor_1_S77_L003_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990640/SRR9990640.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990641/macula_donor_1_S97_L004_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990641/macula_donor_1_S97_L004_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990641/SRR9990641.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990642/macula_donor_1_S98_L004_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990642/macula_donor_1_S98_L004_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990642/SRR9990642.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990643/macula_donor_1_S99_L004_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990643/macula_donor_1_S99_L004_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990643/SRR9990643.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990644/macula_donor_1_S142_L007_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990644/macula_donor_1_S142_L007_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990644/SRR9990644.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990645/macula_donor_1_S143_L007_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990645/macula_donor_1_S143_L007_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990645/SRR9990645.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-15/SRR9990646/macula_donor_1_S144_L007_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990646/macula_donor_1_S144_L007_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990646/SRR9990646.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990647/macula_donor_1_S1_L001_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990647/macula_donor_1_S1_L001_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990647/SRR9990647.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990648/macula_donor_1_S2_L001_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-17/SRR9990648/macula_donor_1_S2_L001_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990648/SRR9990648.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990649/macula_donor_1_S33_L002_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990649/macula_donor_1_S33_L002_R2_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-run-9/SRR9990649/SRR9990649.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-18/SRR9990650/macula_donor_1_S34_L002_R1_001.fastq.gz.1"
+                },
+                {
+                    "url": "gs://sra-pub-src-16/SRR9990650/macula_donor_1_S34_L002_R2_001.fastq.gz.1"
+                }
+            ],
+            "ncbi": [
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR9990627/SRR9990627.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR9990628/SRR9990628.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR9990629/SRR9990629.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR9990630/SRR9990630.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-19/SRR9990631/SRR9990631.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR9990632/SRR9990632.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR9990633/SRR9990633.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR9990634/SRR9990634.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-20/SRR9990635/SRR9990635.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR9990636/SRR9990636.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-19/SRR9990637/SRR9990637.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR9990638/SRR9990638.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-20/SRR9990639/SRR9990639.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR9990640/SRR9990640.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR9990641/SRR9990641.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-19/SRR9990642/SRR9990642.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR9990643/SRR9990643.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR9990644/SRR9990644.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR9990645/SRR9990645.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-15/SRR9990646/SRR9990646.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-19/SRR9990647/SRR9990647.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-21/SRR9990648/SRR9990648.1"
+                },
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-19/SRR9990649/SRR9990649.1"
+                }
+            ]
+        }
     }
 }

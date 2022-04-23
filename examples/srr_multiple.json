@@ -1,86 +1,92 @@
 {
-    "SRR8426358": {
-        "accession": "SRR8426358",
-        "experiment": {
-            "accession": "SRX5234128",
-            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
-            "platform": "ILLUMINA",
-            "instrument": "Illumina HiSeq 4000"
+    "SRR11181954": {
+        "accession": "SRR11181954",
+        "experiment": "SRX7802546",
+        "study": "SRP250732",
+        "sample": "SRS6216589",
+        "title": "BGISEQ-500 paired end sequencing; GSM4339769: BALF, C141 (scRNA-seq); Homo sapiens; RNA-Seq",
+        "attributes": {
+            "loader": "fastq-load.py",
+            "options": "--read1PairFiles=\"C141_R1.fastq.gz\"   --read2PairFiles=\"C141_R2.fastq.gz\"",
+            "ENA-SPOT-COUNT": 2825449586,
+            "ENA-BASE-COUNT": 177690492174,
+            "ENA-FIRST-PUBLIC": "2020-04-23",
+            "ENA-LAST-UPDATE": "2020-07-30"
         },
-        "study": {
-            "accession": "SRP178136",
-            "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
-            "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
-        },
-        "sample": {
-            "accession": "SRS4237519",
-            "title": "old_Dropseq_1",
-            "organism": "Mus musculus",
-            "attributes": {
-                "source_name": "Whole lung",
-                "tissue": "Whole lung",
-                "age": "24 months",
-                "number of cells": "799",
-                "ENA-SPOT-COUNT": "109256158",
-                "ENA-BASE-COUNT": "21984096610",
-                "ENA-FIRST-PUBLIC": "2019-01-11",
-                "ENA-LAST-UPDATE": "2019-01-11"
-            }
-        },
-        "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
-        "files": [
-            {
-                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz",
-                "md5": "be7e88cf6f6fd90f1b1170f1cb367123",
-                "size": "5507959060"
-            },
-            {
-                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz",
-                "md5": "2124da22644d876c4caa92ffd9e2402e",
-                "size": "7194107512"
-            }
-        ]
+        "files": {
+            "ftp": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR111/054/SRR11181954/SRR11181954.fastq.gz",
+                    "md5": "366a3a273a85e820bddbcb1e58df383b",
+                    "size": 147793265862
+                }
+            ],
+            "aws": [
+                {
+                    "url": "https://sra-pub-sars-cov2.s3.amazonaws.com/sra-src/SRR11181954/C141_R1.fastq.1"
+                },
+                {
+                    "url": "https://sra-pub-sars-cov2.s3.amazonaws.com/sra-src/SRR11181954/C141_R2.fastq.1"
+                }
+            ],
+            "gcp": [
+                {
+                    "url": "https://storage.googleapis.com/nih-sequence-read-archive/sra-src/SRR11181954/C141_R1.fastq.1"
+                },
+                {
+                    "url": "https://storage.googleapis.com/nih-sequence-read-archive/sra-src/SRR11181954/C141_R2.fastq.1"
+                }
+            ],
+            "ncbi": [
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-19/SRR11181954/SRR11181954.2"
+                }
+            ]
+        }
     },
-    "SRR8426359": {
-        "accession": "SRR8426359",
-        "experiment": {
-            "accession": "SRX5234129",
-            "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557676: old_Dropseq_2; Mus musculus; RNA-Seq",
-            "platform": "ILLUMINA",
-            "instrument": "Illumina HiSeq 4000"
+    "SRR11181956": {
+        "accession": "SRR11181956",
+        "experiment": "SRX7802548",
+        "study": "SRP250732",
+        "sample": "SRS6216591",
+        "title": "BGISEQ-500 paired end sequencing; GSM4339771: BALF, C143 (scRNA-seq); Homo sapiens; RNA-Seq",
+        "attributes": {
+            "loader": "fastq-load.py",
+            "options": "--read1PairFiles=\"C143_R1.fastq.gz\"   --read2PairFiles=\"C143_R2.fastq.gz\"",
+            "ENA-SPOT-COUNT": 2835372634,
+            "ENA-BASE-COUNT": 178372867658,
+            "ENA-FIRST-PUBLIC": "2020-04-23",
+            "ENA-LAST-UPDATE": "2020-07-30"
         },
-        "study": {
-            "accession": "SRP178136",
-            "title": "Multi-modal analysis of the aging mouse lung at cellular resolution",
-            "abstract": "A) Whole lung tissue from 24 months (n=7) and 3 months old (n=8) mice was dissociated and single-cell mRNAseq libraries generated with Drop-Seq. B) Bulk RNA-seq data was generated from whole mouse lung tissue of old (n=3) and young (n=3) samples. C) Bulk RNA-seq data was generated from flow-sorted macrophages from old (n=7) and young (n=5) mice and flow-sorted epithelial cells from old (n=4) and young (n=4) mice. Overall design: Integration of bulk RNA-seq from whole mouse lung tissue and bulk RNA-seq from flow-sorted lung macrophages and epithelial cells was used to validate results obtained from single cell RNA-seq of whole lung tissue."
-        },
-        "sample": {
-            "accession": "SRS4237520",
-            "title": "old_Dropseq_2",
-            "organism": "Mus musculus",
-            "attributes": {
-                "source_name": "Whole lung",
-                "tissue": "Whole lung",
-                "age": "24 months",
-                "number of cells": "499",
-                "ENA-SPOT-COUNT": "75353664",
-                "ENA-BASE-COUNT": "15164398336",
-                "ENA-FIRST-PUBLIC": "2019-01-11",
-                "ENA-LAST-UPDATE": "2019-01-11"
-            }
-        },
-        "title": "Illumina HiSeq 4000 paired end sequencing; GSM3557676: old_Dropseq_2; Mus musculus; RNA-Seq",
-        "files": [
-            {
-                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/009/SRR8426359/SRR8426359_1.fastq.gz",
-                "md5": "7aa6116b61bbc2a4eb8745c34216331e",
-                "size": "3840879422"
-            },
-            {
-                "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/009/SRR8426359/SRR8426359_2.fastq.gz",
-                "md5": "0a439a254d6691411f368b9b2385c006",
-                "size": "5333126082"
-            }
-        ]
+        "files": {
+            "ftp": [
+                {
+                    "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR111/056/SRR11181956/SRR11181956.fastq.gz",
+                    "md5": "bd99affef5ca502a9e16e94d2ef04434",
+                    "size": 148485489095
+                }
+            ],
+            "aws": [
+                {
+                    "url": "https://sra-pub-sars-cov2.s3.amazonaws.com/sra-src/SRR11181956/C143_R1.fastq.1"
+                },
+                {
+                    "url": "https://sra-pub-sars-cov2.s3.amazonaws.com/sra-src/SRR11181956/C143_R2.fastq.1"
+                }
+            ],
+            "gcp": [
+                {
+                    "url": "https://storage.googleapis.com/nih-sequence-read-archive/sra-src/SRR11181956/C143_R1.fastq.1"
+                },
+                {
+                    "url": "https://storage.googleapis.com/nih-sequence-read-archive/sra-src/SRR11181956/C143_R2.fastq.1"
+                }
+            ],
+            "ncbi": [
+                {
+                    "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos3/sra-pub-run-19/SRR11181956/SRR11181956.2"
+                }
+            ]
+        }
     }
 }

@@ -1,0 +1,784 @@
+{
+    "ENCSR998WNE": {
+        "accession": "ENCSR998WNE",
+        "description": "Ribo depletion RNA-seq on cytoplasmic fraction RNA which is part of BMDM cell pre-treated with 100 ng/ml Lipid A 12 hours, washed out for 12 hours, and stimulated with 100 ng/ml Lipid A for 10 minute.",
+        "dbxrefs": [
+            "GEO:GSE178064"
+        ],
+        "replicates": {
+            "biological_replicate_number": 3,
+            "technical_replicate_number": 1,
+            "library": {
+                "accession": "ENCLB732FGB",
+                "dbxrefs": [
+                    "GEO:GSM5379570"
+                ],
+                "biosample": {
+                    "accession": "ENCBS510HPZ",
+                    "dbxrefs": [
+                        "GEO:SAMN19597598"
+                    ],
+                    "description": "",
+                    "genetic_modifications": [],
+                    "treatments": [],
+                    "sex": "unknown",
+                    "life_stage": "unknown",
+                    "age": "unknown",
+                    "age_units": "",
+                    "organism": {
+                        "schema_version": "6",
+                        "scientific_name": "Mus musculus",
+                        "name": "mouse",
+                        "status": "released",
+                        "taxon_id": "10090",
+                        "@id": "/organisms/mouse/",
+                        "@type": [
+                            "Organism",
+                            "Item"
+                        ],
+                        "uuid": "3413218c-3d86-498b-a0a2-9a406638e786"
+                    },
+                    "biosample_ontology": {
+                        "classification": "",
+                        "term_name": "",
+                        "organ_slims": "",
+                        "cell_slims": "",
+                        "system_slims": "",
+                        "developmental_slims": "",
+                        "treatments": [],
+                        "genetic_modifications": []
+                    },
+                    "donor": {
+                        "accession": "ENCDO072AAA",
+                        "dbxrefs": [
+                            "GEO:SAMN04284198"
+                        ],
+                        "organism": {
+                            "schema_version": "6",
+                            "scientific_name": "Mus musculus",
+                            "name": "mouse",
+                            "status": "released",
+                            "taxon_id": "10090",
+                            "@id": "/organisms/mouse/",
+                            "@type": [
+                                "Organism",
+                                "Item"
+                            ],
+                            "uuid": "3413218c-3d86-498b-a0a2-9a406638e786"
+                        },
+                        "sex": "",
+                        "life_stage": "",
+                        "age": "",
+                        "age_units": "",
+                        "health_status": "",
+                        "ethnicity": ""
+                    }
+                }
+            }
+        },
+        "files": {
+            "ENCFF564YPB": {
+                "accession": "ENCFF564YPB",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848349"
+                ],
+                "file_format": "fastq",
+                "file_size": 1051334121,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/04/9e0ea174-1c54-4324-af4c-b83f8d9eda74/ENCFF564YPB.fastq.gz",
+                    "md5sum_base64": "2h9eQNqWxPpaqDfNZpk0Ig==",
+                    "file_size": 1051334121
+                }
+            },
+            "ENCFF390QUP": {
+                "accession": "ENCFF390QUP",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848344"
+                ],
+                "file_format": "fastq",
+                "file_size": 729855449,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/04/d6280135-8d2f-42d5-9e12-251052697e58/ENCFF390QUP.fastq.gz",
+                    "md5sum_base64": "r+IDZP9BsIfSuRmeLY/6+Q==",
+                    "file_size": 729855449
+                }
+            },
+            "ENCFF590NVM": {
+                "accession": "ENCFF590NVM",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848345"
+                ],
+                "file_format": "fastq",
+                "file_size": 741832770,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/04/0eef62cd-bac6-4897-a289-f4264452c82b/ENCFF590NVM.fastq.gz",
+                    "md5sum_base64": "UE4dq90BYpWvw8g4nQ+/qA==",
+                    "file_size": 741832770
+                }
+            },
+            "ENCFF119KNP": {
+                "accession": "ENCFF119KNP",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848346"
+                ],
+                "file_format": "fastq",
+                "file_size": 737020397,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/f8da13ce-4870-461b-9c36-bef1ed4f51ce/ENCFF119KNP.fastq.gz",
+                    "md5sum_base64": "tEE64Bcw8qG1RPbBSzdr+A==",
+                    "file_size": 737020397
+                }
+            },
+            "ENCFF931PFF": {
+                "accession": "ENCFF931PFF",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848347"
+                ],
+                "file_format": "fastq",
+                "file_size": 737097717,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/d8ba4f7a-8778-4f3d-9f24-165226d39c7f/ENCFF931PFF.fastq.gz",
+                    "md5sum_base64": "IPvOeHBSv6G/k3zdYAfzyg==",
+                    "file_size": 737097717
+                }
+            },
+            "ENCFF761RKP": {
+                "accession": "ENCFF761RKP",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848353"
+                ],
+                "file_format": "fastq",
+                "file_size": 1055997539,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/dffad85f-efb9-43d3-a543-8ab28595cd93/ENCFF761RKP.fastq.gz",
+                    "md5sum_base64": "/1M6KL5SYIfBDLuHeE/Ndg==",
+                    "file_size": 1055997539
+                }
+            },
+            "ENCFF421SNO": {
+                "accession": "ENCFF421SNO",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848354"
+                ],
+                "file_format": "fastq",
+                "file_size": 1048077269,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/2ab1c6fd-d993-42a8-beeb-233ec6a388ab/ENCFF421SNO.fastq.gz",
+                    "md5sum_base64": "sdWEhIik7KPWQWu571I1pA==",
+                    "file_size": 1048077269
+                }
+            },
+            "ENCFF139MHN": {
+                "accession": "ENCFF139MHN",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848355"
+                ],
+                "file_format": "fastq",
+                "file_size": 1009633060,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/2701b427-d308-4b1b-bc0d-f220132a19ee/ENCFF139MHN.fastq.gz",
+                    "md5sum_base64": "FFsdd+kdxhmRxxVGjCPzYA==",
+                    "file_size": 1009633060
+                }
+            },
+            "ENCFF091WMS": {
+                "accession": "ENCFF091WMS",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848356"
+                ],
+                "file_format": "fastq",
+                "file_size": 1041003288,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/e5c88214-f2e2-433e-bb06-6755bc4a73fe/ENCFF091WMS.fastq.gz",
+                    "md5sum_base64": "KmPBeF8hgqVkS4ficNIMXA==",
+                    "file_size": 1041003288
+                }
+            },
+            "ENCFF368CIW": {
+                "accession": "ENCFF368CIW",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848349"
+                ],
+                "file_format": "fastq",
+                "file_size": 1121606637,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/d36c8552-4a6e-493b-a29e-5cf88e46bddc/ENCFF368CIW.fastq.gz",
+                    "md5sum_base64": "YTc2jgoKK6Hl9yjhBkZ8fA==",
+                    "file_size": 1121606637
+                }
+            },
+            "ENCFF828AGP": {
+                "accession": "ENCFF828AGP",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848344"
+                ],
+                "file_format": "fastq",
+                "file_size": 812150277,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/dd2bdd03-93aa-4ce4-ae2d-157aa30972ca/ENCFF828AGP.fastq.gz",
+                    "md5sum_base64": "3+gND5droxsgQlEfzyAg6g==",
+                    "file_size": 812150277
+                }
+            },
+            "ENCFF246SCT": {
+                "accession": "ENCFF246SCT",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848345"
+                ],
+                "file_format": "fastq",
+                "file_size": 821963816,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/a6e139fb-da06-4f73-addb-8cbea36841a0/ENCFF246SCT.fastq.gz",
+                    "md5sum_base64": "1Mc9ewIXoEdGKT7v53NGMQ==",
+                    "file_size": 821963816
+                }
+            },
+            "ENCFF823GTI": {
+                "accession": "ENCFF823GTI",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848346"
+                ],
+                "file_format": "fastq",
+                "file_size": 825912581,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/29c45329-278b-4073-ba46-4ff4862d9e90/ENCFF823GTI.fastq.gz",
+                    "md5sum_base64": "Ox4Y6kmC0fqZKORB/VO1hQ==",
+                    "file_size": 825912581
+                }
+            },
+            "ENCFF110XUH": {
+                "accession": "ENCFF110XUH",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848347"
+                ],
+                "file_format": "fastq",
+                "file_size": 819124291,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/d1bfd902-d972-4bc8-89b6-093476c2b9ff/ENCFF110XUH.fastq.gz",
+                    "md5sum_base64": "CpkWStNjfw47RCvv6vzT5w==",
+                    "file_size": 819124291
+                }
+            },
+            "ENCFF977BEW": {
+                "accession": "ENCFF977BEW",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848354"
+                ],
+                "file_format": "fastq",
+                "file_size": 1165274085,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/9aee22f6-e00e-4046-8e99-9642b4672336/ENCFF977BEW.fastq.gz",
+                    "md5sum_base64": "nZm58TI4UgoxJ7iiPxlxIQ==",
+                    "file_size": 1165274085
+                }
+            },
+            "ENCFF690HOR": {
+                "accession": "ENCFF690HOR",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848353"
+                ],
+                "file_format": "fastq",
+                "file_size": 1173897488,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/09e01414-c2cb-4c09-a1cb-af14685336ee/ENCFF690HOR.fastq.gz",
+                    "md5sum_base64": "ZLPdTMZejQYMPb7x33MoAA==",
+                    "file_size": 1173897488
+                }
+            },
+            "ENCFF041SWE": {
+                "accession": "ENCFF041SWE",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848356"
+                ],
+                "file_format": "fastq",
+                "file_size": 1176404476,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/31d46ae4-6ccb-4f58-b9f7-cf120914b724/ENCFF041SWE.fastq.gz",
+                    "md5sum_base64": "tQlPzWj8yJzfmzLGw5V+OQ==",
+                    "file_size": 1176404476
+                }
+            },
+            "ENCFF562IQR": {
+                "accession": "ENCFF562IQR",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848355"
+                ],
+                "file_format": "fastq",
+                "file_size": 1135242715,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/cb05065f-cb43-4cfc-b6f6-c7420ef163c2/ENCFF562IQR.fastq.gz",
+                    "md5sum_base64": "19Wiw5snP8zWv/sGmiw4uQ==",
+                    "file_size": 1135242715
+                }
+            },
+            "ENCFF992AHU": {
+                "accession": "ENCFF992AHU",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bam",
+                "file_size": 5853538467,
+                "output_type": "alignments",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/ccfc7b48-0612-4719-9575-f730244559f5/ENCFF992AHU.bam",
+                    "md5sum_base64": "81XJJs+VHfM8rJsZhn7hHw==",
+                    "file_size": 5853538467
+                }
+            },
+            "ENCFF822AAM": {
+                "accession": "ENCFF822AAM",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bam",
+                "file_size": 5236735088,
+                "output_type": "alignments",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/05/8405a791-b8ef-4ef6-add3-4e0deeca5a7e/ENCFF822AAM.bam",
+                    "md5sum_base64": "ax36crxs8alPLUqCc8dK6g==",
+                    "file_size": 5236735088
+                }
+            },
+            "ENCFF079HCB": {
+                "accession": "ENCFF079HCB",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bam",
+                "file_size": 4718233047,
+                "output_type": "alignments",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2018/04/06/fc246411-7856-4424-9148-02e86e29d70b/ENCFF079HCB.bam",
+                    "md5sum_base64": "PcJ6M016TItBIijLZreYog==",
+                    "file_size": 4718233047
+                }
+            },
+            "ENCFF084PUC": {
+                "accession": "ENCFF084PUC",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848350"
+                ],
+                "file_format": "fastq",
+                "file_size": 719236730,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2017/01/20/95995138-1385-44b6-aec8-d2a39072ac17/ENCFF084PUC.fastq.gz",
+                    "md5sum_base64": "WvrEPj2tTJlHvxa57d4H/w==",
+                    "file_size": 719236730
+                }
+            },
+            "ENCFF210BCB": {
+                "accession": "ENCFF210BCB",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848351"
+                ],
+                "file_format": "fastq",
+                "file_size": 695768685,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2017/01/20/f918c21f-b44a-47a5-978e-52f6e5ae9fc9/ENCFF210BCB.fastq.gz",
+                    "md5sum_base64": "APj7QvbmYJbVIRD0Po+4eQ==",
+                    "file_size": 695768685
+                }
+            },
+            "ENCFF344LNZ": {
+                "accession": "ENCFF344LNZ",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848352"
+                ],
+                "file_format": "fastq",
+                "file_size": 1052540530,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2017/01/20/80310f8d-d447-4670-ae12-abe8ce137476/ENCFF344LNZ.fastq.gz",
+                    "md5sum_base64": "NK4Q7HqM8xvAGourqf4r7A==",
+                    "file_size": 1052540530
+                }
+            },
+            "ENCFF115KZV": {
+                "accession": "ENCFF115KZV",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848348"
+                ],
+                "file_format": "fastq",
+                "file_size": 701376783,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2017/01/20/9a0b7b6d-6b6c-432c-9fa8-ed2e62871ad1/ENCFF115KZV.fastq.gz",
+                    "md5sum_base64": "b7UgbGMKceNG7lCtuVzpSw==",
+                    "file_size": 701376783
+                }
+            },
+            "ENCFF873WUK": {
+                "accession": "ENCFF873WUK",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848350"
+                ],
+                "file_format": "fastq",
+                "file_size": 735134815,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2017/01/20/07ebdf22-2f51-416e-8387-c8542d8b2038/ENCFF873WUK.fastq.gz",
+                    "md5sum_base64": "s3xmAHYU3FtFCPBiGY20SQ==",
+                    "file_size": 735134815
+                }
+            },
+            "ENCFF930LUS": {
+                "accession": "ENCFF930LUS",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848351"
+                ],
+                "file_format": "fastq",
+                "file_size": 710929725,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2017/01/20/f36e6fd7-d440-4301-9b24-1b81b3c66377/ENCFF930LUS.fastq.gz",
+                    "md5sum_base64": "uCkdVkBlNYEO5MUJ6Vfwfg==",
+                    "file_size": 710929725
+                }
+            },
+            "ENCFF692FOS": {
+                "accession": "ENCFF692FOS",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848348"
+                ],
+                "file_format": "fastq",
+                "file_size": 784892216,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2017/01/20/fa3e9905-e4bc-4df1-a0cb-f46712006611/ENCFF692FOS.fastq.gz",
+                    "md5sum_base64": "zzW442UKWGc7VCKO45QnXA==",
+                    "file_size": 784892216
+                }
+            },
+            "ENCFF911GBG": {
+                "accession": "ENCFF911GBG",
+                "description": "",
+                "dbxrefs": [
+                    "SRA:SRR14848352"
+                ],
+                "file_format": "fastq",
+                "file_size": 1140836142,
+                "output_type": "reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2017/01/20/a4754b9b-7806-4a43-acdf-aef41d121a21/ENCFF911GBG.fastq.gz",
+                    "md5sum_base64": "hqgfta5WDtyAi7NqTM7M2w==",
+                    "file_size": 1140836142
+                }
+            },
+            "ENCFF413YPW": {
+                "accession": "ENCFF413YPW",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bam",
+                "file_size": 8135607259,
+                "output_type": "alignments",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/6fec560a-c57f-4f8b-87cd-a0023ee5af78/ENCFF413YPW.bam",
+                    "md5sum_base64": "1fQLBmvyYP6NeBJNL0OU5w==",
+                    "file_size": 8135607259
+                }
+            },
+            "ENCFF390IUA": {
+                "accession": "ENCFF390IUA",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "tsv",
+                "file_size": 20490672,
+                "output_type": "transcript quantifications",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/68f62fb5-8c4a-4a0d-8d62-1f483efca101/ENCFF390IUA.tsv",
+                    "md5sum_base64": "MsomaytdaGArnbeQIat6WQ==",
+                    "file_size": 20490672
+                }
+            },
+            "ENCFF404JDC": {
+                "accession": "ENCFF404JDC",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bam",
+                "file_size": 9143854509,
+                "output_type": "alignments",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/30ba3fba-7f15-4456-9a72-7b556f06cd58/ENCFF404JDC.bam",
+                    "md5sum_base64": "qUim2d8qUY5YQJOw301yFw==",
+                    "file_size": 9143854509
+                }
+            },
+            "ENCFF122ELT": {
+                "accession": "ENCFF122ELT",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bigWig",
+                "file_size": 141673993,
+                "output_type": "signal of unique reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/80d37565-aa15-4b7e-8b7b-6184c32fee81/ENCFF122ELT.bigWig",
+                    "md5sum_base64": "LNn2ePsrjVkD5Dnf3ib7ag==",
+                    "file_size": 141673993
+                }
+            },
+            "ENCFF853FDT": {
+                "accession": "ENCFF853FDT",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bigWig",
+                "file_size": 195073791,
+                "output_type": "signal of all reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/dc57301c-c3fa-4766-8082-38c29693ddf5/ENCFF853FDT.bigWig",
+                    "md5sum_base64": "EPbqI8h+ykyw2//QDjwTCg==",
+                    "file_size": 195073791
+                }
+            },
+            "ENCFF662JKS": {
+                "accession": "ENCFF662JKS",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "tsv",
+                "file_size": 20400429,
+                "output_type": "transcript quantifications",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/31fc2a42-33b6-4e4e-b4ad-820968310777/ENCFF662JKS.tsv",
+                    "md5sum_base64": "ej7z3wjkXhWb9X8L1vYAog==",
+                    "file_size": 20400429
+                }
+            },
+            "ENCFF636NXT": {
+                "accession": "ENCFF636NXT",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bam",
+                "file_size": 15485405477,
+                "output_type": "transcriptome alignments",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/f48b283b-c2e7-4a2a-ad0f-7ef63fdb953f/ENCFF636NXT.bam",
+                    "md5sum_base64": "KmHjPVIc+0lckjshOlKELg==",
+                    "file_size": 15485405477
+                }
+            },
+            "ENCFF170BMH": {
+                "accession": "ENCFF170BMH",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "tsv",
+                "file_size": 11773853,
+                "output_type": "gene quantifications",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/a3ab1f3a-bbf4-4ba4-8a97-132f7b7da1b5/ENCFF170BMH.tsv",
+                    "md5sum_base64": "kHnf1nyCHhFRuXfrqUWe7w==",
+                    "file_size": 11773853
+                }
+            },
+            "ENCFF219EXB": {
+                "accession": "ENCFF219EXB",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bigWig",
+                "file_size": 222601265,
+                "output_type": "signal of unique reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/58606179-7620-4f82-b5d5-2c4fb60a2b95/ENCFF219EXB.bigWig",
+                    "md5sum_base64": "AT8myeF01K+W6BhJRKcPmQ==",
+                    "file_size": 222601265
+                }
+            },
+            "ENCFF068ZBY": {
+                "accession": "ENCFF068ZBY",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "tsv",
+                "file_size": 24457819,
+                "output_type": "transcript quantifications",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/75f0afc2-7b8b-4850-afaf-7795002edc07/ENCFF068ZBY.tsv",
+                    "md5sum_base64": "Xsk2j1cXrW4aCVuqfQDNGQ==",
+                    "file_size": 24457819
+                }
+            },
+            "ENCFF377WGY": {
+                "accession": "ENCFF377WGY",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bam",
+                "file_size": 9165170043,
+                "output_type": "transcriptome alignments",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/9eaaf068-08ef-43bd-907b-e0742ad89e8a/ENCFF377WGY.bam",
+                    "md5sum_base64": "+JNiDl1KEQBTmkC3OP8H+Q==",
+                    "file_size": 9165170043
+                }
+            },
+            "ENCFF776VZV": {
+                "accession": "ENCFF776VZV",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bam",
+                "file_size": 10275397075,
+                "output_type": "alignments",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/af8191f2-f5f3-493b-a8ba-8913499d13be/ENCFF776VZV.bam",
+                    "md5sum_base64": "bs62FA6kXIa+xbijNxmAbg==",
+                    "file_size": 10275397075
+                }
+            },
+            "ENCFF728FCV": {
+                "accession": "ENCFF728FCV",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "tsv",
+                "file_size": 11787864,
+                "output_type": "gene quantifications",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/cf69371e-5823-4608-a86e-c5f42f23d883/ENCFF728FCV.tsv",
+                    "md5sum_base64": "3r2SmXiI32dv0h6Ga6Cw2w==",
+                    "file_size": 11787864
+                }
+            },
+            "ENCFF536CNV": {
+                "accession": "ENCFF536CNV",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "tsv",
+                "file_size": 24428556,
+                "output_type": "transcript quantifications",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/0df61da6-1094-4c60-a044-56b5d52f4666/ENCFF536CNV.tsv",
+                    "md5sum_base64": "hmBF8DefkhK1q6YV4yjwUw==",
+                    "file_size": 24428556
+                }
+            },
+            "ENCFF109KRO": {
+                "accession": "ENCFF109KRO",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bigWig",
+                "file_size": 175510124,
+                "output_type": "signal of unique reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/59c59c47-dcfa-45ac-ad3c-1e70b659e5bd/ENCFF109KRO.bigWig",
+                    "md5sum_base64": "JEKaYEwHw3w8QpjX3OfdRQ==",
+                    "file_size": 175510124
+                }
+            },
+            "ENCFF268XKB": {
+                "accession": "ENCFF268XKB",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "tsv",
+                "file_size": 24346711,
+                "output_type": "transcript quantifications",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/877ca111-61d7-40b0-8ba6-23304e42f873/ENCFF268XKB.tsv",
+                    "md5sum_base64": "PBVOzOEvou9dXdzydnco5A==",
+                    "file_size": 24346711
+                }
+            },
+            "ENCFF265JPE": {
+                "accession": "ENCFF265JPE",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "tsv",
+                "file_size": 20382062,
+                "output_type": "transcript quantifications",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/a3f5b4d1-7313-44b9-b6b4-ac07ba1cb3bf/ENCFF265JPE.tsv",
+                    "md5sum_base64": "/izjp/o3GD5/K+X9EROTTQ==",
+                    "file_size": 20382062
+                }
+            },
+            "ENCFF700DJU": {
+                "accession": "ENCFF700DJU",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bigWig",
+                "file_size": 247062159,
+                "output_type": "signal of all reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/eccec5ac-a519-473b-a2a8-745566a7cc0f/ENCFF700DJU.bigWig",
+                    "md5sum_base64": "TftJeSQq6Moho1W5auYUeg==",
+                    "file_size": 247062159
+                }
+            },
+            "ENCFF223BYF": {
+                "accession": "ENCFF223BYF",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bam",
+                "file_size": 13678352603,
+                "output_type": "transcriptome alignments",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/c3622bcd-2b10-4d7f-8345-18af7904ea64/ENCFF223BYF.bam",
+                    "md5sum_base64": "fjLkfMidhycreqCgiJl6kQ==",
+                    "file_size": 13678352603
+                }
+            },
+            "ENCFF432OGE": {
+                "accession": "ENCFF432OGE",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "bigWig",
+                "file_size": 157038277,
+                "output_type": "signal of all reads",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/9b8298f8-caaf-4560-834b-3bed3c4384aa/ENCFF432OGE.bigWig",
+                    "md5sum_base64": "tZkoAGQDXPtYaPwNgK0Z9w==",
+                    "file_size": 157038277
+                }
+            },
+            "ENCFF143CQH": {
+                "accession": "ENCFF143CQH",
+                "description": "",
+                "dbxrefs": [],
+                "file_format": "tsv",
+                "file_size": 11815724,
+                "output_type": "gene quantifications",
+                "cloud_metadata": {
+                    "url": "https://encode-public.s3.amazonaws.com/2021/03/24/ed42154e-3e53-49f7-bc98-0d5d24ee62d1/ENCFF143CQH.tsv",
+                    "md5sum_base64": "aRlXA5Jf3SzoBiR9ddNpJA==",
+                    "file_size": 11815724
+                }
+            }
+        }
+    }
+}
