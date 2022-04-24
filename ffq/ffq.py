@@ -95,8 +95,11 @@ def parse_run(soup):
             file['size'] = int(file['size'])
     alt_links_soup = ncbi_fetch_fasta(accession, 'sra')
     aws_links = parse_ncbi_fetch_fasta(alt_links_soup, 'AWS')
+    aws_links = [link for link in aws_links if accession in link]
     gcp_links = parse_ncbi_fetch_fasta(alt_links_soup, 'GCP')
+    gcp_links = [link for link in gcp_links if accession in link]
     ncbi_links = parse_ncbi_fetch_fasta(alt_links_soup, 'NCBI')
+    ncbi_links = [link for link in ncbi_links if accession in link]
     files = {
         'ftp': ftp_files,
         'aws': [{
