@@ -15,14 +15,14 @@ Fetch metadata information from the following databases:
 - [NIH Biosample](https://www.ncbi.nlm.nih.gov/biosample), 
 - [ENCODE](https://www.encodeproject.org/): The Encyclopedia of DNA Elements. 
 
-`ffq` receives an accession and returns the metadata for that accession as well as the metadata for all downstream accessions following the interconnection between GEO and SRA, EMBL-EBI, DDBJ, Biosample:
+`ffq` receives an accession and returns the metadata for that accession as well as the metadata for all downstream accessions following the connections between GEO, SRA, EMBL-EBI, DDBJ, and Biosample:
 
 
 <img src="https://docs.google.com/drawings/d/e/2PACX-1vQwKI33u_qjap-QU9T_v6oZ9EHLTxryB4EIOTNodEWWVFViwhcANpTmBQU4ZrS_85PEl41W64dsifi2/pub?w=2529&amp;h=1478">
 
-By default, ffq returns all downstream metadata down to the corresponding SRR. However, the desired depth level can be specified.
+By default, ffq returns all downstream metadata down to the level of the SRR record. However, the desired level of resolution can be specified.
 
-`ffq` can also skip the metadata and return the raw data download links from any available host (`FTP`, `AWS`, `GCP` or `NCBI`) for GEO and SRA ids.
+`ffq` can also skip returning the metadata, and instead return the raw data download links from any available host (`FTP`, `AWS`, `GCP` or `NCBI`) for GEO and SRA ids.
 
 ## Installation
 ```
