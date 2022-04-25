@@ -25,7 +25,7 @@ By default, ffq returns all downstream metadata down to the level of the SRR rec
 `ffq` can also skip returning the metadata, and instead return the raw data download links from any available host (`FTP`, `AWS`, `GCP` or `NCBI`) for GEO and SRA ids.
 
 ## Installation
-```
+```bash
 pip install ffq
 ```
 
@@ -171,6 +171,52 @@ where `[DOIS]` is a space-delimited list of one or more DOIs. The output is a JS
 Examples of complete outputs are available in the [examples](examples) directory.
 
 ## Downloading data
-`ffq` is specifically designed to download metadata and to facilitate obtaining links to sequence files. To download raw data from the links obtained with `ffq` you can use [`wget`](https://ena-docs.readthedocs.io/en/latest/retrieval/file-download.html#using-wget) or one of these tools: 
- - [`fasterq dump`](https://github.com/ncbi/sra-tools/wiki/HowTo:-fasterq-dump)
- - [`pysradb`](https://github.com/saketkc/pysradb)
+`ffq` is specifically designed to download metadata and to facilitate obtaining links to sequence files. To download raw data from the links obtained with `ffq` you can use one of the following:
+ - [`cURL`](https://curl.se/) and [`wget`](https://www.gnu.org/software/wget/) for FTP links,
+ - [`aws`](https://aws.amazon.com/cli/) for AWS links,
+ - [`gsutil`](https://cloud.google.com/storage/docs/gsutil_install) for GCP links,
+ - [`fasterq dump`](https://github.com/ncbi/sra-tools/wiki/HowTo:-fasterq-dump) for converting SRA files to FASTQ files.
+
+
+#### FTP
+By default, [`cURL`](https://curl.se/) is installed on most computers and can be used to download files with FTP links. Alternatively, [wget](https://ena-docs.readthedocs.io/en/latest/retrieval/file-download.html#using-wget) can be used.
+
+```bash
+# Obtain FTP links
+$ ffq --ftp SRR10668798
+ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz 
+
+# Download the files one-by-one
+$ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz 
+$ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz 
+
+# Or alternatively, pipe the urls to cURL
+$ ffq --ftp SRR10668798 | xargs curl -O
+```
+
+#### AWS
+In order to download files from AWS, the [`aws`](https://aws.amazon.com/cli/) tool must be installed and [credentials must be setup](https://www.ncbi.nlm.nih.gov/sra/docs/sra-aws-download/).
+
+```bash
+# Pipe AWS links to aws s3 cp and download
+$ ffq --aws SRX7347523 | xargs -I {} aws s3 cp {} .
+```
+
+#### GCP
+In order to download files from GCP, the [`gsutil`](https://cloud.google.com/storage/docs/gsutil_install) tool must be install and [credentials must be setup](https://www.ncbi.nlm.nih.gov/sra/docs/SRA-Google-Cloud/).
+
+```bash
+# Pipe GCP links to gsutil cp and download
+$ ffq --gcp ERS3861775 | xargs -I {} gsutil cp {} .
+```
+
+#### NCBI-SRA
+SRA files downloaded from NCBI can be converted to FASTQ files using [`fasterq-dump`](https://github.com/ncbi/sra-tools/tree/master/tools/fasterq-dump) which is installed as part of [SRA Toolkit](https://github.com/ncbi/sra-tools/wiki/HowTo:-fasterq-dump).
+
+```bash
+# Pipe SRA link to curl and download the SRA file
+$ ffq --ncbi GSM2905292 | xargs curl -O
+
+# Convert the SRA file to FASTQ files
+$ fastq-dump ./SRR6425163.1 --split-files --include-technical --gzip  -O ./SRR6425163
+```
