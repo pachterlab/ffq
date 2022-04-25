@@ -1,6 +1,10 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    paths:
+    - 'ffq/**'
+    - 'tests/**'
 
 jobs:
   check-code:
