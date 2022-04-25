@@ -12,11 +12,11 @@ setup(
     name='ffq',
     version='0.0.4',
     url='https://github.com/pachterlab/ffq',
-    author='Kyung Hoi (Joseph) Min, Sina Booeshaghi',
-    author_email='phoenixter96@gmail.com, alisina@caltech.edu',
+    author='Kyung Hoi (Joseph) Min, Sina Booeshaghi, Ángel Gálvez Merchán',
+    author_email='phoenixter96@gmail.com, alisina@caltech.edu, agalvezm@caltech.edu',
     maintainer='Pachter Lab',
     maintainer_email='lpachter@caltech.edu',
-    description='Fetch run information from the European Nucleotide Archive (ENA).',  # noqa
+    description='A command line tool that makes it easier to find sequencing data from SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample.',  # noqa
     long_description=long_description,
     long_description_content_type='text/markdown',
     keywords='',
