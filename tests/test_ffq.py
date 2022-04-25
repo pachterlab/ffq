@@ -27,12 +27,14 @@ class TestFfq(TestMixin, TestCase):
 
     def test_parse_run(self):
         with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run, \
+            mock.patch('ffq.ffq.ncbi_fetch_fasta') as ncbi_fetch_fasta, \
             mock.patch('ffq.ffq.parse_ncbi_fetch_fasta') as parse_ncbi_fetch_fasta:
             with open(self.run_path, 'r') as f:
                 soup = BeautifulSoup(f.read(), 'xml')
 
             get_files_metadata_from_run.return_value = [{'size': "1"}]
-            parse_ncbi_fetch_fasta.return_value = ['link']
+            ncbi_fetch_fasta.return_value = ['SRR8426358_links']
+            parse_ncbi_fetch_fasta.return_value = ['SRR8426358_link']
             self.assertEqual({
                 'accession':
                     'SRR8426358',
@@ -55,13 +57,13 @@ class TestFfq(TestMixin, TestCase):
                         'size': 1
                     }],
                     'aws': [{
-                        'url': 'link'
+                        'url': 'SRR8426358_link'
                     }],
                     'gcp': [{
-                        'url': 'link'
+                        'url': 'SRR8426358_link'
                     }],
                     'ncbi': [{
-                        'url': 'link'
+                        'url': 'SRR8426358_link'
                     }],
                 }
             }, ffq.parse_run(soup))
@@ -389,20 +391,14 @@ class TestFfq(TestMixin, TestCase):
         self.maxDiff = None
         capturedOutput = io.StringIO()
         sys.stdout = capturedOutput
-        ffq.ffq_links([('GSE', 'GSE119212')], 'ftp')
+        ffq.ffq_links([('GSE', 'GSE112570')], 'ftp')
         sys.stdout = sys.__stdout__
         self.assertEqual(
             capturedOutput.getvalue(),
             (
-                'accession\tfiletype\tfilenumber\tlink\nGSM3360833\t\tbam\t1\t'
-                'ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767734/GW16_Hippocampus_possorted_genome_bam.bam.1'
-                '\nGSM3360834\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767735/GW18_Hippocampus_possorted_genome_bam.bam.1'  # noqa
-                '\nGSM3360835\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767736/GW22_Hippocampus_01_possorted_genome_bam.bam.1'  # noqa
-                '\nGSM3360836\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767737/GW22_Hippocampus_02_possorted_genome_bam.bam.1'  # noqa
-                '\nGSM3360837\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767738/GW25_Hippocampus_possorted_genome_bam.bam.1'  # noqa
-                '\nGSM3360838\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767739/GW27_Hippocampus_possorted_genome_bam.bam.1'  # noqa
-                '\nGSM3770749\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072134/GW20_Hippocampus_01_possorted_genome_bam.bam.1'  # noqa
-                '\nGSM3770750\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072135/GW20_Hippocampus_02_possorted_genome_bam.bam.1\n'  # noqa
+                'accession\tfiletype\tfilenumber\tlink\n'
+                'GSM3073088\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/SRA678/SRA678017/bam/H17w_K1.bam\n'  # noqa
+                'GSM3073089\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/SRA678/SRA678017/bam/H17w_K2.bam\n'  # noqa
             )
         )
 
