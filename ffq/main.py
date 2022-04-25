@@ -6,7 +6,7 @@ import sys
 import re
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_encode, ffq_bioproject, ffq_biosample, ffq_links, validate_accession
+from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_encode, ffq_bioproject, ffq_biosample, ffq_links, validate_accession  # noqa
 
 logger = logging.getLogger(__name__)
 
@@ -14,24 +14,25 @@ RUN_TYPES = (
     'SRR',
     'ERR',
     'DRR',
-)  #, 'CRR')
+)  # , 'CRR')
 PROJECT_TYPES = (
     'SRP',
     'ERP',
     'DRP',
-)  #, 'CRP')  # aka study types
+)  # , 'CRP')  # aka study types
 EXPERIMENT_TYPES = (
     'SRX',
     'ERX',
     'DRX',
-)  #, 'CRX')  # CAREFUL, I don't think CRX accessions should go here (see bioproject)
+)  # 'CRX')  # CAREFUL, I don't think CRX accessions should go here (see bioproject)
 SAMPLE_TYPES = ('SRS', 'ERS', 'DRS', 'CRS')
 GEO_TYPES = ('GSE', 'GSM')
 ENCODE_TYPES = ('ENCSR', 'ENCBS', 'ENCDO')
 BIOPROJECT_TYPES = ('CRX',)
 BIOSAMPLE_TYPES = ('SAMN', 'SAMD', 'SAMEA', 'SAMEG')
 OTHER_TYPES = ('DOI',)
-SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + OTHER_TYPES
+SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
+    GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + OTHER_TYPES
 
 
 def main():
@@ -77,7 +78,7 @@ def main():
         type=str,
         required=False,
         choices=SEARCH_TYPES
-        #default='None'
+        # default='None'
     )
 
     parser.add_argument(
@@ -88,21 +89,21 @@ def main():
 
     parser.add_argument(
         '--aws',
-        help=
+        help=  # noqa
         'Skip metadata and return only AWS links for raw data (if available)',
         action='store_true'
     )
 
     parser.add_argument(
         '--ncbi',
-        help=
+        help=  # noqa
         'Skip metadata and return only NCBI links for raw data (if available)',
         action='store_true'
     )
 
     parser.add_argument(
         '--gcp',
-        help=
+        help=  # noqa
         'Skip metadata and return only GCP links for raw data (if available)',
         action='store_true'
     )
@@ -141,17 +142,18 @@ def main():
         parser.error('`-o` must be provided when using `--split`')
 
     if args.l:
-        if args.l <= 0:
+        if args.l <= 0:  # noqa
             parser.error('level `-l` must be equal or greater than 1')
     args.IDs = [id.upper() for id in args.IDs]
     # If user provides -t
     if args.t is not None:
-
         # Check IDs depending on type
-        if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
+        if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
+        GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
             for ID in args.IDs:
                 ID_type = re.findall(r"(\D+).+", ID)
-                if ID_type not in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
+                if ID_type not in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
+                    GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
                     parser.error((
                         f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
                         ' and end with digits.'
@@ -236,7 +238,7 @@ def main():
                 else:
                     logger.error(e)
 
-    #If user does not provide -t
+    # If user does not provide -t
     else:
         # Validate and extract types of accessions provided
         type_accessions = validate_accession(
@@ -247,7 +249,7 @@ def main():
         # If at least one of the accessions is incorrect:
         if False in type_accessions:
             parser.error(
-                f'{args.IDs[type_accessions.index(False)]} is not a valid ID. IDs can be one of {", ".join(SEARCH_TYPES)}'
+                f'{args.IDs[type_accessions.index(False)]} is not a valid ID. IDs can be one of {", ".join(SEARCH_TYPES)}'  # noqa
             )
             sys.exit(1)
 

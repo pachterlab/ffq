@@ -4,20 +4,15 @@ import re
 import time
 from urllib.parse import urlparse
 import sys
-from xml.dom.minidom import Identified
-from bs4 import BeautifulSoup
-import time
 
 from .utils import (
-    cached_get, geo_id_to_srps, geo_ids_to_gses, gsm_id_to_srs, get_doi,
-    get_gse_search_json, get_gsm_search_json, get_xml, get_encode_json,
-    get_samples_from_study, ncbi_link, ncbi_search, ncbi_fetch_fasta,
-    ncbi_summary, parse_range, parse_encode_biosample, parse_encode_donor,
-    parse_encode_json, parse_tsv, search_ena_run_sample, search_ena_run_study,
-    search_ena_study_runs, search_ena_title, sra_ids_to_srrs, geo_to_suppl,
-    gsm_to_platform, gse_to_gsms, srp_to_srx, srs_to_srx, gsm_to_srx,
-    srx_to_srrs, get_files_metadata_from_run, parse_url, parse_ncbi_fetch_fasta,
-    ena_fetch, parse_bioproject
+    geo_ids_to_gses, gsm_id_to_srs, get_doi, get_gse_search_json,
+    get_gsm_search_json, get_xml, get_encode_json, get_samples_from_study,
+    ncbi_link, ncbi_search, ncbi_fetch_fasta, parse_encode_json,
+    search_ena_run_sample, search_ena_run_study, search_ena_title,
+    sra_ids_to_srrs, geo_to_suppl, gsm_to_platform, gse_to_gsms, srp_to_srx,
+    srs_to_srx, gsm_to_srx, srx_to_srrs, get_files_metadata_from_run, parse_url,
+    parse_ncbi_fetch_fasta, ena_fetch, parse_bioproject
 )
 
 logger = logging.getLogger(__name__)
@@ -26,7 +21,7 @@ RUN_PARSER = re.compile(r'(SRR.+)|(ERR.+)|(DRR.+)')
 EXPERIMENT_PARSER = re.compile(r'(SRX.+)|(ERX.+)|(DRX.+)')
 PROJECT_PARSER = re.compile(r'(SRP.+)|(ERP.+)|(DRP.+)')
 SAMPLE_PARSER = re.compile(r'(SRS.+)|(ERS.+)|(DRS.+)')
-DOI_PARSER = re.compile('^10.\d{4,9}\/[-._;()\/:a-z0-9]+')
+DOI_PARSER = re.compile('^10.\d{4,9}\/[-._;()\/:a-z0-9]+')  # noqa
 
 
 def validate_accession(accessions, search_types):
@@ -81,13 +76,13 @@ def parse_run(soup):
             tag = attr.find('TAG').text
             value = attr.find('VALUE').text
             attributes[tag] = value
-        except:
+        except:  # noqa
             pass
     if attributes:
         try:
             attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
             attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT'])
-        except:
+        except:  # noqa
             pass
     ftp_files = get_files_metadata_from_run(soup)
     if ftp_files:
@@ -140,24 +135,24 @@ def parse_sample(soup):
     try:
         attributes = {
             attr.find('TAG').text: attr.find('VALUE').text
-            for attr in soup.find_all('SAMPLE_ATTRIBUTE')
+            for attr in sample_attribute
         }
-    except:
+    except:  # noqa
         attributes = ''
     if attributes:
         try:
             attributes['ENA-SPOT-COUNT'] = int(attributes['ENA-SPOT-COUNT'])
             attributes['ENA-BASE-COUNT'] = int(attributes['ENA-BASE-COUNT'])
-        except:
+        except:  # noqa
             pass
     try:
 
         try:
             experiment = soup.find('ID', text=EXPERIMENT_PARSER).text
-        except:
+        except:  # noqa
             experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text
 
-    except:
+    except:  # noqa
         experiment = ''
         logger.warning('No experiment found')
 
@@ -170,7 +165,7 @@ def parse_sample(soup):
     }
 
 
-def parse_experiment_with_run(soup, l):
+def parse_experiment_with_run(soup, level):
     """Given a BeautifulSoup object representing an experiment, parse out relevant
     information.
 
@@ -194,7 +189,7 @@ def parse_experiment_with_run(soup, l):
         'platform': platform,
         'instrument': instrument
     }
-    if l is None or l > 1:
+    if level is None or level > 1:
         # Returns all of the runs associated with an experiment
         runs = srx_to_srrs(accession)
 
@@ -287,7 +282,7 @@ def ffq_run(accession):
     return run
 
 
-def ffq_study(accession, l=None):
+def ffq_study(accession, level=None):
     """Fetch Study information.
 
     :param accession: study accession (SRP, ERP or DRP)
@@ -303,17 +298,17 @@ def ffq_study(accession, l=None):
     """
     logger.info(f'Parsing Study {accession}')
     study = parse_study(get_xml(accession))
-    if l is None or l != 1:
+    if level is None or level != 1:
         try:
-            l -= 1
-        except:
+            level -= 1
+        except:  # noqa
             pass
         logger.info(f'Getting Sample for {accession}')
         sample_ids = get_samples_from_study(accession)
         logger.warning(
             f'There are {str(len(sample_ids))} samples for {accession}'
         )
-        samples = [ffq_sample(sample_id, l) for sample_id in sample_ids]
+        samples = [ffq_sample(sample_id, level) for sample_id in sample_ids]
         study.update({
             'samples': {sample['accession']: sample
                         for sample in samples}
@@ -323,7 +318,7 @@ def ffq_study(accession, l=None):
         return study
 
 
-def ffq_gse(accession, l=None):
+def ffq_gse(accession, level=None):
     """Fetch GSE information.
 
     This function finds the GSMs corresponding to the GSE and calls `ffq_gsm`.
@@ -349,15 +344,15 @@ def ffq_gse(accession, l=None):
     else:
         logger.info(f'No supplementary files found for {accession}')
     gse.pop('geo_id')
-    if l is None or l != 1:
+    if level is None or level != 1:
         try:
-            l -= 1
-        except:
+            level -= 1
+        except:  # noqa
             pass
         time.sleep(1)
         gsm_ids = gse_to_gsms(accession)
         logger.warning(f'There are {str(len(gsm_ids))} samples for {accession}')
-        gsms = [ffq_gsm(gsm_id, l) for gsm_id in gsm_ids]
+        gsms = [ffq_gsm(gsm_id, level) for gsm_id in gsm_ids]
         gse.update({
             'geo_samples': {sample['accession']: sample
                             for sample in gsms}
@@ -367,7 +362,7 @@ def ffq_gse(accession, l=None):
         return gse
 
 
-def ffq_gsm(accession, l=None):
+def ffq_gsm(accession, level=None):
     """Fetch GSM information.
 
     This function finds the SRS corresponding to the GSM and calls `ffq_sample`.
@@ -394,15 +389,15 @@ def ffq_gsm(accession, l=None):
         logger.info(f'No supplementary files found for {accession}')
 
     gsm.update(gsm_to_platform(accession))
-    if l is None or l != 1:
+    if level is None or level != 1:
         try:
-            l -= 1
-        except:
+            level -= 1
+        except:  # noqa
             pass
         logger.info(f'Getting sample for {accession}')
         srs = gsm_id_to_srs(gsm.pop('geo_id'))
         if srs:
-            sample = ffq_sample(srs, l)
+            sample = ffq_sample(srs, level)
             gsm.update({'samples': {sample['accession']: sample}})
         else:
             return gsm
@@ -411,7 +406,7 @@ def ffq_gsm(accession, l=None):
         return gsm
 
 
-def ffq_experiment(accession, l=None):
+def ffq_experiment(accession, level=None):
     """Fetch Experiment information.
 
     :param accession: experiment accession (SRX, ERX or DRX)
@@ -426,11 +421,11 @@ def ffq_experiment(accession, l=None):
     :rtype: dict
     """
     logger.info(f'Parsing Experiment {accession}')
-    experiment = parse_experiment_with_run(get_xml(accession), l)
+    experiment = parse_experiment_with_run(get_xml(accession), level)
     return experiment
 
 
-def ffq_sample(accession, l=None):
+def ffq_sample(accession, level=None):
     """Fetch Sample information.
 
     :param accession: sample accession (SRS, ERS or DRS)
@@ -446,17 +441,19 @@ def ffq_sample(accession, l=None):
     """
     logger.info(f'Parsing sample {accession}')
     sample = parse_sample(get_xml(accession))
-    if l is None or l != 1:
+    if level is None or level != 1:
         try:
-            l -= 1
-        except:
+            level -= 1
+        except:  # noqa
             pass
         logger.info(f'Getting Experiment for {accession}')
         exp_id = sample['experiments']
         if exp_id:
             if ',' in exp_id:
                 exp_ids = exp_id.split(',')
-                experiments = [ffq_experiment(exp_id, l) for exp_id in exp_ids]
+                experiments = [
+                    ffq_experiment(exp_id, level) for exp_id in exp_ids
+                ]
                 sample.update({
                     'experiments': [{
                         experiment['accession']: experiment
@@ -464,7 +461,7 @@ def ffq_sample(accession, l=None):
                 })
                 return sample
             else:
-                experiment = ffq_experiment(exp_id, l)
+                experiment = ffq_experiment(exp_id, level)
                 sample.update({
                     'experiments': {
                         experiment['accession']: experiment
@@ -478,14 +475,14 @@ def ffq_sample(accession, l=None):
 
 
 def ffq_encode(accession):
-    """Fetch ENCODE ids information. This 
+    """Fetch ENCODE ids information. This
     function receives an ENCSR, ENCBS or ENCD
     ENCODE id and fetches the associated metadata
 
     :param accession: an ENCODE id (ENCSR, ENCBS or ENCD)
     :type accession: str
 
-    :return: dictionary of ENCODE id metadata. 
+    :return: dictionary of ENCODE id metadata.
     :rtype: dict
     """
     logger.info(f'Parsing {accession}')
@@ -494,37 +491,37 @@ def ffq_encode(accession):
 
 
 def ffq_bioproject(accession):
-    """Fetch bioproject ids information. This 
+    """Fetch bioproject ids information. This
     function receives a CXR accession
     and fetches the associated metadata
 
     :param accession: a bioproject CXR id
     :type accession: str
 
-    :return: dictionary of bioproject metadata. 
+    :return: dictionary of bioproject metadata.
     :rtype: dict
     """
     return parse_bioproject(ena_fetch(accession, 'bioproject'))
 
 
-def ffq_biosample(accession, l):
-    """Fetch biosample ids information. This 
+def ffq_biosample(accession, level):
+    """Fetch biosample ids information. This
     function receives a SAMN accession
     and fetches the associated metadata
 
     :param accession: a biosample SAMN id
     :type accession: str
 
-    :return: dictionary of biosample metadata. 
+    :return: dictionary of biosample metadata.
     :rtype: dict
     """
     soup = ena_fetch(accession, 'biosample')
     sample = soup.find('id', text=SAMPLE_PARSER).text
     try:
-        l = l - 1
-    except:
+        level = level - 1
+    except:  # noqa
         pass
-    sample_data = ffq_sample(sample, l)
+    sample_data = ffq_sample(sample, level)
     return {'accession': accession, 'samples': sample_data}
 
 
@@ -535,7 +532,7 @@ def ffq_links(type_accessions, server):
 
     :param type_accession: tuple of accession type and accession id
     :type type_accessions: (str, str)
-    
+
     :param server: server of desired links
     "type server: str
 
@@ -558,7 +555,6 @@ def ffq_links(type_accessions, server):
         if id_type == "GSM":
             if isinstance(accession, str):
                 accession = [accession]
-            counter = 0
             for gsm in accession:
                 time.sleep(0.1)
                 srx = gsm_to_srx(gsm)
@@ -601,7 +597,6 @@ def ffq_links(type_accessions, server):
             origin_SRP = True
         if id_type == "SRS" or id_type == "ERS" or id_type == "DRS":
             origin_SRS = True
-            counter = 0
             if isinstance(accession, str):
                 accession = [accession]
             srxs = []

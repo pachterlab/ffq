@@ -3,7 +3,6 @@ import re
 import time
 from functools import lru_cache
 import sys
-import numpy as np
 
 import requests
 from ftplib import FTP
@@ -169,9 +168,9 @@ def get_samples_from_study(accession):
 
 def parse_encode_biosample(data):
     """Parse a python dictionary containing
-    ENCODE's biosample metadata into a dictionary 
+    ENCODE's biosample metadata into a dictionary
     with select biosample metadata
-    
+
     :param data: python dictionary containing ENCODE' biosample metadata
     :type s: dict
 
@@ -200,9 +199,9 @@ def parse_encode_biosample(data):
 
 def parse_encode_donor(data):
     """Parse a python dictionary containing
-    ENCODE's donor metadata into a dictionary 
+    ENCODE's donor metadata into a dictionary
     with select donor metadata
-    
+
     :param data: python dictionary containing ENCODE' donor metadata
     :type s: dict
 
@@ -219,8 +218,8 @@ def parse_encode_donor(data):
 
 def parse_encode_json(accession, data):
     """Parse a python dictionary containing
-    ENCODE metadata into a parsed dictionary 
-    with select metadata to be returned by 
+    ENCODE metadata into a parsed dictionary
+    with select metadata to be returned by
     `ffq_ENCODE`
 
     :param data: python dictionary containing ENCODE metadata
@@ -447,16 +446,16 @@ def search_ena_title(title):
 
 
 def ncbi_fetch_fasta(accession, db):
-    """ Fetch fastq files information from the 
+    """ Fetch fastq files information from the
     specified NCBI entrez database for the specified
     accession
-    
+
     :param accession: database id
     :type: str
-    
+
     :param db: ENTREZ database
     :type: str
-    
+
     :return: BeautifulSoup object with fastq files information
     :rtype: bs4.BeautifulSoup
     """
@@ -477,7 +476,7 @@ def ncbi_fetch_fasta(accession, db):
         exit(1)
     text = response.text
     if not text:
-        logger.warning(f'No metadata found in {args[0]}')
+        logger.warning(f'No metadata found for {accession}')
         sys.exit(1)
     else:
         return BeautifulSoup(response.content, 'xml')
@@ -632,17 +631,17 @@ def gsm_id_to_srs(id):
         for srx in srxs:
             try:
                 soup = get_xml(srx)
-                try:
-                    sample = soup.find('ID', text=SAMPLE_PARSER).text
-                except:
-                    sample = soup.find('PRIMARY_ID', text=SAMPLE_PARSER).text
-            except:
+                sample = soup.find(
+                    re.compile(r'PRIMARY_ID|ID'), text=SAMPLE_PARSER
+                ).text
+            except:  # noqa
                 logger.warning('No sample found')
                 return
     else:
-        logger.warning(
-            f'No sample found. Either the provided GSM accession is invalid or raw data was not provided for this record'
-        )
+        logger.warning((
+            "No sample found. Either the provided GSM accession is "
+            "invalid or raw data was not provided for this record"
+        ))
         exit(1)
     return sample
 
@@ -720,6 +719,7 @@ def geo_to_suppl(accession, GEO):
     :return: a list of dictionaries with supplemental file information
     :rtype: list
     """
+
     if GEO == "GSM":
         link = FTP_GEO_SAMPLE
     elif GEO == "GSE":
@@ -727,17 +727,19 @@ def geo_to_suppl(accession, GEO):
     ftp = FTP(FTP_GEO_URL)
     ftp.login()
     path = f'{link}{accession[:-3]}nnn/{accession}{FTP_GEO_SUPPL}'
-    files = ftp.mlsd(path)
+    try:
+        files = ftp.mlsd(path)
+    except:  # noqa
+        return []
     try:
         supp = [{
             'filename': entry[0],
             'url': f"{FTP_GEO_URL}{path}{entry[0]}",
             'size': entry[1].get('size')
         } for entry in files if entry[1].get('type') == 'file']
-
-    except:
+    except:  # noqa
         return []
-
+    print("done")
     return supp
 
 
@@ -932,14 +934,14 @@ def parse_url(url):
     """ Given a raw data link, returns
     the file type and file number of the
     associated file
-    
+
     :param url: raw data download link
     :type url: str
-    
+
     :return: file type (bam, fastq or unknown) and
-    file number (either 1 or 2 for reads 1 and 2 of 
+    file number (either 1 or 2 for reads 1 and 2 of
     fastqs, or 1 for bam, unique fastqs, and unknown files)
-    :rtype: str, str 
+    :rtype: str, str
     """
     if "bam" in url:
         filetype = "bam"
@@ -966,16 +968,16 @@ def parse_url(url):
 
 def parse_ncbi_fetch_fasta(soup, server):
     """ Given the output of `ncbi_fetch_fasta` and
-    the server of interest, returns fastq or bam urls 
+    the server of interest, returns fastq or bam urls
     hosted in the specified server
 
-    :param soup: BeautifulSoup object (output of `ncbi_fetch_fasta` 
+    :param soup: BeautifulSoup object (output of `ncbi_fetch_fasta`
     with fastq information
     :type: bs4.BeautifulSoup object
-    
+
     :param server: host server of urls to be returned (AWS, GCP or NCBI)
     :type: str
-    
+
     :rparam: list of urls
     :rtype: list
     """
@@ -991,13 +993,13 @@ def parse_ncbi_fetch_fasta(soup, server):
 def ena_fetch(accession, db):
     """ Fetch information from the specified
     ENA database for the specified accession
-    
+
     :param accession: database id
     :type: str
-    
+
     :param db: ENA database
     :type: str
-    
+
     :return: BeautifulSoup object with accession information
     :rtype: bs4.BeautifulSoup
     """
@@ -1012,7 +1014,7 @@ def parse_bioproject(soup):
 
     :param soup: BeautifulSoup object (output of `ena_fetch` with db = bioproject)
     :type: bs4.BeautifulSoup object
-    
+
     :rparam: dictionary with metadata
     :rtype: dict
     """
@@ -1020,9 +1022,10 @@ def parse_bioproject(soup):
     if 'is not public in BioProject' in soup.text:
         logger.error('The provided ID is not public in BioProject. Exiting')
         sys.exit(0)
-    try:
-        target_material = soup.find('target').get('material')
-    except:
+    target = soup.find('target')
+    if target:
+        target_material = target.get('material')
+    else:
         target_material = ''
     return {
         'accession': soup.find('archiveid').get('accession'),

@@ -3,14 +3,12 @@ from unittest.mock import call
 
 from bs4 import BeautifulSoup
 import json
-import re
 
 import ffq.utils as utils
 from ffq.config import (
     CROSSREF_URL, ENA_SEARCH_URL, ENA_URL, GSE_SEARCH_URL, GSE_SUMMARY_URL,
     GSE_SEARCH_TERMS, GSE_SUMMARY_TERMS, NCBI_FETCH_URL, NCBI_LINK_URL,
-    NCBI_SEARCH_URL, NCBI_SUMMARY_URL, FTP_GEO_URL, FTP_GEO_SAMPLE,
-    FTP_GEO_SERIES, FTP_GEO_SUPPL
+    NCBI_SEARCH_URL, NCBI_SUMMARY_URL
 )
 from tests.mixins import TestMixin
 
@@ -52,9 +50,11 @@ class TestUtils(TestMixin, TestCase):
             ncbi_search.return_value = ['geo_id', 'gsm_id']
             result = utils.get_gsm_search_json('accession')
             ncbi_search.assert_called_once_with("gds", "accession")
-            self.assertEqual({'accession': 'accession',\
-                            'geo_id': 'gsm_id'}, result)
-            #self.assertTrue(isinstance(result, BeautifulSoup))
+            self.assertEqual({
+                'accession': 'accession',
+                'geo_id': 'gsm_id'
+            }, result)
+            # self.assertTrue(isinstance(result, BeautifulSoup))
 
     def test_get_gse_summary_json(self):
         with mock.patch('ffq.utils.cached_get') as cached_get:
@@ -471,17 +471,6 @@ class TestUtils(TestMixin, TestCase):
             self.assertEqual("SRX5692097", utils.gsm_to_srx("accession"))
 
     def test_srs_to_srx(self):
-
-        soup = BeautifulSoup(
-            """<?xml version="1.0" encoding="utf-8"?>
-                                            <SAMPLE_SET>
-                                            <SAMPLE accession="SRS4631628" alias="GSM3717977" broker_name="NCBI">
-                                            <XREF_LINK>
-                                            <DB>ENA-EXPERIMENT</DB>
-                                            <ID>SRX5692096</ID>
-                                            </SAMPLE>
-                                            </SAMPLE_SET>""", 'xml'
-        )
         self.assertEqual("SRX5692096", utils.srs_to_srx("SRS4631628"))
 
     def test_srx_to_srrs(self):

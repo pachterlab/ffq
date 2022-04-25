@@ -67,7 +67,7 @@ class TestFfq(TestMixin, TestCase):
             }, ffq.parse_run(soup))
 
     def test_parse_run_bam(self):
-        #with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run:
+        #       with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run:
         with open(self.run2_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
         self.maxDiff = None
@@ -138,71 +138,74 @@ class TestFfq(TestMixin, TestCase):
         with open(self.experiment_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
         self.maxDiff = None
-        self.assertEqual({
-            "accession":
-                "SRX5234128",
-            "title":
-                "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
-            "platform":
-                "ILLUMINA",
-            "instrument":
-                "Illumina HiSeq 4000",
-            "runs": {
-                "SRR8426358": {
-                    "accession":
-                        "SRR8426358",
-                    "experiment":
-                        "SRX5234128",
-                    "study":
-                        "SRP178136",
-                    "sample":
-                        "SRS4237519",
-                    "title":
-                        "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
-                    "attributes": {
-                        "ENA-SPOT-COUNT": 109256158,
-                        "ENA-BASE-COUNT": 21984096610,
-                        "ENA-FIRST-PUBLIC": "2019-01-27",
-                        "ENA-LAST-UPDATE": "2019-01-27"
-                    },
-                    "files": {
-                        "ftp": [{
-                            "url":
-                                "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz",
-                            "md5":
-                                "be7e88cf6f6fd90f1b1170f1cb367123",
-                            "size":
-                                5507959060
-                        }, {
-                            "url":
-                                "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz",
-                            "md5":
-                                "2124da22644d876c4caa92ffd9e2402e",
-                            "size":
-                                7194107512
-                        }],
-                        "aws": [{
-                            "url":
-                                "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
-                        }, {
-                            "url":
-                                "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
-                        }],
-                        "gcp": [{
-                            "url":
-                                "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
-                        }, {
-                            "url":
-                                "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
-                        }],
-                        "ncbi": [{
-                            "url":
-                                "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-2/SRR8426358/SRR8426358.1"
-                        }]
+        self.assertEqual(
+            {
+                "accession":
+                    "SRX5234128",
+                "title":
+                    "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",
+                "platform":
+                    "ILLUMINA",
+                "instrument":
+                    "Illumina HiSeq 4000",
+                "runs": {
+                    "SRR8426358": {
+                        "accession":
+                            "SRR8426358",
+                        "experiment":
+                            "SRX5234128",
+                        "study":
+                            "SRP178136",
+                        "sample":
+                            "SRS4237519",
+                        "title":
+                            "Illumina HiSeq 4000 paired end sequencing; GSM3557675: old_Dropseq_1; Mus musculus; RNA-Seq",  # noqa
+                        "attributes": {
+                            "ENA-SPOT-COUNT": 109256158,
+                            "ENA-BASE-COUNT": 21984096610,
+                            "ENA-FIRST-PUBLIC": "2019-01-27",
+                            "ENA-LAST-UPDATE": "2019-01-27"
+                        },
+                        "files": {
+                            "ftp": [{
+                                "url":
+                                    "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz",
+                                "md5":
+                                    "be7e88cf6f6fd90f1b1170f1cb367123",
+                                "size":
+                                    5507959060
+                            }, {
+                                "url":
+                                    "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz",
+                                "md5":
+                                    "2124da22644d876c4caa92ffd9e2402e",
+                                "size":
+                                    7194107512
+                            }],
+                            "aws": [{
+                                "url":
+                                    "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
+                            }, {
+                                "url":
+                                    "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
+                            }],
+                            "gcp": [{
+                                "url":
+                                    "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
+                            }, {
+                                "url":
+                                    "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
+                            }],
+                            "ncbi": [{
+                                "url":
+                                    "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-2/SRR8426358/SRR8426358.1"  # noqa
+                            }]
+                        }
                     }
                 }
-            }
-        }, ffq.parse_experiment_with_run(soup, 10))
+            },
+            ffq.parse_experiment_with_run(soup, 10)
+        )
 
     def test_parse_study(self):
         with open(self.study_path, 'r') as f:
@@ -390,17 +393,28 @@ class TestFfq(TestMixin, TestCase):
         sys.stdout = sys.__stdout__
         self.assertEqual(
             capturedOutput.getvalue(),
-            'accession\tfiletype\tfilenumber\tlink\nGSM3360833\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767734/GW16_Hippocampus_possorted_genome_bam.bam.1\nGSM3360834\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767735/GW18_Hippocampus_possorted_genome_bam.bam.1\nGSM3360835\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767736/GW22_Hippocampus_01_possorted_genome_bam.bam.1\nGSM3360836\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767737/GW22_Hippocampus_02_possorted_genome_bam.bam.1\nGSM3360837\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767738/GW25_Hippocampus_possorted_genome_bam.bam.1\nGSM3360838\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767739/GW27_Hippocampus_possorted_genome_bam.bam.1\nGSM3770749\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072134/GW20_Hippocampus_01_possorted_genome_bam.bam.1\nGSM3770750\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072135/GW20_Hippocampus_02_possorted_genome_bam.bam.1\n'
+            (
+                'accession\tfiletype\tfilenumber\tlink\nGSM3360833\t\tbam\t1\t'
+                'ftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767734/GW16_Hippocampus_possorted_genome_bam.bam.1'
+                '\nGSM3360834\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767735/GW18_Hippocampus_possorted_genome_bam.bam.1'  # noqa
+                '\nGSM3360835\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767736/GW22_Hippocampus_01_possorted_genome_bam.bam.1'  # noqa
+                '\nGSM3360836\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767737/GW22_Hippocampus_02_possorted_genome_bam.bam.1'  # noqa
+                '\nGSM3360837\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767738/GW25_Hippocampus_possorted_genome_bam.bam.1'  # noqa
+                '\nGSM3360838\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR776/SRR7767739/GW27_Hippocampus_possorted_genome_bam.bam.1'  # noqa
+                '\nGSM3770749\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072134/GW20_Hippocampus_01_possorted_genome_bam.bam.1'  # noqa
+                '\nGSM3770750\t\tbam\t1\tftp://ftp.sra.ebi.ac.uk/vol1/run/SRR907/SRR9072135/GW20_Hippocampus_02_possorted_genome_bam.bam.1\n'  # noqa
+            )
         )
 
     def test_ffq_links_srs_ftp(self):
         capturedOutput = io.StringIO()  # Create StringIO object
-        sys.stdout = capturedOutput  #  and redirect stdout.
+        sys.stdout = capturedOutput  # and redirect stdout.
         ffq.ffq_links([('SRS', 'SRS3815608')], 'ftp')  # Call function.
         sys.stdout = sys.__stdout__
         self.assertEqual(
             capturedOutput.getvalue(),
-            'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz '
+            'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz '
+            'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz '
         )
 
     def test_ffq_links_gsm_aws(self):
@@ -409,8 +423,10 @@ class TestFfq(TestMixin, TestCase):
         ffq.ffq_links([('GSM', 'GSM2905290')], 'AWS')
         sys.stdout = sys.__stdout__
         self.assertEqual(
-            capturedOutput.getvalue(),
-            's3://sra-pub-src-6/SRR6425161/J4_S1_L001_R1_001.fastq.gz s3://sra-pub-src-6/SRR6425161/J4_S1_L001_R2_001.fastq.gz '
+            capturedOutput.getvalue(), (
+                's3://sra-pub-src-6/SRR6425161/J4_S1_L001_R1_001.fastq.gz '
+                's3://sra-pub-src-6/SRR6425161/J4_S1_L001_R2_001.fastq.gz '
+            )
         )
 
     def test_ffq_links_srr_gcp(self):
@@ -419,8 +435,10 @@ class TestFfq(TestMixin, TestCase):
         ffq.ffq_links([('SRR', 'SRR7895953')], 'GCP')
         sys.stdout = sys.__stdout__
         self.assertEqual(
-            capturedOutput.getvalue(),
-            'gs://sra-pub-src-3/SRR7895953/T1-01P1_ACAGTG_L007_R1_001.fastq.gz gs://sra-pub-src-3/SRR7895953/T1-01P1_ACAGTG_L007_R2_001.fastq.gz '
+            capturedOutput.getvalue(), (
+                'gs://sra-pub-src-3/SRR7895953/T1-01P1_ACAGTG_L007_R1_001.fastq.gz '
+                'gs://sra-pub-src-3/SRR7895953/T1-01P1_ACAGTG_L007_R2_001.fastq.gz '
+            )
         )
 
     def test_ffq_links_srx_ncbi(self):
