@@ -179,7 +179,7 @@ Examples of complete outputs are available in the [examples](examples) directory
 
 
 #### FTP
-By default, [`cURL`](https://curl.se/) is installed on most computers and can be used to download files with FTP links. Alternatively, [wget](https://ena-docs.readthedocs.io/en/latest/retrieval/file-download.html#using-wget) can be used.
+By default, [`cURL`](https://curl.se/) is installed on most computers and can be used to download files with FTP links. Alternatively, [`wget`](https://ena-docs.readthedocs.io/en/latest/retrieval/file-download.html#using-wget) can be used.
 
 ```bash
 # Obtain FTP links
