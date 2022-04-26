@@ -144,13 +144,21 @@ def main():
         if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
         GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
             for ID in args.IDs:
-                ID_type = re.findall(r"(\D+).+", ID)
-                if ID_type not in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
-                    GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
+                IDs = re.findall(r"(\D+).+", ID)
+
+                if len(IDs) == 0:
                     parser.error((
                         f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
                         ' and end with digits.'
                     ))
+                else:
+                    ID_type = IDs[0]
+                    if ID_type not in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
+                        GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
+                        parser.error((
+                            f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
+                            ' and end with digits.'
+                        ))
         elif args.t == 'DOI':
             logger.warning(
                 'Searching by DOI may result in missing information.'
