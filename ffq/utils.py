@@ -739,7 +739,6 @@ def geo_to_suppl(accession, GEO):
         } for entry in files if entry[1].get('type') == 'file']
     except:  # noqa
         return []
-    print("done")
     return supp
 
 

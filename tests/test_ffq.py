@@ -405,46 +405,42 @@ class TestFfq(TestMixin, TestCase):
     def test_ffq_links_srs_ftp(self):
         capturedOutput = io.StringIO()  # Create StringIO object
         sys.stdout = capturedOutput  # and redirect stdout.
-        ffq.ffq_links([('SRS', 'SRS3815608')], 'ftp')  # Call function.
+        ffq.ffq_links([('SRS', 'SRS4629239')], 'ftp')  # Call function.
         sys.stdout = sys.__stdout__
         self.assertEqual(
             capturedOutput.getvalue(),
-            'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_1.fastq.gz '
-            'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR789/003/SRR7895953/SRR7895953_2.fastq.gz '
+            'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR890/000/SRR8903510/SRR8903510.fastq.gz '
         )
 
     def test_ffq_links_gsm_aws(self):
         capturedOutput = io.StringIO()
         sys.stdout = capturedOutput
-        ffq.ffq_links([('GSM', 'GSM2905290')], 'AWS')
+        ffq.ffq_links([('GSM', 'GSM3396164')], 'AWS')
         sys.stdout = sys.__stdout__
         self.assertEqual(
-            capturedOutput.getvalue(), (
-                's3://sra-pub-src-6/SRR6425161/J4_S1_L001_R1_001.fastq.gz '
-                's3://sra-pub-src-6/SRR6425161/J4_S1_L001_R2_001.fastq.gz '
-            )
+            capturedOutput.getvalue(),
+                'https://sra-pub-src-1.s3.amazonaws.com/SRR7881402/possorted_genome_bam_Ck.bam.1 '
         )
 
     def test_ffq_links_srr_gcp(self):
         capturedOutput = io.StringIO()
         sys.stdout = capturedOutput
-        ffq.ffq_links([('SRR', 'SRR7895953')], 'GCP')
+        ffq.ffq_links([('SRR', 'SRR8327928')], 'GCP')
         sys.stdout = sys.__stdout__
         self.assertEqual(
-            capturedOutput.getvalue(), (
-                'gs://sra-pub-src-3/SRR7895953/T1-01P1_ACAGTG_L007_R1_001.fastq.gz '
-                'gs://sra-pub-src-3/SRR7895953/T1-01P1_ACAGTG_L007_R2_001.fastq.gz '
-            )
+            capturedOutput.getvalue(),
+                'gs://sra-pub-src-1/SRR8327928/PDX110_possorted_genome_bam.bam.1 '
+
         )
 
     def test_ffq_links_srx_ncbi(self):
         capturedOutput = io.StringIO()
         sys.stdout = capturedOutput
-        ffq.ffq_links([('SRX', 'SRX4733412')], 'NCBI')
+        ffq.ffq_links([('SRX', 'SRX4063411')], 'NCBI')
         sys.stdout = sys.__stdout__
         self.assertEqual(
             capturedOutput.getvalue(),
-            'https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-2/SRR7895953/SRR7895953.1 '
+            'https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-13/SRR7142647/SRR7142647.1 '
         )
 
     def test_ffq_doi(self):
