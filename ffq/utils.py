@@ -625,7 +625,7 @@ def gsm_id_to_srs(id):
     srxs = []
     if 'extrelations' in data:
         for value in data['extrelations']:
-            if value['relationtype'] == 'SRA':  # may have manys samples?
+            if value['relationtype'] == 'SRA':  # may have many samples?
                 srxs.append(value['targetobject'])
     if srxs:
         for srx in srxs:
@@ -782,15 +782,6 @@ def gse_to_gsms(accession):
     else:
         logger.error("Provided GSE accession is invalid")
         sys.exit(1)
-
-    # data = json.loads(soup.text)
-    # if data['esearchresult']['idlist']:
-    #     accession = data['esearchresult']['querytranslation'].split('[')[0]
-    #     geo_id = data['esearchresult']['idlist'][-1]
-    #     return {'accession': accession, 'geo_id': geo_id}
-    # else:
-    #     logger.error("Provided GSE accession is invalid")
-    #     sys.exit(1)
 
 
 def gsm_to_srx(accession):

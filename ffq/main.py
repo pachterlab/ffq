@@ -14,21 +14,23 @@ RUN_TYPES = (
     'SRR',
     'ERR',
     'DRR',
-)  # , 'CRR')
+)
 PROJECT_TYPES = (
     'SRP',
     'ERP',
     'DRP',
-)  # , 'CRP')  # aka study types
+)
 EXPERIMENT_TYPES = (
     'SRX',
     'ERX',
     'DRX',
-)  # 'CRX')  # CAREFUL, I don't think CRX accessions should go here (see bioproject)
+)
 SAMPLE_TYPES = ('SRS', 'ERS', 'DRS', 'CRS')
 GEO_TYPES = ('GSE', 'GSM')
 ENCODE_TYPES = ('ENCSR', 'ENCBS', 'ENCDO')
-BIOPROJECT_TYPES = ('CRX',)
+BIOPROJECT_TYPES = (
+    'CRX',
+)  # TODO implement CRR and CRP, most dont have public metadata.
 BIOSAMPLE_TYPES = ('SAMN', 'SAMD', 'SAMEA', 'SAMEG')
 OTHER_TYPES = ('DOI',)
 SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
@@ -41,7 +43,7 @@ def main():
     # Main parser
     parser = argparse.ArgumentParser(
         description=((
-            f'ffq {__version__}: A command line tool that makes it easier to find sequencing data '
+            f'ffq {__version__}: A command line tool to find sequencing data '
             'from SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample.'
         ))
     )
@@ -50,19 +52,15 @@ def main():
     parser.add_argument(
         'IDs',
         help=(
-            'Can be a SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample accession, '
-            'DOIs, or paper titles.'
+            'One or multiple SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample accessions, '
+            'DOIs, or paper titles'
         ),
         nargs='+'
     )
     parser.add_argument(
         '-o',
         metavar='OUT',
-        help=(
-            'Path to JSON file to write run information. If `--split` is '
-            'used, path to directory in which to place JSON files. '
-            '(default: standard out)'
-        ),
+        help=('Path to write metadata (default: standard out)'),
         type=str,
         required=False,
     )
@@ -70,48 +68,10 @@ def main():
     parser.add_argument(
         '-t',
         metavar='TYPE',
-        help=(
-            'The type of term used to query data. Can be one of '
-            f'{", ".join(SEARCH_TYPES)} '
-            '(default: SRR)'
-        ),
+        help=argparse.SUPPRESS,
         type=str,
         required=False,
         choices=SEARCH_TYPES
-        # default='None'
-    )
-
-    parser.add_argument(
-        '--ftp', help='Return FTP links only', action='store_true'
-    )
-
-    parser.add_argument(
-        '--aws',
-        help=  # noqa
-        'Return AWS links only',
-        action='store_true'
-    )
-
-    parser.add_argument(
-        '--ncbi',
-        help=  # noqa
-        'Return NCBI links only',
-        action='store_true'
-    )
-
-    parser.add_argument(
-        '--gcp',
-        help=  # noqa
-        'Return GCP links only',
-        action='store_true'
-    )
-    parser.add_argument(
-        '--split',
-        help='Split output by accession into separate files.',
-        action='store_true'
-    )
-    parser.add_argument(
-        '--verbose', help='Print debugging information', action='store_true'
     )
 
     parser.add_argument(
@@ -119,6 +79,38 @@ def main():
         metavar='LEVEL',
         help='Max depth to fetch data within accession tree',
         type=int
+    )
+
+    parser.add_argument('--ftp', help='Return FTP links', action='store_true')
+
+    parser.add_argument(
+        '--aws',
+        help=  # noqa
+        'Return AWS links',
+        action='store_true'
+    )
+
+    parser.add_argument(
+        '--gcp',
+        help=  # noqa
+        'Return GCP links',
+        action='store_true'
+    )
+
+    parser.add_argument(
+        '--ncbi',
+        help=  # noqa
+        'Return NCBI links',
+        action='store_true'
+    )
+    parser.add_argument(
+        '--split',
+        help=
+        'Split output into separate files by accession  (`-o` is a directory)',
+        action='store_true'
+    )
+    parser.add_argument(
+        '--verbose', help='Print debugging information', action='store_true'
     )
 
     # Show help when no arguments are given
