@@ -40,18 +40,18 @@ def main():
     """
     # Main parser
     parser = argparse.ArgumentParser(
-        description=(
-            f'ffq {__version__}: Fetch run information from '
-            'the European Nucleotide Archive (ENA).'
-        )
+        description=((
+            f'ffq {__version__}: A command line tool that makes it easier to find sequencing data '
+            'from SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample.'
+        ))
     )
     parser._actions[0].help = parser._actions[0].help.capitalize()
 
     parser.add_argument(
         'IDs',
         help=(
-            'Can be a SRA / ENA Run Accessions or Study Accessions, '
-            'GEO Study Accessions, DOIs or paper titles.'
+            'Can be a SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample accession, '
+            'DOIs, or paper titles.'
         ),
         nargs='+'
     )
@@ -71,7 +71,7 @@ def main():
         '-t',
         metavar='TYPE',
         help=(
-            'The type of term used to query data. Can be one of'
+            'The type of term used to query data. Can be one of '
             f'{", ".join(SEARCH_TYPES)} '
             '(default: SRR)'
         ),
@@ -82,33 +82,33 @@ def main():
     )
 
     parser.add_argument(
-        '--ftp',
-        help='Skip medatada and return only ftp links for raw data',
-        action='store_true'
+        '--ftp', help='Return FTP links only', action='store_true'
     )
 
     parser.add_argument(
         '--aws',
         help=  # noqa
-        'Skip metadata and return only AWS links for raw data (if available)',
+        'Return AWS links only',
         action='store_true'
     )
 
     parser.add_argument(
         '--ncbi',
         help=  # noqa
-        'Skip metadata and return only NCBI links for raw data (if available)',
+        'Return NCBI links only',
         action='store_true'
     )
 
     parser.add_argument(
         '--gcp',
         help=  # noqa
-        'Skip metadata and return only GCP links for raw data (if available)',
+        'Return GCP links only',
         action='store_true'
     )
     parser.add_argument(
-        '--split', help='Split runs into their own files.', action='store_true'
+        '--split',
+        help='Split output by accession into separate files.',
+        action='store_true'
     )
     parser.add_argument(
         '--verbose', help='Print debugging information', action='store_true'
@@ -116,7 +116,8 @@ def main():
 
     parser.add_argument(
         '-l',
-        help='Specify the desired level for fetching downstream accessions',
+        metavar='LEVEL',
+        help='Max depth to fetch data within accession tree',
         type=int
     )
 
@@ -162,14 +163,6 @@ def main():
             logger.warning(
                 'Searching by DOI may result in missing information.'
             )
-
-        #         if ID[0:3] != args.t or not ID[3:].isdigit():
-        #             parser.error((
-        #                 f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
-        #                 ' and end with digits.'
-        #             ))
-        # elif args.t == 'DOI':
-        #     logger.warning('Searching by DOI may result in missing information.')
 
         if args.ftp:
             results = [
