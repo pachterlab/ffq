@@ -105,7 +105,7 @@ def main():
     )
     parser.add_argument(
         '--split',
-        help=
+        help=  # noqa
         'Split output into separate files by accession  (`-o` is a directory)',
         action='store_true'
     )
