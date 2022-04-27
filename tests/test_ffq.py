@@ -69,7 +69,6 @@ class TestFfq(TestMixin, TestCase):
             }, ffq.parse_run(soup))
 
     def test_parse_run_bam(self):
-        #       with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run:
         with open(self.run2_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
         self.maxDiff = None
