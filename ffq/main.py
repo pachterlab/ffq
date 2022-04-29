@@ -165,32 +165,28 @@ def main():
             )
 
         if args.ftp:
-            results = [
+            keyed = [
                 ffq_links([(args.t, accession)], 'ftp')
                 for accession in args.IDs
             ]
-            sys.exit(0)
 
         elif args.aws:
-            results = [
+            keyed = [
                 ffq_links([(args.t, accession)], 'AWS')
                 for accession in args.IDs
             ]
-            sys.exit(0)
 
         elif args.gcp:
-            results = [
+            keyed = [
                 ffq_links([(args.t, accession)], 'GCP')
                 for accession in args.IDs
             ]
-            sys.exit(0)
 
         elif args.ncbi:
-            results = [
+            keyed = [
                 ffq_links([(args.t, accession)], 'NCBI')
                 for accession in args.IDs
             ]
-            sys.exit(0)
 
         else:
             try:
@@ -250,20 +246,16 @@ def main():
         # NOTE: Change `type` by another name
         ############
         if args.ftp:
-            ffq_links(type_accessions, 'ftp')
-            sys.exit(0)
+            keyed = ffq_links(type_accessions, 'ftp')
 
         elif args.aws:
-            ffq_links(type_accessions, 'AWS')
-            sys.exit(0)
+            keyed = ffq_links(type_accessions, 'AWS')
 
         elif args.gcp:
-            ffq_links(type_accessions, 'GCP')
-            sys.exit(0)
+            keyed = ffq_links(type_accessions, 'GCP')
 
         elif args.ncbi:
-            ffq_links(type_accessions, 'NCBI')
-            sys.exit(0)
+            keyed = ffq_links(type_accessions, 'NCBI')
 
         else:
             # run ffq depending on type

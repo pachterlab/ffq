@@ -886,12 +886,13 @@ def get_files_metadata_from_run(soup):
             # available. This usually means the data was submitted as a BAM file.
             if not urls or not md5s or not sizes:
                 break
-
             files.extend(
                 [{
-                    'url': f'ftp://{url}',
+                    'filetype' : parse_url(url)[0],
+                    'filenumber' : parse_url(url)[1],
                     'md5': md5,
-                    'size': size
+                    'size': int(size),
+                    'url': f'ftp://{url}',
                 } for url, md5, size in
                  zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
             )
@@ -928,9 +929,9 @@ def parse_url(url):
     :param url: raw data download link
     :type url: str
 
-    :return: file type (bam, fastq or unknown) and
+    :return: file type (bam, fastq or SRA) and
     file number (either 1 or 2 for reads 1 and 2 of
-    fastqs, or 1 for bam, unique fastqs, and unknown files)
+    fastqs, or 1 for bam, unique fastqs, and SRA files)
     :rtype: str, str
     """
     if "bam" in url:
@@ -938,21 +939,21 @@ def parse_url(url):
     elif "fastq" in url:
         filetype = 'fastq'
     else:
-        filetype = 'unknown'
+        filetype = 'sra'
 
     if filetype == 'bam':
-        fileno = '1'
+        fileno = 1
     elif filetype == 'fastq':
         if '_R1' in url or '_1' in url:
-            fileno = '1'
+            fileno = 1
         elif '_R2' in url or '_2' in url:
-            fileno = '2'
+            fileno = 2
         elif '_I1' in url:
-            fileno = '3'
+            fileno = 3
         else:
-            fileno = '1'
-    if filetype == 'unknown':
-        fileno = 'unknown'
+            fileno = 1
+    if filetype == 'sra':
+        fileno = 1
     return filetype, fileno
 
 
