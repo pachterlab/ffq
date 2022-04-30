@@ -10,9 +10,9 @@ from .utils import (
     get_gsm_search_json, get_xml, get_encode_json, get_samples_from_study,
     ncbi_link, ncbi_search, ncbi_fetch_fasta, parse_encode_json,
     search_ena_run_sample, search_ena_run_study, search_ena_title,
-    sra_ids_to_srrs, geo_to_suppl, gsm_to_platform, gse_to_gsms, srp_to_srx,
-    srs_to_srx, gsm_to_srx, srx_to_srrs, get_files_metadata_from_run, parse_url,
-    parse_ncbi_fetch_fasta, ena_fetch, parse_bioproject
+    sra_ids_to_srrs, geo_to_suppl, gsm_to_platform, gse_to_gsms, srx_to_srrs,
+    get_files_metadata_from_run, parse_url, parse_ncbi_fetch_fasta, ena_fetch,
+    parse_bioproject
 )
 
 logger = logging.getLogger(__name__)
@@ -24,14 +24,42 @@ SAMPLE_PARSER = re.compile(r'(SRS.+)|(ERS.+)|(DRS.+)')
 DOI_PARSER = re.compile('^10.\d{4,9}\/[-._;()\/:a-z0-9]+')  # noqa
 
 
-def validate_accession(accessions, search_types):
-    ID_types = [
-        re.findall(r"(\D+).+", accession)[0] for accession in accessions
-    ]
-    return [(ID_type, accession) if ID_type in search_types else
-            False if DOI_PARSER.match(accession) is None else
-            ("DOI", accession)
-            for accession, ID_type in zip(accessions, ID_types)]
+# TODO evenetually create an accession class
+# TODO better handling DOI parsing
+def validate_accessions(accessions, search_types):
+    # 1. extract the prefix 2. determine if prefix is valid or its a DOI
+    # {accession: str, prefix: str, valid: bool}
+
+    IDs = []
+    for input_accession in accessions:
+        # encode needs :3 ?
+        # bioproject needs :3 ?
+        # biosample needs :4 or : 5 ?
+        accession = input_accession.upper()
+
+        valid = False
+        prefix = re.findall(r"(\D+).+", accession)[0]
+
+        if prefix in search_types:
+            valid = True
+
+        if DOI_PARSER.match(accession) is not None:
+            valid = True
+            logger.warning(
+                'Searching by DOI may result in missing information.'
+            )
+            prefix = "DOI"
+
+        # TODO add error if not valid
+
+        IDs.append({
+            "accession": accession,
+            "prefix": prefix,
+            "valid": valid,
+            "error": None
+        })
+
+    return IDs
 
 
 def parse_run(soup):
@@ -85,48 +113,56 @@ def parse_run(soup):
         except:  # noqa
             pass
     ftp_files = get_files_metadata_from_run(soup)
-    ftp_files = [file for file in ftp_files if accession in file['url']]
+    # print(ftp_files)
+    # ftp_files = [file for file in ftp_files if accession in file['url']]
+    # print(ftp_files)
     # for file in ftp_files:
     #     if accession in file['url']:
-            # url, md5, size =file['url'], file['md5'], file['size']
-            # # we want url last, so we delete they key and include it later
-            # del file['url'], file['md5'], file['size']
-            # filetype, fileno = parse_url(file['url'])
-            # file['filetype'] = filetype
-            # file['filenumber'] = fileno
-                
+    # url, md5, size =file['url'], file['md5'], file['size']
+    # # we want url last, so we delete they key and include it later
+    # del file['url'], file['md5'], file['size']
+    # filetype, fileno = parse_url(file['url'])
+    # file['filetype'] = filetype
+    # file['filenumber'] = fileno
+
     alt_links_soup = ncbi_fetch_fasta(accession, 'sra')
-    
+
     aws_links = parse_ncbi_fetch_fasta(alt_links_soup, 'AWS')
-    aws_results=[]
+    aws_results = []
     for url in aws_links:
         if accession in url:
             filetype, fileno = parse_url(url)
             aws_results.append({
-                'filetype' : filetype,
+                'filetype': filetype,
                 'filenumber': fileno,
+                'md5': None,
+                'size': None,
                 'url': url
             })
-            
+
     gcp_links = parse_ncbi_fetch_fasta(alt_links_soup, 'GCP')
-    gcp_results=[]
+    gcp_results = []
     for url in gcp_links:
         if accession in url:
             filetype, fileno = parse_url(url)
             gcp_results.append({
-                'filetype' : filetype,
+                'filetype': filetype,
                 'filenumber': fileno,
+                'md5': None,
+                'size': None,
                 'url': url
             })
-   
+
     ncbi_links = parse_ncbi_fetch_fasta(alt_links_soup, 'NCBI')
-    ncbi_results=[]
+    ncbi_results = []
     for url in ncbi_links:
         if accession in url:
             filetype, fileno = parse_url(url)
             ncbi_results.append({
-                'filetype' : filetype,
+                'filetype': filetype,
                 'filenumber': fileno,
+                'md5': None,
+                'size': None,
                 'url': url
             })
     files = {
@@ -296,7 +332,7 @@ def parse_gse_summary(soup):
         return {'accession': srp}
 
 
-def ffq_run(accession):
+def ffq_run(accession, level=0):  # noqa
     """Fetch Run information.
 
     :param accession: run accession (SRR, ERR or DRR)
@@ -502,7 +538,7 @@ def ffq_sample(accession, level=None):
         return sample
 
 
-def ffq_encode(accession):
+def ffq_encode(accession, level=0):
     """Fetch ENCODE ids information. This
     function receives an ENCSR, ENCBS or ENCD
     ENCODE id and fetches the associated metadata
@@ -518,7 +554,7 @@ def ffq_encode(accession):
     return encode
 
 
-def ffq_bioproject(accession):
+def ffq_bioproject(accession, level=0):  # noqa
     """Fetch bioproject ids information. This
     function receives a CXR accession
     and fetches the associated metadata
@@ -532,7 +568,7 @@ def ffq_bioproject(accession):
     return parse_bioproject(ena_fetch(accession, 'bioproject'))
 
 
-def ffq_biosample(accession, level):
+def ffq_biosample(accession, level=None):
     """Fetch biosample ids information. This
     function receives a SAMN accession
     and fetches the associated metadata
@@ -553,159 +589,7 @@ def ffq_biosample(accession, level):
     return {'accession': accession, 'samples': sample_data}
 
 
-def ffq_links(type_accessions, server):
-    """Print download links for raw data
-    from provided server (FTP, AWS, or GCP)
-    to the terminal
-
-    :param type_accession: tuple of accession type and accession id
-    :type type_accessions: (str, str)
-
-    :param server: server of desired links
-    "type server: str
-
-    :return: None
-    :rtype: None
-    """
-    result = []
-    server = server.upper()
-    origin_GSE = False
-    origin_SRP = False
-    origin_SRS = False
-    for id_type, accession in type_accessions:
-        if id_type == "GSE":
-            #print("accession\tfiletype\tfilenumber\tlink")
-            accession = gse_to_gsms(accession)
-            id_type = "GSM"
-            origin_GSE = True
-        else:
-            pass
-        if id_type == "GSM":
-            if isinstance(accession, str):
-                accession = [accession]
-            for gsm in accession:
-                time.sleep(0.1)
-                srx = gsm_to_srx(gsm)
-                if srx:
-                    srrs = srx_to_srrs(srx)
-                    for srr in srrs:
-                        if server == 'FTP':
-                            for file in get_files_metadata_from_run(get_xml(srr)
-                                                                    ):
-                                url = file['url']
-                                filetype, fileno = parse_url(url)
-                                links_dict={}
-                                links_dict['accession'] = gsm
-                                links_dict['filetype'] = filetype
-                                links_dict['filenumber'] = fileno
-                                links_dict['url'] = url
-                                result.append(links_dict)
-
-                        else:
-                            urls = parse_ncbi_fetch_fasta(
-                                ncbi_fetch_fasta(srr, 'sra'), server
-                            )
-                            for url in urls:
-                                filetype, fileno = parse_url(url)
-                                links_dict={}
-                                filetype, fileno = parse_url(url)
-                                links_dict['accession'] = gsm
-                                links_dict['filetype'] = filetype
-                                links_dict['filenumber'] = fileno
-                                links_dict['url'] = url
-                                result.append(links_dict)
-
-                else:
-                    logger.error(
-                        "No SRA files were found for the provided GEO entry"
-                    )
-                    sys.exit(1)
-
-            return result
-        if id_type == "SRP" or id_type == "ERP" or id_type == "DRP":
-            srxs = srp_to_srx(accession)
-            id_type = 'SRX'
-            origin_SRP = True
-        if id_type == "SRS" or id_type == "ERS" or id_type == "DRS":
-            origin_SRS = True
-            if isinstance(accession, str):
-                accession = [accession]
-            srxs = []
-            for srs in accession:
-                srxs.append(srs_to_srx(srs))
-            id_type = "SRX"
-            origin_SRS = True
-        if id_type == "SRX" or id_type == "ERX" or id_type == "DRX":
-            if not origin_SRP and not origin_SRS:
-                srxs = [accession]
-            srrs = []
-
-            for srx in srxs:
-                time.sleep(0.1)
-                for srr in srx_to_srrs(srx):
-                    srrs.append(srr)
-
-                for srr in srrs:
-                    if server == 'FTP':
-                        for file in get_files_metadata_from_run(get_xml(srr)
-                                                                ):
-                            url = file['url']
-                            filetype, fileno = parse_url(url)
-                            links_dict={}
-                            links_dict['accession'] = srx
-                            links_dict['filetype'] = filetype
-                            links_dict['filenumber'] = fileno
-
-                            links_dict['url'] = url
-                            result.append(links_dict)
-                    else:
-                        urls = parse_ncbi_fetch_fasta(
-                            ncbi_fetch_fasta(srr, 'sra'), server
-                        )
-                        for url in urls:
-                            links_dict={}
-                            filetype, fileno = parse_url(url)
-                            links_dict['accession'] = srx
-                            links_dict['filetype'] = filetype
-                            # Maybe transfer to all
-                            links_dict['filenumber'] = fileno     
-                            links_dict['url'] = url
-                            result.append(links_dict)
-            return result
-        if id_type == "SRR" or id_type == "ERR" or id_type == "DRR":
-            if server == 'FTP':
-                for file in get_files_metadata_from_run(get_xml(srr)
-                                                        ):
-                    url = file['url']
-                    filetype, fileno = parse_url(url)
-                    links_dict={}
-                    links_dict['accession'] = srr
-                    links_dict['filetype'] = filetype
-                    links_dict['filenumber'] = fileno
-
-                    links_dict['url'] = url
-                    result.append(links_dict)
-            else:
-                urls = parse_ncbi_fetch_fasta(
-                    ncbi_fetch_fasta(srr, 'sra'), server
-                )
-                for url in urls:
-                    filetype, fileno = parse_url(url)
-                    links_dict={}
-                    filetype, fileno = parse_url(url)
-                    links_dict['accession'] = srr
-                    links_dict['filetype'] = filetype
-                    links_dict['filenumber'] = fileno
-                    links_dict['url'] = url
-                    result.append(links_dict)
-        else:
-            logger.error(
-                'Invalid accession. Download links can only be retrieved from GEO or SRA ids.'
-            )
-            sys.exit(1)
-
-    return(result)
-def ffq_doi(doi):
+def ffq_doi(doi, level=0):  # noqa
     """Fetch DOI information.
 
     This function first searches CrossRef for the paper title, then uses that

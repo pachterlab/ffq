@@ -3,10 +3,14 @@ import json
 import logging
 import os
 import sys
-import re
+
+from ffq.utils import findkey
 
 from . import __version__
-from .ffq import ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment, ffq_encode, ffq_bioproject, ffq_biosample, ffq_links, validate_accession  # noqa
+from .ffq import (
+    ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment,
+    ffq_encode, ffq_bioproject, ffq_biosample, validate_accessions
+)
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +39,20 @@ BIOSAMPLE_TYPES = ('SAMN', 'SAMD', 'SAMEA', 'SAMEG')
 OTHER_TYPES = ('DOI',)
 SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
     GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + OTHER_TYPES
+
+# main ffq caller
+FFQ = {
+    "DOI": ffq_doi,
+    "GSM": ffq_gsm,
+    "GSE": ffq_gse,
+}
+FFQ.update({t: ffq_run for t in RUN_TYPES})
+FFQ.update({t: ffq_study for t in PROJECT_TYPES})
+FFQ.update({t: ffq_experiment for t in EXPERIMENT_TYPES})
+FFQ.update({t: ffq_sample for t in SAMPLE_TYPES})
+FFQ.update({t: ffq_encode for t in ENCODE_TYPES})
+FFQ.update({t: ffq_bioproject for t in BIOPROJECT_TYPES})
+FFQ.update({t: ffq_biosample for t in BIOSAMPLE_TYPES})
 
 
 def main():
@@ -137,170 +155,68 @@ def main():
     if args.l:
         if args.l <= 0:  # noqa
             parser.error('level `-l` must be equal or greater than 1')
-    args.IDs = [id.upper() for id in args.IDs]
-    # If user provides -t
-    if args.t is not None:
-        # Check IDs depending on type
-        if args.t in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
-        GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
-            for ID in args.IDs:
-                IDs = re.findall(r"(\D+).+", ID)
-
-                if len(IDs) == 0:
-                    parser.error((
-                        f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
-                        ' and end with digits.'
-                    ))
-                else:
-                    ID_type = IDs[0]
-                    if ID_type not in RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
-                        GEO_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + ENCODE_TYPES:
-                        parser.error((
-                            f'{ID} failed validation. {args.t}s must start with \'{args.t}\','
-                            ' and end with digits.'
-                        ))
-        elif args.t == 'DOI':
-            logger.warning(
-                'Searching by DOI may result in missing information.'
+    if args.t:
+        if args.t not in SEARCH_TYPES:
+            parser.error(
+                f"{args.t} is not a valide type. TYPES can be one of {', '.join(SEARCH_TYPES)}"
             )
 
-        if args.ftp:
-            keyed = [
-                ffq_links([(args.t, accession)], 'ftp')
-                for accession in args.IDs
-            ]
+    # "clean" the provided ids
+    accessions = validate_accessions(args.IDs, SEARCH_TYPES)
 
-        elif args.aws:
-            keyed = [
-                ffq_links([(args.t, accession)], 'AWS')
-                for accession in args.IDs
-            ]
-
-        elif args.gcp:
-            keyed = [
-                ffq_links([(args.t, accession)], 'GCP')
-                for accession in args.IDs
-            ]
-
-        elif args.ncbi:
-            keyed = [
-                ffq_links([(args.t, accession)], 'NCBI')
-                for accession in args.IDs
-            ]
-
-        else:
-            try:
-                # run ffq depending on type
-                if args.t in RUN_TYPES:
-                    results = [ffq_run(accession) for accession in args.IDs]
-                elif args.t in PROJECT_TYPES:
-                    results = [
-                        ffq_study(accession, args.l) for accession in args.IDs
-                    ]
-                elif args.t in EXPERIMENT_TYPES:
-                    results = [
-                        ffq_experiment(accession, args.l)
-                        for accession in args.IDs
-                    ]
-                elif args.t in SAMPLE_TYPES:
-                    results = [
-                        ffq_sample(accession, args.l) for accession in args.IDs
-                    ]
-                elif args.t == 'GSE':
-                    results = [
-                        ffq_gse(accession, args.l) for accession in args.IDs
-                    ]
-                elif args.t == 'GSM':
-                    results = [
-                        ffq_gsm(accession, args.l) for accession in args.IDs
-                    ]
-                elif args.t == 'DOI':
-                    results = [
-                        study for doi in args.IDs for study in ffq_doi(doi)
-                    ]
-
-                keyed = {result['accession']: result for result in results}
-
-            except Exception as e:
-                if args.verbose:
-                    logger.exception(e)
-                else:
-                    logger.error(e)
-
-    # If user does not provide -t
-    else:
-        # Validate and extract types of accessions provided
-        type_accessions = validate_accession(
-            args.IDs,
-            RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES +
-            GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES
-        )
-        # If at least one of the accessions is incorrect:
-        if False in type_accessions:
+    # check if accessions are valid (TODO separate cleaning accessions and checking them)
+    for v in accessions:
+        if v["valid"] is False:
             parser.error(
-                f'{args.IDs[type_accessions.index(False)]} is not a valid ID. IDs can be one of {", ".join(SEARCH_TYPES)}'  # noqa
+                f"{v['accession']} is not a valid ID. IDs can be one of {', '.join(SEARCH_TYPES)}"  # noqa
             )
             sys.exit(1)
 
-        ############
-        # NOTE: Change `type` by another name
-        ############
-        if args.ftp:
-            keyed = ffq_links(type_accessions, 'ftp')
+    # we want to associate the args.x with the name of X
+    # not just the true/false associated with args.x
+    link_args = [{
+        "link_type": "ftp",
+        "arg": args.ftp
+    }, {
+        "link_type": "aws",
+        "arg": args.aws
+    }, {
+        "link_type": "gcp",
+        "arg": args.gcp
+    }, {
+        "link_type": "ncbi",
+        "arg": args.ncbi
+    }]
 
-        elif args.aws:
-            keyed = ffq_links(type_accessions, 'AWS')
+    # Run FFQ based on type and accessions
+    keyed = {}
+    try:
+        # standard ffq
+        results = [FFQ[v["prefix"]](v["accession"], args.l) for v in accessions]
+        keyed = {result['accession']: result for result in results}
 
-        elif args.gcp:
-            keyed = ffq_links(type_accessions, 'GCP')
+        # get links ffq
+        if [v["arg"] for v in link_args].count(True) > 0:
+            links = []
+            for v in link_args:
+                if v["arg"]:
+                    for obj in findkey(keyed, v["link_type"]):
+                        # for each link add the source
+                        obj["linktype"] = v["link_type"]
+                        links.append(obj)
 
-        elif args.ncbi:
-            keyed = ffq_links(type_accessions, 'NCBI')
+            keyed = links
 
+    except Exception as e:
+        if args.verbose:
+            logger.exception(e)
         else:
-            # run ffq depending on type
-            try:
-
-                results = []
-                for id_type, accession in type_accessions:
-                    if id_type in RUN_TYPES:
-                        results.append(ffq_run(accession))
-                    elif id_type in PROJECT_TYPES:
-                        results.append(ffq_study(accession, args.l))
-                    elif id_type in EXPERIMENT_TYPES:
-                        results.append(ffq_experiment(accession, args.l))
-                    elif id_type in SAMPLE_TYPES:
-                        results.append(ffq_sample(accession, args.l))
-                    elif id_type == 'GSE':
-                        results.append(ffq_gse(accession, args.l))
-                    elif id_type == 'GSM':
-                        results.append(ffq_gsm(accession, args.l))
-                    elif id_type[:3] == 'ENC':
-                        results.append(ffq_encode(accession))
-                    elif id_type[:3] in BIOPROJECT_TYPES:
-                        results.append(ffq_bioproject(accession))
-                    elif id_type[:4
-                                 ] in BIOSAMPLE_TYPES or id_type[:5
-                                                                 ] in BIOSAMPLE_TYPES:
-                        results.append(ffq_biosample(accession, args.l))
-                    elif id_type == 'DOI':
-                        logger.warning(
-                            'Searching by DOI may result in missing information.'
-                        )
-                        results.append(ffq_doi(accession))
-
-                keyed = {result['accession']: result for result in results}
-
-            except Exception as e:
-                if args.verbose:
-                    logger.exception(e)
-                else:
-                    logger.error(e)
+            logger.error(e)
 
     if args.o:
         if args.split:
             # Split each result into its own JSON.
-            for result in results:
+            for result in keyed:
                 os.makedirs(args.o, exist_ok=True)
                 with open(os.path.join(args.o, f'{result["accession"]}.json'),
                           'w') as f:

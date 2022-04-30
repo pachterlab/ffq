@@ -479,20 +479,29 @@ class TestUtils(TestMixin, TestCase):
         ], utils.srx_to_srrs("SRX5763720"))
 
     def test_get_files_metadata_from_run(self):
+        # TODO adjust links accordingly
         with open(self.run_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
         self.assertEqual([{
+            'filetype':
+                "fastq",
+            'filenumber':
+                1,
             'md5':
                 'be7e88cf6f6fd90f1b1170f1cb367123',
             'size':
-                '5507959060',
+                5507959060,
             'url':
                 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'
         }, {
+            'filetype':
+                "fastq",
+            'filenumber':
+                2,
             'md5':
                 '2124da22644d876c4caa92ffd9e2402e',
             'size':
-                '7194107512',
+                7194107512,
             'url':
                 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz'
         }], utils.get_files_metadata_from_run(soup))
@@ -501,17 +510,21 @@ class TestUtils(TestMixin, TestCase):
         with open(self.run2_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
         self.assertEqual([{
+            'filetype':
+                "bam",
+            'filenumber':
+                1,
             'md5':
                 '5355fe6a07155026085ce46631268ab1',
             'size':
-                '17093057664',
+                17093057664,
             'url':
                 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam'
         }], utils.get_files_metadata_from_run(soup))
 
     def test_parse_url(self):
         self.assertEqual(
-            ('fastq', '1'),
+            ('fastq', 1),
             utils.parse_url(
                 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'
             )

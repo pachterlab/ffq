@@ -886,10 +886,11 @@ def get_files_metadata_from_run(soup):
             # available. This usually means the data was submitted as a BAM file.
             if not urls or not md5s or not sizes:
                 break
+
             files.extend(
                 [{
-                    'filetype' : parse_url(url)[0],
-                    'filenumber' : parse_url(url)[1],
+                    'filetype': parse_url(url)[0],
+                    'filenumber': parse_url(url)[1],
                     'md5': md5,
                     'size': int(size),
                     'url': f'ftp://{url}',
@@ -909,11 +910,14 @@ def get_files_metadata_from_run(soup):
             formats = table[0].get('submitted_format', '')
             if not urls or not md5s or not sizes or 'BAM' not in formats:
                 break
+            # print(urls)
             files.extend(
                 [{
-                    'url': f'ftp://{url}',
+                    'filetype': parse_url(url)[0],
+                    'filenumber': parse_url(url)[1],
                     'md5': md5,
-                    'size': size
+                    'size': int(size),
+                    'url': f'ftp://{url}',
                 } for url, md5, size in
                  zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
             )
@@ -934,6 +938,7 @@ def parse_url(url):
     fastqs, or 1 for bam, unique fastqs, and SRA files)
     :rtype: str, str
     """
+    url = url.lower()
     if "bam" in url:
         filetype = "bam"
     elif "fastq" in url:
@@ -944,11 +949,11 @@ def parse_url(url):
     if filetype == 'bam':
         fileno = 1
     elif filetype == 'fastq':
-        if '_R1' in url or '_1' in url:
+        if '_r1' in url or '_1' in url:
             fileno = 1
-        elif '_R2' in url or '_2' in url:
+        elif '_r2' in url or '_2' in url:
             fileno = 2
-        elif '_I1' in url:
+        elif '_i1' in url:
             fileno = 3
         else:
             fileno = 1
@@ -1026,3 +1031,13 @@ def parse_bioproject(soup):
         'organism': soup.find('organismname').text,
         'target_material': target_material
     }
+
+
+def findkey(obj, key):
+    if key in obj:
+        return obj[key]
+    for _, v in obj.items():
+        if isinstance(v, dict):
+            item = findkey(v, key)
+            if item is not None:
+                return item
