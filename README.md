@@ -122,7 +122,7 @@ ffq --ncbi [accession(s)]
 ##### Examples:
 
 ```bash
-# FTP
+# FTP with an SRR
 $ ffq --ftp SRR10668798
 [2022-05-01 16:04:03,772]    INFO Parsing run SRR10668798
 [
@@ -143,28 +143,74 @@ $ ffq --ftp SRR10668798
         "linktype": "ftp"
     }
 ]
-```
 
-```bash
+# FTP with a GSE
 $ ffq --ftp GSE115469
-accession  filetype  filenumber  link
-GSM3178782  bam  1  ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P1TLH.bam
-GSM3178783  bam  1  ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P2TLH.bam
-GSM3178784  bam  1  ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P3TLH.bam
-GSM3178785  bam  1  ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P4TLH.bam
-GSM3178786  bam  1  ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P5TLH.bam
+[
+    {
+        "filetype": "bam",
+        "filenumber": 1,
+        "md5": "d0fde6bf21d9f97bdf349a3d6f0a8787",
+        "size": 48545467653,
+        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P1TLH.bam",
+        "linktype": "ftp"
+    },
+    {
+        "filetype": "bam",
+        "filenumber": 1,
+        "md5": "b13f5e760b6d9d6b4d51b40705202983",
+        "size": 69477495465,
+        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P2TLH.bam",
+        "linktype": "ftp"
+    },
+...
 
 # AWS 
 $ ffq --aws SRX7347523
-s3://sra-pub-src-6/SRR10668798/T84_S1_L001_R1_001.fastq.1 s3://sra-pub-src-6/SRR10668798/T84_S1_L001_R2_001.fastq.1
+[
+    {
+        "filetype": "fastq",
+        "filenumber": 1,
+        "md5": null,
+        "size": null,
+        "url": "s3://sra-pub-src-6/SRR10668798/T84_S1_L001_R1_001.fastq.1",
+        "linktype": "aws"
+    },
+    {
+        "filetype": "fastq",
+        "filenumber": 2,
+        "md5": null,
+        "size": null,
+        "url": "s3://sra-pub-src-6/SRR10668798/T84_S1_L001_R2_001.fastq.1",
+        "linktype": "aws"
+    }
+]
 
 # GCP
 $ ffq --gcp ERS3861775
-gs://sra-pub-src-17/ERR3585496/4834STDY7002879.bam.1
+[
+    {
+        "filetype": "bam",
+        "filenumber": 1,
+        "md5": null,
+        "size": null,
+        "url": "gs://sra-pub-src-17/ERR3585496/4834STDY7002879.bam.1",
+        "linktype": "gcp"
+    }
+]
 
 # NCBI
 $ ffq --ncbi GSM2905292
-https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-13/SRR6425163/SRR6425163.1
+[
+    {
+        "filetype": "sra",
+        "filenumber": 1,
+        "md5": null,
+        "size": null,
+        "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-13/SRR6425163/SRR6425163.1",
+        "linktype": "ncbi"
+    }
+]
 ```
 
 ### Write accession information to a single JSON file
@@ -205,7 +251,6 @@ By default, [`cURL`](https://curl.se/) is installed on most computers and can be
 ```bash
 # Obtain FTP links
 $ ffq --ftp SRR10668798
-[2022-05-01 16:04:03,772]    INFO Parsing run SRR10668798
 [
     {
         "filetype": "fastq",
