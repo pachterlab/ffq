@@ -200,7 +200,9 @@ def main():
             links = []
             for v in link_args:
                 if v["arg"]:
-                    for obj in findkey(keyed, v["link_type"]):
+                    found_links = []
+                    findkey(keyed, v["link_type"], found_links)
+                    for obj in found_links:
                         # for each link add the source
                         obj["linktype"] = v["link_type"]
                         links.append(obj)

@@ -1033,11 +1033,12 @@ def parse_bioproject(soup):
     }
 
 
-def findkey(obj, key):
+def findkey(obj, key, objs=[]):
     if key in obj:
         return obj[key]
     for _, v in obj.items():
         if isinstance(v, dict):
-            item = findkey(v, key)
+            item = findkey(v, key, objs)
             if item is not None:
-                return item
+                objs += item
+    return None
