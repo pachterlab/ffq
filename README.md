@@ -1,4 +1,5 @@
 
+
 # ffq
 ![github version](https://img.shields.io/badge/Version-0.1.2-informational)
 [![pypi version](https://img.shields.io/pypi/v/ffq)](https://pypi.org/project/ffq/0.1.2/)
@@ -184,7 +185,21 @@ By default, [`cURL`](https://curl.se/) is installed on most computers and can be
 ```bash
 # Obtain FTP links
 $ ffq --ftp SRR10668798
-ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz 
+```
+
+```json
+[{
+"filetype": "fastq",
+"filenumber": 1,
+"md5": "bf8078b5a9cc62b0fee98059f5b87fa7",
+"size": 31876537192,
+"url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz",
+"linktype": "ftp"
+},
+...
+
+```
+]ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz 
 
 # Download the files one-by-one
 $ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz 
