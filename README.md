@@ -124,8 +124,7 @@ ffq --ncbi [accession(s)]
 ```bash
 # FTP
 $ ffq --ftp SRR10668798
-```
-```json
+[2022-05-01 16:04:03,772]    INFO Parsing run SRR10668798
 [
     {
         "filetype": "fastq",
@@ -206,28 +205,35 @@ By default, [`cURL`](https://curl.se/) is installed on most computers and can be
 ```bash
 # Obtain FTP links
 $ ffq --ftp SRR10668798
-```
+[2022-05-01 16:04:03,772]    INFO Parsing run SRR10668798
+[
+    {
+        "filetype": "fastq",
+        "filenumber": 1,
+        "md5": "bf8078b5a9cc62b0fee98059f5b87fa7",
+        "size": 31876537192,
+        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz",
+        "linktype": "ftp"
+    },
+    {
+        "filetype": "fastq",
+        "filenumber": 2,
+        "md5": "351df47dca211c1f66ef327e280bd4fd",
+        "size": 43760586944,
+        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz",
+        "linktype": "ftp"
+    }
+]
 
-```json
-[{
-"filetype": "fastq",
-"filenumber": 1,
-"md5": "bf8078b5a9cc62b0fee98059f5b87fa7",
-"size": 31876537192,
-"url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz",
-"linktype": "ftp"
-},
-...
-
-```
-
-```bash
 # Download the files one-by-one
 $ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz 
 $ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz 
+```
 
-# Or alternatively, pipe the urls to cURL
-$ ffq --ftp SRR10668798 | xargs curl -O
+Alternatively, the `url`s can be extracted from the json output with [`jq`](https://stedolan.github.io/jq/) and then piped into [`cURL`](https://curl.se/).
+
+```bash
+$ ffq --ftp SRR10668798 | jq -r '.[] | .url' | xargs curl -O
 ```
 
 #### AWS
@@ -235,7 +241,7 @@ In order to download files from AWS, the [`aws`](https://aws.amazon.com/cli/) to
 
 ```bash
 # Pipe AWS links to aws s3 cp and download
-$ ffq --aws SRX7347523 | xargs -I {} aws s3 cp {} .
+$ ffq --aws SRX7347523 | jq -r '.[] | .url' | xargs -I {} aws s3 cp {} .
 ```
 
 #### GCP
@@ -243,7 +249,7 @@ In order to download files from GCP, the [`gsutil`](https://cloud.google.com/sto
 
 ```bash
 # Pipe GCP links to gsutil cp and download
-$ ffq --gcp ERS3861775 | xargs -I {} gsutil cp {} .
+$ ffq --gcp ERS3861775 | jq -r '.[] | .url' | xargs -I {} gsutil cp {} .
 ```
 
 #### NCBI-SRA
@@ -251,7 +257,7 @@ SRA files downloaded from NCBI can be converted to FASTQ files using [`fasterq-d
 
 ```bash
 # Pipe SRA link to curl and download the SRA file
-$ ffq --ncbi GSM2905292 | xargs curl -O
+$ ffq --ncbi GSM2905292 | jq -r '.[] | .url' | xargs curl -O
 
 # Convert the SRA file to FASTQ files
 $ fastq-dump ./SRR6425163.1 --split-files --include-technical --gzip  -O ./SRR6425163
