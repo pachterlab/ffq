@@ -61,6 +61,7 @@ class TestFfq(TestMixin, TestCase):
         )
 
     def test_parse_run(self):
+        self.maxDiff = None
         with mock.patch('ffq.ffq.get_files_metadata_from_run') as get_files_metadata_from_run, \
             mock.patch('ffq.ffq.ncbi_fetch_fasta') as ncbi_fetch_fasta, \
             mock.patch('ffq.ffq.parse_ncbi_fetch_fasta') as parse_ncbi_fetch_fasta:
@@ -88,20 +89,26 @@ class TestFfq(TestMixin, TestCase):
                     'ENA-LAST-UPDATE': '2019-01-27'
                 },
                 'files': {
-                    'ftp': [{
-                        'size': 1
-                    }],
                     'aws': [{
-                        'url': 'SRR8426358_link'
-                    }],
+                        'filenumber': 1,
+                        'filetype' : 'sra',
+                        'md5' : None,
+                        'size' : None,
+                        'url': 'SRR8426358_link'}],
+                    'ftp': [{'size': 1}],
                     'gcp': [{
-                        'url': 'SRR8426358_link'
-                    }],
+                        'filenumber': 1,
+                        'filetype' : 'sra',
+                        'md5' : None,
+                        'size' : None,
+                        'url': 'SRR8426358_link'}],
                     'ncbi': [{
-                        'url': 'SRR8426358_link'
-                    }],
-                }
-            }, ffq.parse_run(soup))
+                        'filenumber': 1,
+                        'filetype' : 'sra',
+                        'md5' : None,
+                        'size' : None,
+                        'url': 'SRR8426358_link'}]
+            }}, ffq.parse_run(soup))
 
     def test_parse_run_bam(self):
         with open(self.run2_path, 'r') as f:
