@@ -124,8 +124,29 @@ ffq --ncbi [accession(s)]
 ```bash
 # FTP
 $ ffq --ftp SRR10668798
-ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz 
+```
+```json
+[
+    {
+        "filetype": "fastq",
+        "filenumber": 1,
+        "md5": "bf8078b5a9cc62b0fee98059f5b87fa7",
+        "size": 31876537192,
+        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz",
+        "linktype": "ftp"
+    },
+    {
+        "filetype": "fastq",
+        "filenumber": 2,
+        "md5": "351df47dca211c1f66ef327e280bd4fd",
+        "size": 43760586944,
+        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz",
+        "linktype": "ftp"
+    }
+]
+```
 
+```bash
 $ ffq --ftp GSE115469
 accession  filetype  filenumber  link
 GSM3178782  bam  1  ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P1TLH.bam
