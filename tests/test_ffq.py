@@ -1,8 +1,5 @@
 from unittest import mock, TestCase
 from unittest.mock import call
-import io
-import sys
-
 from bs4 import BeautifulSoup
 
 import ffq.ffq as ffq
@@ -56,7 +53,7 @@ class TestFfq(TestMixin, TestCase):
             ],
             ffq.validate_accessions([
                 "SRR244234", "SRT44322", '10.1016/j.cell.2018.06.052',
-                'ASA10.1016/j.cell.2018.06.052',"GSM12345", "GSE567890"
+                'ASA10.1016/j.cell.2018.06.052', "GSM12345", "GSE567890"
             ], SEARCH_TYPES)
         )
 
@@ -91,24 +88,30 @@ class TestFfq(TestMixin, TestCase):
                 'files': {
                     'aws': [{
                         'filenumber': 1,
-                        'filetype' : 'sra',
-                        'md5' : None,
-                        'size' : None,
-                        'url': 'SRR8426358_link'}],
-                    'ftp': [{'size': 1}],
+                        'filetype': 'sra',
+                        'md5': None,
+                        'size': None,
+                        'url': 'SRR8426358_link'
+                    }],
+                    'ftp': [{
+                        'size': 1
+                    }],
                     'gcp': [{
                         'filenumber': 1,
-                        'filetype' : 'sra',
-                        'md5' : None,
-                        'size' : None,
-                        'url': 'SRR8426358_link'}],
+                        'filetype': 'sra',
+                        'md5': None,
+                        'size': None,
+                        'url': 'SRR8426358_link'
+                    }],
                     'ncbi': [{
                         'filenumber': 1,
-                        'filetype' : 'sra',
-                        'md5' : None,
-                        'size' : None,
-                        'url': 'SRR8426358_link'}]
-            }}, ffq.parse_run(soup))
+                        'filetype': 'sra',
+                        'md5': None,
+                        'size': None,
+                        'url': 'SRR8426358_link'
+                    }]
+                }
+            }, ffq.parse_run(soup))
 
     def test_parse_run_bam(self):
         with open(self.run2_path, 'r') as f:
@@ -313,7 +316,7 @@ class TestFfq(TestMixin, TestCase):
                                 "size":
                                     None,
                                 "url":
-                                    "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-2/SRR8426358/SRR8426358.1"
+                                    "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-2/SRR8426358/SRR8426358.1"  # noqa
                             }]
                         }
                     }

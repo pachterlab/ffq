@@ -36,7 +36,7 @@ def validate_accessions(accessions, search_types):
         # bioproject needs :3 ?
         # biosample needs :4 or : 5 ?
         accession = input_accession.upper()
-        
+
         valid = False
         prefix = re.findall(r"(\D+).+", accession)[0]
 
