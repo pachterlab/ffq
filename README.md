@@ -199,7 +199,6 @@ $ ffq --ftp SRR10668798
 ...
 
 ```
-]ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz 
 
 # Download the files one-by-one
 $ curl -O ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz 
