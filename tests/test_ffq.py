@@ -25,7 +25,7 @@ class TestFfq(TestMixin, TestCase):
                 },
                 {
                     'accession': 'SRT44322',
-                    'prefix': 'SRT',
+                    'prefix': 'UNKNOWN',
                     'valid': False,
                     'error': None
                 },
@@ -37,7 +37,7 @@ class TestFfq(TestMixin, TestCase):
                 },
                 {
                     'accession': 'ASA10.1016/J.CELL.2018.06.052',
-                    'prefix': '.',  # TODO better DOI error handling
+                    'prefix': 'UNKNOWN',  # TODO better DOI error handling
                     'valid': False,
                     'error': None
                 },
@@ -49,14 +49,14 @@ class TestFfq(TestMixin, TestCase):
                 },
                 {
                     'accession': 'GSE567890',
-                    'prefix': 'GSM',
+                    'prefix': 'GSE',
                     'valid': True,
                     'error': None
                 },
             ],
             ffq.validate_accessions([
                 "SRR244234", "SRT44322", '10.1016/j.cell.2018.06.052',
-                'ASA10.1016/j.cell.2018.06.052', "GSM12345", "GSE567890"
+                'ASA10.1016/j.cell.2018.06.052',"GSM12345", "GSE567890"
             ], SEARCH_TYPES)
         )
 

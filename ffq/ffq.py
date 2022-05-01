@@ -21,7 +21,7 @@ RUN_PARSER = re.compile(r'(SRR.+)|(ERR.+)|(DRR.+)')
 EXPERIMENT_PARSER = re.compile(r'(SRX.+)|(ERX.+)|(DRX.+)')
 PROJECT_PARSER = re.compile(r'(SRP.+)|(ERP.+)|(DRP.+)')
 SAMPLE_PARSER = re.compile(r'(SRS.+)|(ERS.+)|(DRS.+)')
-DOI_PARSER = re.compile('^10.\d{4,9}\/[-._;()\/:a-z0-9]+')  # noqa
+DOI_PARSER = re.compile('^10.\d{4,9}\/[-._;()\/:A-Z0-9]+')  # noqa
 
 
 # TODO evenetually create an accession class
@@ -36,20 +36,21 @@ def validate_accessions(accessions, search_types):
         # bioproject needs :3 ?
         # biosample needs :4 or : 5 ?
         accession = input_accession.upper()
-
+        
         valid = False
         prefix = re.findall(r"(\D+).+", accession)[0]
 
         if prefix in search_types:
             valid = True
 
-        if DOI_PARSER.match(accession) is not None:
+        elif DOI_PARSER.match(accession) is not None:
             valid = True
             logger.warning(
                 'Searching by DOI may result in missing information.'
             )
             prefix = "DOI"
-
+        else:
+            prefix = "UNKNOWN"
         # TODO add error if not valid
 
         IDs.append({
