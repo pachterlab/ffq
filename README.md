@@ -93,7 +93,7 @@ where `[level]` is the number of downstream accessions you want to fetch
 $ ffq -l 1 GSM4339769
 #=> Returns metadata only for GSM4339769, and not from any downstream accession.
 
-$ ffq -l 3 
+$ ffq -l 3 GSE115469
 #=> Returns metadata for GSE115469 and its downstream GSM and SRS accessions.
 ```
 ### Fetch only raw data links from the host of your choice and display it in the terminal
