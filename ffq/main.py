@@ -154,7 +154,7 @@ def main():
 
     if args.l:
         if args.l <= 0:  # noqa
-            parser.error('level `-l` must be equal or greater than 1')
+            parser.error('level `-l` must greater than zero')
     if args.t:
         if args.t not in SEARCH_TYPES:
             parser.error(
@@ -166,6 +166,15 @@ def main():
 
     # check if accessions are valid (TODO separate cleaning accessions and checking them)
     for v in accessions:
+        if v["prefix"] in ENCODE_TYPES and args.split:
+            parser.error(
+                "`--split` is currently not compatible with ENCODE accessions"
+            )
+        if v["prefix"] in ENCODE_TYPES and ([args.ftp, args.aws, args.gcp,
+                                             args.ncbi]).count(True) > 0:
+            parser.error(
+                "Direct link fetching is currently not compatible with ENCODE accessions"
+            )
         if v["valid"] is False:
             parser.error(
                 f"{v['accession']} is not a valid ID. IDs can be one of {', '.join(SEARCH_TYPES)}"  # noqa
