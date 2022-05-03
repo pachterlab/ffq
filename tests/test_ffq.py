@@ -91,19 +91,23 @@ class TestFfq(TestMixin, TestCase):
                         'filetype': 'sra',
                         'md5': None,
                         'size': None,
-                        'url': 'SRR8426358_link'
+                        'url': 'SRR8426358_link',
+                        "accession": "SRR8426358"
                     }],
                     'ftp': [{
+                        "accession": "SRR8426358",
                         'size': 1
                     }],
                     'gcp': [{
+                        "accession": "SRR8426358",
                         'filenumber': 1,
                         'filetype': 'sra',
                         'md5': None,
                         'size': None,
-                        'url': 'SRR8426358_link'
+                        'url': 'SRR8426358_link',
                     }],
                     'ncbi': [{
+                        "accession": "SRR8426358",
                         'filenumber': 1,
                         'filetype': 'sra',
                         'md5': None,
@@ -141,9 +145,13 @@ class TestFfq(TestMixin, TestCase):
                     "size":
                         17093057664,
                     "url":
-                        "ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam"
+                        "ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam",
+                    "accession":
+                        "SRR6835844"
                 }],
                 "aws": [{
+                    "accession":
+                        "SRR6835844",
                     "filetype":
                         "bam",
                     "filenumber":
@@ -156,6 +164,7 @@ class TestFfq(TestMixin, TestCase):
                         "https://sra-pub-src-1.s3.amazonaws.com/SRR6835844/10X_P4_0.bam.1"
                 }],
                 "gcp": [{
+                    "accession": "SRR6835844",
                     "filetype": "bam",
                     "filenumber": 1,
                     "md5": None,
@@ -163,6 +172,8 @@ class TestFfq(TestMixin, TestCase):
                     "url": "gs://sra-pub-src-1/SRR6835844/10X_P4_0.bam.1"
                 }],
                 "ncbi": [{
+                    "accession":
+                        "SRR6835844",
                     "filetype":
                         "sra",
                     "filenumber":
@@ -247,7 +258,9 @@ class TestFfq(TestMixin, TestCase):
                                 "size":
                                     5507959060,
                                 "url":
-                                    "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz"
+                                    "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz",
+                                "accession":
+                                    "SRR8426358"
                             }, {
                                 "filetype":
                                     "fastq",
@@ -258,9 +271,13 @@ class TestFfq(TestMixin, TestCase):
                                 "size":
                                     7194107512,
                                 "url":
-                                    "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz"
+                                    "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz",
+                                "accession":
+                                    "SRR8426358",
                             }],
                             "aws": [{
+                                "accession":
+                                    "SRR8426358",
                                 "filetype":
                                     "fastq",
                                 "filenumber":
@@ -272,6 +289,8 @@ class TestFfq(TestMixin, TestCase):
                                 "url":
                                     "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
                             }, {
+                                "accession":
+                                    "SRR8426358",
                                 "filetype":
                                     "fastq",
                                 "filenumber":
@@ -284,6 +303,8 @@ class TestFfq(TestMixin, TestCase):
                                     "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
                             }],
                             "gcp": [{
+                                "accession":
+                                    "SRR8426358",
                                 "filetype":
                                     "fastq",
                                 "filenumber":
@@ -295,6 +316,8 @@ class TestFfq(TestMixin, TestCase):
                                 "url":
                                     "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
                             }, {
+                                "accession":
+                                    "SRR8426358",
                                 "filetype":
                                     "fastq",
                                 "filenumber":
@@ -307,6 +330,8 @@ class TestFfq(TestMixin, TestCase):
                                     "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
                             }],
                             "ncbi": [{
+                                "accession":
+                                    "SRR8426358",
                                 "filetype":
                                     "sra",
                                 "filenumber":

@@ -114,6 +114,9 @@ def parse_run(soup):
         except:  # noqa
             pass
     ftp_files = get_files_metadata_from_run(soup)
+    # TODO fix this. currently a hack to add the accession to the links
+    for f in ftp_files:
+        f["accession"] = accession
     # print(ftp_files)
     # ftp_files = [file for file in ftp_files if accession in file['url']]
     # print(ftp_files)
@@ -134,6 +137,7 @@ def parse_run(soup):
         if accession in url:
             filetype, fileno = parse_url(url)
             aws_results.append({
+                'accession': accession,
                 'filetype': filetype,
                 'filenumber': fileno,
                 'md5': None,
@@ -147,6 +151,7 @@ def parse_run(soup):
         if accession in url:
             filetype, fileno = parse_url(url)
             gcp_results.append({
+                'accession': accession,
                 'filetype': filetype,
                 'filenumber': fileno,
                 'md5': None,
@@ -160,6 +165,7 @@ def parse_run(soup):
         if accession in url:
             filetype, fileno = parse_url(url)
             ncbi_results.append({
+                'accession': accession,
                 'filetype': filetype,
                 'filenumber': fileno,
                 'md5': None,
