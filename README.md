@@ -26,8 +26,15 @@ By default, ffq returns all downstream metadata down to the level of the SRR rec
 `ffq` can also skip returning the metadata, and instead return the raw data download links from any available host (`FTP`, `AWS`, `GCP` or `NCBI`) for GEO and SRA ids.
 
 ## Installation
+
+The latest release can be installed with
 ```bash
 pip install ffq
+```
+
+The development version can be installed with
+```bash
+pip install git+https://github.com/pachterlab/ffq
 ```
 
 ## Usage
