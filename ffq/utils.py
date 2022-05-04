@@ -732,11 +732,22 @@ def geo_to_suppl(accession, GEO):
     except:  # noqa
         return []
     try:
-        supp = [{
-            'filename': entry[0],
-            'url': f"{FTP_GEO_URL}{path}{entry[0]}",
-            'size': entry[1].get('size')
-        } for entry in files if entry[1].get('type') == 'file']
+        supp = []
+        idx = 0
+        for entry in files:
+            if entry[1].get("type") == "file":
+                idx += 1
+                supp.append({
+                    "accession": accession,
+                    'filename':
+                        entry[0],  # TODO maybe add to other link objects?
+                    'filetype': None,  # TODO, get
+                    'filesize': int(entry[1].get('size')),
+                    'filenumber': idx,
+                    'md5': None,
+                    "urltype": "ftp",
+                    'url': f"ftp://{FTP_GEO_URL}{path}{entry[0]}",
+                })
     except:  # noqa
         return []
     return supp
@@ -872,6 +883,7 @@ def get_files_metadata_from_run(soup):
     :return: a list files metadata dictionaries
     :rtype: list
     """
+    accession = soup.find('PRIMARY_ID', text=RUN_PARSER).text
     files = []
     # Get FASTQs if available
     for xref in soup.find_all('XREF_LINK'):
@@ -889,10 +901,13 @@ def get_files_metadata_from_run(soup):
 
             files.extend(
                 [{
+                    "accession": accession,
+                    "filename": url.split("/")[-1],
                     'filetype': parse_url(url)[0],
+                    'filesize': int(size),
                     'filenumber': parse_url(url)[1],
                     'md5': md5,
-                    'size': int(size),
+                    "urltype": "ftp",
                     'url': f'ftp://{url}',
                 } for url, md5, size in
                  zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
@@ -913,10 +928,13 @@ def get_files_metadata_from_run(soup):
             # print(urls)
             files.extend(
                 [{
+                    "accession": accession,
+                    "filename": url.split("/")[-1],
                     'filetype': parse_url(url)[0],
+                    'filesize': int(size),
                     'filenumber': parse_url(url)[1],
                     'md5': md5,
-                    'size': int(size),
+                    "urltype": "ftp",
                     'url': f'ftp://{url}',
                 } for url, md5, size in
                  zip(urls.split(';'), md5s.split(';'), sizes.split(';'))]
@@ -939,6 +957,7 @@ def parse_url(url):
     :rtype: str, str
     """
     url = url.lower()
+    fileno = None
     if "bam" in url:
         filetype = "bam"
     elif "fastq" in url:
@@ -959,7 +978,7 @@ def parse_url(url):
             fileno = 1
     if filetype == 'sra':
         fileno = 1
-    return filetype, fileno
+    return (filetype, fileno)
 
 
 def parse_ncbi_fetch_fasta(soup, server):

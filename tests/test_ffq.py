@@ -65,9 +65,9 @@ class TestFfq(TestMixin, TestCase):
             with open(self.run_path, 'r') as f:
                 soup = BeautifulSoup(f.read(), 'xml')
 
-            get_files_metadata_from_run.return_value = [{'size': 1}]
-            ncbi_fetch_fasta.return_value = ['SRR8426358_links']
-            parse_ncbi_fetch_fasta.return_value = ['SRR8426358_link']
+            get_files_metadata_from_run.return_value = []
+            ncbi_fetch_fasta.return_value = []
+            parse_ncbi_fetch_fasta.return_value = []
             self.assertEqual({
                 'accession':
                     'SRR8426358',
@@ -86,34 +86,10 @@ class TestFfq(TestMixin, TestCase):
                     'ENA-LAST-UPDATE': '2019-01-27'
                 },
                 'files': {
-                    'aws': [{
-                        'filenumber': 1,
-                        'filetype': 'sra',
-                        'md5': None,
-                        'size': None,
-                        'url': 'SRR8426358_link',
-                        "accession": "SRR8426358"
-                    }],
-                    'ftp': [{
-                        "accession": "SRR8426358",
-                        'size': 1
-                    }],
-                    'gcp': [{
-                        "accession": "SRR8426358",
-                        'filenumber': 1,
-                        'filetype': 'sra',
-                        'md5': None,
-                        'size': None,
-                        'url': 'SRR8426358_link',
-                    }],
-                    'ncbi': [{
-                        "accession": "SRR8426358",
-                        'filenumber': 1,
-                        'filetype': 'sra',
-                        'md5': None,
-                        'size': None,
-                        'url': 'SRR8426358_link'
-                    }]
+                    'aws': [],
+                    'ftp': [],
+                    'gcp': [],
+                    'ncbi': []
                 }
             }, ffq.parse_run(soup))
 
@@ -136,52 +112,66 @@ class TestFfq(TestMixin, TestCase):
                 'SRX3791763',
             'files': {
                 "ftp": [{
+                    "accession":
+                        "SRR6835844",
+                    "filename":
+                        "10X_P4_0.bam",
                     "filetype":
                         "bam",
+                    "filesize":
+                        17093057664,
                     "filenumber":
                         1,
                     "md5":
                         "5355fe6a07155026085ce46631268ab1",
-                    "size":
-                        17093057664,
+                    "urltype":
+                        "ftp",
                     "url":
                         "ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam",
-                    "accession":
-                        "SRR6835844"
                 }],
                 "aws": [{
                     "accession":
                         "SRR6835844",
+                    "filename":
+                        "10X_P4_0.bam.1",
                     "filetype":
                         "bam",
+                    "filesize":
+                        None,
                     "filenumber":
                         1,
                     "md5":
                         None,
-                    "size":
-                        None,
+                    "urltype":
+                        "aws",
                     "url":
                         "https://sra-pub-src-1.s3.amazonaws.com/SRR6835844/10X_P4_0.bam.1"
                 }],
                 "gcp": [{
                     "accession": "SRR6835844",
+                    "filename": "10X_P4_0.bam.1",
                     "filetype": "bam",
+                    "filesize": None,
                     "filenumber": 1,
                     "md5": None,
-                    "size": None,
+                    "urltype": "gcp",
                     "url": "gs://sra-pub-src-1/SRR6835844/10X_P4_0.bam.1"
                 }],
                 "ncbi": [{
                     "accession":
                         "SRR6835844",
+                    "filename":
+                        "SRR6835844.1",
                     "filetype":
                         "sra",
+                    "filesize":
+                        None,
                     "filenumber":
                         1,
                     "md5":
                         None,
-                    "size":
-                        None,
+                    "urltype":
+                        "ncbi",
                     "url":
                         "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-13/SRR6835844/SRR6835844.1"
                 }]
@@ -249,97 +239,125 @@ class TestFfq(TestMixin, TestCase):
                         },
                         "files": {
                             "ftp": [{
+                                "accession":
+                                    "SRR8426358",
+                                "filename":
+                                    "SRR8426358_1.fastq.gz",
                                 "filetype":
                                     "fastq",
+                                "filesize":
+                                    5507959060,
                                 "filenumber":
                                     1,
                                 "md5":
                                     "be7e88cf6f6fd90f1b1170f1cb367123",
-                                "size":
-                                    5507959060,
+                                "urltype":
+                                    "ftp",
                                 "url":
                                     "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz",
-                                "accession":
-                                    "SRR8426358"
                             }, {
+                                "accession":
+                                    "SRR8426358",
+                                "filename":
+                                    "SRR8426358_2.fastq.gz",
                                 "filetype":
                                     "fastq",
+                                "filesize":
+                                    7194107512,
                                 "filenumber":
                                     2,
                                 "md5":
                                     "2124da22644d876c4caa92ffd9e2402e",
-                                "size":
-                                    7194107512,
+                                "urltype":
+                                    "ftp",
                                 "url":
                                     "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz",
-                                "accession":
-                                    "SRR8426358",
                             }],
                             "aws": [{
                                 "accession":
                                     "SRR8426358",
+                                "filename":
+                                    "MUC3838_S49_L003_R1_001.fastq.gz",
                                 "filetype":
                                     "fastq",
+                                "filesize":
+                                    None,
                                 "filenumber":
                                     1,
                                 "md5":
                                     None,
-                                "size":
-                                    None,
+                                "urltype":
+                                    "aws",
                                 "url":
                                     "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
                             }, {
                                 "accession":
                                     "SRR8426358",
+                                "filename":
+                                    "MUC3838_S49_L003_R2_001.fastq.gz",
                                 "filetype":
                                     "fastq",
+                                "filesize":
+                                    None,
                                 "filenumber":
                                     2,
                                 "md5":
                                     None,
-                                "size":
-                                    None,
+                                "urltype":
+                                    "aws",
                                 "url":
                                     "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
                             }],
                             "gcp": [{
                                 "accession":
                                     "SRR8426358",
+                                "filename":
+                                    "MUC3838_S49_L003_R1_001.fastq.gz",
                                 "filetype":
                                     "fastq",
+                                "filesize":
+                                    None,
                                 "filenumber":
                                     1,
                                 "md5":
                                     None,
-                                "size":
-                                    None,
+                                "urltype":
+                                    "gcp",
                                 "url":
                                     "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R1_001.fastq.gz"
                             }, {
                                 "accession":
                                     "SRR8426358",
+                                "filename":
+                                    "MUC3838_S49_L003_R2_001.fastq.gz",
                                 "filetype":
                                     "fastq",
+                                "filesize":
+                                    None,
                                 "filenumber":
                                     2,
                                 "md5":
                                     None,
-                                "size":
-                                    None,
+                                "urltype":
+                                    "gcp",
                                 "url":
                                     "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
                             }],
                             "ncbi": [{
                                 "accession":
                                     "SRR8426358",
+                                "filename":
+                                    "SRR8426358.1",
                                 "filetype":
                                     "sra",
+                                "filesize":
+                                    None,
                                 "filenumber":
                                     1,
                                 "md5":
                                     None,
-                                "size":
-                                    None,
+                                "urltype":
+                                    "ncbi",
                                 "url":
                                     "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos1/sra-pub-run-2/SRR8426358/SRR8426358.1"  # noqa
                             }]

@@ -374,27 +374,57 @@ class TestUtils(TestMixin, TestCase):
 
     def test_geo_to_suppl(self):
         self.assertEqual([{
+            "accession":
+                "GSM12345",
             'filename':
                 'GSM12345.CEL.gz',
-            'size':
-                '2964920',
+            "filetype":
+                None,
+            'filesize':
+                2964920,
+            "filenumber":
+                1,
+            "md5":
+                None,
+            "urltype":
+                "ftp",
             'url':
-                'ftp.ncbi.nlm.nih.gov/geo/samples/GSM12nnn/GSM12345/suppl/GSM12345.CEL.gz'
+                'ftp://ftp.ncbi.nlm.nih.gov/geo/samples/GSM12nnn/GSM12345/suppl/GSM12345.CEL.gz'
         }], utils.geo_to_suppl("GSM12345", "GSM"))
         self.assertEqual([{
+            "accession":
+                "GSE102592",
             'filename':
                 'filelist.txt',
-            'size':
-                '697',
+            "filetype":
+                None,
+            'filesize':
+                697,
+            "filenumber":
+                1,
+            "md5":
+                None,
+            "urltype":
+                "ftp",
             'url':
-                'ftp.ncbi.nlm.nih.gov/geo/series/GSE102nnn/GSE102592/suppl/filelist.txt'
+                'ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE102nnn/GSE102592/suppl/filelist.txt'
         }, {
+            "accession":
+                "GSE102592",
             'filename':
                 'GSE102592_RAW.tar',
-            'size':
-                '176916480',
+            "filetype":
+                None,
+            'filesize':
+                176916480,
+            "filenumber":
+                2,
+            "md5":
+                None,
+            "urltype":
+                "ftp",
             'url':
-                'ftp.ncbi.nlm.nih.gov/geo/series/GSE102nnn/GSE102592/suppl/GSE102592_RAW.tar'
+                'ftp://ftp.ncbi.nlm.nih.gov/geo/series/GSE102nnn/GSE102592/suppl/GSE102592_RAW.tar'
         }], utils.geo_to_suppl("GSE102592", "GSE"))
 
     def test_gsm_to_platform(self):
@@ -483,25 +513,37 @@ class TestUtils(TestMixin, TestCase):
         with open(self.run_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
         self.assertEqual([{
+            "accession":
+                "SRR8426358",
+            "filename":
+                "SRR8426358_1.fastq.gz",
             'filetype':
                 "fastq",
+            'filesize':
+                5507959060,
             'filenumber':
                 1,
             'md5':
                 'be7e88cf6f6fd90f1b1170f1cb367123',
-            'size':
-                5507959060,
+            "urltype":
+                "ftp",
             'url':
                 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'
         }, {
+            "accession":
+                "SRR8426358",
+            "filename":
+                "SRR8426358_2.fastq.gz",
             'filetype':
                 "fastq",
+            'filesize':
+                7194107512,
             'filenumber':
                 2,
             'md5':
                 '2124da22644d876c4caa92ffd9e2402e',
-            'size':
-                7194107512,
+            "urltype":
+                "ftp",
             'url':
                 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_2.fastq.gz'
         }], utils.get_files_metadata_from_run(soup))
@@ -510,14 +552,20 @@ class TestUtils(TestMixin, TestCase):
         with open(self.run2_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
         self.assertEqual([{
+            "accession":
+                "SRR6835844",
+            "filename":
+                "10X_P4_0.bam",
             'filetype':
                 "bam",
+            'filesize':
+                17093057664,
             'filenumber':
                 1,
             'md5':
                 '5355fe6a07155026085ce46631268ab1',
-            'size':
-                17093057664,
+            "urltype":
+                "ftp",
             'url':
                 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA653/SRA653146/bam/10X_P4_0.bam'
         }], utils.get_files_metadata_from_run(soup))

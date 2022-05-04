@@ -114,9 +114,6 @@ def parse_run(soup):
         except:  # noqa
             pass
     ftp_files = get_files_metadata_from_run(soup)
-    # TODO fix this. currently a hack to add the accession to the links
-    for f in ftp_files:
-        f["accession"] = accession
     # print(ftp_files)
     # ftp_files = [file for file in ftp_files if accession in file['url']]
     # print(ftp_files)
@@ -138,10 +135,12 @@ def parse_run(soup):
             filetype, fileno = parse_url(url)
             aws_results.append({
                 'accession': accession,
+                "filename": url.split("/")[-1],
                 'filetype': filetype,
+                'filesize': None,
                 'filenumber': fileno,
                 'md5': None,
-                'size': None,
+                "urltype": "aws",
                 'url': url
             })
 
@@ -152,11 +151,13 @@ def parse_run(soup):
             filetype, fileno = parse_url(url)
             gcp_results.append({
                 'accession': accession,
+                "filename": url.split("/")[-1],
                 'filetype': filetype,
+                'filesize': None,
                 'filenumber': fileno,
                 'md5': None,
-                'size': None,
-                'url': url
+                "urltype": "gcp",
+                'url': url,
             })
 
     ncbi_links = parse_ncbi_fetch_fasta(alt_links_soup, 'NCBI')
@@ -166,11 +167,13 @@ def parse_run(soup):
             filetype, fileno = parse_url(url)
             ncbi_results.append({
                 'accession': accession,
+                "filename": url.split("/")[-1],
                 'filetype': filetype,
+                'filesize': None,
                 'filenumber': fileno,
                 'md5': None,
-                'size': None,
-                'url': url
+                "urltype": "ncbi",
+                'url': url,
             })
     files = {
         'ftp': ftp_files,

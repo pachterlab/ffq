@@ -183,17 +183,17 @@ def main():
 
     # we want to associate the args.x with the name of X
     # not just the true/false associated with args.x
-    link_args = [{
-        "link_type": "ftp",
+    url_args = [{
+        "url_type": "ftp",
         "arg": args.ftp
     }, {
-        "link_type": "aws",
+        "url_type": "aws",
         "arg": args.aws
     }, {
-        "link_type": "gcp",
+        "url_type": "gcp",
         "arg": args.gcp
     }, {
-        "link_type": "ncbi",
+        "url_type": "ncbi",
         "arg": args.ncbi
     }]
 
@@ -205,16 +205,20 @@ def main():
         keyed = {result['accession']: result for result in results}
 
         # get links ffq
-        if [v["arg"] for v in link_args].count(True) > 0:
+        if [v["arg"] for v in url_args].count(True) > 0:
             links = []
-            for v in link_args:
+            for v in url_args:
                 if v["arg"]:
+                    # get run files
                     found_links = []
-                    findkey(keyed, v["link_type"], found_links)
-                    for obj in found_links:
-                        # for each link add the source
-                        obj["linktype"] = v["link_type"]
-                        links.append(obj)
+                    findkey(keyed, v["url_type"], found_links)
+                    links += found_links
+
+                    # get supplementary
+                    if v["url_type"] == "ftp":
+                        found_links = []
+                        findkey(keyed, "supplementary_files", found_links)
+                        links += found_links
 
             keyed = links
 
