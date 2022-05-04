@@ -184,16 +184,16 @@ def main():
     # we want to associate the args.x with the name of X
     # not just the true/false associated with args.x
     url_args = [{
-        "url_type": "ftp",
+        "urltype": "ftp",
         "arg": args.ftp
     }, {
-        "url_type": "aws",
+        "urltype": "aws",
         "arg": args.aws
     }, {
-        "url_type": "gcp",
+        "urltype": "gcp",
         "arg": args.gcp
     }, {
-        "url_type": "ncbi",
+        "urltype": "ncbi",
         "arg": args.ncbi
     }]
 
@@ -211,11 +211,11 @@ def main():
                 if v["arg"]:
                     # get run files
                     found_links = []
-                    findkey(keyed, v["url_type"], found_links)
+                    findkey(keyed, v["urltype"], found_links)
                     links += found_links
 
                     # get supplementary
-                    if v["url_type"] == "ftp":
+                    if v["urltype"] == "ftp":
                         found_links = []
                         findkey(keyed, "supplementary_files", found_links)
                         links += found_links
