@@ -133,12 +133,14 @@ ffq --ncbi [accession(s)]
 $ ffq --ftp SRR10668798
 [
     {
+        "accession": "SRR10668798",
+        "filename": "SRR10668798_1.fastq.gz",
         "filetype": "fastq",
+        "filesize": 31876537192,
         "filenumber": 1,
         "md5": "bf8078b5a9cc62b0fee98059f5b87fa7",
-        "size": 31876537192,
-        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz",
-        "linktype": "ftp"
+        "urltype": "ftp",
+        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz"
     },
 ...
 
@@ -146,12 +148,14 @@ $ ffq --ftp SRR10668798
 $ ffq --ftp GSE115469
 [
     {
+        "accession": "SRR7276474",
+        "filename": "P1TLH.bam",
         "filetype": "bam",
+        "filesize": 48545467653,
         "filenumber": 1,
         "md5": "d0fde6bf21d9f97bdf349a3d6f0a8787",
-        "size": 48545467653,
-        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P1TLH.bam",
-        "linktype": "ftp"
+        "urltype": "ftp",
+        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/SRA716/SRA716608/bam/P1TLH.bam"
     },
 ...
 
@@ -159,12 +163,14 @@ $ ffq --ftp GSE115469
 $ ffq --aws SRX7347523
 [
     {
+        "accession": "SRR10668798",
+        "filename": "T84_S1_L001_R1_001.fastq.1",
         "filetype": "fastq",
+        "filesize": null,
         "filenumber": 1,
         "md5": null,
-        "size": null,
-        "url": "s3://sra-pub-src-6/SRR10668798/T84_S1_L001_R1_001.fastq.1",
-        "linktype": "aws"
+        "urltype": "aws",
+        "url": "s3://sra-pub-src-6/SRR10668798/T84_S1_L001_R1_001.fastq.1"
     },
 ...
 
@@ -172,12 +178,14 @@ $ ffq --aws SRX7347523
 $ ffq --gcp ERS3861775
 [
     {
+        "accession": "ERR3585496",
+        "filename": "4834STDY7002879.bam.1",
         "filetype": "bam",
+        "filesize": null,
         "filenumber": 1,
         "md5": null,
-        "size": null,
-        "url": "gs://sra-pub-src-17/ERR3585496/4834STDY7002879.bam.1",
-        "linktype": "gcp"
+        "urltype": "gcp",
+        "url": "gs://sra-pub-src-17/ERR3585496/4834STDY7002879.bam.1"
     }
 ]
 
@@ -185,12 +193,14 @@ $ ffq --gcp ERS3861775
 $ ffq --ncbi GSM2905292
 [
     {
+        "accession": "SRR6425163",
+        "filename": "SRR6425163.1",
         "filetype": "sra",
+        "filesize": null,
         "filenumber": 1,
         "md5": null,
-        "size": null,
-        "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-13/SRR6425163/SRR6425163.1",
-        "linktype": "ncbi"
+        "urltype": "ncbi",
+        "url": "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-13/SRR6425163/SRR6425163.1"
     }
 ]
 ```
@@ -235,20 +245,24 @@ By default, [`cURL`](https://curl.se/) is installed on most computers and can be
 $ ffq --ftp SRR10668798
 [
     {
+        "accession": "SRR10668798",
+        "filename": "SRR10668798_1.fastq.gz",
         "filetype": "fastq",
+        "filesize": 31876537192,
         "filenumber": 1,
         "md5": "bf8078b5a9cc62b0fee98059f5b87fa7",
-        "size": 31876537192,
-        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz",
-        "linktype": "ftp"
+        "urltype": "ftp",
+        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_1.fastq.gz"
     },
     {
+        "accession": "SRR10668798",
+        "filename": "SRR10668798_2.fastq.gz",
         "filetype": "fastq",
+        "filesize": 43760586944,
         "filenumber": 2,
         "md5": "351df47dca211c1f66ef327e280bd4fd",
-        "size": 43760586944,
-        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz",
-        "linktype": "ftp"
+        "urltype": "ftp",
+        "url": "ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR106/098/SRR10668798/SRR10668798_2.fastq.gz"
     }
 ]
 
@@ -261,6 +275,11 @@ Alternatively, the `url`s can be extracted from the json output with [`jq`](http
 
 ```bash
 $ ffq --ftp SRR10668798 | jq -r '.[] | .url' | xargs curl -O
+```
+
+If you don't have `jq` installed, you can use the default program [`grep`](https://linux.die.net/man/1/grep).
+```bash
+$ ffq --ftp SRR10668798 | grep -Eo '"url": "[^"]*"' | grep -o '"[^"]*"$' | xargs curl -O
 ```
 
 #### AWS
