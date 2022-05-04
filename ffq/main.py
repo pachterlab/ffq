@@ -153,6 +153,8 @@ def main():
         parser.error('`-o` must be provided when using `--split`')
 
     if args.l:
+        if ([args.ftp, args.ncbi, args.gcp, args.aws]).count(True) > 0:
+            parser.error("`-l` is not compatible with link fetching.")
         if args.l <= 0:  # noqa
             parser.error('level `-l` must greater than zero')
     if args.t:
