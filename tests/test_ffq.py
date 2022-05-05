@@ -146,7 +146,15 @@ class TestFfq(TestMixin, TestCase):
                         "aws",
                     "url":
                         "https://sra-pub-src-1.s3.amazonaws.com/SRR6835844/10X_P4_0.bam.1"
-                }],
+                },{
+                    'accession': 'SRR6835844',
+                     'filename': 'SRR6835844',
+                     'filenumber': 1,
+                     'filesize': None,
+                     'filetype': 'sra',
+                     'md5': None,
+                     'url': 'https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR6835844/SRR6835844',
+                      'urltype': 'aws'}],
                 "gcp": [{
                     "accession": "SRR6835844",
                     "filename": "10X_P4_0.bam.1",
@@ -156,7 +164,15 @@ class TestFfq(TestMixin, TestCase):
                     "md5": None,
                     "urltype": "gcp",
                     "url": "gs://sra-pub-src-1/SRR6835844/10X_P4_0.bam.1"
-                }],
+                },{
+                    'accession': 'SRR6835844',
+                     'filename': 'SRR6835844.1',
+                     'filenumber': 1,
+                     'filesize': None,
+                     'filetype': 'sra',
+                     'md5': None,
+                     'url': 'gs://sra-pub-crun-7/SRR6835844/SRR6835844.1',
+                      'urltype': 'gcp'}],
                 "ncbi": [{
                     "accession":
                         "SRR6835844",
@@ -307,7 +323,22 @@ class TestFfq(TestMixin, TestCase):
                                     "aws",
                                 "url":
                                     "s3://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
-                            }],
+                            }, {'accession': 
+                                    'SRR8426358',
+                                'filename': 
+                                    'SRR8426358',
+                                'filenumber':
+                                     1,
+                                'filesize':
+                                     None,
+                                'filetype': 
+                                    'sra',
+                                'md5': 
+                                    None,
+                                'url': 
+                                    'https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR8426358/SRR8426358',
+                                'urltype': 
+                                    'aws'}],
                             "gcp": [{
                                 "accession":
                                     "SRR8426358",
@@ -342,7 +373,23 @@ class TestFfq(TestMixin, TestCase):
                                     "gcp",
                                 "url":
                                     "gs://sra-pub-src-3/SRR8426358/MUC3838_S49_L003_R2_001.fastq.gz"
-                            }],
+                            },{
+                                'accession': 
+                                    'SRR8426358',
+                                'filename': 
+                                    'SRR8426358.1',
+                                'filenumber': 
+                                    1,
+                                'filesize': 
+                                    None,
+                                'filetype': 
+                                    'sra',
+                                'md5': 
+                                    None,
+                                'url': 
+                                    'gs://sra-pub-crun-7/SRR8426358/SRR8426358.1',
+                                'urltype': 
+                                    'gcp'}],
                             "ncbi": [{
                                 "accession":
                                     "SRR8426358",
