@@ -203,7 +203,14 @@ def main():
     keyed = {}
     try:
         # standard ffq
-        results = [FFQ[v["prefix"]](v["accession"], args.l) for v in accessions]
+        results = []
+        for v in accessions:
+            # DOI returns a list, the others return an object
+            if v["prefix"] == "DOI":
+                results += FFQ[v["prefix"]](v["accession"], args.l)
+            else:
+                results.append(FFQ[v["prefix"]](v["accession"], args.l))
+
         keyed = {result['accession']: result for result in results}
 
         # get links ffq

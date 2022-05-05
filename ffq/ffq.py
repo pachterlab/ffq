@@ -665,8 +665,7 @@ def ffq_doi(doi, level=0):  # noqa
                 'Number of GEO Accessions found does not match the number of GEO '
                 f'records: expected {len(geo_ids)} but found {len(gses)}'
             ))
-        # Sleep for one second because NCBI has rate-limiting to 3 requests
-        # a second
+        # Sleep for 1sec because NCBI has rate-limiting to 3 requests/sec
         time.sleep(1)
         return [ffq_gse(accession) for accession in gses]
 
