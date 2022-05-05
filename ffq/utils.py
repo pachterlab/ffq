@@ -1000,8 +1000,6 @@ def parse_ncbi_fetch_fasta(soup, server):
     for alternative in soup.find_all('Alternatives'):
         if alternative.get('org') == server:
             links.append(alternative.get('url'))
-    # if 'bam' in links[0] or len(links) > 2:
-    #     links.pop()
     return links
 
 
