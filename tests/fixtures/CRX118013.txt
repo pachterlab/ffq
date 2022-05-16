@@ -1,0 +1,50 @@
+<?xml version="1.0" ?><html><body><recordset><documentsummary uid="118013">
+<project>
+<projectid>
+<archiveid accession="PRJNA118013" archive="NCBI" id="118013"></archiveid>
+</projectid>
+<projectdescr>
+<name>Rosa chinensis</name>
+<title>affy_cinetique_lyon_rose: Flower/Petal initiation and development in roses</title>
+<description>affy_cinetique_lyon_rose. The objective is to identify genes involved in petal development and senescence. R. chinensis cv Old Blush (OB) was used for the following reasons: it is a diploid Chinese rose that participated in the generation of modern roses (recurrent flowering, scent, etc.). The objective here is to identify genes whose expression is associated with different flower development stages, from floral meristem to senescing flower. These genes are putative candidates involved in floral initiation, development and senescence. All samples were collected at the same time early in the afternoon. Meristems and early flower development stages were dissected under a microscope. Total RNA was extracted from harvested tissues using the Plant RNA kit (Macherey Nagel), and then used to hybridize Rosa-Affymetrix microarrays. Keywords: time course Overall design: 12 arrays - rose 6 developmental stages, 2 replicates each.</description>
+<externallink label="">
+<dbxref db="GEO">
+<id>GSE18342</id>
+</dbxref>
+</externallink>
+<projectreleasedate>2011-09-01T00:00:00Z</projectreleasedate>
+<relevance>
+<agricultural>Yes</agricultural>
+</relevance>
+</projectdescr>
+<projecttype>
+<projecttypesubmission>
+<target capture="eWhole" material="eTranscriptome" sample_scope="eMultiisolate">
+<organism species="74649" taxid="74649">
+<organismname>Rosa chinensis</organismname>
+<supergroup>eEukaryotes</supergroup>
+</organism>
+</target>
+<method method_type="eArray"></method>
+<objectives>
+<data data_type="eExpression"></data>
+</objectives>
+<projectdatatypeset>
+<datatype>Transcriptome or Gene expression</datatype>
+</projectdatatypeset>
+</projecttypesubmission>
+</projecttype>
+</project>
+<submission last_update="2012-03-21" submission_id="SUB067017" submitted="2009-09-30">
+<description>
+<!-- Submitter information has been removed -->
+<organization role="owner" type="institute">
+<name>URGV, INRA</name>
+<!-- Contact information has been removed -->
+</organization>
+<access>public</access>
+</description>
+<action action_id="SUB067017-1"></action>
+</submission>
+</documentsummary>
+</recordset></body></html>

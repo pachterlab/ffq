@@ -578,6 +578,31 @@ class TestUtils(TestMixin, TestCase):
             )
         )
 
+
+    def test_parse_bioproject(self):
+        with open(self.bioproject_path, 'r') as f:
+            soup = BeautifulSoup(f.read(), 'xml')
+        self.assertEqual(
+            {
+                'accession': 'PRJNA118013',
+                'title': 'affy_cinetique_lyon_rose: Flower/Petal initiation and development in roses',
+                'description': 'affy_cinetique_lyon_rose. The objective is to identify genes involved in ' 
+                'petal development and senescence. R. chinensis cv Old Blush (OB) was used for the following '
+                'reasons: it is a diploid Chinese rose that participated in the generation of modern roses '
+                '(recurrent flowering, scent, etc.). The objective here is to identify genes whose expression '
+                'is associated with different flower development stages, from floral meristem to senescing '
+                'flower. These genes are putative candidates involved in floral initiation, development and '
+                'senescence. All samples were collected at the same time early in the afternoon. Meristems and '
+                'early flower development stages were dissected under a microscope. Total RNA was extracted from '
+                'harvested tissues using the Plant RNA kit (Macherey Nagel), and then used to hybridize '
+                'Rosa-Affymetrix microarrays. Keywords: time course Overall design: 12 arrays - rose 6 developmental '
+                'stages, 2 replicates each.',
+                'dbxref': 'GSE18342',
+                'organism': 'Rosa chinensis',
+                'target_material': 'eTranscriptome'
+            }, utils.parse_bioproject(soup))
+
+
     def test_findkey(self):
         with open(self.srr_keyed) as f:
             keyed = json.load(f)
