@@ -577,3 +577,21 @@ class TestUtils(TestMixin, TestCase):
                 'ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR842/008/SRR8426358/SRR8426358_1.fastq.gz'
             )
         )
+
+    def test_findkey(self):
+        with open(self.srr_keyed) as f:
+            keyed = json.load(f)
+        found = []
+        self.assertEqual(
+            [
+                {
+                    'accession': 'SRR5398235',
+                    'filename': 'A.merged.bam',
+                    'filetype': 'bam',
+                    'filesize': 21692817709,
+                    'filenumber': 1,
+                    'md5': '3d3d2020752b9af657cf22b725a94207',
+                    'urltype': 'ftp',
+                    'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA550/SRA550660/bam/A.merged.bam'
+                }
+            ], utils.findkey(keyed, 'ftp', found))

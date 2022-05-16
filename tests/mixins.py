@@ -40,3 +40,8 @@ class TestMixin(TestCase):
         )
         cls.biosample_path = os.path.join(cls.fixtures_dir, 'ENCBS941ZTJ.txt')
         cls.donor_path = os.path.join(cls.fixtures_dir, 'ENCDO072AAA.txt')
+
+        # keyed jsons
+        cls.srr_keyed = os.path.join(
+            cls.fixtures_dir, 'SRR5398235_keyed.json'
+        )

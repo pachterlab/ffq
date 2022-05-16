@@ -212,7 +212,6 @@ def main():
                 results.append(FFQ[v["prefix"]](v["accession"], args.l))
 
         keyed = {result['accession']: result for result in results}
-
         # get links ffq
         if [v["arg"] for v in url_args].count(True) > 0:
             links = []
@@ -228,7 +227,6 @@ def main():
                         found_links = []
                         findkey(keyed, "supplementary_files", found_links)
                         links += found_links
-
             keyed = links
 
     except Exception as e:
