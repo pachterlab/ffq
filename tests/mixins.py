@@ -50,3 +50,8 @@ class TestMixin(TestCase):
         cls.srr_keyed = os.path.join(
             cls.fixtures_dir, 'SRR5398235_keyed.json'
         )
+        
+        # Alt links
+        cls.alt_links = os.path.join(
+            cls.fixtures_dir, 'SRR6835844_altlinks.txt'
+        )

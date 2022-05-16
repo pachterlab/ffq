@@ -578,6 +578,15 @@ class TestUtils(TestMixin, TestCase):
             )
         )
 
+    
+    def test_parse_ncbi_fetch_fasta(self):
+        with open(self.alt_links, 'r') as f:
+            soup = BeautifulSoup(f.read(), 'xml')        
+        self.assertEqual(
+            ['https://sra-pub-src-1.s3.amazonaws.com/SRR6835844/10X_P4_0.bam.1', 
+             'https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR6835844/SRR6835844'], utils.parse_ncbi_fetch_fasta(soup, 'AWS')
+        )
+
 
     def test_parse_bioproject(self):
         with open(self.bioproject_path, 'r') as f:
@@ -601,7 +610,6 @@ class TestUtils(TestMixin, TestCase):
                 'organism': 'Rosa chinensis',
                 'target_material': 'eTranscriptome'
             }, utils.parse_bioproject(soup))
-
 
     def test_findkey(self):
         with open(self.srr_keyed) as f:
