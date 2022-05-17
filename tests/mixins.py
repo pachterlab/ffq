@@ -42,15 +42,11 @@ class TestMixin(TestCase):
         cls.donor_path = os.path.join(cls.fixtures_dir, 'ENCDO072AAA.txt')
 
         # Bioproject
-        
-        cls.bioproject_path = os.path.join(
-            cls.fixtures_dir, 'CRX118013.txt'
-        )
+
+        cls.bioproject_path = os.path.join(cls.fixtures_dir, 'CRX118013.txt')
         # keyed jsons
-        cls.srr_keyed = os.path.join(
-            cls.fixtures_dir, 'SRR5398235_keyed.json'
-        )
-        
+        cls.srr_keyed = os.path.join(cls.fixtures_dir, 'SRR5398235_keyed.json')
+
         # Alt links
         cls.alt_links = os.path.join(
             cls.fixtures_dir, 'SRR6835844_altlinks.txt'

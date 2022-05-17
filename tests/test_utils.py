@@ -578,24 +578,24 @@ class TestUtils(TestMixin, TestCase):
             )
         )
 
-    
     def test_parse_ncbi_fetch_fasta(self):
         with open(self.alt_links, 'r') as f:
-            soup = BeautifulSoup(f.read(), 'xml')        
-        self.assertEqual(
-            ['https://sra-pub-src-1.s3.amazonaws.com/SRR6835844/10X_P4_0.bam.1', 
-             'https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR6835844/SRR6835844'], utils.parse_ncbi_fetch_fasta(soup, 'AWS')
-        )
-
+            soup = BeautifulSoup(f.read(), 'xml')
+        self.assertEqual([
+            'https://sra-pub-src-1.s3.amazonaws.com/SRR6835844/10X_P4_0.bam.1',
+            'https://sra-pub-run-odp.s3.amazonaws.com/sra/SRR6835844/SRR6835844'
+        ], utils.parse_ncbi_fetch_fasta(soup, 'AWS'))
 
     def test_parse_bioproject(self):
         with open(self.bioproject_path, 'r') as f:
             soup = BeautifulSoup(f.read(), 'xml')
-        self.assertEqual(
-            {
-                'accession': 'PRJNA118013',
-                'title': 'affy_cinetique_lyon_rose: Flower/Petal initiation and development in roses',
-                'description': 'affy_cinetique_lyon_rose. The objective is to identify genes involved in ' 
+        self.assertEqual({
+            'accession':
+                'PRJNA118013',
+            'title':
+                'affy_cinetique_lyon_rose: Flower/Petal initiation and development in roses',
+            'description':
+                'affy_cinetique_lyon_rose. The objective is to identify genes involved in '
                 'petal development and senescence. R. chinensis cv Old Blush (OB) was used for the following '
                 'reasons: it is a diploid Chinese rose that participated in the generation of modern roses '
                 '(recurrent flowering, scent, etc.). The objective here is to identify genes whose expression '
@@ -606,25 +606,33 @@ class TestUtils(TestMixin, TestCase):
                 'harvested tissues using the Plant RNA kit (Macherey Nagel), and then used to hybridize '
                 'Rosa-Affymetrix microarrays. Keywords: time course Overall design: 12 arrays - rose 6 developmental '
                 'stages, 2 replicates each.',
-                'dbxref': 'GSE18342',
-                'organism': 'Rosa chinensis',
-                'target_material': 'eTranscriptome'
-            }, utils.parse_bioproject(soup))
+            'dbxref':
+                'GSE18342',
+            'organism':
+                'Rosa chinensis',
+            'target_material':
+                'eTranscriptome'
+        }, utils.parse_bioproject(soup))
 
     def test_findkey(self):
         with open(self.srr_keyed) as f:
             keyed = json.load(f)
         found = []
-        self.assertEqual(
-            [
-                {
-                    'accession': 'SRR5398235',
-                    'filename': 'A.merged.bam',
-                    'filetype': 'bam',
-                    'filesize': 21692817709,
-                    'filenumber': 1,
-                    'md5': '3d3d2020752b9af657cf22b725a94207',
-                    'urltype': 'ftp',
-                    'url': 'ftp://ftp.sra.ebi.ac.uk/vol1/SRA550/SRA550660/bam/A.merged.bam'
-                }
-            ], utils.findkey(keyed, 'ftp', found))
+        self.assertEqual([{
+            'accession':
+                'SRR5398235',
+            'filename':
+                'A.merged.bam',
+            'filetype':
+                'bam',
+            'filesize':
+                21692817709,
+            'filenumber':
+                1,
+            'md5':
+                '3d3d2020752b9af657cf22b725a94207',
+            'urltype':
+                'ftp',
+            'url':
+                'ftp://ftp.sra.ebi.ac.uk/vol1/SRA550/SRA550660/bam/A.merged.bam'
+        }], utils.findkey(keyed, 'ftp', found))
