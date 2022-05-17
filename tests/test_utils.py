@@ -500,6 +500,10 @@ class TestUtils(TestMixin, TestCase):
             }
             self.assertEqual("SRX5692097", utils.gsm_to_srx("accession"))
 
+    def test_srp_to_srx(self):
+        self.assertEqual(['SRX5689352', 'SRX5689353', 'SRX5689354', 'SRX5689355', 'SRX5689356'
+        ], utils.srp_to_srx("SRP192646"))
+        
     def test_srs_to_srx(self):
         self.assertEqual("SRX5692096", utils.srs_to_srx("SRS4631628"))
 
