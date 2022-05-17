@@ -476,30 +476,28 @@ class TestUtils(TestMixin, TestCase):
     def test_gsm_to_srx(self):
         with mock.patch('ffq.utils.get_gsm_search_json') as get_gsm_search_json, \
             mock.patch('ffq.utils.ncbi_summary') as ncbi_summary:
+            with open (self.gsm_summary_path, 'r') as f:
+                gsm_summary = json.load(f)
             get_gsm_search_json.return_value = {
                 'accession': "GSM3717978",
                 'geo_id': "303717978"
             }
-            ncbi_summary.return_value = {
-                '303717978': {
-                    'accession':
-                        'GSM3717978',
-                    'bioproject':
-                        '',
-                    'entrytype':
-                        'GSM',
-                    'extrelations': [{
-                        'relationtype':
-                            'SRA',
-                        'targetftplink':
-                            'ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX569/SRX5692097/',
-                        'targetobject':
-                            'SRX5692097'
-                    }]
-                }
-            }
+            ncbi_summary.return_value = gsm_summary 
             self.assertEqual("SRX5692097", utils.gsm_to_srx("accession"))
 
+    def test_gsm_id_to_srs(self):
+        with mock.patch('ffq.utils.ncbi_summary') as ncbi_summary,\
+            mock.patch('ffq.utils.get_xml') as get_xml:
+            with open (self.srx_xml, 'r') as f:
+                soup = BeautifulSoup(f.read(), 'xml')
+            with open (self.gsm_summary_path, 'r') as f:
+                gsm_summary = json.load(f)
+            ncbi_summary.return_value = gsm_summary
+            get_xml.return_value = soup
+            self.assertEqual('SRS4631629', utils.gsm_id_to_srs('303717978'))
+            ncbi_summary.assert_called_once_with('gds', '303717978')
+            get_xml.assert_called_once_with('SRX5692097')
+            
     def test_srp_to_srx(self):
         self.assertEqual(['SRX5689352', 'SRX5689353', 'SRX5689354', 'SRX5689355', 'SRX5689356'
         ], utils.srp_to_srx("SRP192646"))

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EXPERIMENT_SET>
+<EXPERIMENT accession="SRX5692097" alias="GSM3717978" center_name="GEO">
+<IDENTIFIERS>
+<PRIMARY_ID>SRX5692097</PRIMARY_ID>
+<SUBMITTER_ID namespace="GEO">GSM3717978</SUBMITTER_ID>
+</IDENTIFIERS>
+<TITLE>Illumina HiSeq 2500 paired end sequencing; GSM3717978: scRNA-seq_Adult: Single cell murine 10w inginal WAT SVF; Mus musculus; RNA-Seq</TITLE>
+<STUDY_REF accession="SRP192693">
+<IDENTIFIERS>
+<PRIMARY_ID>SRP192693</PRIMARY_ID>
+<EXTERNAL_ID namespace="BioProject">PRJNA532356</EXTERNAL_ID>
+</IDENTIFIERS>
+</STUDY_REF>
+<DESIGN>
+<DESIGN_DESCRIPTION/>
+<SAMPLE_DESCRIPTOR accession="SRS4631629">
+<IDENTIFIERS>
+<PRIMARY_ID>SRS4631629</PRIMARY_ID>
+<EXTERNAL_ID namespace="BioSample">SAMN11397491</EXTERNAL_ID>
+</IDENTIFIERS>
+</SAMPLE_DESCRIPTOR>
+<LIBRARY_DESCRIPTOR>
+<LIBRARY_STRATEGY>RNA-Seq</LIBRARY_STRATEGY>
+<LIBRARY_SOURCE>TRANSCRIPTOMIC</LIBRARY_SOURCE>
+<LIBRARY_SELECTION>cDNA</LIBRARY_SELECTION>
+<LIBRARY_LAYOUT>
+<PAIRED/>
+</LIBRARY_LAYOUT>
+<LIBRARY_CONSTRUCTION_PROTOCOL>Tissues were manually minced, digested with Collagenase D and Dispase II at 37C for 45 min. For both mouse and human studies stromal vascular cells were isolated and flow sorted with gating to isolate single cells away from debris, doublets, and dead cells.  For the p12 pups (pooled male and female C57BL/6) and human single cell study, the cells were further gated against CD45 to exclude leukocytes.  For the adult mouse thermoneutral (pooled male 129S6/SvEvTac) sample CD45 cells were segregated and remixed with the SVC cells at a ratio of approximately 20% of the total cells. The sorted cells were loaded onto a GemCode instrument (10x Genomics, Pleasanton, CA, USA) to generate single-cell barcoded droplets (GEMs) according to the manufacture's protocol using the 10x Single Cell 3' v2 chemistry.</LIBRARY_CONSTRUCTION_PROTOCOL>
+</LIBRARY_DESCRIPTOR>
+</DESIGN>
+<PLATFORM>
+<ILLUMINA>
+<INSTRUMENT_MODEL>Illumina HiSeq 2500</INSTRUMENT_MODEL>
+</ILLUMINA>
+</PLATFORM>
+<EXPERIMENT_LINKS>
+<EXPERIMENT_LINK>
+<XREF_LINK>
+<DB>ENA-SAMPLE</DB>
+<ID>SRS4631629</ID>
+</XREF_LINK>
+</EXPERIMENT_LINK>
+<EXPERIMENT_LINK>
+<XREF_LINK>
+<DB>ENA-RUN</DB>
+<ID>SRR8906271-SRR8906274</ID>
+</XREF_LINK>
+</EXPERIMENT_LINK>
+<EXPERIMENT_LINK>
+<XREF_LINK>
+<DB>ENA-SUBMISSION</DB>
+<ID>SRA874595</ID>
+</XREF_LINK>
+</EXPERIMENT_LINK>
+<EXPERIMENT_LINK>
+<XREF_LINK>
+<DB>ENA-FASTQ-FILES</DB>
+<ID>https://www.ebi.ac.uk/ena/portal/api/filereport?accession=SRX5692097&amp;result=read_run&amp;fields=run_accession,fastq_ftp,fastq_md5,fastq_bytes</ID>
+</XREF_LINK>
+</EXPERIMENT_LINK>
+<EXPERIMENT_LINK>
+<XREF_LINK>
+<DB>ENA-SUBMITTED-FILES</DB>
+<ID>https://www.ebi.ac.uk/ena/portal/api/filereport?accession=SRX5692097&amp;result=read_run&amp;fields=run_accession,submitted_ftp,submitted_md5,submitted_bytes,submitted_format</ID>
+</XREF_LINK>
+</EXPERIMENT_LINK>
+</EXPERIMENT_LINKS>
+<EXPERIMENT_ATTRIBUTES>
+<EXPERIMENT_ATTRIBUTE>
+<TAG>GEO Accession</TAG>
+<VALUE>GSM3717978</VALUE>
+</EXPERIMENT_ATTRIBUTE>
+<EXPERIMENT_ATTRIBUTE>
+<TAG>ENA-SPOT-COUNT</TAG>
+<VALUE>460299979</VALUE>
+</EXPERIMENT_ATTRIBUTE>
+<EXPERIMENT_ATTRIBUTE>
+<TAG>ENA-BASE-COUNT</TAG>
+<VALUE>69044996850</VALUE>
+</EXPERIMENT_ATTRIBUTE>
+</EXPERIMENT_ATTRIBUTES>
+</EXPERIMENT>
+</EXPERIMENT_SET>

@@ -20,15 +20,16 @@ class TestMixin(TestCase):
         cls.bam_path = os.path.join(cls.fixtures_dir, 'bam.txt')
         cls.bam2_path = os.path.join(cls.fixtures_dir, 'bam_empty.txt')
 
-        # GSE
+        # GEO
         cls.gse_search_path = os.path.join(
             cls.fixtures_dir, 'GSE93374_search.txt'
         )
         cls.gse_summary_path = os.path.join(
             cls.fixtures_dir, 'GSE93374_summary.txt'
         )
-        cls.study_with_run_path = os.path.join(
-            cls.fixtures_dir, 'SRP096361_with_runlist.txt'
+
+        cls.gsm_summary_path = os.path.join(
+            cls.fixtures_dir, 'GSM3717978_summary.txt'
         )
 
         # ENCODE
@@ -50,4 +51,12 @@ class TestMixin(TestCase):
         # Alt links
         cls.alt_links = os.path.join(
             cls.fixtures_dir, 'SRR6835844_altlinks.txt'
+        )
+
+        # SRA
+        cls.srx_xml = os.path.join(
+            cls.fixtures_dir, 'SRX5692097_xml.txt'
+        )
+        cls.study_with_run_path = os.path.join(
+            cls.fixtures_dir, 'SRP096361_with_runlist.txt'
         )

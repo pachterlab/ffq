@@ -1,0 +1,14 @@
+{
+   "303717978":{
+      "accession":"GSM3717978",
+      "bioproject":"",
+      "entrytype":"GSM",
+      "extrelations":[
+         {
+            "relationtype":"SRA",
+            "targetftplink":"ftp://ftp-trace.ncbi.nlm.nih.gov/sra/sra-instant/reads/ByExp/sra/SRX/SRX569/SRX5692097/",
+            "targetobject":"SRX5692097"
+         }
+      ]
+   }
+}
