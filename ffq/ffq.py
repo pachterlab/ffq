@@ -221,10 +221,13 @@ def parse_sample(soup):
             pass
     try:
 
-        try:
-            experiment = soup.find('ID', text=EXPERIMENT_PARSER).text
-        except:  # noqa
-            experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text
+        experiment = soup.find(
+            re.compile(r'PRIMARY_ID|ID'), text=EXPERIMENT_PARSER
+        ).text
+        # try:
+        #     experiment = soup.find('ID', text=EXPERIMENT_PARSER).text
+        # except:  # noqa
+        #     experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text
 
     except:  # noqa
         experiment = ''
