@@ -300,12 +300,13 @@ $ ffq --gcp ERS3861775 | jq -r '.[] | .url' | xargs -I {} gsutil cp {} .
 ```
 
 #### NCBI-SRA
-SRA files downloaded from NCBI can be converted to FASTQ files using [`fasterq-dump`](https://github.com/ncbi/sra-tools/tree/master/tools/fasterq-dump) which is installed as part of [SRA Toolkit](https://github.com/ncbi/sra-tools/wiki/HowTo:-fasterq-dump).
+SRA files downloaded from NCBI can be converted to FASTQ files using [`fastq-dump`](https://github.com/ncbi/sra-tools/tree/master/tools/fastq-dump) or the improved [`fasterq-dump`](https://github.com/ncbi/sra-tools/tree/master/tools/fasterq-dump) both of which are installed as part of [SRA Toolkit](https://github.com/ncbi/sra-tools/wiki/HowTo:-fasterq-dump).
 
 ```bash
 # Pipe SRA link to curl and download the SRA file
 $ ffq --ncbi GSM2905292 | jq -r '.[] | .url' | xargs curl -O
 
-# Convert the SRA file to FASTQ files
-$ fastq-dump ./SRR6425163.1 --split-files --include-technical --gzip  -O ./SRR6425163
+# Convert the SRA file to FASTQ files with one of the following
+$ fastq-dump   ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 --gzip 
+$ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163        # fasterq-dump does not have gzip option
 ```
