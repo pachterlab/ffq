@@ -517,7 +517,7 @@ def ffq_sample(accession, level=None):
     :rtype: dict
     """
     logger.info(f'Parsing sample {accession}')
-    xml_sample =get_xml(accession)
+    xml_sample = get_xml(accession)
     sample = parse_sample(xml_sample)
     if level is None or level != 1:
         try:
@@ -530,14 +530,13 @@ def ffq_sample(accession, level=None):
             try:
                 alias = xml_sample.SAMPLE.attrs['alias']
                 id = get_gsm_search_json(alias)['geo_id']
-                exp_id  = ncbi_summary('gds',id)[id]['extrelations'][0]['targetobject']
-            except:
-                logger.warning(f'No Experiment found for {accession}') 
+                exp_id = ncbi_summary('gds',
+                                      id)[id]['extrelations'][0]['targetobject']
+            except:  # noqa
+                logger.warning(f'No Experiment found for {accession}')
         if ',' in exp_id:
             exp_ids = exp_id.split(',')
-            experiments = [
-                ffq_experiment(exp_id, level) for exp_id in exp_ids
-            ]
+            experiments = [ffq_experiment(exp_id, level) for exp_id in exp_ids]
             sample.update({
                 'experiments': [{
                     experiment['accession']: experiment

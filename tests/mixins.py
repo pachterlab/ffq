@@ -54,9 +54,7 @@ class TestMixin(TestCase):
         )
 
         # SRA
-        cls.srx_xml = os.path.join(
-            cls.fixtures_dir, 'SRX5692097_xml.txt'
-        )
+        cls.srx_xml = os.path.join(cls.fixtures_dir, 'SRX5692097_xml.txt')
         cls.study_with_run_path = os.path.join(
             cls.fixtures_dir, 'SRP096361_with_runlist.txt'
         )
