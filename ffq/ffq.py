@@ -231,7 +231,7 @@ def parse_sample(soup):
 
     except:  # noqa
         experiment = ''
-        logger.warning('No experiment found')
+        logger.warning('No experiment found in ENA. Falling back to ncbi')
 
     return {
         'accession': accession,
