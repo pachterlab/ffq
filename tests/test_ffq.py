@@ -183,24 +183,7 @@ class TestFfq(TestMixin, TestCase):
                     'url': 'gs://sra-pub-crun-7/SRR6835844/SRR6835844.1',
                     'urltype': 'gcp'
                 }],
-                "ncbi": [{
-                    "accession":
-                        "SRR6835844",
-                    "filename":
-                        "SRR6835844.1",
-                    "filetype":
-                        "sra",
-                    "filesize":
-                        None,
-                    "filenumber":
-                        1,
-                    "md5":
-                        None,
-                    "urltype":
-                        "ncbi",
-                    "url":
-                        "https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-13/SRR6835844/SRR6835844.1"
-                }]
+                "ncbi": []
             },
             'sample':
                 'SRS3044236',
