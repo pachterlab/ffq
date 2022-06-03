@@ -319,7 +319,7 @@ For example, as of May 29th, the command:
 ffq --ncbi SRR6835844
 ```
 returned:
-```json
+```bash
 [{'accession': 'SRR6835844',
 'filename': 'SRR6835844.1',
 'filenumber': 1,
