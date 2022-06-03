@@ -310,3 +310,28 @@ $ ffq --ncbi GSM2905292 | jq -r '.[] | .url' | xargs curl -O
 $ fastq-dump   ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 --gzip 
 $ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163        # fasterq-dump does not have gzip option
 ```
+## Caveats and limitations
+`ffq` relies on the information provided by the different APIs it uses to retrieve metadata (hosted by ENA, ncbi, Encode, etc). Therefore, returning consistent and accurate metadata is dependent on the accuracy and consistency of such databases. Unfortunately, we have observed instances where some APIs are updated without notice. This leads to unconsistent metadata retrieval by ffq that cannot be solved on our end.
+
+For example, as of May 29th, the command:
+```bash
+ffq --ncbi SRR6835844
+```
+returned:
+```bash
+[{'accession': 'SRR6835844',
+'filename': 'SRR6835844.1',
+'filenumber': 1,
+'filesize': None,
+'filetype': 'sra',
+ 'md5': None,
+'url': 'https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-13/SRR6835844/SRR6835844.1',
+'urltype': 'ncbi'}]
+```
+
+On June 1st, we detected an error in one of ffq’s tests. Running the same command led to the following output:
+```bash
+[]
+```
+
+Investigating this issue, we discovered that the output of the eutil’s efetch tool had changed (for a comparison, compare files `SRR6835844_old.xml` and `SRR6835844_new.xml` contained in `tests/fixtures`). In the new output, ncbi hosted links were no longer provided. This affects a large number of accessions, not only SRR6835844. We have updated our tests accordingly and will continue to monitor the situation.
