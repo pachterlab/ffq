@@ -17,8 +17,12 @@ Fetch metadata information from the following databases:
 - [NIH Biosample](https://www.ncbi.nlm.nih.gov/biosample):  Biological source materials used in experimental assays, 
 - [ENCODE](https://www.encodeproject.org/): The Encyclopedia of DNA Elements. 
 
-`ffq` receives an accession and returns the metadata for that accession as well as the metadata for all downstream accessions following the connections between GEO, SRA, EMBL-EBI, DDBJ, and Biosample:
+`ffq` receives an accession and returns the metadata for that accession as well as the metadata for all downstream accessions following the connections between GEO, SRA, EMBL-EBI, DDBJ, and Biosample. If you use `ffq` in a publication, please the [cite*](#cite):
 
+```
+Gálvez-Merchán, Á., et al. (2022). Metadata retrieval from sequence databases with ffq. bioRxiv 2022.05.18.492548.
+```
+available here: https://doi.org/10.1101/2022.05.18.492548.
 
 <img src="https://docs.google.com/drawings/d/e/2PACX-1vQwKI33u_qjap-QU9T_v6oZ9EHLTxryB4EIOTNodEWWVFViwhcANpTmBQU4ZrS_85PEl41W64dsifi2/pub?w=2529&amp;h=1478">
 
@@ -336,3 +340,12 @@ On June 1st, we detected an error in one of ffq’s tests. Running the same comm
 ```
 
 Investigating this issue, we discovered that the output of the eutil’s efetch tool had changed (for a comparison, compare files `SRR6835844_old.xml` and `SRR6835844_new.xml` contained in `tests/fixtures`). In the new output, ncbi hosted links were no longer provided. This affects a large number of accessions, not only SRR6835844. We have updated our tests accordingly and will continue to monitor the situation.
+
+# Cite
+```
+@article{galvez2022metadata,
+  title={Metadata retrieval from sequence databases with ffq},
+  author={G{\'a}lvez-Merch{\'a}n, {\'A}ngel and Min, Kyung Hoi Joseph and Pachter, Lior and Booeshaghi, A. Sina},
+  year={2022}
+}
+```
