@@ -22,7 +22,7 @@ Fetch metadata information from the following databases:
 ```
 Gálvez-Merchán, Á., et al. (2022). Metadata retrieval from sequence databases with ffq. bioRxiv 2022.05.18.492548.
 ```
-available here: https://doi.org/10.1101/2022.05.18.492548.
+The manuscript is available here: https://doi.org/10.1101/2022.05.18.492548.
 
 <img src="https://docs.google.com/drawings/d/e/2PACX-1vQwKI33u_qjap-QU9T_v6oZ9EHLTxryB4EIOTNodEWWVFViwhcANpTmBQU4ZrS_85PEl41W64dsifi2/pub?w=2529&amp;h=1478">
 
