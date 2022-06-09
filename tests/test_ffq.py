@@ -320,18 +320,7 @@ class TestFfq(TestMixin, TestCase):
                                     'urltype': 'gcp'
                                 }
                             ],
-                            'ncbi': [
-                                {
-                                    'accession': 'SRR6425163',
-                                    'filename': 'SRR6425163.1',
-                                    'filenumber': 1,
-                                    'filesize': None,
-                                    'filetype': 'sra',
-                                    'md5': None,
-                                    'url': 'https://sra-downloadb.be-md.ncbi.nlm.nih.gov/sos2/sra-pub-run-13/SRR6425163/SRR6425163.1',
-                                    'urltype': 'ncbi'
-                                }
-                            ]
+                            'ncbi': []
                         },
                         'sample': 'SRS2792433',
                         'study': 'SRP127624',

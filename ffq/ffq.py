@@ -596,8 +596,11 @@ def ffq_biosample(accession, level=None):
     :return: dictionary of biosample metadata.
     :rtype: dict
     """
-    soup = ena_fetch(accession, 'biosample')
-    sample = soup.find('id', text=SAMPLE_PARSER).text
+    # commented below: old implementation using ncbi to fetch biosample data
+    #soup = ena_fetch(accession, 'biosample')
+    #sample = soup.find('id', text=SAMPLE_PARSER).text
+    soup = get_xml(accession)
+    sample = soup.SAMPLE.attrs['accession']
     try:
         level = level - 1
     except:  # noqa
