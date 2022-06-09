@@ -597,8 +597,8 @@ def ffq_biosample(accession, level=None):
     :rtype: dict
     """
     # commented below: old implementation using ncbi to fetch biosample data
-    #soup = ena_fetch(accession, 'biosample')
-    #sample = soup.find('id', text=SAMPLE_PARSER).text
+    # soup = ena_fetch(accession, 'biosample')
+    # sample = soup.find('id', text=SAMPLE_PARSER).text
     soup = get_xml(accession)
     sample = soup.SAMPLE.attrs['accession']
     try:
