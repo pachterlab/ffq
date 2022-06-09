@@ -50,7 +50,7 @@ class TestMixin(TestCase):
 
         # Alt links
         cls.alt_links = os.path.join(
-            cls.fixtures_dir, 'SRR6835844_altlinks.txt'
+            cls.fixtures_dir, 'SRR6835844_altlinks_new.txt'
         )
 
         # SRA
