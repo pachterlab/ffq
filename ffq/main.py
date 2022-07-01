@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 
+from ffq.exceptions import CliError, InvalidAccession, FfqException
 from ffq.utils import findkey
 
 from . import __version__
@@ -140,7 +141,7 @@ def cli():
 
     try:
         print(json.dumps(run_ffq(args), indent=4))
-    except UserWarning as e:
+    except FfqException as e:
         parser.error(e)
 
 
@@ -158,16 +159,16 @@ def run_ffq(args):
 
     # Check the -o is provided if --split is set
     if args.split and not args.o:
-        raise UserWarning('`-o` must be provided when using `--split`')
+        raise CliError('`-o` must be provided when using `--split`')
 
     if args.l:
         if ([args.ftp, args.ncbi, args.gcp, args.aws]).count(True) > 0:
-            raise UserWarning("`-l` is not compatible with link fetching.")
+            raise CliError("`-l` is not compatible with link fetching.")
         if args.l <= 0:  # noqa
-            raise UserWarning('level `-l` must greater than zero')
+            raise CliError('level `-l` must greater than zero')
     if args.t:
         if args.t not in SEARCH_TYPES:
-            raise UserWarning(
+            raise CliError(
                 f"{args.t} is not a valide type. TYPES can be one of {', '.join(SEARCH_TYPES)}"
             )
 
@@ -177,19 +178,18 @@ def run_ffq(args):
     # check if accessions are valid (TODO separate cleaning accessions and checking them)
     for v in accessions:
         if v["prefix"] in ENCODE_TYPES and args.split:
-            raise UserWarning(
+            raise CliError(
                 "`--split` is currently not compatible with ENCODE accessions"
             )
         if v["prefix"] in ENCODE_TYPES and ([args.ftp, args.aws, args.gcp,
                                              args.ncbi]).count(True) > 0:
-            raise UserWarning(
+            raise CliError(
                 "Direct link fetching is currently not compatible with ENCODE accessions"
             )
         if v["valid"] is False:
-            raise UserWarning(
+            raise InvalidAccession(
                 f"{v['accession']} is not a valid ID. IDs can be one of {', '.join(SEARCH_TYPES)}"  # noqa
             )
-            sys.exit(1)
 
     # we want to associate the args.x with the name of X
     # not just the true/false associated with args.x
@@ -242,6 +242,7 @@ def run_ffq(args):
             logger.exception(e)
         else:
             logger.error(e)
+            keyed["error_msg"] = str(e)
 
     if args.o:
         if args.split:
