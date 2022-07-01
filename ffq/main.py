@@ -55,7 +55,7 @@ FFQ.update({t: ffq_bioproject for t in BIOPROJECT_TYPES})
 FFQ.update({t: ffq_biosample for t in BIOSAMPLE_TYPES})
 
 
-def main():
+def cli():
     """Command-line entrypoint.
     """
     # Main parser
@@ -138,6 +138,14 @@ def main():
 
     args = parser.parse_args()
 
+    try:
+        print(json.dumps(run_ffq(args), indent=4))
+    except UserWarning as e:
+        parser.error(e)
+
+
+def run_ffq(args):
+
     logging.basicConfig(
         format='[%(asctime)s] %(levelname)7s %(message)s',
         level=logging.DEBUG if args.verbose else logging.INFO,
@@ -150,16 +158,16 @@ def main():
 
     # Check the -o is provided if --split is set
     if args.split and not args.o:
-        parser.error('`-o` must be provided when using `--split`')
+        raise UserWarning('`-o` must be provided when using `--split`')
 
     if args.l:
         if ([args.ftp, args.ncbi, args.gcp, args.aws]).count(True) > 0:
-            parser.error("`-l` is not compatible with link fetching.")
+            raise UserWarning("`-l` is not compatible with link fetching.")
         if args.l <= 0:  # noqa
-            parser.error('level `-l` must greater than zero')
+            raise UserWarning('level `-l` must greater than zero')
     if args.t:
         if args.t not in SEARCH_TYPES:
-            parser.error(
+            raise UserWarning(
                 f"{args.t} is not a valide type. TYPES can be one of {', '.join(SEARCH_TYPES)}"
             )
 
@@ -169,16 +177,16 @@ def main():
     # check if accessions are valid (TODO separate cleaning accessions and checking them)
     for v in accessions:
         if v["prefix"] in ENCODE_TYPES and args.split:
-            parser.error(
+            raise UserWarning(
                 "`--split` is currently not compatible with ENCODE accessions"
             )
         if v["prefix"] in ENCODE_TYPES and ([args.ftp, args.aws, args.gcp,
                                              args.ncbi]).count(True) > 0:
-            parser.error(
+            raise UserWarning(
                 "Direct link fetching is currently not compatible with ENCODE accessions"
             )
         if v["valid"] is False:
-            parser.error(
+            raise UserWarning(
                 f"{v['accession']} is not a valid ID. IDs can be one of {', '.join(SEARCH_TYPES)}"  # noqa
             )
             sys.exit(1)
@@ -251,4 +259,4 @@ def main():
             with open(args.o, 'w') as f:
                 json.dump(keyed, f, indent=4)
     else:
-        print(json.dumps(keyed, indent=4))
+        return keyed
