@@ -43,7 +43,6 @@ def cached_get(*args, **kwargs):
             raise ConnectionError(
                 '429 Client Error: Too Many Requests. Please try again later'
             )
-            exit(1)
         else:
             logger.error(f'{exception}')
             raise InvalidAccession('Provided accession is invalid')
