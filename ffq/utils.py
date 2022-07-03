@@ -2,7 +2,6 @@ import json
 import re
 import time
 from functools import lru_cache
-import sys
 
 import requests
 from ftplib import FTP
@@ -10,6 +9,7 @@ from bs4 import BeautifulSoup
 from frozendict import frozendict
 import logging
 
+from .exceptions import InvalidAccession, ConnectionError, BadData
 from .config import (
     CROSSREF_URL, ENA_SEARCH_URL, ENA_URL, ENA_FETCH, GSE_SEARCH_URL,
     GSE_SUMMARY_URL, GSE_SEARCH_TERMS, GSE_SUMMARY_TERMS, NCBI_FETCH_URL,
@@ -39,19 +39,17 @@ def cached_get(*args, **kwargs):
     try:
         response.raise_for_status()
     except requests.HTTPError as exception:
-        if exception.getcode() == 429:
-            logger.error(
+        if hasattr(exception, 'getcode') and exception.getcode() == 429:
+            raise ConnectionError(
                 '429 Client Error: Too Many Requests. Please try again later'
             )
             exit(1)
         else:
             logger.error(f'{exception}')
-            logger.error('Provided accession is invalid')
-            exit(1)
+            raise InvalidAccession('Provided accession is invalid')
     text = response.text
     if not text:
-        logger.warning(f'No metadata found in {args[0]}')
-        sys.exit(1)
+        raise BadData(f'No metadata found in {args[0]}')
     else:
         return response.text
 
@@ -116,8 +114,7 @@ def get_gsm_search_json(accession):
         geo_id = geo[-1]
         return {'accession': accession, 'geo_id': geo_id}
     else:
-        logger.error('Provided GSM accession is invalid')
-        sys.exit(1)
+        raise InvalidAccession('Provided GSM accession is invalid')
 
 
 def get_gse_summary_json(accession):
@@ -472,12 +469,10 @@ def ncbi_fetch_fasta(accession, db):
         response.raise_for_status()
     except requests.HTTPError as exception:
         logger.error(f'{exception}')
-        logger.error('Provided accession is invalid')
-        exit(1)
+        raise InvalidAccession('Provided accession is invalid')
     text = response.text
     if not text:
-        logger.warning(f'No metadata found for {accession}')
-        sys.exit(1)
+        raise BadData(f'No metadata found for {accession}')
     else:
         return BeautifulSoup(response.content, 'xml')
 
@@ -638,11 +633,10 @@ def gsm_id_to_srs(id):
                 logger.warning('No sample found')
                 return
     else:
-        logger.warning((
+        raise InvalidAccession(
             "No sample found. Either the provided GSM accession is "
             "invalid or raw data was not provided for this record"
-        ))
-        exit(1)
+        )
     return sample
 
 
@@ -790,8 +784,7 @@ def gse_to_gsms(accession):
         gsms.sort()
         return gsms
     else:
-        logger.error("Provided GSE accession is invalid")
-        sys.exit(1)
+        raise InvalidAccession("Provided GSE accession is invalid")
 
 
 def gsm_to_srx(accession):
@@ -1033,8 +1026,7 @@ def parse_bioproject(soup):
     """
     # Exception for: the followin bioproject ID is not public
     if 'is not public in BioProject' in soup.text:
-        logger.error('The provided ID is not public in BioProject. Exiting')
-        sys.exit(0)
+        raise InvalidAccession('The provided ID is not public in BioProject.')
     target = soup.find('target')
     if target:
         target_material = target.get('material')

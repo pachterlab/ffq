@@ -27,7 +27,7 @@ setup(
     include_package_data=True,
     install_requires=read('requirements.txt').strip().split('\n'),
     entry_points={
-        'console_scripts': ['ffq=ffq.main:main'],
+        'console_scripts': ['ffq=ffq.main:cli'],
     },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
