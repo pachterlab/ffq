@@ -3,8 +3,8 @@ import logging
 import re
 import time
 from urllib.parse import urlparse
-import sys
 
+from .exceptions import InvalidAccession
 from .utils import (
     geo_ids_to_gses, gsm_id_to_srs, get_doi, get_gse_search_json,
     get_gsm_search_json, get_xml, get_encode_json, get_samples_from_study,
@@ -317,8 +317,7 @@ def parse_gse_search(soup):
         geo_id = data['esearchresult']['idlist'][-1]
         return {'accession': accession, 'geo_id': geo_id}
     else:
-        logger.error("Provided GSE accession is invalid")
-        sys.exit(1)
+        raise InvalidAccession("Provided GSE accession is invalid")
 
 
 def parse_gse_summary(soup):
