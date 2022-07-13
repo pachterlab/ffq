@@ -10,7 +10,7 @@ class TestMixin(TestCase):
         cls.fixtures_dir = os.path.join(cls.base_dir, 'fixtures')
         cls.run_path = os.path.join(cls.fixtures_dir, 'SRR8426358.txt')
         cls.sample_path = os.path.join(cls.fixtures_dir, 'SRS4237519.txt')
-        cls.experiment_path = os.path.join(cls.fixtures_dir, 'SRX5234128.txt')
+        cls.experiment_path = os.path.join(cls.fixtures_dir, 'SRX3517583.txt')
         cls.study_path = os.path.join(cls.fixtures_dir, 'SRP178136.txt')
         cls.fastqs_path = os.path.join(cls.fixtures_dir, 'fastqs.txt')
 
@@ -50,13 +50,11 @@ class TestMixin(TestCase):
 
         # Alt links
         cls.alt_links = os.path.join(
-            cls.fixtures_dir, 'SRR6835844_altlinks.txt'
+            cls.fixtures_dir, 'SRR6835844_altlinks_new.txt'
         )
 
         # SRA
-        cls.srx_xml = os.path.join(
-            cls.fixtures_dir, 'SRX5692097_xml.txt'
-        )
+        cls.srx_xml = os.path.join(cls.fixtures_dir, 'SRX5692097_xml.txt')
         cls.study_with_run_path = os.path.join(
             cls.fixtures_dir, 'SRP096361_with_runlist.txt'
         )

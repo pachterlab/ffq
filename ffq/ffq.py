@@ -3,12 +3,12 @@ import logging
 import re
 import time
 from urllib.parse import urlparse
-import sys
 
+from .exceptions import InvalidAccession
 from .utils import (
     geo_ids_to_gses, gsm_id_to_srs, get_doi, get_gse_search_json,
     get_gsm_search_json, get_xml, get_encode_json, get_samples_from_study,
-    ncbi_link, ncbi_search, ncbi_fetch_fasta, parse_encode_json,
+    ncbi_link, ncbi_search, ncbi_fetch_fasta, ncbi_summary, parse_encode_json,
     search_ena_run_sample, search_ena_run_study, search_ena_title,
     sra_ids_to_srrs, geo_to_suppl, gsm_to_platform, gse_to_gsms, srx_to_srrs,
     get_files_metadata_from_run, parse_url, parse_ncbi_fetch_fasta, ena_fetch,
@@ -231,7 +231,7 @@ def parse_sample(soup):
 
     except:  # noqa
         experiment = ''
-        logger.warning('No experiment found')
+        logger.warning('No experiment found in ENA. Falling back to ncbi')
 
     return {
         'accession': accession,
@@ -317,8 +317,7 @@ def parse_gse_search(soup):
         geo_id = data['esearchresult']['idlist'][-1]
         return {'accession': accession, 'geo_id': geo_id}
     else:
-        logger.error("Provided GSE accession is invalid")
-        sys.exit(1)
+        raise InvalidAccession("Provided GSE accession is invalid")
 
 
 def parse_gse_summary(soup):
@@ -517,7 +516,8 @@ def ffq_sample(accession, level=None):
     :rtype: dict
     """
     logger.info(f'Parsing sample {accession}')
-    sample = parse_sample(get_xml(accession))
+    xml_sample = get_xml(accession)
+    sample = parse_sample(xml_sample)
     if level is None or level != 1:
         try:
             level -= 1
@@ -525,27 +525,30 @@ def ffq_sample(accession, level=None):
             pass
         logger.info(f'Getting Experiment for {accession}')
         exp_id = sample['experiments']
-        if exp_id:
-            if ',' in exp_id:
-                exp_ids = exp_id.split(',')
-                experiments = [
-                    ffq_experiment(exp_id, level) for exp_id in exp_ids
-                ]
-                sample.update({
-                    'experiments': [{
-                        experiment['accession']: experiment
-                    } for experiment in experiments]
-                })
-                return sample
-            else:
-                experiment = ffq_experiment(exp_id, level)
-                sample.update({
-                    'experiments': {
-                        experiment['accession']: experiment
-                    }
-                })
+        if not exp_id:
+            try:
+                alias = xml_sample.SAMPLE.attrs['alias']
+                id = get_gsm_search_json(alias)['geo_id']
+                exp_id = ncbi_summary('gds',
+                                      id)[id]['extrelations'][0]['targetobject']
+            except:  # noqa
+                logger.warning(f'No Experiment found for {accession}')
+        if ',' in exp_id:
+            exp_ids = exp_id.split(',')
+            experiments = [ffq_experiment(exp_id, level) for exp_id in exp_ids]
+            sample.update({
+                'experiments': [{
+                    experiment['accession']: experiment
+                } for experiment in experiments]
+            })
+            return sample
         else:
-            logger.warning(f'No Experiment found for {accession}')
+            experiment = ffq_experiment(exp_id, level)
+            sample.update({
+                'experiments': {
+                    experiment['accession']: experiment
+                }
+            })
         return sample
     else:
         return sample
@@ -592,8 +595,11 @@ def ffq_biosample(accession, level=None):
     :return: dictionary of biosample metadata.
     :rtype: dict
     """
-    soup = ena_fetch(accession, 'biosample')
-    sample = soup.find('id', text=SAMPLE_PARSER).text
+    # commented below: old implementation using ncbi to fetch biosample data
+    # soup = ena_fetch(accession, 'biosample')
+    # sample = soup.find('id', text=SAMPLE_PARSER).text
+    soup = get_xml(accession)
+    sample = soup.SAMPLE.attrs['accession']
     try:
         level = level - 1
     except:  # noqa
