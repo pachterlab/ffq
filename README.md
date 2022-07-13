@@ -5,7 +5,7 @@
 [![pypi version](https://img.shields.io/pypi/v/ffq)](https://pypi.org/project/ffq/0.2.1/)
 ![python versions](https://img.shields.io/pypi/pyversions/ffq)
 ![status](https://github.com/pachterlab/ffq/workflows/CI/badge.svg)
-![Code Coverage](https://img.shields.io/badge/Coverage-88%25-green.svg)
+![Code Coverage](https://img.shields.io/badge/Coverage-81%25-green.svg)
 [![Downloads](https://static.pepy.tech/personalized-badge/ffq?period=total&units=international_system&left_color=grey&right_color=brightgreen&left_text=Downloads)](https://pepy.tech/project/ffq)
 [![license](https://img.shields.io/pypi/l/ffq)](LICENSE)
 
@@ -17,8 +17,12 @@ Fetch metadata information from the following databases:
 - [NIH Biosample](https://www.ncbi.nlm.nih.gov/biosample):  Biological source materials used in experimental assays, 
 - [ENCODE](https://www.encodeproject.org/): The Encyclopedia of DNA Elements. 
 
-`ffq` receives an accession and returns the metadata for that accession as well as the metadata for all downstream accessions following the connections between GEO, SRA, EMBL-EBI, DDBJ, and Biosample:
+`ffq` receives an accession and returns the metadata for that accession as well as the metadata for all downstream accessions following the connections between GEO, SRA, EMBL-EBI, DDBJ, and Biosample. If you use `ffq` in a publication, please the [cite*](#cite):
 
+```
+Gálvez-Merchán, Á., et al. (2022). Metadata retrieval from sequence databases with ffq. bioRxiv 2022.05.18.492548.
+```
+The manuscript is available here: https://doi.org/10.1101/2022.05.18.492548.
 
 <img src="https://docs.google.com/drawings/d/e/2PACX-1vQwKI33u_qjap-QU9T_v6oZ9EHLTxryB4EIOTNodEWWVFViwhcANpTmBQU4ZrS_85PEl41W64dsifi2/pub?w=2529&amp;h=1478">
 
@@ -310,6 +314,7 @@ $ ffq --ncbi GSM2905292 | jq -r '.[] | .url' | xargs curl -O
 $ fastq-dump   ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 --gzip 
 $ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163        # fasterq-dump does not have gzip option
 ```
+
 ## Caveats and limitations
 `ffq` relies on the information provided by the different APIs it uses to retrieve metadata (hosted by ENA, ncbi, Encode, etc). Therefore, returning consistent and accurate metadata is dependent on the accuracy and consistency of such databases. Unfortunately, we have observed instances where some APIs are updated without notice. This leads to unconsistent metadata retrieval by ffq that cannot be solved on our end.
 
@@ -330,8 +335,18 @@ returned:
 ```
 
 On June 1st, we detected an error in one of ffq’s tests. Running the same command led to the following output:
-```bash
+
+```json
 []
 ```
 
 Investigating this issue, we discovered that the output of the eutil’s efetch tool had changed (for a comparison, compare files `SRR6835844_altlinks_old.txt` and `SRR6835844_altlinks_new.txt` contained in `tests/fixtures`). In the new output, ncbi hosted links were no longer provided. This affects a large number of accessions, not only SRR6835844. We have updated our tests accordingly and will continue to monitor the situation.
+
+# Cite
+```
+@article{galvez2022metadata,
+  title={Metadata retrieval from sequence databases with ffq},
+  author={G{\'a}lvez-Merch{\'a}n, {\'A}ngel and Min, Kyung Hoi Joseph and Pachter, Lior and Booeshaghi, A. Sina},
+  year={2022}
+}
+```
