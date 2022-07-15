@@ -240,9 +240,9 @@ def main():
             # Split each result into its own JSON.
             for result in keyed:
                 os.makedirs(args.o, exist_ok=True)
-                with open(os.path.join(args.o, f'{result["accession"]}.json'),
+                with open(os.path.join(args.o, f'{result}.json'),
                           'w') as f:
-                    json.dump(result, f, indent=4)
+                    json.dump(keyed[result], f, indent=4)
         else:
             # Otherwise, write a single JSON with result accession as keys.
             if os.path.dirname(
