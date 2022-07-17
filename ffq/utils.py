@@ -460,7 +460,7 @@ def ncbi_fetch_fasta(accession, db):
         params={
             'db': db,
             'id': accession,
-            'rettype': 'fasta',
+            #'rettype': 'fasta',
             'retmode': 'xml'  # max allowed
         }
     )
