@@ -315,6 +315,15 @@ $ fastq-dump   ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 
 $ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163        # fasterq-dump does not have gzip option
 ```
 
+## Contributing
+Thank you for wanting to improve `ffq`! If you have a bug that is related to `ffq` please create an issue. The issue should contain
+
+1. the `ffq` command ran with `--verbose`,
+2. the error message, and
+3. the `ffq` and `python` version.
+
+Please make all Pull Requests against the `devel` branch and include a message detailing the exact changes made, the reasons for the change, and tests that check for the correctness of those changes.
+
 ## Caveats and limitations
 `ffq` relies on the information provided by the different APIs it uses to retrieve metadata (hosted by ENA, ncbi, Encode, etc). Therefore, returning consistent and accurate metadata is dependent on the accuracy and consistency of such databases. Unfortunately, we have observed instances where some APIs are updated without notice. This leads to unconsistent metadata retrieval by ffq that cannot be solved on our end.
 
