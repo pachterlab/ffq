@@ -57,7 +57,7 @@ where `[accession]` is either:
 - a GEO accession (`GSE` or `GSM`)
 - an ENCODE accession (`ENCSR`, `ENCSB` or `ENCSD`)
 - a Bioproject accession (`CXR`)
-- a Biosample accession (`SAMN`')
+- a Biosample accession (`SAMN`)
 - a DOI
 
 ##### Examples:
