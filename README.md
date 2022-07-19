@@ -39,7 +39,7 @@ pip install ffq
 
 The development version can be installed with
 ```bash
-pip install git+https://github.com/pachterlab/ffq
+pip install git+https://github.com/pachterlab/ffq@devel
 ```
 
 ## Usage
