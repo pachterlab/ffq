@@ -154,8 +154,20 @@ def get_samples_from_study(accession):
     else:
         # The original code fell to ENA search if runs were not found. I don't know if this is
         # necessary, so make a warning to detect it in case it is.
+        srxs = search_ena(accession, 'secondary_study_accession', 'read_experiment', 'experiment_accession')
+        samples = []
+        for srx in srxs:
+        #     if len(samples) > 2:
+        #         break
+            soup = ena_fetch(srx, 'sra')
+            time.sleep(0.5)
+            samples.append(soup.find('primary_id', text = SAMPLE_PARSER).text)
+
+    
+        
+    if not samples:
         logger.warning(
-            'No samples found for study. Modify code to search through ENA'
+            'No samples found for study'
         )
         return
 
@@ -390,6 +402,36 @@ def search_ena_run_sample(accession):
             'but one was expected.'
         )
     return list(accessions)[0]
+
+def search_ena(accession, query, result, field):
+    """Given an accession (SRP), a query, a result and a field,
+    submit a search request to ENA.
+
+    :param accession: accession
+    :param query: query for ENA search
+    :param result: result for ENA search   
+    :param field: field for ENA search   
+    :type accession: str
+    :type query: str
+    :type result: str
+    :type field: str 
+
+    :return: list of downstream accessions
+    :rtype: list
+    """
+    text = cached_get(
+        ENA_SEARCH_URL,
+        params=frozendict({
+            'query': f'{query}="{accession}"',
+            'result': result,
+            'fields': field,
+            'limit': 0,
+        })
+    )
+    if not text:
+      return []
+    table = parse_tsv(text)
+    return [t[field] for t in table]
 
 
 def search_ena_title(title):
@@ -855,14 +897,15 @@ def srx_to_srrs(accession):
                 runs.append(run_range)
     else:
         logger.warning(
-            'Failed to parse run information from ENA XML. Falling back to '
+            'Failed to parse experiment information from ENA XML. Falling back to '
             'ENA search...'
         )
+        
         # Sometimes the SRP does not contain a list of runs (for whatever reason).
         # A common trend with such projects is that they use ArrayExpress.
         # In the case that no runs could be found from the project XML,
         # fallback to ENA SEARCH.
-        runs = search_ena_study_runs(accession)
+        runs = search_ena(accession, 'experiment_accession', 'read_run', 'run_accession')
     return runs
 
 

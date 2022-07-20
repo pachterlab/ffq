@@ -3,13 +3,15 @@ import logging
 import re
 import time
 from urllib.parse import urlparse
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module='bs4')
 
 from .exceptions import InvalidAccession
 from .utils import (
     geo_ids_to_gses, gsm_id_to_srs, get_doi, get_gse_search_json,
     get_gsm_search_json, get_xml, get_encode_json, get_samples_from_study,
     ncbi_link, ncbi_search, ncbi_fetch_fasta, ncbi_summary, parse_encode_json,
-    search_ena_run_sample, search_ena_run_study, search_ena_title,
+    search_ena_run_sample, search_ena_run_study, search_ena_title, search_ena,
     sra_ids_to_srrs, geo_to_suppl, gsm_to_platform, gse_to_gsms, srx_to_srrs,
     get_files_metadata_from_run, parse_url, parse_ncbi_fetch_fasta, ena_fetch,
     parse_bioproject
@@ -82,19 +84,19 @@ def parse_run(soup):
     if study_parsed:
         study = study_parsed.text
     else:
-        logger.warning(
-            'Failed to parse study information from ENA XML. Falling back to '
-            'ENA search...'
-        )
+    #     logger.warning(
+    #         'Failed to parse study information from ENA XML. Falling back to '
+    #         'ENA search...'
+    #     )
         study = search_ena_run_study(accession)
     sample_parsed = soup.find('ID', text=SAMPLE_PARSER)
     if sample_parsed:
         sample = sample_parsed.text
     else:
-        logger.warning(
-            'Failed to parse sample information from ENA XML. Falling back to '
-            'ENA search...'
-        )
+        # logger.warning(
+        #     'Failed to parse sample information from ENA XML. Falling back to '
+        #     'ENA search...'
+        # )
         sample = search_ena_run_sample(accession)
     title = soup.find('TITLE').text
 
@@ -228,10 +230,18 @@ def parse_sample(soup):
         #     experiment = soup.find('ID', text=EXPERIMENT_PARSER).text
         # except:  # noqa
         #     experiment = soup.find('PRIMARY_ID', text=EXPERIMENT_PARSER).text
-
-    except:  # noqa
-        experiment = ''
-        logger.warning('No experiment found in ENA. Falling back to ncbi')
+    
+    except:
+        logger.warning(
+        'Failed to parse sample information from ENA XML. Falling back to '
+        'ENA search...'
+        )
+        try:
+            experiment = search_ena(accession, 'secondary_sample_accession', 'read_experiment', 'experiment_accession')[0]
+        
+        except:  # noqa
+            experiment = ''
+            logger.warning('No experiment found')
 
     return {
         'accession': accession,
@@ -269,7 +279,6 @@ def parse_experiment_with_run(soup, level):
     if level is None or level > 1:
         # Returns all of the runs associated with an experiment
         runs = srx_to_srrs(accession)
-
         if len(runs) == 1:
             logger.warning(f'There is 1 run for {accession}')
 
