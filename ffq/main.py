@@ -130,6 +130,10 @@ def main():
     parser.add_argument(
         '--verbose', help='Print debugging information', action='store_true'
     )
+    parser.add_argument(
+        '--version', action="version", version=f'%(prog)s {__version__}'
+    )
+
 
     # Show help when no arguments are given
     if len(sys.argv) == 1:
