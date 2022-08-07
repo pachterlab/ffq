@@ -211,7 +211,6 @@ def run_ffq(args):
     # Run FFQ based on type and accessions
     keyed = {}
     try:
-        1/0
         # standard ffq
         results = []
         for v in accessions:
