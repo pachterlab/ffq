@@ -325,17 +325,22 @@ $ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 
 
 ```bash
 # Goal: quantify publicly available scRNAseq data
+$ pip install kb-python gget ffq
 $ kb ref -i index.idx -g t2g.txt -f1 transcriptome.fa $(gget ref --ftp -w dna,gtf homo_sapiens)
 $ kb count -i index.idx -g t2g.txt -x 10xv3 -o out $(ffq --ftp SRR10668798 | jq -r '.[] | .url' | tr '\n' ' ')
-#> count matrix in out/ folder
+#-> count matrix in out/ folder
 
 # Goal: count the total number of reads
 $ ffq SRR10668798 | jq '.. | ."ENA-SPOT-COUNT"? | select(. != null)' |  paste -sd+ - | bc
-#=> 624886427
+#-> 624886427
 
 # Goal: check the total size of the FASTQ files
 $ ffq --ftp SRR10668798 | jq '.[] | .filesize ' blah | paste -sd+ - | bc | numfmt --to=iec-i --suffix=B
-#=> 71GiB
+#-> 71GiB
+
+# Goal: count the number of FASTQ files
+$ ffq --ftp SRR10668798 | jq -r 'length'
+#-> 2
 ```
 Submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
 
