@@ -241,10 +241,10 @@ def run_ffq(args):
     except Exception as e:
         if args.verbose:
             logger.error(e)
-            raise FailToFetchData("For possible failure modes, please see https://github.com/pachterlab/ffq")
+            raise FailToFetchData("For possible failure modes, please see https://github.com/pachterlab/ffq#failure-modes")
         else:
             logger.error(e)
-            raise FailToFetchData("For possible failure modes, please see https://github.com/pachterlab/ffq")
+            raise FailToFetchData("For possible failure modes, please see https://github.com/pachterlab/ffq#failure-modes")
 
     if args.o:
         if args.split:
