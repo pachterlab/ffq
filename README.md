@@ -388,6 +388,9 @@ On June 1st, we detected an error in one of ffq’s tests. Running the same comm
 
 Investigating this issue, we discovered that the output of the eutil’s efetch tool had changed (for a comparison, compare files `SRR6835844_altlinks_old.txt` and `SRR6835844_altlinks_new.txt` contained in `tests/fixtures`). In the new output, ncbi hosted links were no longer provided. This affects a large number of accessions, not only SRR6835844. We have updated our tests accordingly and will continue to monitor the situation.
 
+## Naming
+`ffq` is short for FetchFastQ.
+
 # Cite
 ```
 @article{galvez2022metadata,
