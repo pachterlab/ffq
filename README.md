@@ -343,7 +343,7 @@ $ ffq --ftp SRR10668798 | jq -r 'length'
 #-> 2
 
 # Goal: get sequence stats for the first 100 entries with seqkit
-$ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') | zcat | head -400 | seqkit stats
+$ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') | zcat | head -400 | seqkit stats -a
 ```
 Submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
 
