@@ -9,6 +9,12 @@
 [![Downloads](https://static.pepy.tech/personalized-badge/ffq?period=total&units=international_system&left_color=grey&right_color=brightgreen&left_text=Downloads)](https://pepy.tech/project/ffq)
 [![license](https://img.shields.io/pypi/l/ffq)](LICENSE)
 
+---
+### User note
+```diff
+! NCBI is depracating .SRA file links for runs. This may result in an empty list when using the `--ncbi` option.
+```
+---
 Fetch metadata information from the following databases:
 - [GEO](https://www.ncbi.nlm.nih.gov/geo/): Gene Expression Omnibus, 
 - [SRA](https://www.ncbi.nlm.nih.gov/sra): Sequence Read Archive, 
