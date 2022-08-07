@@ -9,12 +9,10 @@
 [![Downloads](https://static.pepy.tech/personalized-badge/ffq?period=total&units=international_system&left_color=grey&right_color=brightgreen&left_text=Downloads)](https://pepy.tech/project/ffq)
 [![license](https://img.shields.io/pypi/l/ffq)](LICENSE)
 
----
-### User note
 ```diff
-! NCBI is depracating .SRA file links. This may result in an empty list with the `--ncbi` option.
+! Note: NCBI is depracating .SRA file links. This may result in an empty list with `--ncbi`.
 ```
----
+
 Fetch metadata information from the following databases:
 - [GEO](https://www.ncbi.nlm.nih.gov/geo/): Gene Expression Omnibus, 
 - [SRA](https://www.ncbi.nlm.nih.gov/sra): Sequence Read Archive, 
@@ -324,10 +322,12 @@ $ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 
 ## Failure modes
 Many factors, independent of `ffq`, may result in failure to fetch metadata including:
 
-1. Broken internet connection 
-2. Improperly formatted accession
-3. Recently submitted data to SRA (not synced with ENA)
-4. Request rate exceeded for NCBI servers
+1. broken internet connection 
+2. improperly formatted accession
+3. recently submitted data to SRA (not synced with ENA)
+4. exceeded request rate for servers
+
+If you believe you have identified a bug in `ffq` please see the section on [contributing*](#contributing).
 
 ## Contributing
 Thank you for wanting to improve `ffq`! If you have a bug that is related to `ffq` please create an issue. The issue should contain
