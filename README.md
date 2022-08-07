@@ -319,6 +319,24 @@ $ fastq-dump   ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 
 $ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163        # fasterq-dump does not have gzip option
 ```
 
+## Use cases
+`ffq` facilitates the acquisition of publicly available sequencing data to help answer relevant research questions. 
+
+```bash
+# Goal: quantify publicly available scRNAseq data
+$ kb ref -i index.idx -g t2g.txt -f1 transcriptome.fa $(gget ref --ftp -w dna,gtf homo_sapiens)
+$ kb count -i index.idx -g t2g.txt -x 10xv3 -o out $(ffq --ftp SRR10668798 | jq -r '.[] | .url' | tr '\n' ' ')
+#> count matrix in out/ folder
+
+# Goal: count the total number of reads
+$ ffq SRR10668798 | jq '.. | ."ENA-SPOT-COUNT"? | select(. != null)' |  paste -sd+ - | bc
+#=> 624886427
+
+# Goal: check the total size of the FASTQ files
+$ ffq --ftp SRR10668798 | jq '.[] | .filesize ' blah | paste -sd+ - | bc | numfmt --to=iec-i --suffix=B
+#=> 71GiB
+```
+
 ## Failure modes
 Many factors, independent of `ffq`, may result in failure to fetch metadata including:
 
