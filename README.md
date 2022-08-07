@@ -10,7 +10,8 @@
 [![license](https://img.shields.io/pypi/l/ffq)](LICENSE)
 
 ```diff
-! Note: NCBI is depracating .SRA file links. This may result in an empty list with `--ncbi`.
+! NCBI is depracating .SRA file links. This may result in an empty list with `--ncbi`.
++ Have a cool use case for ffq? Submit a PR to the `Use cases` section and we'll feature it!
 ```
 
 Fetch metadata information from the following databases:
