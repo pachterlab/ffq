@@ -344,6 +344,24 @@ $ ffq --ftp SRR10668798 | jq -r 'length'
 ```
 Submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
 
+
+```bash
+# Goal: print the first 3 sequences of read 1 to the screen
+$ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') |zcat | awk '(NR-2)%4==0' | head -n
+#-> NCCAAATAGGAATTACATACACCCCC
+#-> NAACCTGAGTAGATGTGTTGTTAACT
+#-> NGATCTGAGAACTCGGAACTATTTTC
+
+# Goal: get number of counts per unique read sequence from the first 10000 reads
+$ curl -s $(ffq --ftp accession | jq -r '.[0] | .url') | zcat | awk '(NR-2)%4==0'| head -n 10000 | sort | uniq -c | sort -r
+#-> 4 TACACGACACTTAACGATCGGCCTTC
+#-> 4 GTACTTTAGGCCCGTTTGTGTGCGAT
+#-> 4 GACGGCTAGTACATGATATAACAAGC
+#-> ...
+```
+Submitted by [@agalvezm](https://github.com/agalvezm/).
+
+
 Do you have a cool use case for `ffq`? Submit a PR (including the goal, code snippet, and your username) so that we can feature it here.
 
 ## Failure modes
