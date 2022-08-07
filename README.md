@@ -341,13 +341,16 @@ $ ffq --ftp SRR10668798 | jq '.[] | .filesize ' blah | paste -sd+ - | bc | numfm
 # Goal: count the number of FASTQ files
 $ ffq --ftp SRR10668798 | jq -r 'length'
 #-> 2
+
+# Goal: get sequence stats for the first 100 entries with seqkit
+$ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') | zcat | head -400 seqkit stats
 ```
 Submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
 
 
 ```bash
 # Goal: print the first 3 sequences of read 1 to the screen
-$ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') |zcat | awk '(NR-2)%4==0' | head -n
+$ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') | zcat | awk '(NR-2)%4==0' | head -n
 #-> NCCAAATAGGAATTACATACACCCCC
 #-> NAACCTGAGTAGATGTGTTGTTAACT
 #-> NGATCTGAGAACTCGGAACTATTTTC
