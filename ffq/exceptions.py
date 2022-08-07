@@ -24,3 +24,7 @@ class ConnectionError(FfqException):
 class BadData(FfqException):
     """Raised when returned data does not look as expected"""
     pass
+
+class FailToFetchData(FfqException):
+    """Raised when ffq fails in the absence of another exception"""
+    pass

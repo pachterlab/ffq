@@ -4,7 +4,7 @@ import logging
 import os
 import sys
 
-from ffq.exceptions import CliError, InvalidAccession, FfqException
+from ffq.exceptions import CliError, InvalidAccession, FfqException, FailToFetchData
 from ffq.utils import findkey
 
 from . import __version__
@@ -211,6 +211,7 @@ def run_ffq(args):
     # Run FFQ based on type and accessions
     keyed = {}
     try:
+        1/0
         # standard ffq
         results = []
         for v in accessions:
@@ -240,10 +241,11 @@ def run_ffq(args):
 
     except Exception as e:
         if args.verbose:
-            logger.exception(e)
+            logger.error(e)
+            raise FailToFetchData("For possible failure modes, please see https://github.com/pachterlab/ffq")
         else:
             logger.error(e)
-            keyed["error_msg"] = str(e)
+            raise FailToFetchData("For possible failure modes, please see https://github.com/pachterlab/ffq")
 
     if args.o:
         if args.split:
