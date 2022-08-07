@@ -12,7 +12,7 @@
 ---
 ### User note
 ```diff
-! NCBI is depracating .SRA file links for runs. This may result in an empty list when using the `--ncbi` option.
+! NCBI is depracating .SRA file links. This may result in an empty list when using the `--ncbi` option.
 ```
 ---
 Fetch metadata information from the following databases:
