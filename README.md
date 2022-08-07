@@ -315,6 +315,14 @@ $ fastq-dump   ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 
 $ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163        # fasterq-dump does not have gzip option
 ```
 
+## Failure modes
+Many factors, independent of `ffq`, may result in failure to fetch metadata including:
+
+1. Broken internet connection 
+2. Improperly formatted accession
+3. Recently submitted data to SRA (not synced with ENA)
+4. Request rate exceeded for NCBI servers
+
 ## Contributing
 Thank you for wanting to improve `ffq`! If you have a bug that is related to `ffq` please create an issue. The issue should contain
 
