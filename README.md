@@ -337,6 +337,7 @@ $ ffq SRR10668798 | jq '.. | ."ENA-SPOT-COUNT"? | select(. != null)' |  paste -s
 $ ffq --ftp SRR10668798 | jq '.[] | .filesize ' blah | paste -sd+ - | bc | numfmt --to=iec-i --suffix=B
 #=> 71GiB
 ```
+Submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
 
 ## Failure modes
 Many factors, independent of `ffq`, may result in failure to fetch metadata including:
