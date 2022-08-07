@@ -339,13 +339,16 @@ $ ffq --ftp SRR10668798 | jq '.[] | .filesize ' blah | paste -sd+ - | bc | numfm
 ```
 Submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
 
+Do you have a cool use case for `ffq`? Submit a PR (including the goal, code snippet, and your username) so that we can feature it here.
+
 ## Failure modes
-Many factors, independent of `ffq`, may result in failure to fetch metadata including:
+Many factors, independent of `ffq`, may result in failure to fetch metadata or missing metadata including:
 
 1. broken internet connection 
 2. improperly formatted accession
 3. recently submitted data to SRA (not synced with ENA)
 4. exceeded request rate for servers
+5. missing metadata from online database
 
 If you believe you have identified a bug in `ffq` please see the section on [contributing*](#contributing).
 
@@ -359,7 +362,7 @@ Thank you for wanting to improve `ffq`! If you have a bug that is related to `ff
 Please make all Pull Requests against the `devel` branch and include a message detailing the exact changes made, the reasons for the change, and tests that check for the correctness of those changes.
 
 ## Caveats and limitations
-`ffq` relies on the information provided by the different APIs it uses to retrieve metadata (hosted by ENA, ncbi, Encode, etc). Therefore, returning consistent and accurate metadata is dependent on the accuracy and consistency of such databases. Unfortunately, we have observed instances where some APIs are updated without notice. This leads to unconsistent metadata retrieval by ffq that cannot be solved on our end.
+`ffq` relies on the information provided by the different APIs it uses to retrieve metadata (hosted by ENA, NCBI, ENCODE, etc). Therefore, returning consistent and accurate metadata is dependent on the accuracy and consistency of such databases. Unfortunately, we have observed instances where some APIs are updated without notice. This leads to unconsistent metadata retrieval by ffq that cannot be solved on our end.
 
 For example, as of May 29th, the command:
 ```bash
