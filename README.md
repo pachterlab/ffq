@@ -328,22 +328,24 @@ $ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 
 $ pip install kb-python gget ffq
 $ kb ref -i index.idx -g t2g.txt -f1 transcriptome.fa $(gget ref --ftp -w dna,gtf homo_sapiens)
 $ kb count -i index.idx -g t2g.txt -x 10xv3 -o out $(ffq --ftp SRR10668798 | jq -r '.[] | .url' | tr '\n' ' ')
-#-> count matrix in out/ folder
+# -> count matrix in out/ folder
 
 # Goal: count the total number of reads
 $ ffq SRR10668798 | jq '.. | ."ENA-SPOT-COUNT"? | select(. != null)' |  paste -sd+ - | bc
-#-> 624886427
+624886427
 
 # Goal: check the total size of the FASTQ files
 $ ffq --ftp SRR10668798 | jq '.[] | .filesize ' blah | paste -sd+ - | bc | numfmt --to=iec-i --suffix=B
-#-> 71GiB
+71GiB
 
 # Goal: count the number of FASTQ files
 $ ffq --ftp SRR10668798 | jq -r 'length'
-#-> 2
+2
 
 # Goal: get sequence stats for the first 100 entries with seqkit
 $ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') | zcat | head -400 | seqkit stats -a
+file  format  type  num_seqs  sum_len  min_len  avg_len  max_len  Q1  Q2  Q3  sum_gap  N50  Q20(%)  Q30(%)
+-     FASTQ   DNA        100    2,600       26       26       26  13  26  13        0   26   95.31   92.92
 ```
 Submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
 
@@ -351,16 +353,16 @@ Submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
 ```bash
 # Goal: print the first 3 sequences of read 1 to the screen
 $ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') | zcat | awk '(NR-2)%4==0' | head -n
-#-> NCCAAATAGGAATTACATACACCCCC
-#-> NAACCTGAGTAGATGTGTTGTTAACT
-#-> NGATCTGAGAACTCGGAACTATTTTC
+NCCAAATAGGAATTACATACACCCCC
+NAACCTGAGTAGATGTGTTGTTAACT
+NGATCTGAGAACTCGGAACTATTTTC
 
 # Goal: get number of counts per unique read sequence from the first 10000 reads
 $ curl -s $(ffq --ftp accession | jq -r '.[0] | .url') | zcat | awk '(NR-2)%4==0'| head -n 10000 | sort | uniq -c | sort -r
-#-> 4 TACACGACACTTAACGATCGGCCTTC
-#-> 4 GTACTTTAGGCCCGTTTGTGTGCGAT
-#-> 4 GACGGCTAGTACATGATATAACAAGC
-#-> ...
+4 TACACGACACTTAACGATCGGCCTTC
+4 GTACTTTAGGCCCGTTTGTGTGCGAT
+4 GACGGCTAGTACATGATATAACAAGC
+...
 ```
 Submitted by [@agalvezm](https://github.com/agalvezm/).
 
