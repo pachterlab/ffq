@@ -74,7 +74,7 @@ FFQ.update({t: ffq_bioproject for t in BIOPROJECT_TYPES})
 FFQ.update({t: ffq_biosample for t in BIOSAMPLE_TYPES})
 
 
-def cli():
+def main():
     """Command-line entrypoint."""
     # Main parser
     parser = argparse.ArgumentParser(
