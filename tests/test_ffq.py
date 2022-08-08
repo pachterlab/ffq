@@ -1,9 +1,13 @@
+import sys
+from io import StringIO
 from unittest import mock, TestCase
-from unittest.mock import call
+from unittest.mock import call, patch
 from bs4 import BeautifulSoup
 
 import ffq.ffq as ffq
 from tests.mixins import TestMixin
+from ffq.main import main
+from ffq import __version__
 
 
 class TestFfq(TestMixin, TestCase):
@@ -697,3 +701,14 @@ class TestFfq(TestMixin, TestCase):
             ])
             sra_ids_to_srrs.assert_called_once_with(['SRA1'])
             ffq_run.assert_called_once_with('SRR1')
+    
+    def test_version_string(self):
+        with patch("sys.argv", ["main", "--version"]):
+            out = StringIO()
+            sys.stdout = out
+            try:
+                main()
+            except SystemExit:
+                pass
+            output = out.getvalue()
+            self.assertEqual(output, f"main {__version__}\n")
