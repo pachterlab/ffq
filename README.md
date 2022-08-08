@@ -389,6 +389,14 @@ Thank you for wanting to improve `ffq`! If you have a bug that is related to `ff
 
 Please make all Pull Requests against the `devel` branch and include a message detailing the exact changes made, the reasons for the change, and tests that check for the correctness of those changes.
 
+Some tips for improving the `ffq` code base:
+
+- the developer dependencies can be installed with `pip install -r dev-requirements.txt`
+- unit tests can be added to the `./tests/test_*.py`
+- code reformatting can be performed by running `black ffq/`
+- code quality can be checked by running `make check`
+- tests can be performed by running `make test`
+
 ## Caveats and limitations
 `ffq` relies on the information provided by the different APIs it uses to retrieve metadata (hosted by ENA, NCBI, ENCODE, etc). Therefore, returning consistent and accurate metadata is dependent on the accuracy and consistency of such databases. Unfortunately, we have observed instances where some APIs are updated without notice. This leads to unconsistent metadata retrieval by ffq that cannot be solved on our end.
 
