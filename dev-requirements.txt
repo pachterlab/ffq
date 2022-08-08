@@ -1,7 +1,7 @@
 bumpversion==0.6.0
 coverage>=5.1
 pytest>=7.0.0
-flake8==3.8.2
-pre-commit==2.4.0
+flake8==3.9.2
+pre-commit==2.20.0
 wheel==0.34.2
 black==22.6.0
