@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        python: [ '3.6', '3.7', '3.8' ]
+        python: [ '3.6', '3.7', '3.8', '3.9', '3.10']
         os: ['ubuntu-18.04']
     name: Test on Python ${{ matrix.python }}
     steps:
@@ -40,4 +40,4 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt && pip install -r dev-requirements.txt
       - name: Run tests
-        run: nosetests --verbose --with-coverage --cover-package ffq
+        run: coverage run -m pytest -ra -v tests && coverage report --omit=main.py,tests*

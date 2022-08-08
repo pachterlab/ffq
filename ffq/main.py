@@ -4,6 +4,7 @@ import logging
 import os
 import sys
 
+from ffq.exceptions import CliError, InvalidAccession, FfqException, FailToFetchData
 from ffq.utils import findkey
 
 from . import __version__
@@ -55,7 +56,7 @@ FFQ.update({t: ffq_bioproject for t in BIOPROJECT_TYPES})
 FFQ.update({t: ffq_biosample for t in BIOSAMPLE_TYPES})
 
 
-def main():
+def cli():
     """Command-line entrypoint.
     """
     # Main parser
@@ -142,6 +143,15 @@ def main():
 
     args = parser.parse_args()
 
+    try:
+        print(json.dumps(run_ffq(args), indent=4))
+    except FfqException as e:
+        parser.error(e)
+
+
+def run_ffq(args):
+    """Main function to run ffq."""
+
     logging.basicConfig(
         format='[%(asctime)s] %(levelname)7s %(message)s',
         level=logging.DEBUG if args.verbose else logging.INFO,
@@ -154,16 +164,16 @@ def main():
 
     # Check the -o is provided if --split is set
     if args.split and not args.o:
-        parser.error('`-o` must be provided when using `--split`')
+        raise CliError('`-o` must be provided when using `--split`')
 
     if args.l:
         if ([args.ftp, args.ncbi, args.gcp, args.aws]).count(True) > 0:
-            parser.error("`-l` is not compatible with link fetching.")
+            raise CliError("`-l` is not compatible with link fetching.")
         if args.l <= 0:  # noqa
-            parser.error('level `-l` must greater than zero')
+            raise CliError('level `-l` must greater than zero')
     if args.t:
         if args.t not in SEARCH_TYPES:
-            parser.error(
+            raise CliError(
                 f"{args.t} is not a valide type. TYPES can be one of {', '.join(SEARCH_TYPES)}"
             )
 
@@ -173,19 +183,18 @@ def main():
     # check if accessions are valid (TODO separate cleaning accessions and checking them)
     for v in accessions:
         if v["prefix"] in ENCODE_TYPES and args.split:
-            parser.error(
+            raise CliError(
                 "`--split` is currently not compatible with ENCODE accessions"
             )
         if v["prefix"] in ENCODE_TYPES and ([args.ftp, args.aws, args.gcp,
                                              args.ncbi]).count(True) > 0:
-            parser.error(
+            raise CliError(
                 "Direct link fetching is currently not compatible with ENCODE accessions"
             )
         if v["valid"] is False:
-            parser.error(
+            raise InvalidAccession(
                 f"{v['accession']} is not a valid ID. IDs can be one of {', '.join(SEARCH_TYPES)}"  # noqa
             )
-            sys.exit(1)
 
     # we want to associate the args.x with the name of X
     # not just the true/false associated with args.x
@@ -235,9 +244,11 @@ def main():
 
     except Exception as e:
         if args.verbose:
-            logger.exception(e)
+            logger.error(e)
+            raise FailToFetchData("For possible failure modes, please see https://github.com/pachterlab/ffq#failure-modes")
         else:
             logger.error(e)
+            raise FailToFetchData("For possible failure modes, please see https://github.com/pachterlab/ffq#failure-modes")
 
     if args.o:
         if args.split:
@@ -254,5 +265,7 @@ def main():
                 os.makedirs(os.path.dirname(args.o), exist_ok=True)
             with open(args.o, 'w') as f:
                 json.dump(keyed, f, indent=4)
+                quit()
     else:
-        print(json.dumps(keyed, indent=4))
+        return keyed
+

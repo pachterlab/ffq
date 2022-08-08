@@ -5,9 +5,14 @@
 [![pypi version](https://img.shields.io/pypi/v/ffq)](https://pypi.org/project/ffq/0.2.1/)
 ![python versions](https://img.shields.io/pypi/pyversions/ffq)
 ![status](https://github.com/pachterlab/ffq/workflows/CI/badge.svg)
-![Code Coverage](https://img.shields.io/badge/Coverage-88%25-green.svg)
+![Code Coverage](https://img.shields.io/badge/Coverage-81%25-green.svg)
 [![Downloads](https://static.pepy.tech/personalized-badge/ffq?period=total&units=international_system&left_color=grey&right_color=brightgreen&left_text=Downloads)](https://pepy.tech/project/ffq)
 [![license](https://img.shields.io/pypi/l/ffq)](LICENSE)
+
+```diff
+! NCBI is depracating .SRA file links. This may result in an empty list with `--ncbi`.
++ Have a cool use case for ffq? Submit a PR to the `Use cases` section and we'll feature it!
+```
 
 Fetch metadata information from the following databases:
 - [GEO](https://www.ncbi.nlm.nih.gov/geo/): Gene Expression Omnibus, 
@@ -39,7 +44,7 @@ pip install ffq
 
 The development version can be installed with
 ```bash
-pip install git+https://github.com/pachterlab/ffq
+pip install git+https://github.com/pachterlab/ffq@devel
 ```
 
 ## Usage
@@ -57,7 +62,7 @@ where `[accession]` is either:
 - a GEO accession (`GSE` or `GSM`)
 - an ENCODE accession (`ENCSR`, `ENCSB` or `ENCSD`)
 - a Bioproject accession (`CXR`)
-- a Biosample accession (`SAMN`')
+- a Biosample accession (`SAMN`)
 - a DOI
 
 ##### Examples:
@@ -315,8 +320,77 @@ $ fastq-dump   ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 
 $ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163        # fasterq-dump does not have gzip option
 ```
 
+## Use cases
+`ffq` facilitates the acquisition of publicly available sequencing data to help answer relevant research questions. 
+
+```bash
+# Goal: quantify publicly available scRNAseq data
+$ pip install kb-python gget ffq
+$ kb ref -i index.idx -g t2g.txt -f1 transcriptome.fa $(gget ref --ftp -w dna,gtf homo_sapiens)
+$ kb count -i index.idx -g t2g.txt -x 10xv3 -o out $(ffq --ftp SRR10668798 | jq -r '.[] | .url' | tr '\n' ' ')
+# -> count matrix in out/ folder
+
+# Goal: count the total number of reads
+$ ffq SRR10668798 | jq '.. | ."ENA-SPOT-COUNT"? | select(. != null)' |  paste -sd+ - | bc
+624886427
+
+# Goal: check the total size of the FASTQ files
+$ ffq --ftp SRR10668798 | jq '.[] | .filesize ' blah | paste -sd+ - | bc | numfmt --to=iec-i --suffix=B
+71GiB
+
+# Goal: count the number of FASTQ files
+$ ffq --ftp SRR10668798 | jq -r 'length'
+2
+
+# Goal: get sequence stats for the first 100 entries with seqkit
+$ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') | zcat | head -400 | seqkit stats -a
+file  format  type  num_seqs  sum_len  min_len  avg_len  max_len  Q1  Q2  Q3  sum_gap  N50  Q20(%)  Q30(%)
+-     FASTQ   DNA        100    2,600       26       26       26  13  26  13        0   26   95.31   92.92
+```
+Submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
+
+
+```bash
+# Goal: print the first 3 sequences of read 1 to the screen
+$ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') | zcat | awk '(NR-2)%4==0' | head -n
+NCCAAATAGGAATTACATACACCCCC
+NAACCTGAGTAGATGTGTTGTTAACT
+NGATCTGAGAACTCGGAACTATTTTC
+
+# Goal: get number of counts per unique read sequence from the first 10000 reads
+$ curl -s $(ffq --ftp accession | jq -r '.[0] | .url') | zcat | awk '(NR-2)%4==0'| head -n 10000 | sort | uniq -c | sort -r
+4 TACACGACACTTAACGATCGGCCTTC
+4 GTACTTTAGGCCCGTTTGTGTGCGAT
+4 GACGGCTAGTACATGATATAACAAGC
+...
+```
+Submitted by [@agalvezm](https://github.com/agalvezm/).
+
+
+Do you have a cool use case for `ffq`? Submit a PR (including the goal, code snippet, and your username) so that we can feature it here.
+
+## Failure modes
+Many factors, independent of `ffq`, may result in failure to fetch metadata or missing metadata including:
+
+1. broken internet connection 
+2. improperly formatted accession
+3. recently submitted data to SRA (not synced with ENA)
+4. exceeded request rate for servers
+5. missing metadata from online database
+
+If you believe you have identified a bug in `ffq` please see the section on [contributing*](#contributing).
+
+## Contributing
+Thank you for wanting to improve `ffq`! If you have a bug that is related to `ffq` please create an issue. The issue should contain
+
+1. the `ffq` command ran with `--verbose`,
+2. the error message, and
+3. the `ffq` and `python` version.
+
+Please make all Pull Requests against the `devel` branch and include a message detailing the exact changes made, the reasons for the change, and tests that check for the correctness of those changes.
+
 ## Caveats and limitations
-`ffq` relies on the information provided by the different APIs it uses to retrieve metadata (hosted by ENA, ncbi, Encode, etc). Therefore, returning consistent and accurate metadata is dependent on the accuracy and consistency of such databases. Unfortunately, we have observed instances where some APIs are updated without notice. This leads to unconsistent metadata retrieval by ffq that cannot be solved on our end.
+`ffq` relies on the information provided by the different APIs it uses to retrieve metadata (hosted by ENA, NCBI, ENCODE, etc). Therefore, returning consistent and accurate metadata is dependent on the accuracy and consistency of such databases. Unfortunately, we have observed instances where some APIs are updated without notice. This leads to unconsistent metadata retrieval by ffq that cannot be solved on our end.
 
 For example, as of May 29th, the command:
 ```bash
@@ -335,11 +409,16 @@ returned:
 ```
 
 On June 1st, we detected an error in one of ffq’s tests. Running the same command led to the following output:
+
 ```json
 []
 ```
 
-Investigating this issue, we discovered that the output of the eutil’s efetch tool had changed (for a comparison, compare files `SRR6835844_old.xml` and `SRR6835844_new.xml` contained in `tests/fixtures`). In the new output, ncbi hosted links were no longer provided. This affects a large number of accessions, not only SRR6835844. We have updated our tests accordingly and will continue to monitor the situation.
+Investigating this issue, we discovered that the output of the eutil’s efetch tool had changed (for a comparison, compare files `SRR6835844_altlinks_old.txt` and `SRR6835844_altlinks_new.txt` contained in `tests/fixtures`). In the new output, ncbi hosted links were no longer provided. This affects a large number of accessions, not only SRR6835844. We have updated our tests accordingly and will continue to monitor the situation.
+
+## Naming
+`ffq` is short for FetchFastQ.
+
 
 # Cite
 ```

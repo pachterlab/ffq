@@ -27,7 +27,7 @@ setup(
     include_package_data=True,
     install_requires=read('requirements.txt').strip().split('\n'),
     entry_points={
-        'console_scripts': ['ffq=ffq.main:main'],
+        'console_scripts': ['ffq=ffq.main:cli'],
     },
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -38,6 +38,8 @@ setup(
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Scientific/Engineering :: Bio-Informatics',
         'Topic :: Utilities',
     ],

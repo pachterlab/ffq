@@ -2,7 +2,6 @@ import json
 import re
 import time
 from functools import lru_cache
-import sys
 
 import requests
 from ftplib import FTP
@@ -10,6 +9,7 @@ from bs4 import BeautifulSoup
 from frozendict import frozendict
 import logging
 
+from .exceptions import InvalidAccession, ConnectionError, BadData
 from .config import (
     CROSSREF_URL, ENA_SEARCH_URL, ENA_URL, ENA_FETCH, GSE_SEARCH_URL,
     GSE_SUMMARY_URL, GSE_SEARCH_TERMS, GSE_SUMMARY_TERMS, NCBI_FETCH_URL,
@@ -39,19 +39,16 @@ def cached_get(*args, **kwargs):
     try:
         response.raise_for_status()
     except requests.HTTPError as exception:
-        if exception.getcode() == 429:
-            logger.error(
+        if hasattr(exception, 'getcode') and exception.getcode() == 429:
+            raise ConnectionError(
                 '429 Client Error: Too Many Requests. Please try again later'
             )
-            exit(1)
         else:
             logger.error(f'{exception}')
-            logger.error('Provided accession is invalid')
-            exit(1)
+            raise InvalidAccession('Provided accession is invalid')
     text = response.text
     if not text:
-        logger.warning(f'No metadata found in {args[0]}')
-        sys.exit(1)
+        raise BadData(f'No metadata found in {args[0]}')
     else:
         return response.text
 
@@ -116,8 +113,7 @@ def get_gsm_search_json(accession):
         geo_id = geo[-1]
         return {'accession': accession, 'geo_id': geo_id}
     else:
-        logger.error('Provided GSM accession is invalid')
-        sys.exit(1)
+        raise InvalidAccession('Provided GSM accession is invalid')
 
 
 def get_gse_summary_json(accession):
@@ -158,8 +154,20 @@ def get_samples_from_study(accession):
     else:
         # The original code fell to ENA search if runs were not found. I don't know if this is
         # necessary, so make a warning to detect it in case it is.
+        srxs = search_ena(accession, 'secondary_study_accession', 'read_experiment', 'experiment_accession')
+        samples = []
+        for srx in srxs:
+        #     if len(samples) > 2:
+        #         break
+            soup = ena_fetch(srx, 'sra')
+            time.sleep(0.5)
+            samples.append(soup.find('primary_id', text = SAMPLE_PARSER).text)
+
+    
+        
+    if not samples:
         logger.warning(
-            'No samples found for study. Modify code to search through ENA'
+            'No samples found for study'
         )
         return
 
@@ -395,6 +403,36 @@ def search_ena_run_sample(accession):
         )
     return list(accessions)[0]
 
+def search_ena(accession, query, result, field):
+    """Given an accession (SRP), a query, a result and a field,
+    submit a search request to ENA.
+
+    :param accession: accession
+    :param query: query for ENA search
+    :param result: result for ENA search   
+    :param field: field for ENA search   
+    :type accession: str
+    :type query: str
+    :type result: str
+    :type field: str 
+
+    :return: list of downstream accessions
+    :rtype: list
+    """
+    text = cached_get(
+        ENA_SEARCH_URL,
+        params=frozendict({
+            'query': f'{query}="{accession}"',
+            'result': result,
+            'fields': field,
+            'limit': 0,
+        })
+    )
+    if not text:
+      return []
+    table = parse_tsv(text)
+    return [t[field] for t in table]
+
 
 def search_ena_title(title):
     """Given a title, search the ENA for studies (SRPs) corresponding to the title.
@@ -464,7 +502,7 @@ def ncbi_fetch_fasta(accession, db):
         params={
             'db': db,
             'id': accession,
-            'rettype': 'fasta',
+            #'rettype': 'fasta',
             'retmode': 'xml'  # max allowed
         }
     )
@@ -472,12 +510,10 @@ def ncbi_fetch_fasta(accession, db):
         response.raise_for_status()
     except requests.HTTPError as exception:
         logger.error(f'{exception}')
-        logger.error('Provided accession is invalid')
-        exit(1)
+        raise InvalidAccession('Provided accession is invalid')
     text = response.text
     if not text:
-        logger.warning(f'No metadata found for {accession}')
-        sys.exit(1)
+        raise BadData(f'No metadata found for {accession}')
     else:
         return BeautifulSoup(response.content, 'xml')
 
@@ -638,11 +674,10 @@ def gsm_id_to_srs(id):
                 logger.warning('No sample found')
                 return
     else:
-        logger.warning((
+        raise InvalidAccession(
             "No sample found. Either the provided GSM accession is "
             "invalid or raw data was not provided for this record"
-        ))
-        exit(1)
+        )
     return sample
 
 
@@ -790,8 +825,7 @@ def gse_to_gsms(accession):
         gsms.sort()
         return gsms
     else:
-        logger.error("Provided GSE accession is invalid")
-        sys.exit(1)
+        raise InvalidAccession("Provided GSE accession is invalid")
 
 
 def gsm_to_srx(accession):
@@ -863,14 +897,15 @@ def srx_to_srrs(accession):
                 runs.append(run_range)
     else:
         logger.warning(
-            'Failed to parse run information from ENA XML. Falling back to '
+            'Failed to parse experiment information from ENA XML. Falling back to '
             'ENA search...'
         )
+        
         # Sometimes the SRP does not contain a list of runs (for whatever reason).
         # A common trend with such projects is that they use ArrayExpress.
         # In the case that no runs could be found from the project XML,
         # fallback to ENA SEARCH.
-        runs = search_ena_study_runs(accession)
+        runs = search_ena(accession, 'experiment_accession', 'read_run', 'run_accession')
     return runs
 
 
@@ -1033,8 +1068,7 @@ def parse_bioproject(soup):
     """
     # Exception for: the followin bioproject ID is not public
     if 'is not public in BioProject' in soup.text:
-        logger.error('The provided ID is not public in BioProject. Exiting')
-        sys.exit(0)
+        raise InvalidAccession('The provided ID is not public in BioProject.')
     target = soup.find('target')
     if target:
         target_material = target.get('material')
