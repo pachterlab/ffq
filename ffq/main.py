@@ -4,41 +4,60 @@ import logging
 import os
 import sys
 
+from ffq.exceptions import CliError, InvalidAccession, FfqException, FailToFetchData
 from ffq.utils import findkey
 
 from . import __version__
 from .ffq import (
-    ffq_doi, ffq_gse, ffq_run, ffq_study, ffq_sample, ffq_gsm, ffq_experiment,
-    ffq_encode, ffq_bioproject, ffq_biosample, validate_accessions
+    ffq_doi,
+    ffq_gse,
+    ffq_run,
+    ffq_study,
+    ffq_sample,
+    ffq_gsm,
+    ffq_experiment,
+    ffq_encode,
+    ffq_bioproject,
+    ffq_biosample,
+    validate_accessions,
 )
 
 logger = logging.getLogger(__name__)
 
 RUN_TYPES = (
-    'SRR',
-    'ERR',
-    'DRR',
+    "SRR",
+    "ERR",
+    "DRR",
 )
 PROJECT_TYPES = (
-    'SRP',
-    'ERP',
-    'DRP',
+    "SRP",
+    "ERP",
+    "DRP",
 )
 EXPERIMENT_TYPES = (
-    'SRX',
-    'ERX',
-    'DRX',
+    "SRX",
+    "ERX",
+    "DRX",
 )
-SAMPLE_TYPES = ('SRS', 'ERS', 'DRS', 'CRS')
-GEO_TYPES = ('GSE', 'GSM')
-ENCODE_TYPES = ('ENCSR', 'ENCBS', 'ENCDO')
+SAMPLE_TYPES = ("SRS", "ERS", "DRS", "CRS")
+GEO_TYPES = ("GSE", "GSM")
+ENCODE_TYPES = ("ENCSR", "ENCBS", "ENCDO")
 BIOPROJECT_TYPES = (
-    'CRX',
+    "CRX",
 )  # TODO implement CRR and CRP, most dont have public metadata.
-BIOSAMPLE_TYPES = ('SAMN', 'SAMD', 'SAMEA', 'SAMEG')
-OTHER_TYPES = ('DOI',)
-SEARCH_TYPES = RUN_TYPES + PROJECT_TYPES + EXPERIMENT_TYPES + SAMPLE_TYPES + \
-    GEO_TYPES + ENCODE_TYPES + BIOPROJECT_TYPES + BIOSAMPLE_TYPES + OTHER_TYPES
+BIOSAMPLE_TYPES = ("SAMN", "SAMD", "SAMEA", "SAMEG")
+OTHER_TYPES = ("DOI",)
+SEARCH_TYPES = (
+    RUN_TYPES
+    + PROJECT_TYPES
+    + EXPERIMENT_TYPES
+    + SAMPLE_TYPES
+    + GEO_TYPES
+    + ENCODE_TYPES
+    + BIOPROJECT_TYPES
+    + BIOSAMPLE_TYPES
+    + OTHER_TYPES
+)
 
 # main ffq caller
 FFQ = {
@@ -56,79 +75,67 @@ FFQ.update({t: ffq_biosample for t in BIOSAMPLE_TYPES})
 
 
 def main():
-    """Command-line entrypoint.
-    """
+    """Command-line entrypoint."""
     # Main parser
     parser = argparse.ArgumentParser(
-        description=((
-            f'ffq {__version__}: A command line tool to find sequencing data '
-            'from SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample.'
-        ))
+        description=(
+            (
+                f"ffq {__version__}: A command line tool to find sequencing data "
+                "from SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample."
+            )
+        )
     )
     parser._actions[0].help = parser._actions[0].help.capitalize()
 
     parser.add_argument(
-        'IDs',
+        "IDs",
         help=(
-            'One or multiple SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample accessions, '
-            'DOIs, or paper titles'
+            "One or multiple SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample accessions, "
+            "DOIs, or paper titles"
         ),
-        nargs='+'
+        nargs="+",
     )
     parser.add_argument(
-        '-o',
-        metavar='OUT',
-        help=('Path to write metadata (default: standard out)'),
+        "-o",
+        metavar="OUT",
+        help=("Path to write metadata (default: standard out)"),
         type=str,
         required=False,
     )
 
     parser.add_argument(
-        '-t',
-        metavar='TYPE',
+        "-t",
+        metavar="TYPE",
         help=argparse.SUPPRESS,
         type=str,
         required=False,
-        choices=SEARCH_TYPES
+        choices=SEARCH_TYPES,
     )
 
     parser.add_argument(
-        '-l',
-        metavar='LEVEL',
-        help='Max depth to fetch data within accession tree',
-        type=int
+        "-l",
+        metavar="LEVEL",
+        help="Max depth to fetch data within accession tree",
+        type=int,
     )
 
-    parser.add_argument('--ftp', help='Return FTP links', action='store_true')
+    parser.add_argument("--ftp", help="Return FTP links", action="store_true")
 
-    parser.add_argument(
-        '--aws',
-        help=  # noqa
-        'Return AWS links',
-        action='store_true'
-    )
+    parser.add_argument("--aws", help="Return AWS links", action="store_true")  # noqa
 
-    parser.add_argument(
-        '--gcp',
-        help=  # noqa
-        'Return GCP links',
-        action='store_true'
-    )
+    parser.add_argument("--gcp", help="Return GCP links", action="store_true")  # noqa
 
+    parser.add_argument("--ncbi", help="Return NCBI links", action="store_true")  # noqa
     parser.add_argument(
-        '--ncbi',
-        help=  # noqa
-        'Return NCBI links',
-        action='store_true'
+        "--split",
+        help="Split output into separate files by accession  (`-o` is a directory)",  # noqa
+        action="store_true",
     )
     parser.add_argument(
-        '--split',
-        help=  # noqa
-        'Split output into separate files by accession  (`-o` is a directory)',
-        action='store_true'
+        "--verbose", help="Print debugging information", action="store_true"
     )
     parser.add_argument(
-        '--verbose', help='Print debugging information', action='store_true'
+        "--version", action="version", version=f"%(prog)s {__version__}"
     )
 
     # Show help when no arguments are given
@@ -138,28 +145,37 @@ def main():
 
     args = parser.parse_args()
 
+    try:
+        print(json.dumps(run_ffq(args), indent=4))
+    except FfqException as e:
+        parser.error(e)
+
+
+def run_ffq(args):
+    """Main function to run ffq."""
+
     logging.basicConfig(
-        format='[%(asctime)s] %(levelname)7s %(message)s',
+        format="[%(asctime)s] %(levelname)7s %(message)s",
         level=logging.DEBUG if args.verbose else logging.INFO,
     )
-    logging.getLogger('chardet.charsetprober').setLevel(logging.WARNING)
-    logging.getLogger('urllib3').setLevel(logging.WARNING)
+    logging.getLogger("chardet.charsetprober").setLevel(logging.WARNING)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
 
-    logger.debug('Printing verbose output')
+    logger.debug("Printing verbose output")
     logger.debug(args)
 
     # Check the -o is provided if --split is set
     if args.split and not args.o:
-        parser.error('`-o` must be provided when using `--split`')
+        raise CliError("`-o` must be provided when using `--split`")
 
     if args.l:
         if ([args.ftp, args.ncbi, args.gcp, args.aws]).count(True) > 0:
-            parser.error("`-l` is not compatible with link fetching.")
+            raise CliError("`-l` is not compatible with link fetching.")
         if args.l <= 0:  # noqa
-            parser.error('level `-l` must greater than zero')
+            raise CliError("level `-l` must greater than zero")
     if args.t:
         if args.t not in SEARCH_TYPES:
-            parser.error(
+            raise CliError(
                 f"{args.t} is not a valide type. TYPES can be one of {', '.join(SEARCH_TYPES)}"
             )
 
@@ -169,35 +185,29 @@ def main():
     # check if accessions are valid (TODO separate cleaning accessions and checking them)
     for v in accessions:
         if v["prefix"] in ENCODE_TYPES and args.split:
-            parser.error(
+            raise CliError(
                 "`--split` is currently not compatible with ENCODE accessions"
             )
-        if v["prefix"] in ENCODE_TYPES and ([args.ftp, args.aws, args.gcp,
-                                             args.ncbi]).count(True) > 0:
-            parser.error(
+        if (
+            v["prefix"] in ENCODE_TYPES
+            and ([args.ftp, args.aws, args.gcp, args.ncbi]).count(True) > 0
+        ):
+            raise CliError(
                 "Direct link fetching is currently not compatible with ENCODE accessions"
             )
         if v["valid"] is False:
-            parser.error(
+            raise InvalidAccession(
                 f"{v['accession']} is not a valid ID. IDs can be one of {', '.join(SEARCH_TYPES)}"  # noqa
             )
-            sys.exit(1)
 
     # we want to associate the args.x with the name of X
     # not just the true/false associated with args.x
-    url_args = [{
-        "urltype": "ftp",
-        "arg": args.ftp
-    }, {
-        "urltype": "aws",
-        "arg": args.aws
-    }, {
-        "urltype": "gcp",
-        "arg": args.gcp
-    }, {
-        "urltype": "ncbi",
-        "arg": args.ncbi
-    }]
+    url_args = [
+        {"urltype": "ftp", "arg": args.ftp},
+        {"urltype": "aws", "arg": args.aws},
+        {"urltype": "gcp", "arg": args.gcp},
+        {"urltype": "ncbi", "arg": args.ncbi},
+    ]
 
     # Run FFQ based on type and accessions
     keyed = {}
@@ -211,7 +221,7 @@ def main():
             else:
                 results.append(FFQ[v["prefix"]](v["accession"], args.l))
 
-        keyed = {result['accession']: result for result in results}
+        keyed = {result["accession"]: result for result in results}
         # get links ffq
         if [v["arg"] for v in url_args].count(True) > 0:
             links = []
@@ -231,24 +241,36 @@ def main():
 
     except Exception as e:
         if args.verbose:
-            logger.exception(e)
+            logger.error(e)
+            raise FailToFetchData(
+                "For possible failure modes, please see https://github.com/pachterlab/ffq#failure-modes"
+            )
         else:
             logger.error(e)
+            raise FailToFetchData(
+                "For possible failure modes, please see https://github.com/pachterlab/ffq#failure-modes"
+            )
 
     if args.o:
         if args.split:
             # Split each result into its own JSON.
+            outputfiles = []
             for result in keyed:
                 os.makedirs(args.o, exist_ok=True)
-                with open(os.path.join(args.o, f'{result["accession"]}.json'),
-                          'w') as f:
-                    json.dump(result, f, indent=4)
+                with open(os.path.join(args.o, f"{result}.json"), "w") as f:
+                    json.dump(keyed[result], f, indent=4)
+                    outputfiles.append(f.name)
+
+            sys.exit()
+
         else:
             # Otherwise, write a single JSON with result accession as keys.
-            if os.path.dirname(
-                    args.o) != '':  # handles case where file is in current dir
+            if (
+                os.path.dirname(args.o) != ""
+            ):  # handles case where file is in current dir
                 os.makedirs(os.path.dirname(args.o), exist_ok=True)
-            with open(args.o, 'w') as f:
+            with open(args.o, "w") as f:
                 json.dump(keyed, f, indent=4)
+                sys.exit()
     else:
-        print(json.dumps(keyed, indent=4))
+        return keyed

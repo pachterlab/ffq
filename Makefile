@@ -14,7 +14,7 @@ test:
 
 check:
 	flake8 ffq && echo OK
-	yapf -r --diff ffq && echo OK
+	black --check ffq/ && echo OK
 
 examples:
 	pip install .
