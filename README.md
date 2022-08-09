@@ -5,7 +5,7 @@
 [![pypi version](https://img.shields.io/pypi/v/ffq)](https://pypi.org/project/ffq/0.2.1/)
 ![python versions](https://img.shields.io/pypi/pyversions/ffq)
 ![status](https://github.com/pachterlab/ffq/workflows/CI/badge.svg)
-![Code Coverage](https://img.shields.io/badge/Coverage-88%25-green.svg)
+![Code Coverage](https://img.shields.io/badge/Coverage-78%25-green.svg)
 [![Downloads](https://static.pepy.tech/personalized-badge/ffq?period=total&units=international_system&left_color=grey&right_color=brightgreen&left_text=Downloads)](https://pepy.tech/project/ffq)
 [![license](https://img.shields.io/pypi/l/ffq)](LICENSE)
 
