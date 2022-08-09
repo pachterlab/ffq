@@ -662,7 +662,7 @@ class TestFfq(TestMixin, TestCase):
         # test the functionality of --split ensuring the output file is created
         # and is a valid ffq json file
         import tempfile, json, os
-        tempdir = tempfile.mkdtemp(remove=True)
+        tempdir = tempfile.mkdtemp()
         with patch("sys.argv", ["main", "--split", "-o", tempdir, "SRR1581006"]):
             out = StringIO()
             sys.stdout = out
@@ -671,12 +671,13 @@ class TestFfq(TestMixin, TestCase):
             except SystemExit:
                 pass
             output = out.getvalue()
-            # parse json from output
-            output_json = json.loads(output)
-            self.assertEqual(output_json["message"], "Output was split into separate files")
-            self.assertEqual(len(output_json["files"]), 1)
+            
 
-            # load json from output file
+            # Test that the STDOUT is empty (an not "null")
+            self.assertEqual(output, "")
+       
+
+            # Test the output JSON file
             file_json = json.load(open(os.path.join(tempdir, "SRR1581006.json")))
             self.assertEqual(file_json["accession"], "SRR1581006")
 
