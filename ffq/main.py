@@ -254,12 +254,17 @@ def run_ffq(args):
     if args.o:
         if args.split:
             # Split each result into its own JSON.
+            outputfiles = []
             for result in keyed:
                 os.makedirs(args.o, exist_ok=True)
                 with open(
-                    os.path.join(args.o, f'{result["accession"]}.json'), "w"
+                    os.path.join(args.o, f'{result}.json'), "w"
                 ) as f:
-                    json.dump(result, f, indent=4)
+                    json.dump(keyed[result], f, indent=4)
+                    outputfiles.append(f.name)
+            
+            sys.exit()
+            
         else:
             # Otherwise, write a single JSON with result accession as keys.
             if (

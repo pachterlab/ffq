@@ -1,13 +1,16 @@
+from os import remove
 import sys
 from io import StringIO
 from unittest import mock, TestCase
 from unittest.mock import call, patch
 from bs4 import BeautifulSoup
 
+
 import ffq.ffq as ffq
 from tests.mixins import TestMixin
 from ffq.main import main
 from ffq import __version__
+
 
 
 class TestFfq(TestMixin, TestCase):
@@ -654,3 +657,31 @@ class TestFfq(TestMixin, TestCase):
                 pass
             output = out.getvalue()
             self.assertEqual(output, f"main {__version__}\n")
+    
+    def test_split_output(self):
+        # test the functionality of --split ensuring the output file is created
+        # and is a valid ffq json file
+        import tempfile, json, os
+        tempdir = tempfile.mkdtemp()
+        with patch("sys.argv", ["main", "--split", "-o", tempdir, "SRR1581006"]):
+            out = StringIO()
+            sys.stdout = out
+            try:               
+                main()
+            except SystemExit:
+                pass
+            output = out.getvalue()
+            
+
+            # Test that the STDOUT is empty (an not "null")
+            self.assertEqual(output, "")
+       
+
+            # Test the output JSON file
+            file_json = json.load(open(os.path.join(tempdir, "SRR1581006.json")))
+            self.assertEqual(file_json["accession"], "SRR1581006")
+
+            
+
+
+
