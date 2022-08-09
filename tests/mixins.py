@@ -47,4 +47,3 @@ class TestMixin(TestCase):
         cls.study_with_run_path = os.path.join(
             cls.fixtures_dir, "SRP096361_with_runlist.txt"
         )
-
