@@ -263,8 +263,7 @@ def run_ffq(args):
                     json.dump(keyed[result], f, indent=4)
                     outputfiles.append(f.name)
             
-            # Return a message that files were split (otherwise prints \null\)
-            return {"message": "Output was split into separate files", "files": outputfiles}
+            sys.exit()
             
         else:
             # Otherwise, write a single JSON with result accession as keys.
