@@ -427,7 +427,6 @@ Investigating this issue, we discovered that the output of the eutil’s efetch 
 ## Naming
 `ffq` is short for FetchFastQ.
 
-
 # Cite
 ```
 @article{galvez2022metadata,
