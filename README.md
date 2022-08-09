@@ -1,8 +1,8 @@
 
 
 # ffq
-![github version](https://img.shields.io/badge/Version-0.2.1-informational)
-[![pypi version](https://img.shields.io/pypi/v/ffq)](https://pypi.org/project/ffq/0.2.1/)
+![github version](https://img.shields.io/badge/Version-0.3.0-informational)
+[![pypi version](https://img.shields.io/pypi/v/ffq)](https://pypi.org/project/ffq/0.3.0/)
 ![python versions](https://img.shields.io/pypi/pyversions/ffq)
 ![status](https://github.com/pachterlab/ffq/workflows/CI/badge.svg)
 ![Code Coverage](https://img.shields.io/badge/Coverage-78%25-green.svg)
