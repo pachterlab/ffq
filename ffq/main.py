@@ -273,6 +273,6 @@ def run_ffq(args):
                 os.makedirs(os.path.dirname(args.o), exist_ok=True)
             with open(args.o, "w") as f:
                 json.dump(keyed, f, indent=4)
-                quit()
+                sys.exit()
     else:
         return keyed
