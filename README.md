@@ -335,7 +335,7 @@ $ ffq SRR10668798 | jq '.. | ."ENA-SPOT-COUNT"? | select(. != null)' |  paste -s
 624886427
 
 # Goal: check the total size of the FASTQ files
-$ ffq --ftp SRR10668798 | jq '.[] | .filesize ' blah | paste -sd+ - | bc | numfmt --to=iec-i --suffix=B
+$ ffq --ftp SRR10668798 | jq '.[] | .filesize ' | paste -sd+ - | bc | numfmt --to=iec-i --suffix=B
 71GiB
 
 # Goal: count the number of FASTQ files
@@ -369,11 +369,10 @@ Submitted by [@agalvezm](https://github.com/agalvezm/).
 
 ```bash
 # Goal: concurrent download of a set of FASTQ files given a list of IDs (list.txt)
-# (Requires Nextflow and Docker (or Conda) installed, pipeline and dependencies will be installed automatically)
-nextflow run telatin/getreads -r main   -profile docker \
-   --list list.txt --outdir downloaded-reads/
+# (Requires Nextflow and Docker, or Conda, to be installed. Pipeline and dependencies will be installed automatically)
+$ nextflow run telatin/getreads -r main -profile docker --list list.txt --outdir downloaded-reads/
 ```
-if you don't have Nextflow and Docker or Conda, see the [installation instructions](https://github.com/telatin/getreads/blob/main/docs/INSTALLATION.md).
+For instructions on how to install Nextflow and Docker, or Conda, see the [installation instructions](https://github.com/telatin/getreads/blob/main/docs/INSTALLATION.md).
 
 Submitted by [@telatin](https://github.com/telatin)
 
