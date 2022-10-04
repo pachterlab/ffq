@@ -367,6 +367,16 @@ $ curl -s $(ffq --ftp accession | jq -r '.[0] | .url') | zcat | awk '(NR-2)%4==0
 Submitted by [@agalvezm](https://github.com/agalvezm/).
 
 
+```bash
+# Goal: concurrent download of a set of FASTQ files given a list of IDs (list.txt)
+# (Requires Nextflow and Docker (or Conda) installed, pipeline and dependencies will be installed automatically)
+nextflow run telatin/getreads -r main   -profile docker \
+   --list list.txt --outdir downloaded-reads/
+```
+if you don't have Nextflow and Docker or Conda, see the [installation instructions](https://github.com/telatin/getreads/blob/main/docs/INSTALLATION.md).
+
+Submitted by [@telatin](https://github.com/telatin)
+
 Do you have a cool use case for `ffq`? Submit a PR (including the goal, code snippet, and your username) so that we can feature it here.
 
 ## Failure modes
