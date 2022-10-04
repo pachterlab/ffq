@@ -369,11 +369,13 @@ Submitted by [@agalvezm](https://github.com/agalvezm/).
 
 ```bash
 # Goal: concurrent download of a set of FASTQ files given a list of IDs (list.txt)
-# (Requires Nextflow and Docker installed, pipeline and dependencies will be installed automatically)
+# (Requires Nextflow and Docker (or Conda) installed, pipeline and dependencies will be installed automatically)
 nextflow run telatin/getreads -r main   -profile docker \
    --list list.txt --outdir downloaded-reads/
 ```
-Submitted by [@telatin](https://github.com/telatin) -- source available [getreads](https://github.com/telatin/getreads)
+if you don't have Nextflow and Docker or Conda, see the [installation instructions](https://github.com/telatin/getreads/blob/main/docs/INSTALLATION.md).
+
+Submitted by [@telatin](https://github.com/telatin)
 
 Do you have a cool use case for `ffq`? Submit a PR (including the goal, code snippet, and your username) so that we can feature it here.
 
