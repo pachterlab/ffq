@@ -323,6 +323,7 @@ $ fasterq-dump ./SRR6425163.1 --split-files --include-technical -O ./SRR6425163 
 ## Use cases
 `ffq` facilitates the acquisition of publicly available sequencing data to help answer relevant research questions. 
 
+The following was submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
 ```bash
 # Goal: quantify publicly available scRNAseq data
 $ pip install kb-python gget ffq
@@ -347,9 +348,8 @@ $ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') | zcat | head -400 | se
 file  format  type  num_seqs  sum_len  min_len  avg_len  max_len  Q1  Q2  Q3  sum_gap  N50  Q20(%)  Q30(%)
 -     FASTQ   DNA        100    2,600       26       26       26  13  26  13        0   26   95.31   92.92
 ```
-Submitted by [@sbooeshaghi](https://github.com/sbooeshaghi/).
 
-
+The following was submitted by [@agalvezm](https://github.com/agalvezm/).
 ```bash
 # Goal: print the first 3 sequences of read 1 to the screen
 $ curl -s $(ffq --ftp SRR10668798 | jq -r '.[0] | .url') | zcat | awk '(NR-2)%4==0' | head -n
@@ -364,17 +364,14 @@ $ curl -s $(ffq --ftp accession | jq -r '.[0] | .url') | zcat | awk '(NR-2)%4==0
 4 GACGGCTAGTACATGATATAACAAGC
 ...
 ```
-Submitted by [@agalvezm](https://github.com/agalvezm/).
 
-
+The following was submitted by [@telatin](https://github.com/telatin).
 ```bash
 # Goal: concurrent download of a set of FASTQ files given a list of IDs (list.txt)
 # (Requires Nextflow and Docker, or Conda, to be installed. Pipeline and dependencies will be installed automatically)
 $ nextflow run telatin/getreads -r main -profile docker --list list.txt --outdir downloaded-reads/
 ```
 For instructions on how to install Nextflow and Docker, or Conda, see the [installation instructions](https://github.com/telatin/getreads/blob/main/docs/INSTALLATION.md).
-
-Submitted by [@telatin](https://github.com/telatin)
 
 Do you have a cool use case for `ffq`? Submit a PR (including the goal, code snippet, and your username) so that we can feature it here.
 
