@@ -10,7 +10,7 @@ long_description = read("README.md")
 
 setup(
     name="ffq",
-    version="0.3.0",
+    version="0.3.1",
     url="https://github.com/pachterlab/ffq",
     author="Kyung Hoi (Joseph) Min, Sina Booeshaghi, Ángel Gálvez Merchán",
     author_email="phoenixter96@gmail.com, alisina@caltech.edu, agalvezm@caltech.edu",
