@@ -76,7 +76,7 @@ def get_xml(accession):
     :rtype: bs4.BeautifulSoup
     """
 
-    return BeautifulSoup(cached_get(f"{ENA_URL}/{accession}/"), "xml")
+    return BeautifulSoup(cached_get(f"{ENA_URL}/{accession}"), "xml")
 
 
 def get_encode_json(accession):
