@@ -81,59 +81,67 @@ def validate_accessions(accessions, search_types):
     return IDs
 
 
-def parse_run(soup):
+def parse_run(soup, accession = None):
     """Given a BeautifulSoup object representing a run, parse out relevant
     information.
 
     :param soup: a BeautifulSoup object representing a run
     :type soup: bs4.BeautifulSoup
+    :type accession: str
 
     :return: a dictionary containing run information
     :rtype: dict
     """
-    accession = soup.find("PRIMARY_ID", text=RUN_PARSER).text
-    experiment = (
-        soup.find("PRIMARY_ID", text=EXPERIMENT_PARSER).text
-        if soup.find("PRIMARY_ID", text=EXPERIMENT_PARSER)
-        else soup.find("EXPERIMENT_REF")["accession"]
-    )
-
-    study_parsed = soup.find("ID", text=PROJECT_PARSER)
-    if study_parsed:
-        study = study_parsed.text
-    else:
-        #     logger.warning(
-        #         'Failed to parse study information from ENA XML. Falling back to '
-        #         'ENA search...'
-        #     )
-        study = search_ena_run_study(accession)
-    sample_parsed = soup.find("ID", text=SAMPLE_PARSER)
-    if sample_parsed:
-        sample = sample_parsed.text
-    else:
-        # logger.warning(
-        #     'Failed to parse sample information from ENA XML. Falling back to '
-        #     'ENA search...'
-        # )
-        sample = search_ena_run_sample(accession)
-    title = soup.find("TITLE").text
-
+  
+    title = None
+    sample = None
+    study = None
+    experiment = None
+    ftp_files = None
     attributes = {}
 
-    for attr in soup.find_all("RUN_ATTRIBUTE"):
-        try:
-            tag = attr.find("TAG").text
-            value = attr.find("VALUE").text
-            attributes[tag] = value
-        except:  # noqa
-            pass
+    if soup is None:
+        accession = accession
+    else:
+        accession = soup.find("PRIMARY_ID", text=RUN_PARSER).text
+        experiment = (
+            soup.find("PRIMARY_ID", text=EXPERIMENT_PARSER).text
+            if soup.find("PRIMARY_ID", text=EXPERIMENT_PARSER)
+            else soup.find("EXPERIMENT_REF")["accession"]
+        )
+
+        study_parsed = soup.find("ID", text=PROJECT_PARSER)
+        if study_parsed:
+            study = study_parsed.text
+        
+        sample_parsed = soup.find("ID", text=SAMPLE_PARSER)
+        if sample_parsed:
+            sample = sample_parsed.text
+        
+        title = soup.find("TITLE").text
+
+        for attr in soup.find_all("RUN_ATTRIBUTE"):
+            try:
+                tag = attr.find("TAG").text
+                value = attr.find("VALUE").text
+                attributes[tag] = value
+            except:  # noqa
+                pass
+        ftp_files = get_files_metadata_from_run(soup)
+
+    if study is None:
+        study = search_ena_run_study(accession)
+    
+    if sample is None:
+        sample = search_ena_run_sample(accession)
+
     if attributes:
         try:
             attributes["ENA-SPOT-COUNT"] = int(attributes["ENA-SPOT-COUNT"])
             attributes["ENA-BASE-COUNT"] = int(attributes["ENA-BASE-COUNT"])
         except:  # noqa
             pass
-    ftp_files = get_files_metadata_from_run(soup)
+    
     # print(ftp_files)
     # ftp_files = [file for file in ftp_files if accession in file['url']]
     # print(ftp_files)
@@ -389,8 +397,15 @@ def ffq_run(accession, level=0):  # noqa
     :return: dictionary of run information
     :rtype: dict
     """
+    
     logger.info(f"Parsing run {accession}")
-    run = parse_run(get_xml(accession))
+    try:
+        soup = get_xml(accession)
+    except InvalidAccession:
+        logger.error(f"Bad response for {accession} from ENA, proceeding without ENA data...")
+        soup = None 
+
+    run = parse_run(soup = soup, accession = accession)
     return run
 
 
