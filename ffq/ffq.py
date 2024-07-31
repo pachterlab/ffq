@@ -625,12 +625,15 @@ def ffq_biosample(accession, level=None):
     # soup = ena_fetch(accession, 'biosample')
     # sample = soup.find('id', text=SAMPLE_PARSER).text
     soup = get_xml(accession)
-    sample = soup.SAMPLE.attrs["accession"]
+
+    # gsm = soup.SAMPLE.attrs["alias"]
+    srs = soup.IDENTIFIERS.SECONDARY_ID.text
+    logger.info(f"Accession {accession} secondary ID {srs}")
     try:
         level = level - 1
     except:  # noqa
         pass
-    sample_data = ffq_sample(sample, level)
+    sample_data = ffq_sample(srs, level)
     return {"accession": accession, "samples": sample_data}
 
 
