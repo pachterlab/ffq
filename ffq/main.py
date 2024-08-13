@@ -74,69 +74,71 @@ FFQ.update({t: ffq_bioproject for t in BIOPROJECT_TYPES})
 FFQ.update({t: ffq_biosample for t in BIOSAMPLE_TYPES})
 
 
-def main():
-    """Command-line entrypoint."""
-    # Main parser
-    parser = argparse.ArgumentParser(
-        description=(
-            (
-                f"ffq {__version__}: A command line tool to find sequencing data "
-                "from SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample."
-            )
+# Main parser
+parser = argparse.ArgumentParser(
+    description=(
+        (
+            f"ffq {__version__}: A command line tool to find sequencing data "
+            "from SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample."
         )
     )
-    parser._actions[0].help = parser._actions[0].help.capitalize()
+)
+parser._actions[0].help = parser._actions[0].help.capitalize()
 
-    parser.add_argument(
-        "IDs",
-        help=(
-            "One or multiple SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample accessions, "
-            "DOIs, or paper titles"
-        ),
-        nargs="+",
-    )
-    parser.add_argument(
-        "-o",
-        metavar="OUT",
-        help=("Path to write metadata (default: standard out)"),
-        type=str,
-        required=False,
-    )
+parser.add_argument(
+    "IDs",
+    help=(
+        "One or multiple SRA / GEO / ENCODE / ENA / EBI-EMBL / DDBJ / Biosample accessions, "
+        "DOIs, or paper titles"
+    ),
+    nargs="+",
+)
+parser.add_argument(
+    "-o",
+    metavar="OUT",
+    help=("Path to write metadata (default: standard out)"),
+    type=str,
+    required=False,
+)
 
-    parser.add_argument(
-        "-t",
-        metavar="TYPE",
-        help=argparse.SUPPRESS,
-        type=str,
-        required=False,
-        choices=SEARCH_TYPES,
-    )
+parser.add_argument(
+    "-t",
+    metavar="TYPE",
+    help=argparse.SUPPRESS,
+    type=str,
+    required=False,
+    choices=SEARCH_TYPES,
+)
 
-    parser.add_argument(
-        "-l",
-        metavar="LEVEL",
-        help="Max depth to fetch data within accession tree",
-        type=int,
-    )
+parser.add_argument(
+    "-l",
+    metavar="LEVEL",
+    help="Max depth to fetch data within accession tree",
+    type=int,
+)
 
-    parser.add_argument("--ftp", help="Return FTP links", action="store_true")
+parser.add_argument("--ftp", help="Return FTP links", action="store_true")
 
-    parser.add_argument("--aws", help="Return AWS links", action="store_true")  # noqa
+parser.add_argument("--aws", help="Return AWS links", action="store_true")  # noqa
 
-    parser.add_argument("--gcp", help="Return GCP links", action="store_true")  # noqa
+parser.add_argument("--gcp", help="Return GCP links", action="store_true")  # noqa
 
-    parser.add_argument("--ncbi", help="Return NCBI links", action="store_true")  # noqa
-    parser.add_argument(
-        "--split",
-        help="Split output into separate files by accession  (`-o` is a directory)",  # noqa
-        action="store_true",
-    )
-    parser.add_argument(
-        "--verbose", help="Print debugging information", action="store_true"
-    )
-    parser.add_argument(
-        "--version", action="version", version=f"%(prog)s {__version__}"
-    )
+parser.add_argument("--ncbi", help="Return NCBI links", action="store_true")  # noqa
+parser.add_argument(
+    "--split",
+    help="Split output into separate files by accession  (`-o` is a directory)",  # noqa
+    action="store_true",
+)
+parser.add_argument(
+    "--verbose", help="Print debugging information", action="store_true"
+)
+parser.add_argument(
+    "--version", action="version", version=f"%(prog)s {__version__}"
+)
+
+
+def main():
+    """Command-line entrypoint."""
 
     # Show help when no arguments are given
     if len(sys.argv) == 1:
